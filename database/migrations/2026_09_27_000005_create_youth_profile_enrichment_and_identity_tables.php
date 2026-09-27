@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -109,7 +110,7 @@ return new class extends Migration
             $table->dateTime('reviewed_at', 6)->nullable();
             $table->binary('reviewed_by', 16, true)->nullable();
             $table->text('review_notes')->nullable();
-            $table->json('metadata')->nullable();
+            $table->json('metadata');
             $table->dateTime('created_at', 6)->useCurrent();
             $table->dateTime('updated_at', 6)->useCurrent();
             $table->dateTime('deleted_at', 6)->nullable();
@@ -117,6 +118,12 @@ return new class extends Migration
             $table->foreign('reviewed_by')->references('id')->on('users')->nullOnDelete()->restrictOnUpdate();
             $table->index(['status', 'deleted_at', 'submitted_at'], 'idx_uiv_status_submitted');
         });
+
+        DB::statement("ALTER TABLE user_skills ADD CONSTRAINT ck_user_skills_level CHECK (proficiency_level IS NULL OR proficiency_level IN ('beginner','intermediate','advanced','expert'))");
+        DB::statement('ALTER TABLE user_educations ADD CONSTRAINT ck_user_educations_dates CHECK (end_date IS NULL OR start_date IS NULL OR end_date >= start_date), ADD CONSTRAINT ck_user_educations_current CHECK (NOT is_current OR end_date IS NULL)');
+        DB::statement('ALTER TABLE organization_experiences ADD CONSTRAINT ck_org_exp_dates CHECK (end_date IS NULL OR start_date IS NULL OR end_date >= start_date), ADD CONSTRAINT ck_org_exp_current CHECK (NOT is_current OR end_date IS NULL)');
+        DB::statement("ALTER TABLE user_achievements ADD CONSTRAINT ck_user_achievements_status CHECK (verification_status IN ('self_reported','pending','verified','rejected'))");
+        DB::statement("ALTER TABLE user_identity_verifications ADD CONSTRAINT ck_uiv_document_type CHECK (document_type IN ('ktp','kia','student_card')), ADD CONSTRAINT ck_uiv_status CHECK (status IN ('pending','revision','rejected','verified')), ADD CONSTRAINT ck_uiv_review_state CHECK (status = 'pending' OR reviewed_at IS NOT NULL), ADD CONSTRAINT ck_uiv_metadata_object CHECK (JSON_TYPE(metadata) = 'OBJECT')");
     }
 
     public function down(): void

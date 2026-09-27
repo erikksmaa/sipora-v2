@@ -14,7 +14,7 @@ final class UpsertAchievementAction
     public function execute(User $user, array $data, ?string $achievementId = null): UserAchievement
     {
         if ($achievementId) {
-            $achievement = $user->achievements()->where('id', BinaryUuid::bytes($achievementId))->firstOrFail();
+            $achievement = $user->achievements()->where('id', BinaryUuid::bytesOrFail($achievementId, UserAchievement::class))->firstOrFail();
         } else {
             $achievement = new UserAchievement;
             $achievement->id = BinaryUuid::generate();
@@ -27,7 +27,6 @@ final class UpsertAchievementAction
             'issuer_name' => $data['issuer_name'] ?? null,
             'achievement_date' => $data['achievement_date'] ?? null,
             'description' => $data['description'] ?? null,
-            'evidence_path' => $data['evidence_path'] ?? null,
         ]);
 
         $achievement->save();

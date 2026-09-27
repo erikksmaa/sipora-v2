@@ -17,7 +17,10 @@ class ProfileController extends Controller
 {
     public function show(Request $request, ProfileCompletionService $completion, YouthEligibilityService $eligibility): View
     {
-        $user = $request->user()->load(['profile', 'primaryDomicile.administrativeArea', 'interests', 'identity', 'profileVisibility']);
+        $user = $request->user()->load([
+            'profile', 'primaryDomicile.administrativeArea', 'interests', 'identity', 'profileVisibility',
+            'skills', 'educations', 'organizationExperiences', 'achievements',
+        ]);
 
         return view('youth.profile.show', compact('user') + ['completion' => $completion->calculate($user), 'eligibility' => $eligibility->for($user)]);
     }

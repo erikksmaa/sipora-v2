@@ -2,6 +2,8 @@
 
 namespace App\Presenters;
 
+use App\Models\Interest;
+
 /**
  * Temporary presentation data for the public landing page.
  *
@@ -13,14 +15,27 @@ final class PublicLandingPresenter
     /** @return array<string, mixed> */
     public function present(): array
     {
-        return [
-            'presentation' => ['is_placeholder' => true, 'source' => 'temporary_landing_presentation'],
-            'interests' => [
+        $interestIcons = ['💻', '🎨', '🏃', '🌱', '📚', '🤝', '💼', '🎭'];
+        $databaseInterests = Interest::query()->orderBy('name')->limit(8)->get();
+        $interests = $databaseInterests->isNotEmpty()
+            ? $databaseInterests->values()->map(fn (Interest $interest, int $index): array => [
+                'icon' => $interestIcons[$index % count($interestIcons)],
+                'name' => $interest->name,
+            ])->all()
+            : [
                 ['icon' => '💻', 'name' => 'Teknologi'], ['icon' => '🎨', 'name' => 'Seni & Kreatif'],
                 ['icon' => '🏃', 'name' => 'Olahraga'], ['icon' => '🌱', 'name' => 'Lingkungan'],
                 ['icon' => '📚', 'name' => 'Pendidikan'], ['icon' => '🤝', 'name' => 'Sosial'],
                 ['icon' => '💼', 'name' => 'Kewirausahaan'], ['icon' => '🎭', 'name' => 'Budaya'],
+            ];
+
+        return [
+            'presentation' => [
+                'is_placeholder' => true,
+                'source' => 'temporary_landing_presentation',
+                'interests_source' => $databaseInterests->isNotEmpty() ? 'database' : 'placeholder_fallback',
             ],
+            'interests' => $interests,
             'activities' => [
                 ['category' => 'Teknologi', 'title' => 'Workshop Web Development untuk Pemula', 'date' => '18 Oktober 2026', 'location' => 'Gedung Pemuda Pemalang', 'quota' => '32 dari 40 peserta', 'progress' => 80, 'image' => 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80', 'badge' => 'Pendaftaran Dibuka'],
                 ['category' => 'Lingkungan', 'title' => 'Aksi Pemuda Hijau: Tanam 1.000 Mangrove', 'date' => '26 Oktober 2026', 'location' => 'Pantai Widuri, Pemalang', 'quota' => '76 dari 100 peserta', 'progress' => 76, 'image' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=900&q=80', 'badge' => 'Pendaftaran Dibuka'],

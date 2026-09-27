@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
@@ -26,5 +27,14 @@ final class BinaryUuid
     public static function text(string $value): string
     {
         return Uuid::fromBytes(self::bytes($value))->toString();
+    }
+
+    public static function bytesOrFail(string $value, string $model): string
+    {
+        try {
+            return self::bytes($value);
+        } catch (InvalidArgumentException) {
+            throw (new ModelNotFoundException)->setModel($model, [$value]);
+        }
     }
 }

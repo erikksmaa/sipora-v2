@@ -14,7 +14,7 @@ final class UpsertEducationAction
     public function execute(User $user, array $data, ?string $educationId = null): UserEducation
     {
         if ($educationId) {
-            $education = $user->educations()->where('id', BinaryUuid::bytes($educationId))->firstOrFail();
+            $education = $user->educations()->where('id', BinaryUuid::bytesOrFail($educationId, UserEducation::class))->firstOrFail();
         } else {
             $education = new UserEducation;
             $education->id = BinaryUuid::generate();

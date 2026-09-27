@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 
 #[Fillable([
     'user_identity_id',
@@ -26,11 +27,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[Hidden([
     'document_number_hash',
     'document_number_ciphertext',
+    'document_path',
     'document_sha256',
 ])]
 class UserIdentityVerification extends Model
 {
     use HasBinaryUuid, SoftDeletes;
+
+    public const STATUS_PENDING = 'pending';
+
+    public const STATUS_REJECTED = 'rejected';
+
+    public const STATUS_REVISION = 'revision';
+
+    public const STATUS_VERIFIED = 'verified';
+
+    public function documentNumber(): ?string
+    {
+        return $this->document_number_ciphertext
+            ? Crypt::decryptString($this->document_number_ciphertext)
+            : null;
+    }
 
     public function userIdentity(): BelongsTo
     {

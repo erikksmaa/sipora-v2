@@ -21,7 +21,6 @@ final class UpsertAchievementRequest extends FormRequest
             'issuer_name' => ['nullable', 'string', 'max:180'],
             'achievement_date' => ['nullable', 'date'],
             'description' => ['nullable', 'string', 'max:1000'],
-            'evidence_path' => ['nullable', 'string', 'max:500'],
         ];
     }
 }

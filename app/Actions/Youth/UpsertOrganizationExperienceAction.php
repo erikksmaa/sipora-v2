@@ -14,7 +14,7 @@ final class UpsertOrganizationExperienceAction
     public function execute(User $user, array $data, ?string $experienceId = null): OrganizationExperience
     {
         if ($experienceId) {
-            $experience = $user->organizationExperiences()->where('id', BinaryUuid::bytes($experienceId))->firstOrFail();
+            $experience = $user->organizationExperiences()->where('id', BinaryUuid::bytesOrFail($experienceId, OrganizationExperience::class))->firstOrFail();
         } else {
             $experience = new OrganizationExperience;
             $experience->id = BinaryUuid::generate();

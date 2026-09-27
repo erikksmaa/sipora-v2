@@ -59,6 +59,7 @@ class GoogleAuthenticationTest extends TestCase
         $this->assertSame(['youth'], $user->getRoleNames()->all());
         $this->assertTrue($user->hasVerifiedEmail());
         $this->assertNull($user->password);
+        $this->assertNull($user->identity, 'Google OAuth must not verify SIPORA identity.');
         $this->assertAuthenticatedAs($user);
         $this->assertDatabaseCount('user_social_accounts', 1);
         $this->assertSame($user->getKey(), UserSocialAccount::first()->user_id);
