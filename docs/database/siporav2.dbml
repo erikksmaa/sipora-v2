@@ -1,0 +1,674 @@
+Project SIPORA_v2 {
+  database_type: 'MySQL'
+  Note: '''
+  SIPORA v2 visual ERD for dbdiagram.io.
+  Physical source: MySQL 8.0.30+/8.4 schema.
+  UUIDv7 primary/foreign keys are stored as BINARY(16).
+  CHECK constraints, triggers, views, FULLTEXT indexes, and generated invisible columns used for soft-delete uniqueness remain in the SQL DDL and are intentionally omitted here to keep the ERD readable.
+  '''
+}
+
+Table system_roles [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  code varchar(32) [not null, unique]
+  name varchar(100) [not null]
+  description text
+}
+
+Table users [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  email varchar(254) [not null]
+  password_hash text [not null]
+  account_status varchar(24) [not null, default: 'active']
+  email_verified_at datetime(6)
+  last_login_at datetime(6)
+}
+
+Table user_system_roles [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  role_id binary(16) [not null]
+  assigned_by binary(16)
+}
+
+Table user_profiles [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null, unique]
+  public_slug varchar(190) [not null]
+  full_name varchar(160) [not null]
+  birth_place varchar(120)
+  birth_date date [not null]
+  gender varchar(24)
+  phone varchar(32)
+  bio text
+  occupation_status varchar(32)
+  occupation_title varchar(160)
+  profile_photo_path text
+}
+
+Table administrative_areas [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  parent_id binary(16)
+  code varchar(32) [not null, unique]
+  name varchar(160) [not null]
+  area_level varchar(24) [not null]
+
+}
+
+Table user_addresses [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  administrative_area_id binary(16) [not null]
+  address_type varchar(24) [not null, default: 'domicile']
+  address_line text
+  rt varchar(4)
+  rw varchar(4)
+  postal_code varchar(10)
+  is_primary boolean [not null, default: true]
+
+}
+
+Table user_identities [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null, unique]
+  national_id_hash char(64)
+  national_id_ciphertext varbinary(512)
+  verification_status varchar(24) [not null, default: 'unverified']
+  verification_method varchar(24)
+  verified_at datetime(6)
+  verified_by binary(16)
+}
+
+Table user_identity_verifications [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_identity_id binary(16) [not null]
+  document_type varchar(24) [not null]
+  document_number_hash char(64)
+  document_number_ciphertext varbinary(512)
+  document_path text [not null]
+  document_sha256 char(64)
+  status varchar(24) [not null, default: 'pending']
+  submitted_at datetime(6) [not null]
+  reviewed_at datetime(6)
+  reviewed_by binary(16)
+  review_notes text
+  metadata json [not null]
+
+}
+
+Table interests [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+}
+
+Table user_interests [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  interest_id binary(16) [not null]
+
+}
+
+Table skills [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+}
+
+Table user_skills [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  skill_id binary(16) [not null]
+  proficiency_level varchar(24)
+  is_self_reported boolean [not null, default: true]
+
+}
+
+Table hobbies [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+}
+
+Table user_hobbies [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  hobby_id binary(16) [not null]
+}
+
+Table user_educations [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  education_level varchar(40) [not null]
+  institution_name varchar(180) [not null]
+  field_of_study varchar(180)
+  start_date date
+  end_date date
+  is_current boolean [not null, default: false]
+  description text
+
+}
+
+Table organization_experiences [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  organization_name varchar(180) [not null]
+  role_title varchar(160)
+  start_date date
+  end_date date
+  is_current boolean [not null, default: false]
+  description text
+
+}
+
+Table user_business_experiences [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  business_name varchar(180) [not null]
+  role_title varchar(160)
+  business_category varchar(120)
+  start_date date
+  end_date date
+  is_current boolean [not null, default: false]
+  description text
+}
+
+Table user_achievements [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  title varchar(180) [not null]
+  issuer_name varchar(180)
+  achievement_date date
+  description text
+  evidence_path text
+  verification_status varchar(24) [not null, default: 'self_reported']
+  verified_by binary(16)
+  verified_at datetime(6)
+}
+
+Table user_profile_visibility [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null, unique]
+  is_profile_public boolean [not null, default: true]
+  show_photo boolean [not null, default: true]
+  show_bio boolean [not null, default: true]
+  show_interests boolean [not null, default: true]
+  show_skills boolean [not null, default: true]
+  show_education boolean [not null, default: true]
+  show_organization_experience boolean [not null, default: true]
+  show_community_membership boolean [not null, default: true]
+  show_activity_passport boolean [not null, default: true]
+  show_certificates boolean [not null, default: true]
+  show_achievements boolean [not null, default: true]
+  show_business_experience boolean [not null, default: true]
+}
+
+Table organization_categories [headercolor: #059669] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+  description text
+}
+
+Table organizations [headercolor: #059669] {
+  id binary(16) [pk, not null]
+  created_by_user_id binary(16)
+  category_id binary(16) [not null]
+  administrative_area_id binary(16)
+  name varchar(180) [not null]
+  slug varchar(190) [not null]
+  description text
+  logo_path text
+  contact_email varchar(254)
+  contact_phone varchar(32)
+  website_url text
+  address_text text
+  social_links json [not null]
+  status varchar(24) [not null, default: 'draft']
+  approved_at datetime(6)
+  approved_by binary(16)
+}
+
+Table organization_documents [headercolor: #059669] {
+  id binary(16) [pk, not null]
+  organization_id binary(16) [not null]
+  document_type varchar(48) [not null]
+  document_name varchar(180)
+  document_path text [not null]
+  document_sha256 char(64)
+
+}
+
+Table organization_verification_requests [headercolor: #059669] {
+  id binary(16) [pk, not null]
+  organization_id binary(16) [not null]
+  submitted_by binary(16) [not null]
+  status varchar(24) [not null, default: 'pending']
+  submission_notes text
+  submitted_at datetime(6) [not null]
+  reviewed_by binary(16)
+  reviewed_at datetime(6)
+  review_notes text
+
+}
+
+Table organization_memberships [headercolor: #059669] {
+  id binary(16) [pk, not null]
+  organization_id binary(16) [not null]
+  user_id binary(16) [not null]
+  access_role varchar(24) [not null, default: 'member']
+  position_title varchar(160)
+  membership_status varchar(24) [not null, default: 'pending']
+  requested_at datetime(6) [not null]
+  approved_at datetime(6)
+  approved_by binary(16)
+  ended_at datetime(6)
+
+}
+
+Table program_categories [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+  description text
+}
+
+Table programs [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  organization_id binary(16) [not null]
+  category_id binary(16) [not null]
+  created_by_user_id binary(16) [not null]
+  title varchar(220) [not null]
+  slug varchar(190) [not null]
+  description text
+  objectives text
+  start_date date
+  end_date date
+  execution_status varchar(24) [not null, default: 'planned']
+
+}
+
+Table activity_categories [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+  description text
+}
+
+Table activities [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  organization_id binary(16) [not null]
+  program_id binary(16)
+  category_id binary(16) [not null]
+  created_by_user_id binary(16) [not null]
+  title varchar(220) [not null]
+  slug varchar(190) [not null]
+  description text
+  poster_path text
+  location_type varchar(16) [not null, default: 'offline']
+  venue_name varchar(180)
+  administrative_area_id binary(16)
+  address_text text
+  meeting_url text
+  start_at datetime(6) [not null]
+  end_at datetime(6) [not null]
+  registration_open_at datetime(6)
+  registration_close_at datetime(6)
+  quota integer
+  registration_mode varchar(24) [not null, default: 'open']
+  min_age smallint
+  max_age smallint
+  requires_identity_verification boolean [not null, default: false]
+  members_only boolean [not null, default: false]
+  eligibility_notes text
+  certificate_enabled boolean [not null, default: false]
+  review_status varchar(24) [not null, default: 'draft']
+  publication_status varchar(24) [not null, default: 'unpublished']
+  execution_status varchar(24) [not null, default: 'scheduled']
+  published_at datetime(6)
+
+}
+
+Table activity_reviews [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  activity_id binary(16) [not null]
+  reviewer_id binary(16) [not null]
+  decision varchar(24) [not null]
+  review_notes text
+  reviewed_at datetime(6) [not null]
+
+}
+
+Table activity_participations [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  activity_id binary(16) [not null]
+  user_id binary(16) [not null]
+  activity_role varchar(24) [not null, default: 'participant']
+  registration_status varchar(24) [not null, default: 'pending']
+  completion_status varchar(24) [not null, default: 'pending']
+  registration_notes text
+  requested_at datetime(6) [not null]
+  reviewed_at datetime(6)
+  reviewed_by binary(16)
+  completed_at datetime(6)
+
+}
+
+Table activity_attendances [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  participation_id binary(16) [not null, unique]
+  attendance_status varchar(24) [not null]
+  checked_in_at datetime(6)
+  checked_out_at datetime(6)
+  recorded_by binary(16) [not null]
+  notes text
+
+}
+
+Table activity_media [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  activity_id binary(16) [not null]
+  uploaded_by binary(16) [not null]
+  media_type varchar(24) [not null, default: 'image']
+  file_path text [not null]
+  caption text
+  sort_order integer [not null, default: 0]
+
+}
+
+Table activity_bookmarks [headercolor: #F97316] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  activity_id binary(16) [not null]
+}
+
+Table user_certificates [headercolor: #2563EB] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  participation_id binary(16)
+  source_type varchar(24) [not null]
+  name varchar(220) [not null]
+  issuer_name varchar(180) [not null]
+  certificate_number varchar(120)
+  verification_code varchar(120)
+  issued_at date [not null]
+  expires_at date
+  file_path text
+  external_url text
+  verification_status varchar(24) [not null, default: 'self_reported']
+
+}
+
+Table program_proposals [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  program_id binary(16) [not null]
+  version integer [not null]
+  status varchar(24) [not null, default: 'draft']
+  requested_budget decimal(18,2)
+  proposal_document_path text
+  submitted_at datetime(6)
+  reviewed_at datetime(6)
+  reviewed_by binary(16)
+  review_notes text
+
+}
+
+Table program_logbooks [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  program_id binary(16) [not null]
+  activity_id binary(16)
+  created_by_user_id binary(16) [not null]
+  log_date date [not null]
+  summary text [not null]
+  obstacles text
+  solutions text
+  progress_percent smallint [not null, default: 0]
+  status varchar(24) [not null, default: 'draft']
+  submitted_at datetime(6)
+  reviewed_at datetime(6)
+  reviewed_by binary(16)
+  review_notes text
+
+}
+
+Table program_logbook_media [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  logbook_id binary(16) [not null]
+  uploaded_by binary(16) [not null]
+  file_path text [not null]
+  caption text
+
+}
+
+Table financial_reports [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  program_id binary(16) [not null]
+  version integer [not null, default: 1]
+  status varchar(24) [not null, default: 'draft']
+  notes text
+  submitted_at datetime(6)
+  reviewed_at datetime(6)
+  reviewed_by binary(16)
+  review_notes text
+
+}
+
+Table financial_items [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  financial_report_id binary(16) [not null]
+  transaction_type varchar(16) [not null]
+  transaction_date date [not null]
+  description text [not null]
+  amount decimal(18,2) [not null]
+  receipt_path text
+
+}
+
+Table program_evaluations [headercolor: #7C3AED] {
+  id binary(16) [pk, not null]
+  program_id binary(16) [not null]
+  verifier_id binary(16) [not null]
+  decision varchar(24) [not null]
+  evaluation_notes text
+  evaluated_at datetime(6) [not null]
+
+}
+
+Table opportunity_categories [headercolor: #D97706] {
+  id binary(16) [pk, not null]
+  name varchar(120) [not null]
+  slug varchar(190) [not null]
+  description text
+}
+
+Table opportunities [headercolor: #D97706] {
+  id binary(16) [pk, not null]
+  category_id binary(16) [not null]
+  organization_id binary(16)
+  created_by_user_id binary(16)
+  title varchar(220) [not null]
+  slug varchar(190) [not null]
+  provider_name varchar(180) [not null]
+  description text [not null]
+  administrative_area_id binary(16)
+  location_text varchar(220)
+  external_url text [not null]
+  deadline_at datetime(6)
+  starts_at datetime(6)
+  ends_at datetime(6)
+  publication_status varchar(24) [not null, default: 'draft']
+  published_at datetime(6)
+
+}
+
+Table opportunity_bookmarks [headercolor: #D97706] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  opportunity_id binary(16) [not null]
+}
+
+Table notifications [headercolor: #475569] {
+  id binary(16) [pk, not null]
+  user_id binary(16) [not null]
+  notification_type varchar(80) [not null]
+  title varchar(220) [not null]
+  body text [not null]
+  data json [not null]
+  read_at datetime(6)
+
+}
+
+Table audit_logs [headercolor: #475569] {
+  id binary(16) [pk, not null]
+  actor_user_id binary(16)
+  action varchar(80) [not null]
+  entity_type varchar(120) [not null]
+  entity_id binary(16)
+  request_id binary(16)
+  ip_address varchar(45)
+  user_agent text
+  before_data json
+  after_data json
+
+}
+
+// Foreign-key relationships
+Ref fk_usr_user: user_system_roles.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_usr_role: user_system_roles.role_id > system_roles.id [delete: restrict, update: restrict]
+Ref fk_usr_assigned_by: user_system_roles.assigned_by > users.id [delete: set null, update: restrict]
+Ref fk_user_profiles_user: user_profiles.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_admin_areas_parent: administrative_areas.parent_id > administrative_areas.id [delete: restrict, update: restrict]
+Ref fk_user_addresses_user: user_addresses.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_addresses_area: user_addresses.administrative_area_id > administrative_areas.id [delete: restrict, update: restrict]
+Ref fk_user_identities_user: user_identities.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_identities_verified_by: user_identities.verified_by > users.id [delete: set null, update: restrict]
+Ref fk_uiv_identity: user_identity_verifications.user_identity_id > user_identities.id [delete: cascade, update: restrict]
+Ref fk_uiv_reviewer: user_identity_verifications.reviewed_by > users.id [delete: set null, update: restrict]
+Ref fk_user_interests_user: user_interests.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_interests_interest: user_interests.interest_id > interests.id [delete: restrict, update: restrict]
+Ref fk_user_skills_user: user_skills.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_skills_skill: user_skills.skill_id > skills.id [delete: restrict, update: restrict]
+Ref fk_user_hobbies_user: user_hobbies.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_hobbies_hobby: user_hobbies.hobby_id > hobbies.id [delete: restrict, update: restrict]
+Ref fk_user_educations_user: user_educations.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_org_exp_user: organization_experiences.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_business_user: user_business_experiences.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_achievements_user: user_achievements.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_achievements_verifier: user_achievements.verified_by > users.id [delete: set null, update: restrict]
+Ref fk_user_visibility_user: user_profile_visibility.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_organizations_creator: organizations.created_by_user_id > users.id [delete: set null, update: restrict]
+Ref fk_organizations_category: organizations.category_id > organization_categories.id [delete: restrict, update: restrict]
+Ref fk_organizations_area: organizations.administrative_area_id > administrative_areas.id [delete: set null, update: restrict]
+Ref fk_organizations_approver: organizations.approved_by > users.id [delete: set null, update: restrict]
+Ref fk_org_documents_org: organization_documents.organization_id > organizations.id [delete: cascade, update: restrict]
+Ref fk_org_verify_org: organization_verification_requests.organization_id > organizations.id [delete: cascade, update: restrict]
+Ref fk_org_verify_submitter: organization_verification_requests.submitted_by > users.id [delete: restrict, update: restrict]
+Ref fk_org_verify_reviewer: organization_verification_requests.reviewed_by > users.id [delete: set null, update: restrict]
+Ref fk_org_membership_org: organization_memberships.organization_id > organizations.id [delete: restrict, update: restrict]
+Ref fk_org_membership_user: organization_memberships.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_org_membership_approver: organization_memberships.approved_by > users.id [delete: set null, update: restrict]
+Ref fk_programs_org: programs.organization_id > organizations.id [delete: restrict, update: restrict]
+Ref fk_programs_category: programs.category_id > program_categories.id [delete: restrict, update: restrict]
+Ref fk_programs_creator: programs.created_by_user_id > users.id [delete: restrict, update: restrict]
+Ref fk_activities_org: activities.organization_id > organizations.id [delete: restrict, update: restrict]
+Ref fk_activities_program: activities.program_id > programs.id [delete: restrict, update: restrict]
+Ref fk_activities_category: activities.category_id > activity_categories.id [delete: restrict, update: restrict]
+Ref fk_activities_creator: activities.created_by_user_id > users.id [delete: restrict, update: restrict]
+Ref fk_activities_area: activities.administrative_area_id > administrative_areas.id [delete: set null, update: restrict]
+Ref fk_activity_reviews_activity: activity_reviews.activity_id > activities.id [delete: cascade, update: restrict]
+Ref fk_activity_reviews_reviewer: activity_reviews.reviewer_id > users.id [delete: restrict, update: restrict]
+Ref fk_activity_participation_activity: activity_participations.activity_id > activities.id [delete: restrict, update: restrict]
+Ref fk_activity_participation_user: activity_participations.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_activity_participation_reviewer: activity_participations.reviewed_by > users.id [delete: set null, update: restrict]
+Ref fk_activity_attendance_participation: activity_attendances.participation_id > activity_participations.id [delete: cascade, update: restrict]
+Ref fk_activity_attendance_recorder: activity_attendances.recorded_by > users.id [delete: restrict, update: restrict]
+Ref fk_activity_media_activity: activity_media.activity_id > activities.id [delete: cascade, update: restrict]
+Ref fk_activity_media_uploader: activity_media.uploaded_by > users.id [delete: restrict, update: restrict]
+Ref fk_activity_bookmark_user: activity_bookmarks.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_activity_bookmark_activity: activity_bookmarks.activity_id > activities.id [delete: cascade, update: restrict]
+Ref fk_user_certificates_user: user_certificates.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_user_certificates_participation: user_certificates.participation_id > activity_participations.id [delete: restrict, update: restrict]
+Ref fk_program_proposals_program: program_proposals.program_id > programs.id [delete: cascade, update: restrict]
+Ref fk_program_proposals_reviewer: program_proposals.reviewed_by > users.id [delete: set null, update: restrict]
+Ref fk_program_logbooks_program: program_logbooks.program_id > programs.id [delete: cascade, update: restrict]
+Ref fk_program_logbooks_activity: program_logbooks.activity_id > activities.id [delete: restrict, update: restrict]
+Ref fk_program_logbooks_creator: program_logbooks.created_by_user_id > users.id [delete: restrict, update: restrict]
+Ref fk_program_logbooks_reviewer: program_logbooks.reviewed_by > users.id [delete: set null, update: restrict]
+Ref fk_logbook_media_logbook: program_logbook_media.logbook_id > program_logbooks.id [delete: cascade, update: restrict]
+Ref fk_logbook_media_uploader: program_logbook_media.uploaded_by > users.id [delete: restrict, update: restrict]
+Ref fk_financial_reports_program: financial_reports.program_id > programs.id [delete: cascade, update: restrict]
+Ref fk_financial_reports_reviewer: financial_reports.reviewed_by > users.id [delete: set null, update: restrict]
+Ref fk_financial_items_report: financial_items.financial_report_id > financial_reports.id [delete: cascade, update: restrict]
+Ref fk_program_evaluations_program: program_evaluations.program_id > programs.id [delete: cascade, update: restrict]
+Ref fk_program_evaluations_verifier: program_evaluations.verifier_id > users.id [delete: restrict, update: restrict]
+Ref fk_opportunities_category: opportunities.category_id > opportunity_categories.id [delete: restrict, update: restrict]
+Ref fk_opportunities_org: opportunities.organization_id > organizations.id [delete: set null, update: restrict]
+Ref fk_opportunities_creator: opportunities.created_by_user_id > users.id [delete: set null, update: restrict]
+Ref fk_opportunities_area: opportunities.administrative_area_id > administrative_areas.id [delete: set null, update: restrict]
+Ref fk_opportunity_bookmark_user: opportunity_bookmarks.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_opportunity_bookmark_opportunity: opportunity_bookmarks.opportunity_id > opportunities.id [delete: cascade, update: restrict]
+Ref fk_notifications_user: notifications.user_id > users.id [delete: cascade, update: restrict]
+Ref fk_audit_logs_actor: audit_logs.actor_user_id > users.id [delete: set null, update: restrict]
+
+TableGroup Identity_Youth_Portfolio {
+  system_roles
+  users
+  user_system_roles
+  user_profiles
+  administrative_areas
+  user_addresses
+  user_identities
+  user_identity_verifications
+  interests
+  user_interests
+  skills
+  user_skills
+  hobbies
+  user_hobbies
+  user_educations
+  organization_experiences
+  user_business_experiences
+  user_achievements
+  user_profile_visibility
+  user_certificates
+}
+
+TableGroup Community {
+  organization_categories
+  organizations
+  organization_documents
+  organization_verification_requests
+  organization_memberships
+}
+
+TableGroup Program_Administration {
+  program_categories
+  programs
+  program_proposals
+  program_logbooks
+  program_logbook_media
+  financial_reports
+  financial_items
+  program_evaluations
+}
+
+TableGroup Activity {
+  activity_categories
+  activities
+  activity_reviews
+  activity_participations
+  activity_attendances
+  activity_media
+  activity_bookmarks
+}
+
+TableGroup Opportunity {
+  opportunity_categories
+  opportunities
+  opportunity_bookmarks
+}
+
+TableGroup Platform {
+  notifications
+  audit_logs
+}

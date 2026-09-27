@@ -62,6 +62,34 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserProfileVisibility::class);
     }
 
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'user_skills')
+            ->withPivot(['id', 'proficiency_level', 'is_self_reported'])
+            ->withTimestamps()
+            ->wherePivotNull('deleted_at');
+    }
+
+    public function userSkills(): HasMany
+    {
+        return $this->hasMany(UserSkill::class);
+    }
+
+    public function educations(): HasMany
+    {
+        return $this->hasMany(UserEducation::class)->orderByDesc('start_date');
+    }
+
+    public function organizationExperiences(): HasMany
+    {
+        return $this->hasMany(OrganizationExperience::class)->orderByDesc('start_date');
+    }
+
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(UserAchievement::class)->orderByDesc('achievement_date');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

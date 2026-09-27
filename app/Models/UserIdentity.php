@@ -25,6 +25,16 @@ class UserIdentity extends Model
         return $this->belongsTo(User::class, 'verified_by');
     }
 
+    public function verifications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserIdentityVerification::class, 'user_identity_id')->latest('submitted_at');
+    }
+
+    public function latestVerification(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserIdentityVerification::class, 'user_identity_id')->latestOfMany('submitted_at');
+    }
+
     protected function casts(): array
     {
         return ['verified_at' => 'datetime'];

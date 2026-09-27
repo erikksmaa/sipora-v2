@@ -105,12 +105,16 @@ class YouthProfileTest extends TestCase
     {
         $user = $this->youth();
         $service = app(ProfileCompletionService::class);
+        // Phase 3 weights: profile fields (50%) + domicile (10%) + interests (10%) + enrichment (30%)
         $this->assertSame(0, $service->calculate($user)['percentage']);
         app(UpdateYouthProfileAction::class)->execute($user, $this->validProfile());
-        $this->assertSame(70, $service->calculate($user->fresh())['percentage']);
+        // full_name(10)+birth_date(10)+gender(5)+phone(5)+occupation_status(10)+bio(10) = 50
+        $this->assertSame(50, $service->calculate($user->fresh())['percentage']);
         app(UpdateDomicileAction::class)->execute($user, ['administrative_area_id' => AdministrativeArea::where('area_level', 'district')->firstOrFail()->uuid()]);
         app(SyncUserInterestsAction::class)->execute($user, [Interest::firstOrFail()->uuid()]);
-        $this->assertSame(100, $service->calculate($user->fresh())['percentage']);
+        // +domicile(10)+interests(10) = 70
+        $this->assertSame(70, $service->calculate($user->fresh())['percentage']);
+        // Access is not gated by completion percentage
         $this->actingAs($user)->get('/youth/home')->assertOk();
     }
 
