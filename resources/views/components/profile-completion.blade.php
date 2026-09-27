@@ -1,0 +1,5 @@
+@props(['completion'])
+<section {{ $attributes->class(['sipora-card']) }} aria-labelledby="profile-completion-title"><div class="flex flex-col gap-5 sm:flex-row sm:items-center">
+<div class="grid size-24 shrink-0 place-items-center rounded-full p-2" style="background: conic-gradient(#f59e0b {{ $completion['percentage'] }}%, #e8eaf4 0)"><div class="grid size-full place-items-center rounded-full bg-white"><span class="text-2xl font-extrabold text-[#243378]">{{ $completion['percentage'] }}%</span></div></div>
+<div class="min-w-0 flex-1"><p class="text-xs font-bold uppercase tracking-wider text-orange-600">Kelengkapan profil</p><h2 id="profile-completion-title" class="mt-1 text-xl font-bold">{{ $completion['percentage'] === 100 ? 'Profil dasarmu lengkap' : 'Lengkapi profilmu' }}</h2><p class="mt-1 text-sm text-slate-600">Kelengkapan membantu SIPORA memberi panduan yang relevan. Nilai ini bukan peringkat.</p></div>
+@if($completion['percentage'] < 100)<a class="btn shrink-0" href="{{ route('youth.onboarding') }}">Lanjutkan</a>@endif</div></section>

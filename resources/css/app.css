@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+[x-cloak] { display: none !important; }
+
+@layer components {
+    .btn { @apply inline-flex min-h-11 items-center justify-center rounded-xl bg-[#243378] px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-[#172554] disabled:opacity-60; }
+    .btn-secondary { @apply inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 font-semibold transition hover:bg-slate-100; }
+    .field { @apply block min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 focus:border-[#3346a8] focus:ring-[#3346a8]; }
+    .auth-card { @apply mx-auto max-w-md rounded-2xl border border-slate-200 bg-white p-6 sm:p-8; }
+    .sipora-card { @apply rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6; }
+    .field-label { @apply mb-1.5 block text-sm font-semibold text-slate-700; }
+    .field-error { @apply mt-1 text-sm text-red-700; }
+    .interest-chip { @apply inline-flex items-center rounded-full bg-[#eef0ff] px-3 py-1.5 text-sm font-semibold text-[#243378]; }
+    .landing-btn-primary { @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#f59e0b] px-6 py-3 text-sm font-extrabold text-[#18245c] shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-lg; }
+    .landing-btn-secondary { @apply inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-extrabold text-[#243378] transition hover:-translate-y-0.5 hover:border-indigo-300 hover:bg-indigo-50; }
+    .landing-search { @apply min-h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-700 transition focus:border-[#3346a8] focus:bg-white focus:ring-[#3346a8]; }
+    .landing-card { @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/5; }
+}
+
+:focus-visible { outline: 3px solid #3346a8; outline-offset: 3px; }
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
