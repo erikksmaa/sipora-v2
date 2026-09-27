@@ -90,6 +90,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserAchievement::class)->orderByDesc('achievement_date');
     }
 
+    public function siporaNotifications(): HasMany
+    {
+        return $this->hasMany(UserNotification::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

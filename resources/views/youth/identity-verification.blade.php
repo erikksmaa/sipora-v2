@@ -8,6 +8,14 @@
         <p class="mt-2 text-slate-600">Verifikasi identitas berbeda dari login Google dan verifikasi email. Dokumenmu disimpan secara privat dan hanya dapat diakses oleh admin SIPORA yang berwenang.</p>
     </div>
 
+    @if($latestIdentityNotification)
+        <section class="rounded-2xl border border-indigo-200 bg-indigo-50 p-5" role="status">
+            <p class="text-xs font-bold uppercase tracking-wider text-[#3346a8]">Notifikasi terbaru</p>
+            <h2 class="mt-2 font-extrabold text-[#18245c]">{{ $latestIdentityNotification->title }}</h2>
+            <p class="mt-1 text-sm text-indigo-900">{{ $latestIdentityNotification->body }}</p>
+        </section>
+    @endif
+
     {{-- Status card --}}
     <section class="sipora-card">
         <div class="flex items-center gap-4">

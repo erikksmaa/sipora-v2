@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['user_id', 'verification_status', 'verification_method', 'verified_at', 'verified_by'])]
-#[Hidden(['national_id_hash', 'national_id_ciphertext'])]
+#[Hidden(['user_id', 'national_id_hash', 'national_id_ciphertext', 'verified_by'])]
 class UserIdentity extends Model
 {
     use HasBinaryUuid, SoftDeletes;

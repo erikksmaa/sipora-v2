@@ -25,10 +25,12 @@ use Illuminate\Support\Facades\Crypt;
     'metadata',
 ])]
 #[Hidden([
+    'user_identity_id',
     'document_number_hash',
     'document_number_ciphertext',
     'document_path',
     'document_sha256',
+    'reviewed_by',
 ])]
 class UserIdentityVerification extends Model
 {

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -110,7 +111,7 @@ return new class extends Migration
             $table->dateTime('reviewed_at', 6)->nullable();
             $table->binary('reviewed_by', 16, true)->nullable();
             $table->text('review_notes')->nullable();
-            $table->json('metadata');
+            $table->json('metadata')->default(new Expression('(JSON_OBJECT())'));
             $table->dateTime('created_at', 6)->useCurrent();
             $table->dateTime('updated_at', 6)->useCurrent();
             $table->dateTime('deleted_at', 6)->nullable();

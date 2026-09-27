@@ -32,6 +32,10 @@ class IdentityVerificationController extends Controller
             'user' => $user,
             'identity' => $identity,
             'latestVerification' => $identity->latestVerification,
+            'latestIdentityNotification' => $user->siporaNotifications()
+                ->where('notification_type', 'identity_verification_result')
+                ->latest('created_at')
+                ->first(),
         ]);
     }
 

@@ -15,6 +15,8 @@
     .landing-btn-secondary { @apply inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-extrabold text-[#243378] transition hover:-translate-y-0.5 hover:border-indigo-300 hover:bg-indigo-50; }
     .landing-search { @apply min-h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-700 transition focus:border-[#3346a8] focus:bg-white focus:ring-[#3346a8]; }
     .landing-card { @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/5; }
+    .admin-nav-link { @apply mb-1 flex min-h-11 items-center rounded-xl px-3 py-2.5 font-semibold text-slate-600 transition hover:bg-indigo-50 hover:text-[#243378]; }
+    .admin-nav-active { @apply bg-[#243378] text-white shadow-sm hover:bg-[#243378] hover:text-white; }
 }
 
 :focus-visible { outline: 3px solid #3346a8; outline-offset: 3px; }
