@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::get('/{organization}/activities/{activity}/participants', [ActivityParticipantController::class, 'index'])->name('activities.participants.index');
         Route::post('/{organization}/activities/{activity}/participants/{participation}/review', [ActivityParticipantController::class, 'review'])->name('activities.participants.review');
         Route::post('/{organization}/activities/{activity}/participants/{participation}/completion', [ActivityParticipantController::class, 'complete'])->name('activities.participants.complete');
+        Route::post('/{organization}/activities/{activity}/participants/{participation}/certificate', [ActivityParticipantController::class, 'issueCertificate'])->name('activities.participants.certificate');
         Route::get('/{organization}/activities/{activity}/sessions/{session}/attendance', [ActivityAttendanceController::class, 'index'])->name('activities.attendance.index');
         Route::put('/{organization}/activities/{activity}/sessions/{session}/attendance/{participation}', [ActivityAttendanceController::class, 'update'])->name('activities.attendance.update');
     });

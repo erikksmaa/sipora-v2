@@ -26,6 +26,7 @@ final class ActivityPassportController extends Controller
         $participation->load([
             'activity.organization',
             'activity.category',
+            'certificate',
             'activity.sessions.attendances' => fn ($query) => $query->where('participation_id', $participation->getKey()),
         ]);
 

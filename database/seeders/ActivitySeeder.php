@@ -41,7 +41,7 @@ class ActivitySeeder extends Seeder
                 'registration_open_at' => $start->copy()->subDays(14), 'registration_close_at' => $start->copy()->subDay(),
                 'quota' => 30, 'registration_mode' => 'approval_required', 'min_age' => 15, 'max_age' => 35,
                 'requires_identity_verification' => false, 'members_only' => false, 'eligibility_notes' => 'Data contoh untuk pengujian lokal.',
-                'certificate_enabled' => false, 'review_status' => $record['review'], 'publication_status' => $record['publication'],
+                'certificate_enabled' => $record['slug'] === 'bootcamp-digital-pemalang', 'review_status' => $record['review'], 'publication_status' => $record['publication'],
                 'execution_status' => $record['execution'], 'published_at' => $record['publication'] === 'published' ? now()->subWeek() : null,
                 'deleted_at' => null,
             ]);

@@ -16,6 +16,6 @@ The approved contract is `sipora_v2_mysql_backend_driven_clean_v2.sql`. Laravel 
 | participations | Implemented | `activity_participations` | 10, 12 | Registration and completion dimensions are independent |
 | attendances | Implemented | `activity_attendances` | 11 | Per-session evidence |
 | Activity Passport | Implemented | Derived read model from completed accepted participation | 12 | No persistence table exists in approved SQL |
-| certificates | Future | Approved `user_certificates` table | 13 | Not migrated yet |
+| certificates | Implemented | Approved `user_certificates` table plus dynamic private PDF | 13 | Public verification uses immutable database code |
 | Programs | Future | Approved Program domain tables | Future | Added only in its feature phase |
 | Opportunities | Future | Approved Opportunity domain tables | Future | Added only in its feature phase |

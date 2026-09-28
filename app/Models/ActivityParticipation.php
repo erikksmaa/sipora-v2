@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['activity_id', 'user_id', 'activity_role', 'registration_status', 'completion_status', 'registration_notes', 'requested_at', 'reviewed_at', 'reviewed_by', 'completed_at'])]
@@ -48,6 +49,11 @@ class ActivityParticipation extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(ActivityAttendance::class, 'participation_id');
+    }
+
+    public function certificate(): HasOne
+    {
+        return $this->hasOne(UserCertificate::class, 'participation_id');
     }
 
     protected function casts(): array

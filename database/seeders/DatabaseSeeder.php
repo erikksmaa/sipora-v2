@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ActivitySessionSeeder::class,
             ActivityParticipationSeeder::class,
             ActivityAttendanceSeeder::class,
+            UserCertificateSeeder::class,
             NotificationSeeder::class,
         ]);
     }

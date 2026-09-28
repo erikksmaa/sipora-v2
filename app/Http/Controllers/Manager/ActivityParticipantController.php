@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Actions\Manager\CompleteActivityParticipationAction;
+use App\Actions\Manager\IssueActivityCertificateAction;
 use App\Actions\Manager\ReviewActivityRegistrationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Manager\CompleteActivityParticipationRequest;
@@ -29,7 +30,7 @@ final class ActivityParticipantController extends Controller
         ])->validate();
         $status = $input['status'] ?? 'all';
         $completion = $input['completion'] ?? 'all';
-        $participants = $activity->participations()->with(['user.profile', 'user.identity'])
+        $participants = $activity->participations()->with(['user.profile', 'user.identity', 'certificate'])
             ->withCount([
                 'attendances as present_count' => fn ($query) => $query->where('attendance_status', 'present'),
                 'attendances as absent_count' => fn ($query) => $query->where('attendance_status', 'absent'),
@@ -68,6 +69,15 @@ final class ActivityParticipantController extends Controller
         $action->execute($request->user(), $activity, $participation, $request->validated('decision'), $request->validated('notes'));
 
         return back()->with('status', 'Keputusan peserta berhasil disimpan.');
+    }
+
+    public function issueCertificate(Request $request, Organization $organization, Activity $activity, ActivityParticipation $participation, IssueActivityCertificateAction $action): RedirectResponse
+    {
+        $this->ensureNested($organization, $activity, $participation);
+        Gate::authorize('completeParticipation', $activity);
+        $action->execute($request->user(), $activity, $participation);
+
+        return back()->with('status', 'Sertifikat Activity berhasil diterbitkan.');
     }
 
     private function ensureNested(Organization $organization, Activity $activity, ?ActivityParticipation $participation = null): void

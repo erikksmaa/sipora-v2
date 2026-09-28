@@ -38,3 +38,10 @@ Identity numbers and documents created by the seeders are explicitly fake develo
 - Youth 3 has an accepted participation with pending completion on Workshop Web Development Pemula. It cannot be finalized while that Activity is still scheduled.
 
 Attendance is supporting evidence only. The contextual leader or manager makes the final completion decision after the Activity execution is completed.
+
+## Phase 13 certificate scenarios
+
+- Sign in as `youth2@sipora.test` and open `/youth/certificates`. The verified Bootcamp certificate can be viewed and downloaded as a PDF.
+- Open the public verification link from Youth 2's certificate in a guest browser. The page shows only the recipient display name, Activity, organizer, issue date, certificate number, and verification code.
+- Sign in as `youth3@sipora.test`, manage Bootcamp Digital Pemalang, then issue the still-unissued certificate for Youth 1. Youth 1 is completed and eligible; issuing it twice is blocked.
+- Youth 4 remains `no_show` and cannot receive a certificate.

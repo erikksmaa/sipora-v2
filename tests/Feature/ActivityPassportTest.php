@@ -34,7 +34,7 @@ class ActivityPassportTest extends TestCase
             ->assertOk()->assertSee('Activity Passport')->assertSee('Activity verified-experience')
             ->assertDontSee('Activity no-show-experience')->assertDontSee('Activity cancelled-experience')->assertDontSee('Activity rejected-experience');
         $this->actingAs($owner)->get(route('youth.passport.show', $completed))
-            ->assertOk()->assertSee('Pengalaman SIPORA terverifikasi')->assertSee('ID Activity')->assertSee('Sertifikat belum tersedia');
+            ->assertOk()->assertSee('Pengalaman SIPORA terverifikasi')->assertSee('ID Activity')->assertSee('Belum ada sertifikat yang diterbitkan');
     }
 
     public function test_multiple_completed_activities_render_and_youth_home_uses_real_count(): void

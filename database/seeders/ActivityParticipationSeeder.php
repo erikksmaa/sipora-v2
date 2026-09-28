@@ -27,6 +27,7 @@ class ActivityParticipationSeeder extends Seeder
             $user = User::query()->where('email', $record['email'])->firstOrFail();
             $reviewed = in_array($record['status'], ['accepted', 'rejected'], true);
             $completion = match ([$record['activity'], $record['email']]) {
+                ['bootcamp-digital-pemalang', 'youth1@sipora.test'] => ActivityParticipation::COMPLETION_COMPLETED,
                 ['bootcamp-digital-pemalang', 'youth2@sipora.test'] => ActivityParticipation::COMPLETION_COMPLETED,
                 ['bootcamp-digital-pemalang', 'youth4@sipora.test'] => ActivityParticipation::COMPLETION_NO_SHOW,
                 default => ActivityParticipation::COMPLETION_PENDING,
