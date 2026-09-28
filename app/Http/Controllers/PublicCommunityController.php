@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\OrganizationMembership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -13,7 +14,9 @@ final class PublicCommunityController extends Controller
     public function show(Request $request, Organization $organization): View
     {
         $this->ensurePublic($organization);
-        $organization->load(['category', 'administrativeArea']);
+        $organization->load(['category', 'administrativeArea'])->loadCount([
+            'memberships as active_members_count' => fn ($query) => $query->where('membership_status', OrganizationMembership::STATUS_ACTIVE),
+        ]);
         $membership = $request->user()?->organizationMemberships()
             ->where('organization_id', $organization->getKey())
             ->first();

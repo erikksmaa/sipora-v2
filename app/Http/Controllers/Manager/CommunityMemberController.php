@@ -8,6 +8,7 @@ use App\Actions\Membership\ReviewCommunityJoinRequestAction;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
+use App\Services\Community\ManagedCommunityService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -16,7 +17,7 @@ use Illuminate\View\View;
 
 final class CommunityMemberController extends Controller
 {
-    public function index(Request $request, Organization $organization): View
+    public function index(Request $request, Organization $organization, ManagedCommunityService $managed): View
     {
         Gate::authorize('manageMemberships', $organization);
         $pending = $organization->memberships()->with('user.profile')
@@ -27,7 +28,13 @@ final class CommunityMemberController extends Controller
             ->paginate(20);
         $actorMembership = $organization->memberships()->where('user_id', $request->user()->getKey())->firstOrFail();
 
-        return view('manager.members.index', compact('organization', 'pending', 'members', 'actorMembership'));
+        return view('manager.members.index', [
+            'organization' => $organization,
+            'pending' => $pending,
+            'members' => $members,
+            'actorMembership' => $actorMembership,
+            'managedCommunities' => $managed->forUser($request->user()),
+        ]);
     }
 
     public function review(Request $request, Organization $organization, OrganizationMembership $membership, ReviewCommunityJoinRequestAction $action): RedirectResponse
