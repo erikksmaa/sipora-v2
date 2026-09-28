@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\Organization;
+use App\Policies\OrganizationPolicy;
 use App\Support\Auth\BinaryDatabaseSessionHandler;
 use App\Support\Auth\BinaryUuidUserProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
@@ -28,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::policy(Organization::class, OrganizationPolicy::class);
+
         Auth::provider('binary-uuid', fn ($app, array $config) => new BinaryUuidUserProvider($app['hash'], $config['model']));
         Session::extend('binary-database', fn ($app) => new BinaryDatabaseSessionHandler(
             $app['db']->connection(config('session.connection')),

@@ -1,5 +1,6 @@
 @extends('layouts.verifier')
-@section('content')
-<h1 class="mb-4 text-3xl font-bold">Verifier workspace</h1>
-<p>Protected workspace placeholder. Review queues will arrive in later phases.</p>
+@section('title', 'Beranda Verifier · SIPORA')
+@section('verifier-content')
+<section class="overflow-hidden rounded-3xl bg-[#243378] p-6 text-white shadow-lg sm:p-8"><p class="text-sm font-bold text-orange-300">Tim Kurasi & Pengawasan</p><h1 class="mt-2 text-3xl font-extrabold">Dashboard Verifier Dindikpora</h1><p class="mt-2 max-w-2xl text-indigo-100">Tinjau kelayakan pengajuan komunitas melalui antrean resmi SIPORA.</p></section>
+<div class="mt-6 grid gap-4 md:grid-cols-2"><a href="{{ route('verifier.community-verifications.index') }}" class="sipora-card block border-t-4 border-t-orange-500 transition hover:-translate-y-0.5 hover:shadow-md"><p class="text-xs font-bold uppercase tracking-wider text-orange-600">Antrean aktif</p><h2 class="mt-2 text-xl font-bold text-[#243378]">Verifikasi komunitas</h2><p class="mt-2 text-sm text-slate-600">Periksa profil, data pemohon, dan berikan keputusan.</p><span class="mt-5 inline-block text-sm font-bold text-[#243378]">Buka antrean →</span></a><div class="sipora-card opacity-70"><p class="text-xs font-bold uppercase tracking-wider text-slate-500">Fase berikutnya</p><h2 class="mt-2 text-xl font-bold">Verifikasi kegiatan</h2><p class="mt-2 text-sm text-slate-600">Belum tersedia pada Phase 5.</p></div></div>
 @endsection

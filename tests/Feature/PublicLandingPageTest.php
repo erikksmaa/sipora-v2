@@ -63,14 +63,11 @@ class PublicLandingPageTest extends TestCase
     public function test_no_future_domain_migration_was_added_for_the_landing_page(): void
     {
         $migrationNames = collect(glob(database_path('migrations/*.php')))
-            ->map(fn (string $path): string => strtolower(basename($path)))
-            ->reject(fn (string $name): bool => str_contains($name, 'create_activity_log_table'));
+            ->map(fn (string $path): string => strtolower(basename($path)));
 
-        foreach (['activity', 'activities', 'community', 'communities', 'program', 'opportunity', 'opportunities'] as $domain) {
-            $this->assertFalse(
-                $migrationNames->contains(fn (string $name): bool => str_contains($name, $domain)),
-                "Landing page must not introduce a {$domain} domain migration."
-            );
-        }
+        $this->assertFalse(
+            $migrationNames->contains(fn (string $name): bool => str_contains($name, 'landing')),
+            'The presentation-only landing page must not own a persistence migration.'
+        );
     }
 }

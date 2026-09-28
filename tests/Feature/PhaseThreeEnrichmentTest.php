@@ -11,7 +11,6 @@ use App\Support\BinaryUuid;
 use Database\Seeders\RolePermissionSeeder;
 use Database\Seeders\YouthEnrichmentSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 class PhaseThreeEnrichmentTest extends TestCase
@@ -87,7 +86,7 @@ class PhaseThreeEnrichmentTest extends TestCase
         ])->assertRedirect();
         $experience = $user->organizationExperiences()->firstOrFail();
         $this->assertSame('OSIS SMAN 1 Pemalang', $experience->organization_name);
-        $this->assertFalse(Schema::hasTable('organization_memberships'));
+        $this->assertDatabaseCount('organization_memberships', 0);
 
         $this->actingAs($user)->put('/youth/organization-experiences/'.$experience->uuid(), [
             'organization_name' => 'OSIS SMAN 1 Pemalang', 'role_title' => 'Alumni',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Youth\CommunityApplicationController;
 use App\Http\Controllers\Youth\IdentityVerificationController;
 use App\Http\Controllers\Youth\InterestController;
 use App\Http\Controllers\Youth\OnboardingController;
@@ -47,4 +48,13 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('yo
 
         Route::get('/identity-verification', [IdentityVerificationController::class, 'show'])->name('identity-verification');
         Route::post('/identity-verification', [IdentityVerificationController::class, 'store'])->name('identity-verification.store');
+
+        Route::get('/communities', [CommunityApplicationController::class, 'index'])->name('communities.index');
+        Route::get('/communities/create', [CommunityApplicationController::class, 'create'])->name('communities.create');
+        Route::post('/communities', [CommunityApplicationController::class, 'store'])->name('communities.store');
+        Route::get('/communities/{organization}', [CommunityApplicationController::class, 'show'])->name('communities.show');
+        Route::get('/communities/{organization}/edit', [CommunityApplicationController::class, 'edit'])->name('communities.edit');
+        Route::put('/communities/{organization}', [CommunityApplicationController::class, 'update'])->name('communities.update');
+        Route::post('/communities/{organization}/submit', [CommunityApplicationController::class, 'submit'])->name('communities.submit');
+        Route::get('/communities/{organization}/logo', [CommunityApplicationController::class, 'logo'])->name('communities.logo');
     });
