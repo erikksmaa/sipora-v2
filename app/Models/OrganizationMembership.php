@@ -17,7 +17,19 @@ class OrganizationMembership extends Model
 
     public const ROLE_LEADER = 'leader';
 
+    public const ROLE_MANAGER = 'manager';
+
+    public const ROLE_MEMBER = 'member';
+
     public const STATUS_ACTIVE = 'active';
+
+    public const STATUS_LEFT = 'left';
+
+    public const STATUS_PENDING = 'pending';
+
+    public const STATUS_REJECTED = 'rejected';
+
+    public const STATUS_REMOVED = 'removed';
 
     public function organization(): BelongsTo
     {

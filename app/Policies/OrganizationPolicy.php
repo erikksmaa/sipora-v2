@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Organization;
+use App\Models\OrganizationMembership;
 use App\Models\User;
 
 final class OrganizationPolicy
@@ -21,6 +22,15 @@ final class OrganizationPolicy
     public function submit(User $user, Organization $organization): bool
     {
         return $this->update($user, $organization);
+    }
+
+    public function manageMemberships(User $user, Organization $organization): bool
+    {
+        return $organization->memberships()
+            ->where('user_id', $user->getKey())
+            ->where('membership_status', OrganizationMembership::STATUS_ACTIVE)
+            ->whereIn('access_role', [OrganizationMembership::ROLE_LEADER, OrganizationMembership::ROLE_MANAGER])
+            ->exists();
     }
 
     private function owns(User $user, Organization $organization): bool

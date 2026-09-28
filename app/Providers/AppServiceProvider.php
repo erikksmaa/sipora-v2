@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Organization;
+use App\Models\OrganizationMembership;
+use App\Policies\OrganizationMembershipPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Support\Auth\BinaryDatabaseSessionHandler;
 use App\Support\Auth\BinaryUuidUserProvider;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Organization::class, OrganizationPolicy::class);
+        Gate::policy(OrganizationMembership::class, OrganizationMembershipPolicy::class);
 
         Auth::provider('binary-uuid', fn ($app, array $config) => new BinaryUuidUserProvider($app['hash'], $config['model']));
         Session::extend('binary-database', fn ($app) => new BinaryDatabaseSessionHandler(

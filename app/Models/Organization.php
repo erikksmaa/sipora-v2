@@ -66,6 +66,11 @@ class Organization extends Model
         return $this->hasMany(OrganizationMembership::class);
     }
 
+    public function activeMemberships(): HasMany
+    {
+        return $this->hasMany(OrganizationMembership::class)->where('membership_status', OrganizationMembership::STATUS_ACTIVE);
+    }
+
     public function latestVerificationRequest(): HasOne
     {
         return $this->hasOne(OrganizationVerificationRequest::class)->latestOfMany('submitted_at');
