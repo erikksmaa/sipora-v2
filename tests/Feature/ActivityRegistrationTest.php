@@ -139,10 +139,9 @@ class ActivityRegistrationTest extends TestCase
         $this->assertSame(ActivityParticipation::REGISTRATION_ACCEPTED, ActivityParticipation::firstOrFail()->registration_status);
     }
 
-    public function test_attendance_table_is_not_created(): void
+    public function test_participation_table_exists(): void
     {
         $this->assertTrue(Schema::hasTable('activity_participations'));
-        $this->assertFalse(Schema::hasTable('activity_attendances'));
     }
 
     private function context(string $slug, array $override = []): array
