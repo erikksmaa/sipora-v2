@@ -26,6 +26,10 @@ class ActivityParticipation extends Model
 
     public const COMPLETION_PENDING = 'pending';
 
+    public const COMPLETION_COMPLETED = 'completed';
+
+    public const COMPLETION_NO_SHOW = 'no_show';
+
     public function activity(): BelongsTo
     {
         return $this->belongsTo(Activity::class);

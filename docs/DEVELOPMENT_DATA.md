@@ -29,3 +29,12 @@ All demo accounts use the development-only password `password`.
 | Youth 5 | `youth5@sipora.test` | `youth` | Rejected/left membership and cancelled registration examples |
 
 Identity numbers and documents created by the seeders are explicitly fake development fixtures. Activity categories are temporary development values until official Dindikpora categories are approved.
+
+## Phase 12 manual scenarios
+
+- Sign in as `youth3@sipora.test`, open Pemuda Olahraga Pemalang, then open Bootcamp Digital Pemalang participants. Attendance evidence is available for three accepted participants. Youth 1 remains pending completion and can be finalized as completed or no-show.
+- Sign in as `youth2@sipora.test` and open `/youth/passport`. Bootcamp Digital Pemalang appears as a completed, verified Activity experience.
+- Sign in as `youth4@sipora.test` and open `/youth/passport`. The no-show Bootcamp record does not appear.
+- Youth 3 has an accepted participation with pending completion on Workshop Web Development Pemula. It cannot be finalized while that Activity is still scheduled.
+
+Attendance is supporting evidence only. The contextual leader or manager makes the final completion decision after the Activity execution is completed.

@@ -23,7 +23,7 @@ class ActivitySeeder extends Seeder
             ['slug' => 'kelas-konten-kreatif', 'title' => 'Kelas Konten Kreatif', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'kreatif', 'review' => 'revision', 'publication' => 'unpublished', 'execution' => 'scheduled', 'days' => 20],
             ['slug' => 'seminar-keamanan-digital', 'title' => 'Seminar Keamanan Digital', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'unpublished', 'execution' => 'scheduled', 'days' => 18],
             ['slug' => 'workshop-web-development-pemula', 'title' => 'Workshop Web Development Pemula', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'scheduled', 'days' => 12],
-            ['slug' => 'bootcamp-digital-pemalang', 'title' => 'Bootcamp Digital Pemalang', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'ongoing', 'days' => -1],
+            ['slug' => 'bootcamp-digital-pemalang', 'title' => 'Bootcamp Digital Pemalang', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'completed', 'days' => -10],
             ['slug' => 'seminar-kewirausahaan-digital', 'title' => 'Seminar Kewirausahaan Digital', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'kewirausahaan', 'review' => 'approved', 'publication' => 'archived', 'execution' => 'completed', 'days' => -45],
         ];
 

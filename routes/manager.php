@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::post('/{organization}/activities/{activity}/submit', [ActivityController::class, 'submit'])->name('activities.submit');
         Route::post('/{organization}/activities/{activity}/publish', [ActivityController::class, 'publish'])->name('activities.publish');
         Route::post('/{organization}/activities/{activity}/archive', [ActivityController::class, 'archive'])->name('activities.archive');
+        Route::post('/{organization}/activities/{activity}/complete-execution', [ActivityController::class, 'completeExecution'])->name('activities.complete-execution');
         Route::get('/{organization}/activities/{activity}/poster', [ActivityController::class, 'poster'])->name('activities.poster');
         Route::get('/{organization}/activities/{activity}/sessions', [ActivitySessionController::class, 'index'])->name('activities.sessions.index');
         Route::get('/{organization}/activities/{activity}/sessions/create', [ActivitySessionController::class, 'create'])->name('activities.sessions.create');
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::delete('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'destroy'])->name('activities.sessions.destroy');
         Route::get('/{organization}/activities/{activity}/participants', [ActivityParticipantController::class, 'index'])->name('activities.participants.index');
         Route::post('/{organization}/activities/{activity}/participants/{participation}/review', [ActivityParticipantController::class, 'review'])->name('activities.participants.review');
+        Route::post('/{organization}/activities/{activity}/participants/{participation}/completion', [ActivityParticipantController::class, 'complete'])->name('activities.participants.complete');
         Route::get('/{organization}/activities/{activity}/sessions/{session}/attendance', [ActivityAttendanceController::class, 'index'])->name('activities.attendance.index');
         Route::put('/{organization}/activities/{activity}/sessions/{session}/attendance/{participation}', [ActivityAttendanceController::class, 'update'])->name('activities.attendance.update');
     });

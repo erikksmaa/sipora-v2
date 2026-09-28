@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Actions\Manager\ArchiveActivityAction;
+use App\Actions\Manager\CompleteActivityExecutionAction;
 use App\Actions\Manager\PublishActivityAction;
 use App\Actions\Manager\SaveActivityDraftAction;
 use App\Actions\Manager\SubmitActivityForReviewAction;
@@ -96,6 +97,15 @@ final class ActivityController extends Controller
         $action->execute($request->user(), $activity);
 
         return back()->with('status', 'Activity berhasil diarsipkan.');
+    }
+
+    public function completeExecution(Request $request, Organization $organization, Activity $activity, CompleteActivityExecutionAction $action): RedirectResponse
+    {
+        $this->ensureBelongs($organization, $activity);
+        Gate::authorize('completeExecution', $activity);
+        $action->execute($request->user(), $activity);
+
+        return back()->with('status', 'Eksekusi Activity berhasil diselesaikan. Hasil peserta kini dapat ditetapkan.');
     }
 
     public function poster(Organization $organization, Activity $activity): StreamedResponse

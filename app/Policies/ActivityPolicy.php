@@ -38,6 +38,16 @@ final class ActivityPolicy
             && $activity->publication_status === Activity::PUBLICATION_PUBLISHED;
     }
 
+    public function completeExecution(User $user, Activity $activity): bool
+    {
+        return $this->manages($user, $activity);
+    }
+
+    public function completeParticipation(User $user, Activity $activity): bool
+    {
+        return $this->manages($user, $activity);
+    }
+
     private function manages(User $user, Activity $activity): bool
     {
         return OrganizationMembership::query()

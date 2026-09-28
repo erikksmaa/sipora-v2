@@ -35,6 +35,12 @@ class Activity extends Model
 
     public const EXECUTION_SCHEDULED = 'scheduled';
 
+    public const EXECUTION_ONGOING = 'ongoing';
+
+    public const EXECUTION_COMPLETED = 'completed';
+
+    public const EXECUTION_CANCELLED = 'cancelled';
+
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);

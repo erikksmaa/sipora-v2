@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Youth\ActivityPassportController;
 use App\Http\Controllers\Youth\CommunityApplicationController;
 use App\Http\Controllers\Youth\IdentityVerificationController;
 use App\Http\Controllers\Youth\InterestController;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('youth.')
     ->group(function (): void {
         Route::get('/home', YouthHomeController::class)->name('home');
+        Route::get('/passport', [ActivityPassportController::class, 'index'])->name('passport.index');
+        Route::get('/passport/{participation}', [ActivityPassportController::class, 'show'])->name('passport.show');
         Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::get('/profile/photo', [ProfileController::class, 'photo'])->name('profile.photo');
