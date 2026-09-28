@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Manager\ActivityController;
+use App\Http\Controllers\Manager\ActivityParticipantController;
 use App\Http\Controllers\Manager\ActivitySessionController;
 use App\Http\Controllers\Manager\CommunityMemberController;
 use App\Http\Controllers\Manager\CommunityWorkspaceController;
@@ -32,4 +33,6 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::patch('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'update'])->name('activities.sessions.update');
         Route::patch('/{organization}/activities/{activity}/sessions/{session}/move', [ActivitySessionController::class, 'move'])->name('activities.sessions.move');
         Route::delete('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'destroy'])->name('activities.sessions.destroy');
+        Route::get('/{organization}/activities/{activity}/participants', [ActivityParticipantController::class, 'index'])->name('activities.participants.index');
+        Route::post('/{organization}/activities/{activity}/participants/{participation}/review', [ActivityParticipantController::class, 'review'])->name('activities.participants.review');
     });

@@ -85,11 +85,10 @@ class ActivitySessionTest extends TestCase
         $this->get(route('activities.show', $unpublished))->assertNotFound()->assertDontSee('Sesi Rahasia');
     }
 
-    public function test_phase_does_not_create_attendance_or_participation_tables(): void
+    public function test_phase_does_not_create_attendance_table(): void
     {
         $this->assertTrue(Schema::hasTable('activity_sessions'));
         $this->assertFalse(Schema::hasTable('activity_attendances'));
-        $this->assertFalse(Schema::hasTable('activity_participations'));
     }
 
     private function activityContext(string $slug, string $review = Activity::REVIEW_DRAFT, string $publication = Activity::PUBLICATION_UNPUBLISHED): array

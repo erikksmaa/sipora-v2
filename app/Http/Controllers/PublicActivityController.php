@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class PublicActivityController extends Controller
 {
-    public function show(Activity $activity): View
+    public function show(Request $request, Activity $activity): View
     {
         $this->ensurePublic($activity);
         $activity->load(['organization', 'category', 'administrativeArea', 'sessions']);
+        $participation = $request->user()?->activityParticipations()->where('activity_id', $activity->getKey())->first();
+        $acceptedCount = $activity->participations()->where('registration_status', 'accepted')->count();
 
-        return view('public.activities.show', compact('activity'));
+        return view('public.activities.show', compact('activity', 'participation', 'acceptedCount'));
     }
 
     public function poster(Activity $activity): StreamedResponse
