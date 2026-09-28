@@ -10,8 +10,8 @@ abstract class TestCase extends BaseTestCase
     {
         $app = parent::createApplication();
         if ($app['config']->get('database.default') !== 'mysql'
-            || $app['config']->get('database.connections.mysql.database') !== 'sipora_v2_testing') {
-            throw new \RuntimeException('Tests may only run against the dedicated sipora_v2_testing MySQL database. Clear cached config first.');
+            || $app['config']->get('database.connections.mysql.database') !== 'sipora') {
+            throw new \RuntimeException('Tests may only run against the canonical local sipora MySQL database. Clear cached config first.');
         }
 
         return $app;
