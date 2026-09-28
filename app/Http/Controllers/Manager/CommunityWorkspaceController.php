@@ -29,6 +29,7 @@ final class CommunityWorkspaceController extends Controller
             'managers' => $organization->memberships()->where('membership_status', OrganizationMembership::STATUS_ACTIVE)
                 ->whereIn('access_role', [OrganizationMembership::ROLE_LEADER, OrganizationMembership::ROLE_MANAGER])->count(),
             'pending' => $organization->memberships()->where('membership_status', OrganizationMembership::STATUS_PENDING)->count(),
+            'activities' => $organization->activities()->count(),
         ];
 
         return view('manager.dashboard', [

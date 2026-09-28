@@ -6,7 +6,7 @@
         <nav class="space-y-1 text-sm" aria-label="Navigasi Verifier">
             <a href="{{ route('verifier.dashboard') }}" class="admin-nav-link {{ request()->routeIs('verifier.dashboard') ? 'admin-nav-active' : '' }}">Beranda Verifier</a>
             <a href="{{ route('verifier.community-verifications.index') }}" class="admin-nav-link {{ request()->routeIs('verifier.community-verifications.*') ? 'admin-nav-active' : '' }}">Organisasi & Komunitas</a>
-            <span class="admin-nav-link cursor-not-allowed text-slate-400">Usulan Kegiatan</span>
+            <a href="{{ route('verifier.activity-verifications.index') }}" class="admin-nav-link {{ request()->routeIs('verifier.activity-verifications.*') ? 'admin-nav-active' : '' }}">Usulan Kegiatan</a>
             <span class="admin-nav-link cursor-not-allowed text-slate-400">Log Audit & Kepatuhan</span>
         </nav>
     </aside>

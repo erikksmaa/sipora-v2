@@ -1,0 +1,27 @@
+@php($editing = $activity->exists)
+<form method="POST" enctype="multipart/form-data" action="{{ $editing ? route('manager.activities.update',[$organization,$activity]) : route('manager.activities.store',$organization) }}" class="mt-6 space-y-6 rounded-2xl bg-white p-6 shadow-sm">
+@csrf @if($editing) @method('PATCH') @endif
+@if($categories->isEmpty())<div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">Master kategori Activity belum tersedia. Hubungi administrator untuk menambahkan kategori yang disetujui.</div>@endif
+<div class="grid gap-5 md:grid-cols-2">
+<label class="md:col-span-2"><span class="label">Judul Activity</span><input class="field" name="title" value="{{ old('title',$activity->title) }}" required maxlength="220"></label>
+<label><span class="label">Kategori</span><select class="field" name="category_id" required><option value="">Pilih kategori</option>@foreach($categories as $category)<option value="{{ $category->uuid() }}" @selected(old('category_id',$activity->category?->uuid())===$category->uuid())>{{ $category->name }}</option>@endforeach</select></label>
+<label><span class="label">Poster</span><input class="field" type="file" name="poster" accept="image/jpeg,image/png,image/webp"></label>
+<label class="md:col-span-2"><span class="label">Deskripsi</span><textarea class="field min-h-32" name="description">{{ old('description',$activity->description) }}</textarea></label>
+<label><span class="label">Jenis lokasi</span><select class="field" name="location_type" required>@foreach(['offline'=>'Luring','online'=>'Daring','hybrid'=>'Hybrid'] as $value=>$label)<option value="{{ $value }}" @selected(old('location_type',$activity->location_type ?: 'offline')===$value)>{{ $label }}</option>@endforeach</select></label>
+<label><span class="label">Nama lokasi</span><input class="field" name="venue_name" value="{{ old('venue_name',$activity->venue_name) }}" maxlength="180"></label>
+<label><span class="label">Wilayah</span><select class="field" name="administrative_area_id"><option value="">Pilih wilayah</option>@foreach($areas as $area)<option value="{{ $area->uuid() }}" @selected(old('administrative_area_id',$activity->administrativeArea?->uuid())===$area->uuid())>{{ $area->name }}</option>@endforeach</select></label>
+<label><span class="label">Tautan pertemuan</span><input class="field" type="url" name="meeting_url" value="{{ old('meeting_url',$activity->meeting_url) }}"></label>
+<label class="md:col-span-2"><span class="label">Alamat</span><textarea class="field" name="address_text">{{ old('address_text',$activity->address_text) }}</textarea></label>
+<label><span class="label">Mulai</span><input class="field" type="datetime-local" name="start_at" value="{{ old('start_at',$activity->start_at?->format('Y-m-d\TH:i')) }}" required></label>
+<label><span class="label">Selesai</span><input class="field" type="datetime-local" name="end_at" value="{{ old('end_at',$activity->end_at?->format('Y-m-d\TH:i')) }}" required></label>
+<label><span class="label">Pendaftaran dibuka</span><input class="field" type="datetime-local" name="registration_open_at" value="{{ old('registration_open_at',$activity->registration_open_at?->format('Y-m-d\TH:i')) }}"></label>
+<label><span class="label">Pendaftaran ditutup</span><input class="field" type="datetime-local" name="registration_close_at" value="{{ old('registration_close_at',$activity->registration_close_at?->format('Y-m-d\TH:i')) }}"></label>
+<label><span class="label">Kuota</span><input class="field" type="number" min="1" name="quota" value="{{ old('quota',$activity->quota) }}"></label>
+<label><span class="label">Mode pendaftaran</span><select class="field" name="registration_mode"><option value="open" @selected(old('registration_mode',$activity->registration_mode ?: 'open')==='open')>Terbuka</option><option value="approval_required" @selected(old('registration_mode',$activity->registration_mode)==='approval_required')>Perlu persetujuan</option></select></label>
+<label><span class="label">Usia minimum</span><input class="field" type="number" min="0" max="100" name="min_age" value="{{ old('min_age',$activity->min_age) }}"></label><label><span class="label">Usia maksimum</span><input class="field" type="number" min="0" max="100" name="max_age" value="{{ old('max_age',$activity->max_age) }}"></label>
+<label class="md:col-span-2"><span class="label">Catatan kelayakan</span><textarea class="field" name="eligibility_notes">{{ old('eligibility_notes',$activity->eligibility_notes) }}</textarea></label>
+</div>
+<div class="flex flex-wrap gap-5 text-sm"><label><input type="checkbox" name="requires_identity_verification" value="1" @checked(old('requires_identity_verification',$activity->requires_identity_verification))> Wajib identitas terverifikasi</label><label><input type="checkbox" name="members_only" value="1" @checked(old('members_only',$activity->members_only))> Khusus anggota</label><label><input type="checkbox" name="certificate_enabled" value="1" @checked(old('certificate_enabled',$activity->certificate_enabled))> Sertifikat diaktifkan</label></div>
+@if($errors->any())<div class="rounded-xl bg-red-50 p-4 text-sm text-red-800"><ul class="list-disc pl-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+<div class="flex justify-end gap-3"><a class="btn-secondary" href="{{ route('manager.activities.index',$organization) }}">Batal</a><button class="btn-primary" @disabled($categories->isEmpty())>Simpan Draft</button></div>
+</form>

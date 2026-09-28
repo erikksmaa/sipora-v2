@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
 use Illuminate\Http\Request;
@@ -20,8 +21,12 @@ final class PublicCommunityController extends Controller
         $membership = $request->user()?->organizationMemberships()
             ->where('organization_id', $organization->getKey())
             ->first();
+        $activities = $organization->activities()
+            ->where('review_status', Activity::REVIEW_APPROVED)
+            ->where('publication_status', Activity::PUBLICATION_PUBLISHED)
+            ->with('category')->orderBy('start_at')->limit(6)->get();
 
-        return view('public.communities.show', compact('organization', 'membership'));
+        return view('public.communities.show', compact('organization', 'membership', 'activities'));
     }
 
     public function logo(Organization $organization): StreamedResponse

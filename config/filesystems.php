@@ -54,6 +54,14 @@ return [
             'throw' => true,
         ],
 
+        'activity_media' => [
+            'driver' => 'local',
+            'root' => storage_path('app/activity-media'),
+            'visibility' => 'private',
+            'serve' => false,
+            'throw' => true,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
