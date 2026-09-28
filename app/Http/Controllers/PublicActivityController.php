@@ -12,7 +12,7 @@ final class PublicActivityController extends Controller
     public function show(Activity $activity): View
     {
         $this->ensurePublic($activity);
-        $activity->load(['organization', 'category', 'administrativeArea']);
+        $activity->load(['organization', 'category', 'administrativeArea', 'sessions']);
 
         return view('public.activities.show', compact('activity'));
     }

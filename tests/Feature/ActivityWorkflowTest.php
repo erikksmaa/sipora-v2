@@ -132,7 +132,7 @@ class ActivityWorkflowTest extends TestCase
 
     public function test_phase_does_not_create_future_activity_domain_tables(): void
     {
-        foreach (['activity_sessions', 'activity_registrations', 'participations', 'attendances', 'certificates'] as $table) {
+        foreach (['activity_registrations', 'participations', 'attendances', 'certificates'] as $table) {
             $this->assertFalse(Schema::hasTable($table));
         }
     }

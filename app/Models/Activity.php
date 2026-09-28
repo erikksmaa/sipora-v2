@@ -60,6 +60,11 @@ class Activity extends Model
         return $this->hasMany(ActivityReview::class);
     }
 
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(ActivitySession::class)->orderBy('session_number');
+    }
+
     public function latestReview(): HasOne
     {
         return $this->hasOne(ActivityReview::class)->latestOfMany('reviewed_at');

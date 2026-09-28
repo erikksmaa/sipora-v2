@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Manager\ActivityController;
+use App\Http\Controllers\Manager\ActivitySessionController;
 use App\Http\Controllers\Manager\CommunityMemberController;
 use App\Http\Controllers\Manager\CommunityWorkspaceController;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,11 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::post('/{organization}/activities/{activity}/publish', [ActivityController::class, 'publish'])->name('activities.publish');
         Route::post('/{organization}/activities/{activity}/archive', [ActivityController::class, 'archive'])->name('activities.archive');
         Route::get('/{organization}/activities/{activity}/poster', [ActivityController::class, 'poster'])->name('activities.poster');
+        Route::get('/{organization}/activities/{activity}/sessions', [ActivitySessionController::class, 'index'])->name('activities.sessions.index');
+        Route::get('/{organization}/activities/{activity}/sessions/create', [ActivitySessionController::class, 'create'])->name('activities.sessions.create');
+        Route::post('/{organization}/activities/{activity}/sessions', [ActivitySessionController::class, 'store'])->name('activities.sessions.store');
+        Route::get('/{organization}/activities/{activity}/sessions/{session}/edit', [ActivitySessionController::class, 'edit'])->name('activities.sessions.edit');
+        Route::patch('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'update'])->name('activities.sessions.update');
+        Route::patch('/{organization}/activities/{activity}/sessions/{session}/move', [ActivitySessionController::class, 'move'])->name('activities.sessions.move');
+        Route::delete('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'destroy'])->name('activities.sessions.destroy');
     });
