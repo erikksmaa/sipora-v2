@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Verifier\ActivityVerificationController;
 use App\Http\Controllers\Verifier\CommunityVerificationController;
+use App\Http\Controllers\Verifier\ProgramMonitoringController;
 use App\Http\Controllers\Verifier\ProgramProposalVerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,8 @@ Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->na
         Route::get('/program-proposals/{proposal}', [ProgramProposalVerificationController::class, 'show'])->name('program-proposals.show');
         Route::post('/program-proposals/{proposal}/review', [ProgramProposalVerificationController::class, 'review'])->name('program-proposals.review');
         Route::get('/program-proposals/{proposal}/document', [ProgramProposalVerificationController::class, 'document'])->name('program-proposals.document');
+        Route::get('/program-monitoring', [ProgramMonitoringController::class, 'index'])->name('program-monitoring.index');
+        Route::get('/program-monitoring/logbooks/{logbook}', [ProgramMonitoringController::class, 'show'])->name('program-monitoring.show');
+        Route::post('/program-monitoring/logbooks/{logbook}/review', [ProgramMonitoringController::class, 'review'])->name('program-monitoring.review');
+        Route::get('/program-monitoring/logbooks/{logbook}/media/{media}', [ProgramMonitoringController::class, 'media'])->name('program-monitoring.media');
     });

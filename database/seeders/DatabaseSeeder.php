@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ProgramSeeder::class,
             ActivitySeeder::class,
             ProgramProposalSeeder::class,
+            ProgramLogbookSeeder::class,
             ActivitySessionSeeder::class,
             ActivityParticipationSeeder::class,
             ActivityAttendanceSeeder::class,

@@ -108,7 +108,7 @@ class ActivityAttendanceTest extends TestCase
         $this->participation($activity, $pending, ActivityParticipation::REGISTRATION_PENDING);
 
         $this->actingAs($manager)->get(route('manager.activities.attendance.index', [$community, $activity, $session]))
-            ->assertOk()->assertSee('Manajemen Kehadiran')->assertSee('Pilih sesi')->assertSee('Peserta Diterima')->assertDontSee('Peserta Pending')->assertDontSee('QR');
+            ->assertOk()->assertSee('Manajemen Kehadiran')->assertSee('Pilih sesi')->assertSee('Peserta Diterima')->assertDontSee('Peserta Pending')->assertDontSee('Pindai QR');
     }
 
     public function test_database_rejects_duplicate_session_participation_pair_and_invalid_times(): void

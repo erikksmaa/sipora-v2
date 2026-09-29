@@ -8,6 +8,7 @@
             <a href="{{ route('verifier.community-verifications.index') }}" class="admin-nav-link {{ request()->routeIs('verifier.community-verifications.*') ? 'admin-nav-active' : '' }}">Organisasi & Komunitas</a>
             <a href="{{ route('verifier.activity-verifications.index') }}" class="admin-nav-link {{ request()->routeIs('verifier.activity-verifications.*') ? 'admin-nav-active' : '' }}">Usulan Kegiatan</a>
             <a href="{{ route('verifier.program-proposals.index') }}" class="admin-nav-link {{ request()->routeIs('verifier.program-proposals.*') ? 'admin-nav-active' : '' }}">Proposal Program</a>
+            <a href="{{ route('verifier.program-monitoring.index') }}" class="admin-nav-link {{ request()->routeIs('verifier.program-monitoring.*') ? 'admin-nav-active' : '' }}">Monitoring & Logbook</a>
             <span class="admin-nav-link cursor-not-allowed text-slate-400">Log Audit & Kepatuhan</span>
         </nav>
     </aside>

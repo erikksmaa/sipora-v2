@@ -70,6 +70,11 @@ return [
             'throw' => true,
         ],
 
+        'program_logbook_media' => [
+            'driver' => 'local', 'root' => storage_path('app/program-logbook-media'),
+            'visibility' => 'private', 'serve' => false, 'throw' => true,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

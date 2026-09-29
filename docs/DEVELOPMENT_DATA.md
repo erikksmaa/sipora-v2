@@ -87,3 +87,11 @@ Personalization is deterministic. It uses only Interest slugs that exactly match
 - `Program Kepemimpinan Muda` has a draft Proposal but no linked Activity, so submission is correctly blocked until the composition requirement is met.
 - Sign in as `verifier@sipora.test` and open `/verifier/program-proposals` to test the queue and decision detail. A Verifier who also contextually manages the same Community cannot decide that Community's Proposal.
 - Seeded Proposal files are local development fixtures on the private `proposal_documents` disk. They have no public URL.
+
+## Phase 18 Program Logbook scenarios
+
+- `Program Pemuda Digital 2026` is running with an approved Proposal, two Logbook entries, and one private media fixture. One Logbook is approved and one is waiting in the Verifier queue.
+- `Program Literasi Teknologi` has an approved Proposal and linked Activity but remains planned. Its manager can deliberately start execution; the action does not alter Proposal or Activity lifecycle state.
+- `Program Olahraga Komunitas` and `Program Kreativitas Pemuda` cannot start because their latest Proposals are submitted and revision respectively.
+- Managers can create, edit, archive, attach private media, and submit draft/revision Logbooks only while a Program is running. Submitted and approved records are locked.
+- Sign in as `verifier@sipora.test` and open `/verifier/program-monitoring` to inspect factual Activity/Logbook metrics and review submitted Logbooks. No financial or evaluation data is present.

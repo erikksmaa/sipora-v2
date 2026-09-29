@@ -13,10 +13,11 @@ class ProgramSeeder extends Seeder
     public function run(): void
     {
         foreach ([
-            ['slug' => 'program-pemuda-digital-2026', 'title' => 'Program Pemuda Digital 2026', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->addDays(7)->toDateString(), 'end' => now()->addMonths(3)->toDateString()],
+            ['slug' => 'program-pemuda-digital-2026', 'title' => 'Program Pemuda Digital 2026', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->subMonth()->toDateString(), 'end' => now()->addMonths(2)->toDateString(), 'execution' => Program::STATUS_RUNNING],
             ['slug' => 'program-kepemimpinan-muda', 'title' => 'Program Kepemimpinan Muda', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'kepemudaan-dan-kepemimpinan', 'creator' => 'youth1@sipora.test', 'start' => null, 'end' => null],
             ['slug' => 'program-olahraga-komunitas', 'title' => 'Program Olahraga Komunitas', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'olahraga-masyarakat', 'creator' => 'youth3@sipora.test', 'start' => now()->addDays(5)->toDateString(), 'end' => now()->addMonths(2)->toDateString()],
             ['slug' => 'program-kreativitas-pemuda', 'title' => 'Program Kreativitas Pemuda', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->addDays(14)->toDateString(), 'end' => now()->addMonths(2)->toDateString()],
+            ['slug' => 'program-literasi-teknologi', 'title' => 'Program Literasi Teknologi', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->addDays(10)->toDateString(), 'end' => now()->addMonths(2)->toDateString()],
         ] as $record) {
             $organization = Organization::query()->where('slug', $record['organization'])->firstOrFail();
             $category = ProgramCategory::query()->where('slug', $record['category'])->firstOrFail();
@@ -30,7 +31,7 @@ class ProgramSeeder extends Seeder
                 'objectives' => 'Menghubungkan rangkaian Activity dalam satu rencana administratif yang terstruktur.',
                 'start_date' => $record['start'],
                 'end_date' => $record['end'],
-                'execution_status' => Program::STATUS_PLANNED,
+                'execution_status' => $record['execution'] ?? Program::STATUS_PLANNED,
                 'deleted_at' => null,
             ]);
         }

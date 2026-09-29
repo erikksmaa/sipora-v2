@@ -20,4 +20,4 @@ The approved `program_proposals` table has no submitter column. The submission t
 
 ## Deferred scope
 
-Program execution controls, Logbook, financial reporting/E-LPJ, evaluation, completion, and public Program discovery remain deferred to later phases. No tables for those domains are introduced here.
+Program execution start and Logbook monitoring are implemented in Phase 18. Financial reporting/E-LPJ, evaluation, completion, and public Program discovery remain deferred to later phases.

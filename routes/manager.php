@@ -7,6 +7,7 @@ use App\Http\Controllers\Manager\ActivitySessionController;
 use App\Http\Controllers\Manager\CommunityMemberController;
 use App\Http\Controllers\Manager\CommunityWorkspaceController;
 use App\Http\Controllers\Manager\ProgramController;
+use App\Http\Controllers\Manager\ProgramLogbookController;
 use App\Http\Controllers\Manager\ProgramProposalController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::get('/{organization}/programs/{program}', [ProgramController::class, 'show'])->name('programs.show');
         Route::get('/{organization}/programs/{program}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
         Route::patch('/{organization}/programs/{program}', [ProgramController::class, 'update'])->name('programs.update');
+        Route::post('/{organization}/programs/{program}/start-execution', [ProgramController::class, 'startExecution'])->name('programs.start-execution');
         Route::get('/{organization}/programs/{program}/proposal/create', [ProgramProposalController::class, 'create'])->name('program-proposals.create');
         Route::post('/{organization}/programs/{program}/proposal', [ProgramProposalController::class, 'store'])->name('program-proposals.store');
         Route::get('/{organization}/programs/{program}/proposals/{proposal}/edit', [ProgramProposalController::class, 'edit'])->name('program-proposals.edit');
@@ -32,6 +34,17 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::post('/{organization}/programs/{program}/proposals/{proposal}/submit', [ProgramProposalController::class, 'submit'])->name('program-proposals.submit');
         Route::post('/{organization}/programs/{program}/proposals/{proposal}/revise', [ProgramProposalController::class, 'revise'])->name('program-proposals.revise');
         Route::get('/{organization}/programs/{program}/proposals/{proposal}/document', [ProgramProposalController::class, 'document'])->name('program-proposals.document');
+        Route::get('/{organization}/programs/{program}/logbooks', [ProgramLogbookController::class, 'index'])->name('program-logbooks.index');
+        Route::get('/{organization}/programs/{program}/logbooks/create', [ProgramLogbookController::class, 'create'])->name('program-logbooks.create');
+        Route::post('/{organization}/programs/{program}/logbooks', [ProgramLogbookController::class, 'store'])->name('program-logbooks.store');
+        Route::get('/{organization}/programs/{program}/logbooks/{logbook}', [ProgramLogbookController::class, 'show'])->name('program-logbooks.show');
+        Route::get('/{organization}/programs/{program}/logbooks/{logbook}/edit', [ProgramLogbookController::class, 'edit'])->name('program-logbooks.edit');
+        Route::patch('/{organization}/programs/{program}/logbooks/{logbook}', [ProgramLogbookController::class, 'update'])->name('program-logbooks.update');
+        Route::delete('/{organization}/programs/{program}/logbooks/{logbook}', [ProgramLogbookController::class, 'destroy'])->name('program-logbooks.destroy');
+        Route::post('/{organization}/programs/{program}/logbooks/{logbook}/submit', [ProgramLogbookController::class, 'submit'])->name('program-logbooks.submit');
+        Route::post('/{organization}/programs/{program}/logbooks/{logbook}/media', [ProgramLogbookController::class, 'storeMedia'])->name('program-logbooks.media.store');
+        Route::get('/{organization}/programs/{program}/logbooks/{logbook}/media/{media}', [ProgramLogbookController::class, 'media'])->name('program-logbooks.media.show');
+        Route::delete('/{organization}/programs/{program}/logbooks/{logbook}/media/{media}', [ProgramLogbookController::class, 'destroyMedia'])->name('program-logbooks.media.destroy');
         Route::get('/{organization}/activities', [ActivityController::class, 'index'])->name('activities.index');
         Route::get('/{organization}/activities/create', [ActivityController::class, 'create'])->name('activities.create');
         Route::post('/{organization}/activities', [ActivityController::class, 'store'])->name('activities.store');

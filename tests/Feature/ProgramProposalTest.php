@@ -171,7 +171,10 @@ class ProgramProposalTest extends TestCase
     public function test_schema_and_future_boundaries_are_preserved(): void
     {
         $this->assertTrue(Schema::hasTable('program_proposals'));
-        foreach (['program_logbooks', 'program_logbook_media', 'financial_reports', 'financial_items', 'program_evaluations'] as $table) {
+        $this->assertTrue(Schema::hasTable('program_logbooks'));
+        $this->assertTrue(Schema::hasTable('program_logbook_media'));
+
+        foreach (['financial_reports', 'financial_items', 'program_evaluations'] as $table) {
             $this->assertFalse(Schema::hasTable($table));
         }
     }

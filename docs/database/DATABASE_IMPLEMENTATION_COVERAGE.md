@@ -21,5 +21,6 @@ The approved contract is `sipora_v2_mysql_backend_driven_clean_v2.sql`. Laravel 
 | Discovery / Search / Personalization | Implemented query layer | Public Activity and Community queries plus deterministic Youth suggestions | 15 | No search, recommendation, behavior, or history persistence; MySQL queries use existing indexes |
 | Program core | Implemented | `program_categories`, `programs`, and Activity → Program FK | 16 | Organization-owned Program; nullable Activity relation |
 | Program Proposal | Implemented | `program_proposals`, private documents, versioned review workflow | 17 | Submit actor is represented by the privacy-safe activity-log causer because the approved table has no submitter column |
-| Program Logbook / Finance / Evaluation | Future | Approved downstream Program tables | Future | Not created in Phase 17 |
+| Program Logbook | Implemented | `program_logbooks`, private `program_logbook_media`, review workflow, factual monitoring service | 18 | Progress percentage is manager-reported data from the approved schema, not a generated score |
+| Program Finance / Evaluation | Future | Approved downstream Program tables | Future | Not created in Phase 18 |
 | Opportunities | Future | Approved Opportunity domain tables | Future | Added only in its feature phase |

@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\OrganizationMembership;
 use App\Models\Program;
+use App\Models\ProgramProposal;
 use App\Models\User;
 
 final class ProgramPolicy
@@ -17,6 +18,13 @@ final class ProgramPolicy
     {
         return $this->manages($user, $program) && $program->execution_status === Program::STATUS_PLANNED
             && ! $program->proposalCompositionLocked();
+    }
+
+    public function startExecution(User $user, Program $program): bool
+    {
+        return $this->manages($user, $program) && $program->execution_status === Program::STATUS_PLANNED
+            && $program->latestProposal()->value('status') === ProgramProposal::STATUS_APPROVED
+            && $program->activities()->exists();
     }
 
     private function manages(User $user, Program $program): bool

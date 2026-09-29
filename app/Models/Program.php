@@ -60,6 +60,11 @@ class Program extends Model
         return $this->hasOne(ProgramProposal::class)->ofMany('version', 'max');
     }
 
+    public function logbooks(): HasMany
+    {
+        return $this->hasMany(ProgramLogbook::class)->orderByDesc('log_date')->orderByDesc('created_at');
+    }
+
     public function proposalCompositionLocked(): bool
     {
         $status = $this->relationLoaded('latestProposal') ? $this->latestProposal?->status : $this->latestProposal()->value('status');
