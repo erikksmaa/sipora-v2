@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Verifier\ActivityVerificationController;
 use App\Http\Controllers\Verifier\CommunityVerificationController;
+use App\Http\Controllers\Verifier\ProgramProposalVerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->name('verifier.')
@@ -15,4 +16,8 @@ Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->na
         Route::get('/activity-verifications/{activity}', [ActivityVerificationController::class, 'show'])->name('activity-verifications.show');
         Route::post('/activity-verifications/{activity}/review', [ActivityVerificationController::class, 'review'])->name('activity-verifications.review');
         Route::get('/activity-verifications/{activity}/poster', [ActivityVerificationController::class, 'poster'])->name('activity-verifications.poster');
+        Route::get('/program-proposals', [ProgramProposalVerificationController::class, 'index'])->name('program-proposals.index');
+        Route::get('/program-proposals/{proposal}', [ProgramProposalVerificationController::class, 'show'])->name('program-proposals.show');
+        Route::post('/program-proposals/{proposal}/review', [ProgramProposalVerificationController::class, 'review'])->name('program-proposals.review');
+        Route::get('/program-proposals/{proposal}/document', [ProgramProposalVerificationController::class, 'document'])->name('program-proposals.document');
     });

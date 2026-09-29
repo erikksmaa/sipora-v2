@@ -62,6 +62,14 @@ return [
             'throw' => true,
         ],
 
+        'proposal_documents' => [
+            'driver' => 'local',
+            'root' => storage_path('app/proposal-documents'),
+            'visibility' => 'private',
+            'serve' => false,
+            'throw' => true,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

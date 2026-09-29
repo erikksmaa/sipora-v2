@@ -6,10 +6,12 @@ use App\Models\Activity;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
 use App\Models\Program;
+use App\Models\ProgramProposal;
 use App\Policies\ActivityPolicy;
 use App\Policies\OrganizationMembershipPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\ProgramPolicy;
+use App\Policies\ProgramProposalPolicy;
 use App\Support\Auth\BinaryDatabaseSessionHandler;
 use App\Support\Auth\BinaryUuidUserProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -41,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Activity::class, ActivityPolicy::class);
         Gate::policy(OrganizationMembership::class, OrganizationMembershipPolicy::class);
         Gate::policy(Program::class, ProgramPolicy::class);
+        Gate::policy(ProgramProposal::class, ProgramProposalPolicy::class);
 
         Auth::provider('binary-uuid', fn ($app, array $config) => new BinaryUuidUserProvider($app['hash'], $config['model']));
         Session::extend('binary-database', fn ($app) => new BinaryDatabaseSessionHandler(

@@ -77,4 +77,13 @@ Personalization is deterministic. It uses only Interest slugs that exactly match
 - Other Activities in Komunitas Programmer Pemalang remain standalone, proving `activities.program_id` stays optional.
 - Sign in as `youth3@sipora.test` to manage `Program Olahraga Komunitas` under Pemuda Olahraga Pemalang. It provides the cross-organization authorization scenario: each manager can only view, edit, or link Programs within their own contextual Community.
 - Program categories in the development database are deterministic samples only and are not official Dindikpora master data.
-- Proposal, Logbook, financial reporting / E-LPJ, evaluation, and public Program discovery are intentionally unavailable in Phase 16.
+- Proposal is implemented in Phase 17. Logbook, financial reporting / E-LPJ, evaluation, and public Program discovery remain unavailable.
+
+## Phase 17 Program Proposal scenarios
+
+- `Program Pemuda Digital 2026` has an approved Proposal version 1. Approval does not start the Program and does not change Activity verification.
+- `Program Olahraga Komunitas` has a submitted Proposal in the Verifier queue.
+- `Program Kreativitas Pemuda` has a Proposal requiring revision. Its manager can create version 2, edit the copied private document, and resubmit it while preserving version 1.
+- `Program Kepemimpinan Muda` has a draft Proposal but no linked Activity, so submission is correctly blocked until the composition requirement is met.
+- Sign in as `verifier@sipora.test` and open `/verifier/program-proposals` to test the queue and decision detail. A Verifier who also contextually manages the same Community cannot decide that Community's Proposal.
+- Seeded Proposal files are local development fixtures on the private `proposal_documents` disk. They have no public URL.

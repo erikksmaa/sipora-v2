@@ -126,14 +126,16 @@ class ProgramCoreTest extends TestCase
         ]);
     }
 
-    public function test_future_program_workflow_tables_and_routes_are_absent(): void
+    public function test_only_later_program_workflow_tables_and_routes_are_absent(): void
     {
-        foreach (['program_proposals', 'program_logbooks', 'program_logbook_media', 'financial_reports', 'financial_items', 'program_evaluations'] as $table) {
+        $this->assertTrue(Schema::hasTable('program_proposals'));
+        foreach (['program_logbooks', 'program_logbook_media', 'financial_reports', 'financial_items', 'program_evaluations'] as $table) {
             $this->assertFalse(Schema::hasTable($table));
         }
 
         $routes = collect(app('router')->getRoutes()->getRoutes())->map->getName()->filter();
-        $this->assertFalse($routes->contains(fn (string $name): bool => str_contains($name, 'proposal') || str_contains($name, 'logbook')));
+        $this->assertTrue($routes->contains(fn (string $name): bool => str_contains($name, 'program-proposals')));
+        $this->assertFalse($routes->contains(fn (string $name): bool => str_contains($name, 'logbook')));
     }
 
     private function roleUser(string $role): User

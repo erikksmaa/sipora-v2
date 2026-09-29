@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['organization_id', 'category_id', 'created_by_user_id', 'title', 'slug', 'description', 'objectives', 'start_date', 'end_date', 'execution_status'])]
@@ -47,6 +48,23 @@ class Program extends Model
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class)->orderBy('start_at');
+    }
+
+    public function proposals(): HasMany
+    {
+        return $this->hasMany(ProgramProposal::class)->orderByDesc('version');
+    }
+
+    public function latestProposal(): HasOne
+    {
+        return $this->hasOne(ProgramProposal::class)->ofMany('version', 'max');
+    }
+
+    public function proposalCompositionLocked(): bool
+    {
+        $status = $this->relationLoaded('latestProposal') ? $this->latestProposal?->status : $this->latestProposal()->value('status');
+
+        return in_array($status, [ProgramProposal::STATUS_SUBMITTED, ProgramProposal::STATUS_UNDER_REVIEW], true);
     }
 
     protected function casts(): array

@@ -15,7 +15,8 @@ final class ProgramPolicy
 
     public function update(User $user, Program $program): bool
     {
-        return $this->manages($user, $program) && $program->execution_status === Program::STATUS_PLANNED;
+        return $this->manages($user, $program) && $program->execution_status === Program::STATUS_PLANNED
+            && ! $program->proposalCompositionLocked();
     }
 
     private function manages(User $user, Program $program): bool

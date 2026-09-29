@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             ProgramCategorySeeder::class,
             ProgramSeeder::class,
             ActivitySeeder::class,
+            ProgramProposalSeeder::class,
             ActivitySessionSeeder::class,
             ActivityParticipationSeeder::class,
             ActivityAttendanceSeeder::class,

@@ -125,7 +125,13 @@ final class ActivityController extends Controller
             'categories' => ActivityCategory::query()->orderBy('name')->get(),
             'areas' => AdministrativeArea::query()->orderBy('name')->get(),
             'programs' => Program::query()->where('organization_id', $organization->getKey())
-                ->whereIn('execution_status', [Program::STATUS_PLANNED, Program::STATUS_RUNNING])->orderBy('title')->get(),
+                ->whereIn('execution_status', [Program::STATUS_PLANNED, Program::STATUS_RUNNING])
+                ->where(function ($query) use ($activity): void {
+                    $query->whereDoesntHave('latestProposal', fn ($proposals) => $proposals->whereIn('status', ['submitted', 'under_review']));
+                    if ($activity->program_id) {
+                        $query->orWhereKey($activity->program_id);
+                    }
+                })->orderBy('title')->get(),
         ]);
     }
 

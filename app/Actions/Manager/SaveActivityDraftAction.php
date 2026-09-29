@@ -4,12 +4,14 @@ namespace App\Actions\Manager;
 
 use App\Models\Activity;
 use App\Models\Organization;
+use App\Models\Program;
 use App\Models\User;
 use App\Support\BinaryUuid;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 final class SaveActivityDraftAction
 {
@@ -21,6 +23,12 @@ final class SaveActivityDraftAction
         $values = Arr::except($data, ['poster']);
         $values['category_id'] = BinaryUuid::bytes($values['category_id']);
         $values['program_id'] = filled($values['program_id'] ?? null) ? BinaryUuid::bytes($values['program_id']) : null;
+        if ($oldProgramId !== $values['program_id']) {
+            $locked = collect([$oldProgramId, $values['program_id']])->filter()->contains(fn ($programId) => Program::query()->whereKey($programId)->first()?->proposalCompositionLocked());
+            if ($locked) {
+                throw ValidationException::withMessages(['program_id' => ['Komposisi Activity terkunci selama Proposal Program sedang ditinjau.']]);
+            }
+        }
         $values['administrative_area_id'] = filled($values['administrative_area_id'] ?? null)
             ? BinaryUuid::bytes($values['administrative_area_id']) : null;
         foreach (['requires_identity_verification', 'members_only', 'certificate_enabled'] as $boolean) {

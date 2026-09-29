@@ -7,6 +7,7 @@ use App\Http\Controllers\Manager\ActivitySessionController;
 use App\Http\Controllers\Manager\CommunityMemberController;
 use App\Http\Controllers\Manager\CommunityWorkspaceController;
 use App\Http\Controllers\Manager\ProgramController;
+use App\Http\Controllers\Manager\ProgramProposalController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('manager.')
@@ -24,6 +25,13 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::get('/{organization}/programs/{program}', [ProgramController::class, 'show'])->name('programs.show');
         Route::get('/{organization}/programs/{program}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
         Route::patch('/{organization}/programs/{program}', [ProgramController::class, 'update'])->name('programs.update');
+        Route::get('/{organization}/programs/{program}/proposal/create', [ProgramProposalController::class, 'create'])->name('program-proposals.create');
+        Route::post('/{organization}/programs/{program}/proposal', [ProgramProposalController::class, 'store'])->name('program-proposals.store');
+        Route::get('/{organization}/programs/{program}/proposals/{proposal}/edit', [ProgramProposalController::class, 'edit'])->name('program-proposals.edit');
+        Route::patch('/{organization}/programs/{program}/proposals/{proposal}', [ProgramProposalController::class, 'update'])->name('program-proposals.update');
+        Route::post('/{organization}/programs/{program}/proposals/{proposal}/submit', [ProgramProposalController::class, 'submit'])->name('program-proposals.submit');
+        Route::post('/{organization}/programs/{program}/proposals/{proposal}/revise', [ProgramProposalController::class, 'revise'])->name('program-proposals.revise');
+        Route::get('/{organization}/programs/{program}/proposals/{proposal}/document', [ProgramProposalController::class, 'document'])->name('program-proposals.document');
         Route::get('/{organization}/activities', [ActivityController::class, 'index'])->name('activities.index');
         Route::get('/{organization}/activities/create', [ActivityController::class, 'create'])->name('activities.create');
         Route::post('/{organization}/activities', [ActivityController::class, 'store'])->name('activities.store');

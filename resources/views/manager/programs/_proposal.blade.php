@@ -1,0 +1,16 @@
+<section class="rounded-2xl bg-white p-6 shadow-sm">
+    <div class="flex flex-wrap items-start justify-between gap-4"><div><p class="text-sm font-bold text-orange-600">PROPOSAL PROGRAM</p><h2 class="mt-1 text-xl font-black text-[#14205c]">Pengajuan resmi kepada Verifier</h2></div>@if($program->latestProposal)<x-program.proposal-status-badge :status="$program->latestProposal->status" />@endif</div>
+    @if(!$program->latestProposal)
+        <div class="mt-5 rounded-xl border border-dashed border-slate-300 p-6"><p class="font-bold text-[#14205c]">Belum ada Proposal</p><p class="mt-2 text-sm text-slate-500">Siapkan dokumen dan anggaran. Minimal satu Activity harus terhubung sebelum pengajuan.</p>@can('update', $program)<a class="btn-primary mt-4 inline-flex" href="{{ route('manager.program-proposals.create', [$organization, $program]) }}">Buat Proposal</a>@endcan</div>
+    @else
+        @php($latest = $program->latestProposal)
+        <dl class="mt-5 grid gap-4 rounded-xl bg-slate-50 p-5 sm:grid-cols-3"><div><dt class="text-xs font-bold uppercase text-slate-500">Versi</dt><dd class="mt-1 font-extrabold text-[#14205c]">v{{ $latest->version }}</dd></div><div><dt class="text-xs font-bold uppercase text-slate-500">Anggaran</dt><dd class="mt-1 font-extrabold text-[#14205c]">{{ $latest->requested_budget !== null ? 'Rp '.number_format((float) $latest->requested_budget, 0, ',', '.') : 'Tidak dicantumkan' }}</dd></div><div><dt class="text-xs font-bold uppercase text-slate-500">Diajukan</dt><dd class="mt-1 font-extrabold text-[#14205c]">{{ $latest->submitted_at?->translatedFormat('d M Y, H:i') ?? 'Belum diajukan' }}</dd></div></dl>
+        @if($latest->review_notes)<div class="mt-4 rounded-xl border border-orange-200 bg-orange-50 p-4"><p class="text-xs font-bold uppercase text-orange-700">Catatan Verifier</p><p class="mt-1 text-sm text-slate-700">{{ $latest->review_notes }}</p></div>@endif
+        <div class="mt-5 flex flex-wrap gap-3">
+            @if($latest->proposal_document_path)<a class="btn-secondary" target="_blank" href="{{ route('manager.program-proposals.document', [$organization, $program, $latest]) }}">Lihat dokumen</a>@endif
+            @can('update', $latest)<a class="btn-secondary" href="{{ route('manager.program-proposals.edit', [$organization, $program, $latest]) }}">Edit draft</a><form method="POST" action="{{ route('manager.program-proposals.submit', [$organization, $program, $latest]) }}">@csrf<button class="btn-primary">Ajukan ke Verifier</button></form>@endcan
+            @can('revise', $latest)<form method="POST" action="{{ route('manager.program-proposals.revise', [$organization, $program, $latest]) }}">@csrf<button class="btn-primary">Buat versi revisi</button></form>@endcan
+        </div>
+        @if($program->proposals->count() > 1)<div class="mt-6 border-t border-slate-200 pt-5"><h3 class="font-extrabold text-[#14205c]">Riwayat versi</h3><div class="mt-3 space-y-2">@foreach($program->proposals as $proposal)<div class="flex items-center justify-between rounded-lg border border-slate-200 px-4 py-3"><span class="text-sm font-bold text-slate-700">Versi {{ $proposal->version }}</span><x-program.proposal-status-badge :status="$proposal->status" /></div>@endforeach</div></div>@endif
+    @endif
+</section>
