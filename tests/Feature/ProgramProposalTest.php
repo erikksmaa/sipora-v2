@@ -174,9 +174,9 @@ class ProgramProposalTest extends TestCase
         $this->assertTrue(Schema::hasTable('program_logbooks'));
         $this->assertTrue(Schema::hasTable('program_logbook_media'));
 
-        foreach (['financial_reports', 'financial_items', 'program_evaluations'] as $table) {
-            $this->assertFalse(Schema::hasTable($table));
-        }
+        $this->assertTrue(Schema::hasTable('financial_reports'));
+        $this->assertTrue(Schema::hasTable('financial_items'));
+        $this->assertFalse(Schema::hasTable('program_evaluations'));
     }
 
     public function test_manager_verifier_conflict_is_blocked_server_side(): void

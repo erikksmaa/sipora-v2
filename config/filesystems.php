@@ -75,6 +75,11 @@ return [
             'visibility' => 'private', 'serve' => false, 'throw' => true,
         ],
 
+        'financial_receipts' => [
+            'driver' => 'local', 'root' => storage_path('app/financial-receipts'),
+            'visibility' => 'private', 'serve' => false, 'throw' => true,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

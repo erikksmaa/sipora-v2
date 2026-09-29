@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Verifier\ActivityVerificationController;
 use App\Http\Controllers\Verifier\CommunityVerificationController;
+use App\Http\Controllers\Verifier\FinancialReportVerificationController;
 use App\Http\Controllers\Verifier\ProgramMonitoringController;
 use App\Http\Controllers\Verifier\ProgramProposalVerificationController;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,8 @@ Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->na
         Route::get('/program-monitoring/logbooks/{logbook}', [ProgramMonitoringController::class, 'show'])->name('program-monitoring.show');
         Route::post('/program-monitoring/logbooks/{logbook}/review', [ProgramMonitoringController::class, 'review'])->name('program-monitoring.review');
         Route::get('/program-monitoring/logbooks/{logbook}/media/{media}', [ProgramMonitoringController::class, 'media'])->name('program-monitoring.media');
+        Route::get('/financial-reports', [FinancialReportVerificationController::class, 'index'])->name('financial-reports.index');
+        Route::get('/financial-reports/{report}', [FinancialReportVerificationController::class, 'show'])->name('financial-reports.show');
+        Route::post('/financial-reports/{report}/review', [FinancialReportVerificationController::class, 'review'])->name('financial-reports.review');
+        Route::get('/financial-reports/{report}/items/{item}/receipt', [FinancialReportVerificationController::class, 'receipt'])->name('financial-reports.items.receipt');
     });

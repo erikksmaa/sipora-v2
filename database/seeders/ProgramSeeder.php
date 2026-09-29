@@ -18,6 +18,7 @@ class ProgramSeeder extends Seeder
             ['slug' => 'program-olahraga-komunitas', 'title' => 'Program Olahraga Komunitas', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'olahraga-masyarakat', 'creator' => 'youth3@sipora.test', 'start' => now()->addDays(5)->toDateString(), 'end' => now()->addMonths(2)->toDateString()],
             ['slug' => 'program-kreativitas-pemuda', 'title' => 'Program Kreativitas Pemuda', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->addDays(14)->toDateString(), 'end' => now()->addMonths(2)->toDateString()],
             ['slug' => 'program-literasi-teknologi', 'title' => 'Program Literasi Teknologi', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->addDays(10)->toDateString(), 'end' => now()->addMonths(2)->toDateString()],
+            ['slug' => 'program-kolaborasi-digital', 'title' => 'Program Kolaborasi Digital', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pengembangan-kapasitas-pemuda', 'creator' => 'youth1@sipora.test', 'start' => now()->subWeeks(3)->toDateString(), 'end' => now()->addMonth()->toDateString(), 'execution' => Program::STATUS_RUNNING],
         ] as $record) {
             $organization = Organization::query()->where('slug', $record['organization'])->firstOrFail();
             $category = ProgramCategory::query()->where('slug', $record['category'])->firstOrFail();

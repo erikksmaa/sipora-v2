@@ -91,7 +91,16 @@ Personalization is deterministic. It uses only Interest slugs that exactly match
 ## Phase 18 Program Logbook scenarios
 
 - `Program Pemuda Digital 2026` is running with an approved Proposal, two Logbook entries, and one private media fixture. One Logbook is approved and one is waiting in the Verifier queue.
-- `Program Literasi Teknologi` has an approved Proposal and linked Activity but remains planned. Its manager can deliberately start execution; the action does not alter Proposal or Activity lifecycle state.
+- `Program Literasi Teknologi` has an approved Proposal and linked Activity. Phase 19 advances this development fixture to running so its submitted E-LPJ can be reviewed.
 - `Program Olahraga Komunitas` and `Program Kreativitas Pemuda` cannot start because their latest Proposals are submitted and revision respectively.
 - Managers can create, edit, archive, attach private media, and submit draft/revision Logbooks only while a Program is running. Submitted and approved records are locked.
-- Sign in as `verifier@sipora.test` and open `/verifier/program-monitoring` to inspect factual Activity/Logbook metrics and review submitted Logbooks. No financial or evaluation data is present.
+- Sign in as `verifier@sipora.test` and open `/verifier/program-monitoring` to inspect factual Activity/Logbook metrics and review submitted Logbooks. Evaluation data is not present.
+
+## Phase 19 E-LPJ scenarios
+
+- `Program Pemuda Digital 2026` has a draft E-LPJ with expense, income, and private evidence examples. Its proposal budget is compared with the derived expense realization.
+- `Program Literasi Teknologi` is running with an approved Proposal and Logbook plus a submitted E-LPJ in the Verifier queue.
+- `Program Kolaborasi Digital` is running with an approved Proposal and Logbook plus an E-LPJ requiring revision. Its realization exceeds the approved proposal budget to exercise the warning state; the application does not silently block or approve the variance.
+- Sign in as `youth1@sipora.test` and open the Program detail in the Manager workspace to manage the draft or explicitly create a new version from the revision report.
+- Sign in as `verifier@sipora.test` and open `/verifier/financial-reports` to review submitted E-LPJ records. Evidence is streamed from the private `financial_receipts` disk through authorized routes.
+- Approval, revision, and rejection preserve the Program's running state. Phase 20 owns final Program evaluation and completion.

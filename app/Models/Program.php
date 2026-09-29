@@ -65,6 +65,16 @@ class Program extends Model
         return $this->hasMany(ProgramLogbook::class)->orderByDesc('log_date')->orderByDesc('created_at');
     }
 
+    public function financialReports(): HasMany
+    {
+        return $this->hasMany(FinancialReport::class)->orderByDesc('version');
+    }
+
+    public function latestFinancialReport(): HasOne
+    {
+        return $this->hasOne(FinancialReport::class)->ofMany('version', 'max');
+    }
+
     public function proposalCompositionLocked(): bool
     {
         $status = $this->relationLoaded('latestProposal') ? $this->latestProposal?->status : $this->latestProposal()->value('status');

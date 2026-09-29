@@ -48,7 +48,7 @@ final class ProgramController extends Controller
     {
         $this->ensureBelongs($organization, $program);
         Gate::authorize('view', $program);
-        $program->load(['category', 'creator', 'activities.category', 'proposals.reviewer', 'latestProposal', 'logbooks.creator', 'logbooks.media']);
+        $program->load(['category', 'creator', 'activities.category', 'proposals.reviewer', 'latestProposal', 'logbooks.creator', 'logbooks.media', 'financialReports.items', 'financialReports.reviewer']);
 
         return view('manager.programs.show', [
             'organization' => $organization,

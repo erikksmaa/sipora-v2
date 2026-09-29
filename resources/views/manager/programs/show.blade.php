@@ -13,6 +13,7 @@
     </section>
     @include('manager.programs._proposal')
     @include('manager.programs._monitoring')
-    <aside class="rounded-2xl border border-indigo-100 bg-[#f6f7ff] p-5 text-sm text-slate-600"><strong class="text-[#14205c]">Tahap berikutnya belum dibuka.</strong> E-LPJ dan evaluasi Program akan tersedia pada fase masing-masing.</aside>
+    @include('manager.programs._financial')
+    <aside class="rounded-2xl border border-indigo-100 bg-[#f6f7ff] p-5 text-sm text-slate-600"><strong class="text-[#14205c]">Evaluasi akhir belum dibuka.</strong> Persetujuan E-LPJ tidak otomatis menyelesaikan Program.</aside>
 </div>
 @endsection
