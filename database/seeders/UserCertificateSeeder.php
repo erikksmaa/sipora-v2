@@ -14,7 +14,7 @@ class UserCertificateSeeder extends Seeder
     public function run(): void
     {
         $activity = Activity::query()->where('slug', 'bootcamp-digital-pemalang')->firstOrFail();
-        $user = User::query()->where('email', 'youth2@sipora.test')->firstOrFail();
+        $user = User::query()->where('email', 'youth1@sipora.test')->firstOrFail();
         $participation = ActivityParticipation::query()
             ->where('activity_id', $activity->getKey())
             ->where('user_id', $user->getKey())

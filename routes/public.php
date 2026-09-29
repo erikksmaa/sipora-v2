@@ -5,6 +5,7 @@ use App\Http\Controllers\PublicActivityController;
 use App\Http\Controllers\PublicCertificateController;
 use App\Http\Controllers\PublicCommunityController;
 use App\Http\Controllers\PublicLandingController;
+use App\Http\Controllers\PublicYouthPortfolioController;
 use App\Http\Controllers\Youth\CommunityMembershipController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,8 @@ Route::get('/communities/{organization}/logo', [PublicCommunityController::class
 Route::get('/activities/{activity}', [PublicActivityController::class, 'show'])->name('activities.show');
 Route::get('/activities/{activity}/poster', [PublicActivityController::class, 'poster'])->name('activities.poster');
 Route::get('/certificates/verify/{code}', PublicCertificateController::class)->name('certificates.verify');
+Route::get('/portfolio/{profile}/photo', [PublicYouthPortfolioController::class, 'photo'])->name('portfolio.photo');
+Route::get('/portfolio/{profile}', [PublicYouthPortfolioController::class, 'show'])->name('portfolio.show');
 
 Route::middleware(['auth', 'verified', 'role:youth'])->group(function (): void {
     Route::post('/activities/{activity}/register', [ActivityRegistrationController::class, 'store'])->name('activities.register');

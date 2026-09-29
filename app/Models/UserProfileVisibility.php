@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[Fillable([
     'user_id', 'is_profile_public', 'show_photo', 'show_bio', 'show_interests',
     'show_skills', 'show_education', 'show_organization_experience', 'show_achievements',
+    'show_community_membership', 'show_activity_passport', 'show_certificates', 'show_business_experience',
 ])]
 class UserProfileVisibility extends Model
 {
@@ -29,6 +30,8 @@ class UserProfileVisibility extends Model
             'is_profile_public' => 'boolean', 'show_photo' => 'boolean', 'show_bio' => 'boolean',
             'show_interests' => 'boolean', 'show_skills' => 'boolean', 'show_education' => 'boolean',
             'show_organization_experience' => 'boolean', 'show_achievements' => 'boolean',
+            'show_community_membership' => 'boolean', 'show_activity_passport' => 'boolean',
+            'show_certificates' => 'boolean', 'show_business_experience' => 'boolean',
         ];
     }
 }

@@ -58,7 +58,7 @@
         <p class="mt-2 text-sm text-slate-600">NIK, dokumen identitas, tanggal lahir lengkap, alamat detail, telepon, dan email selalu privat.</p>
         <form class="mt-5 space-y-3" method="post" action="{{ route('youth.profile.visibility.update') }}">
             @csrf @method('PUT')
-            @foreach(['is_profile_public'=>'Profil dapat dipublikasikan nanti','show_photo'=>'Tampilkan foto','show_bio'=>'Tampilkan bio','show_interests'=>'Tampilkan minat','show_skills'=>'Tampilkan keahlian','show_education'=>'Tampilkan pendidikan','show_organization_experience'=>'Tampilkan pengalaman organisasi','show_achievements'=>'Tampilkan prestasi'] as $key=>$label)
+            @foreach(['is_profile_public'=>'Publikasikan Portfolio','show_photo'=>'Tampilkan foto','show_bio'=>'Tampilkan bio','show_interests'=>'Tampilkan minat','show_skills'=>'Tampilkan keahlian','show_education'=>'Tampilkan pendidikan','show_organization_experience'=>'Tampilkan pengalaman organisasi mandiri','show_community_membership'=>'Tampilkan keanggotaan Community','show_activity_passport'=>'Tampilkan Activity Passport','show_certificates'=>'Tampilkan sertifikat','show_achievements'=>'Tampilkan prestasi'] as $key=>$label)
                 <label class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-3">
                     <span class="font-medium">{{ $label }}</span>
                     <input type="hidden" name="{{ $key }}" value="0">

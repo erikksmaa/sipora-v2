@@ -41,7 +41,14 @@ Attendance is supporting evidence only. The contextual leader or manager makes t
 
 ## Phase 13 certificate scenarios
 
-- Sign in as `youth2@sipora.test` and open `/youth/certificates`. The verified Bootcamp certificate can be viewed and downloaded as a PDF.
-- Open the public verification link from Youth 2's certificate in a guest browser. The page shows only the recipient display name, Activity, organizer, issue date, certificate number, and verification code.
-- Sign in as `youth3@sipora.test`, manage Bootcamp Digital Pemalang, then issue the still-unissued certificate for Youth 1. Youth 1 is completed and eligible; issuing it twice is blocked.
+- Sign in as `youth1@sipora.test` and open `/youth/certificates`. The verified Bootcamp certificate can be viewed and downloaded as a PDF.
+- Open the public verification link from Youth 1's certificate in a guest browser. The page shows only the recipient display name, Activity, organizer, issue date, certificate number, and verification code.
+- Sign in as `youth3@sipora.test`, manage Bootcamp Digital Pemalang, then issue the still-unissued certificate for Youth 2. Youth 2 is completed and eligible; issuing it twice is blocked.
 - Youth 4 remains `no_show` and cannot receive a certificate.
+
+## Phase 14 Portfolio scenarios
+
+- `youth1@sipora.test` is the rich public Portfolio example. Open `/youth/portfolio` as the owner or `/portfolio/erik-kusuma-rais` as a guest. The Portfolio contains profile enrichment, an active Community role, completed Activity, and verified SIPORA certificate.
+- `youth3@sipora.test` is a sparse Portfolio example for owner and public empty-state checks.
+- `youth2@sipora.test` is the privacy example. Skills, education, organization experience, and achievements remain visible to the owner with a private indicator but are omitted from `/portfolio/nabila-putri-salsabila`.
+- Email, phone, birth date, detailed domicile address, identity data/documents, review notes, attendance notes, and private certificate download links never appear on public Portfolio pages.

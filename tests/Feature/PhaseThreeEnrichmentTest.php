@@ -128,7 +128,8 @@ class PhaseThreeEnrichmentTest extends TestCase
         $this->actingAs($user)->put('/youth/profile/visibility', [
             'is_profile_public' => 1, 'show_photo' => 0, 'show_bio' => 1, 'show_interests' => 1,
             'show_skills' => 0, 'show_education' => 0, 'show_organization_experience' => 0,
-            'show_achievements' => 0,
+            'show_community_membership' => 1, 'show_activity_passport' => 1,
+            'show_certificates' => 1, 'show_achievements' => 0,
         ])->assertRedirect('/youth/profile');
         $visibility = $user->fresh()->profileVisibility;
         $this->assertFalse($visibility->show_skills);

@@ -16,6 +16,7 @@ class UpdateVisibilityRequest extends FormRequest
         return collect([
             'is_profile_public', 'show_photo', 'show_bio', 'show_interests',
             'show_skills', 'show_education', 'show_organization_experience', 'show_achievements',
+            'show_community_membership', 'show_activity_passport', 'show_certificates',
         ])->mapWithKeys(fn (string $field): array => [$field => ['required', 'boolean']])->all();
     }
 }

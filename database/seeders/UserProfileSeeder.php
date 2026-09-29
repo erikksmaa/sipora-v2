@@ -30,8 +30,11 @@ class UserProfileSeeder extends Seeder
             UserProfile::withTrashed()->updateOrCreate(['user_id' => $user->getKey()], $profile + ['deleted_at' => null]);
             UserProfileVisibility::withTrashed()->updateOrCreate(['user_id' => $user->getKey()], [
                 'is_profile_public' => true, 'show_photo' => true, 'show_bio' => true, 'show_interests' => true,
-                'show_skills' => true, 'show_education' => true, 'show_organization_experience' => true,
-                'show_achievements' => true, 'deleted_at' => null,
+                'show_skills' => $email !== 'youth2@sipora.test', 'show_education' => $email !== 'youth2@sipora.test',
+                'show_organization_experience' => $email !== 'youth2@sipora.test',
+                'show_community_membership' => true, 'show_activity_passport' => true,
+                'show_certificates' => true, 'show_achievements' => $email !== 'youth2@sipora.test',
+                'show_business_experience' => true, 'deleted_at' => null,
             ]);
             UserAddress::withTrashed()->updateOrCreate(
                 ['user_id' => $user->getKey(), 'address_type' => 'domicile'],

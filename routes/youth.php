@@ -12,12 +12,14 @@ use App\Http\Controllers\Youth\YouthAchievementController;
 use App\Http\Controllers\Youth\YouthEducationController;
 use App\Http\Controllers\Youth\YouthHomeController;
 use App\Http\Controllers\Youth\YouthOrganizationExperienceController;
+use App\Http\Controllers\Youth\YouthPortfolioController;
 use App\Http\Controllers\Youth\YouthSkillController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('youth.')
     ->group(function (): void {
         Route::get('/home', YouthHomeController::class)->name('home');
+        Route::get('/portfolio', YouthPortfolioController::class)->name('portfolio.show');
         Route::get('/passport', [ActivityPassportController::class, 'index'])->name('passport.index');
         Route::get('/passport/{participation}', [ActivityPassportController::class, 'show'])->name('passport.show');
         Route::get('/certificates', [ActivityCertificateController::class, 'index'])->name('certificates.index');
