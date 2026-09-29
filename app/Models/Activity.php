@@ -51,6 +51,11 @@ class Activity extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function program(): BelongsTo
+    {
+        return $this->belongsTo(Program::class);
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(ActivityCategory::class, 'category_id');

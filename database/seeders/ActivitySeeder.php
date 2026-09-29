@@ -7,6 +7,7 @@ use App\Models\ActivityCategory;
 use App\Models\ActivityReview;
 use App\Models\AdministrativeArea;
 use App\Models\Organization;
+use App\Models\Program;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +22,7 @@ class ActivitySeeder extends Seeder
             ['slug' => 'pelatihan-public-speaking-pemuda', 'title' => 'Pelatihan Public Speaking Pemuda', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'pendidikan', 'review' => 'pending_review', 'publication' => 'unpublished', 'execution' => 'scheduled', 'days' => 24],
             ['slug' => 'kelas-konten-kreatif', 'title' => 'Kelas Konten Kreatif', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'kreatif', 'review' => 'revision', 'publication' => 'unpublished', 'execution' => 'scheduled', 'days' => 20],
             ['slug' => 'seminar-keamanan-digital', 'title' => 'Seminar Keamanan Digital', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'unpublished', 'execution' => 'scheduled', 'days' => 18],
-            ['slug' => 'workshop-web-development-pemula', 'title' => 'Workshop Web Development Pemula', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'scheduled', 'days' => 12, 'district' => '33.27.08', 'mode' => 'offline'],
+            ['slug' => 'workshop-web-development-pemula', 'title' => 'Workshop Web Development Pemula', 'organization' => 'komunitas-programmer-pemalang', 'program' => 'program-pemuda-digital-2026', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'scheduled', 'days' => 12, 'district' => '33.27.08', 'mode' => 'offline'],
             ['slug' => 'kelas-fotografi-pemuda', 'title' => 'Kelas Fotografi dan Cerita Pemuda', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'kreatif', 'review' => 'approved', 'publication' => 'published', 'execution' => 'scheduled', 'days' => 19, 'district' => '33.27.09', 'mode' => 'hybrid'],
             ['slug' => 'latihan-kebugaran-pemuda', 'title' => 'Latihan Kebugaran Pemuda Pemalang', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'olahraga', 'review' => 'approved', 'publication' => 'published', 'execution' => 'scheduled', 'days' => 8, 'district' => '33.27.12', 'mode' => 'offline'],
             ['slug' => 'bootcamp-digital-pemalang', 'title' => 'Bootcamp Digital Pemalang', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'completed', 'days' => -10],
@@ -32,10 +33,11 @@ class ActivitySeeder extends Seeder
             $organization = Organization::query()->where('slug', $record['organization'])->firstOrFail();
             $category = ActivityCategory::query()->where('slug', $record['category'])->firstOrFail();
             $district = AdministrativeArea::query()->where('code', $record['district'] ?? '33.27.08')->firstOrFail();
+            $program = isset($record['program']) ? Program::query()->where('slug', $record['program'])->firstOrFail() : null;
             $start = now()->startOfHour()->addDays($record['days'])->setHour(9);
             $end = $record['slug'] === 'bootcamp-digital-pemalang' ? $start->copy()->addDays(2)->setHour(16) : $start->copy()->addHours(4);
             $activity = Activity::withTrashed()->updateOrCreate(['slug' => $record['slug']], [
-                'organization_id' => $organization->getKey(), 'program_id' => null, 'category_id' => $category->getKey(),
+                'organization_id' => $organization->getKey(), 'program_id' => $program?->getKey(), 'category_id' => $category->getKey(),
                 'created_by_user_id' => $manager->getKey(), 'title' => $record['title'],
                 'description' => 'Activity pengembangan yang menggambarkan kegiatan pemuda di Kabupaten Pemalang.',
                 'location_type' => $record['mode'] ?? 'offline', 'venue_name' => ($record['mode'] ?? 'offline') === 'online' ? null : 'Gedung Pemuda '.$district->name, 'administrative_area_id' => $district->getKey(),

@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             IdentityVerificationSeeder::class,
             OrganizationSeeder::class,
             OrganizationMembershipSeeder::class,
+            ProgramCategorySeeder::class,
+            ProgramSeeder::class,
             ActivitySeeder::class,
             ActivitySessionSeeder::class,
             ActivityParticipationSeeder::class,

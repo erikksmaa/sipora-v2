@@ -6,6 +6,7 @@ use App\Http\Controllers\Manager\ActivityParticipantController;
 use App\Http\Controllers\Manager\ActivitySessionController;
 use App\Http\Controllers\Manager\CommunityMemberController;
 use App\Http\Controllers\Manager\CommunityWorkspaceController;
+use App\Http\Controllers\Manager\ProgramController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('manager.')
@@ -17,6 +18,12 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::post('/{organization}/join-requests/{membership}/review', [CommunityMemberController::class, 'review'])->name('join-requests.review');
         Route::patch('/{organization}/members/{membership}/role', [CommunityMemberController::class, 'updateRole'])->name('members.role.update');
         Route::delete('/{organization}/members/{membership}', [CommunityMemberController::class, 'destroy'])->name('members.destroy');
+        Route::get('/{organization}/programs', [ProgramController::class, 'index'])->name('programs.index');
+        Route::get('/{organization}/programs/create', [ProgramController::class, 'create'])->name('programs.create');
+        Route::post('/{organization}/programs', [ProgramController::class, 'store'])->name('programs.store');
+        Route::get('/{organization}/programs/{program}', [ProgramController::class, 'show'])->name('programs.show');
+        Route::get('/{organization}/programs/{program}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
+        Route::patch('/{organization}/programs/{program}', [ProgramController::class, 'update'])->name('programs.update');
         Route::get('/{organization}/activities', [ActivityController::class, 'index'])->name('activities.index');
         Route::get('/{organization}/activities/create', [ActivityController::class, 'create'])->name('activities.create');
         Route::post('/{organization}/activities', [ActivityController::class, 'store'])->name('activities.store');

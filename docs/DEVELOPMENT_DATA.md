@@ -69,3 +69,12 @@ Youth scenarios:
 - Remove all interests from a local test account to see the neutral fallback: upcoming public Activity ordered by date and recently approved active Community not already joined.
 
 Personalization is deterministic. It uses only Interest slugs that exactly match Activity Category slugs, completed accepted Activity categories, and active Community memberships. It does not inspect identity data, profile visibility, attendance notes, review notes, or behavioral history.
+
+## Phase 16 Program scenarios
+
+- Sign in as `youth1@sipora.test` and open the Komunitas Programmer Pemalang Manager workspace. `Program Pemuda Digital 2026` is a planned Program with `Workshop Web Development Pemula` linked to it.
+- `Program Kepemimpinan Muda` is a valid planned Program without Activity. Its detail page explains that at least one Activity will be required before Proposal submission becomes available in a later phase.
+- Other Activities in Komunitas Programmer Pemalang remain standalone, proving `activities.program_id` stays optional.
+- Sign in as `youth3@sipora.test` to manage `Program Olahraga Komunitas` under Pemuda Olahraga Pemalang. It provides the cross-organization authorization scenario: each manager can only view, edit, or link Programs within their own contextual Community.
+- Program categories in the development database are deterministic samples only and are not official Dindikpora master data.
+- Proposal, Logbook, financial reporting / E-LPJ, evaluation, and public Program discovery are intentionally unavailable in Phase 16.

@@ -81,6 +81,11 @@ class Organization extends Model
         return $this->hasMany(Activity::class);
     }
 
+    public function programs(): HasMany
+    {
+        return $this->hasMany(Program::class);
+    }
+
     public function latestVerificationRequest(): HasOne
     {
         return $this->hasOne(OrganizationVerificationRequest::class)->latestOfMany('submitted_at');

@@ -14,6 +14,7 @@ use App\Models\Activity;
 use App\Models\ActivityCategory;
 use App\Models\AdministrativeArea;
 use App\Models\Organization;
+use App\Models\Program;
 use App\Services\Community\ManagedCommunityService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ final class ActivityController extends Controller
     {
         $this->ensureBelongs($organization, $activity);
         Gate::authorize('view', $activity);
-        $activity->load(['category', 'administrativeArea', 'latestReview']);
+        $activity->load(['category', 'administrativeArea', 'latestReview', 'program']);
 
         return view('manager.activities.show', ['organization' => $organization, 'activity' => $activity,
             'managedCommunities' => $managed->forUser($request->user())]);
@@ -123,6 +124,8 @@ final class ActivityController extends Controller
             'managedCommunities' => $managed->forUser($request->user()),
             'categories' => ActivityCategory::query()->orderBy('name')->get(),
             'areas' => AdministrativeArea::query()->orderBy('name')->get(),
+            'programs' => Program::query()->where('organization_id', $organization->getKey())
+                ->whereIn('execution_status', [Program::STATUS_PLANNED, Program::STATUS_RUNNING])->orderBy('title')->get(),
         ]);
     }
 

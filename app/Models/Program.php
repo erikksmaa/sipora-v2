@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Concerns\HasBinaryUuid;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+#[Fillable(['organization_id', 'category_id', 'created_by_user_id', 'title', 'slug', 'description', 'objectives', 'start_date', 'end_date', 'execution_status'])]
+#[Hidden(['organization_id', 'category_id', 'created_by_user_id'])]
+class Program extends Model
+{
+    use HasBinaryUuid, SoftDeletes;
+
+    public const STATUS_PLANNED = 'planned';
+
+    public const STATUS_RUNNING = 'running';
+
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_CANCELLED = 'cancelled';
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ProgramCategory::class, 'category_id');
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class)->orderBy('start_at');
+    }
+
+    protected function casts(): array
+    {
+        return ['start_date' => 'date', 'end_date' => 'date'];
+    }
+}

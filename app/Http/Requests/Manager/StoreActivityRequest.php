@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Manager;
 
 use App\Rules\BinaryUuidExists;
+use App\Rules\ProgramBelongsToOrganization;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,6 +19,7 @@ class StoreActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'program_id' => ['nullable', 'uuid', new ProgramBelongsToOrganization($this->route('organization'))],
             'category_id' => ['required', 'uuid', new BinaryUuidExists('activity_categories')],
             'title' => ['required', 'string', 'max:220'],
             'description' => ['nullable', 'string', 'max:10000'],
