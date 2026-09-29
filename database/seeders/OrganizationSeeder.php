@@ -22,10 +22,9 @@ class OrganizationSeeder extends Seeder
         }
 
         $verifier = User::query()->where('email', 'verifier@sipora.test')->firstOrFail();
-        $district = AdministrativeArea::query()->where('code', '33.27.08')->firstOrFail();
         $records = [
-            ['slug' => 'komunitas-programmer-pemalang', 'name' => 'Komunitas Programmer Pemalang', 'owner' => 'youth1@sipora.test', 'category' => 'komunitas-teknologi', 'review' => 'approved', 'operational' => 'active'],
-            ['slug' => 'pemuda-olahraga-pemalang', 'name' => 'Pemuda Olahraga Pemalang', 'owner' => 'youth3@sipora.test', 'category' => 'komunitas-olahraga', 'review' => 'approved', 'operational' => 'active'],
+            ['slug' => 'komunitas-programmer-pemalang', 'name' => 'Komunitas Programmer Pemalang', 'owner' => 'youth1@sipora.test', 'category' => 'komunitas-teknologi', 'review' => 'approved', 'operational' => 'active', 'district' => '33.27.08'],
+            ['slug' => 'pemuda-olahraga-pemalang', 'name' => 'Pemuda Olahraga Pemalang', 'owner' => 'youth3@sipora.test', 'category' => 'komunitas-olahraga', 'review' => 'approved', 'operational' => 'active', 'district' => '33.27.12'],
             ['slug' => 'forum-kreatif-pemalang', 'name' => 'Forum Kreatif Pemalang', 'owner' => 'youth2@sipora.test', 'category' => 'komunitas-kreatif', 'review' => 'pending_review', 'operational' => 'inactive'],
             ['slug' => 'wirausaha-muda-pemalang', 'name' => 'Wirausaha Muda Pemalang', 'owner' => 'youth2@sipora.test', 'category' => 'komunitas-kewirausahaan', 'review' => 'revision', 'operational' => 'inactive'],
             ['slug' => 'sahabat-kreatif-pesisir', 'name' => 'Sahabat Kreatif Pesisir', 'owner' => 'youth3@sipora.test', 'category' => 'komunitas-kreatif', 'review' => 'rejected', 'operational' => 'inactive'],
@@ -34,6 +33,7 @@ class OrganizationSeeder extends Seeder
         foreach ($records as $record) {
             $owner = User::query()->where('email', $record['owner'])->firstOrFail();
             $category = OrganizationCategory::query()->where('slug', $record['category'])->firstOrFail();
+            $district = AdministrativeArea::query()->where('code', $record['district'] ?? '33.27.09')->firstOrFail();
             $approved = $record['review'] === 'approved';
             $organization = Organization::withTrashed()->updateOrCreate(['slug' => $record['slug']], [
                 'created_by_user_id' => $owner->getKey(), 'category_id' => $category->getKey(), 'administrative_area_id' => $district->getKey(),

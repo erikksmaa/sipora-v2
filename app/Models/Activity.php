@@ -41,6 +41,11 @@ class Activity extends Model
 
     public const EXECUTION_CANCELLED = 'cancelled';
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);

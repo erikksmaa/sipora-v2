@@ -18,5 +18,6 @@ The approved contract is `sipora_v2_mysql_backend_driven_clean_v2.sql`. Laravel 
 | Activity Passport | Implemented | Derived read model from completed accepted participation | 12 | No persistence table exists in approved SQL |
 | certificates | Implemented | Approved `user_certificates` table plus dynamic private PDF | 13 | Public verification uses immutable database code |
 | Youth Portfolio | Implemented read model | Composed from profile, visibility, enrichment, membership, Passport, and certificate data | 14 | No Portfolio persistence table exists in approved SQL |
+| Discovery / Search / Personalization | Implemented query layer | Public Activity and Community queries plus deterministic Youth suggestions | 15 | No search, recommendation, behavior, or history persistence; MySQL queries use existing indexes |
 | Programs | Future | Approved Program domain tables | Future | Added only in its feature phase |
 | Opportunities | Future | Approved Opportunity domain tables | Future | Added only in its feature phase |

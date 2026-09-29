@@ -1,0 +1,13 @@
+@extends('layouts.public')
+@section('title', 'Pencarian · SIPORA')
+@section('content')
+<section class="bg-[#18245c] px-5 py-14 text-white"><div class="mx-auto max-w-5xl"><p class="text-xs font-black uppercase tracking-[.18em] text-orange-300">Pencarian SIPORA</p><h1 class="mt-3 text-4xl font-black">Cari Activity dan Community</h1><form class="mt-7 flex flex-col gap-3 sm:flex-row" method="GET" action="{{ route('search.index') }}"><label class="flex-1"><span class="sr-only">Kata pencarian</span><input class="landing-search h-12" type="search" name="q" value="{{ $query }}" maxlength="120" placeholder="Contoh: teknologi, olahraga, atau Pemalang"></label><button class="landing-btn-primary" type="submit">Cari sekarang</button></form></div></section>
+<div class="mx-auto max-w-5xl space-y-12 px-5 py-12">
+    @if($query === '')
+        <section class="rounded-3xl border-2 border-dashed border-slate-200 bg-white p-12 text-center"><h2 class="text-2xl font-black text-[#18245c]">Mulai pencarianmu</h2><p class="mt-2 text-slate-500">Masukkan kata kunci untuk menemukan Activity dan Community publik.</p></section>
+    @else
+        <section><div class="flex items-end justify-between gap-3"><div><p class="text-xs font-black uppercase tracking-wider text-orange-600">Hasil terkelompok</p><h2 class="mt-1 text-2xl font-black text-[#18245c]">Activity</h2></div><a class="text-sm font-bold text-[#3346a8]" href="{{ route('activities.index', ['q'=>$query]) }}">Semua Activity →</a></div><div class="mt-5 grid gap-5 md:grid-cols-2">@forelse($activities as $activity)<x-discovery.activity-card :activity="$activity" compact />@empty<p class="col-span-full rounded-2xl bg-slate-50 p-6 text-sm text-slate-500">Tidak ada Activity publik yang cocok.</p>@endforelse</div></section>
+        <section><div class="flex items-end justify-between gap-3"><h2 class="text-2xl font-black text-[#18245c]">Community</h2><a class="text-sm font-bold text-[#3346a8]" href="{{ route('communities.index', ['q'=>$query]) }}">Semua Community →</a></div><div class="mt-5 grid gap-5 md:grid-cols-2">@forelse($communities as $community)<x-discovery.community-card :community="$community" compact />@empty<p class="col-span-full rounded-2xl bg-slate-50 p-6 text-sm text-slate-500">Tidak ada Community publik yang cocok.</p>@endforelse</div></section>
+    @endif
+</div>
+@endsection

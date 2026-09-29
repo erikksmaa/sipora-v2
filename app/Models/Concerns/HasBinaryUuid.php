@@ -34,13 +34,17 @@ trait HasBinaryUuid
 
     public function getRouteKey(): mixed
     {
-        return $this->uuid();
+        return $this->getRouteKeyName() === $this->getKeyName()
+            ? $this->uuid()
+            : $this->getAttribute($this->getRouteKeyName());
     }
 
     public function resolveRouteBindingQuery($query, $value, $field = null)
     {
-        if ($field && $field !== $this->getKeyName()) {
-            return parent::resolveRouteBindingQuery($query, $value, $field);
+        $routeField = $field ?? $this->getRouteKeyName();
+
+        if ($routeField !== $this->getKeyName()) {
+            return parent::resolveRouteBindingQuery($query, $value, $routeField);
         }
 
         try {

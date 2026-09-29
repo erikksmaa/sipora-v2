@@ -52,3 +52,20 @@ Attendance is supporting evidence only. The contextual leader or manager makes t
 - `youth3@sipora.test` is a sparse Portfolio example for owner and public empty-state checks.
 - `youth2@sipora.test` is the privacy example. Skills, education, organization experience, and achievements remain visible to the owner with a private indicator but are omitted from `/portfolio/nabila-putri-salsabila`.
 - Email, phone, birth date, detailed domicile address, identity data/documents, review notes, attendance notes, and private certificate download links never appear on public Portfolio pages.
+
+## Phase 15 discovery scenarios
+
+Guest scenarios:
+
+- Open `/activities` to see approved, published, upcoming Activity ordered by date. Search `teknologi`, filter category `Teknologi`, or filter the districts Pemalang, Taman, and Comal.
+- Open `/communities` to search approved, active Community and filter by category or district. Pending, revision, rejected, suspended, and archived Community records never appear.
+- Open `/search?q=teknologi` for grouped public Activity and Community results. Blank searches show an instruction state and wildcard characters are treated as literal input.
+- The landing page now reads upcoming Activity and active Community from the database. Opportunity, Program, public statistics, and youth stories remain isolated presentation placeholders until their domains exist.
+
+Youth scenarios:
+
+- Sign in as `youth1@sipora.test`. Youth Home suggests upcoming Technology and Education Activity because their category slugs match the account's stored interests or completed Activity history.
+- Sign in as `youth3@sipora.test`. The active Community membership is excluded from Community suggestions.
+- Remove all interests from a local test account to see the neutral fallback: upcoming public Activity ordered by date and recently approved active Community not already joined.
+
+Personalization is deterministic. It uses only Interest slugs that exactly match Activity Category slugs, completed accepted Activity categories, and active Community memberships. It does not inspect identity data, profile visibility, attendance notes, review notes, or behavioral history.

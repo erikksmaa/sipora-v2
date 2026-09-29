@@ -3,15 +3,20 @@
 namespace App\Presenters;
 
 use App\Models\Interest;
+use App\Services\Discovery\ActivityDiscoveryService;
+use App\Services\Discovery\CommunityDiscoveryService;
 
 /**
- * Temporary presentation data for the public landing page.
- *
- * These values are not domain records and must be replaced by read-model queries
- * when the Activity, Community, Opportunity, Program, and analytics domains exist.
+ * Mixed public landing read model. Activity, Community, and Interest data come
+ * from approved domain tables. Future domains remain isolated placeholders.
  */
 final class PublicLandingPresenter
 {
+    public function __construct(
+        private readonly ActivityDiscoveryService $activities,
+        private readonly CommunityDiscoveryService $communities,
+    ) {}
+
     /** @return array<string, mixed> */
     public function present(): array
     {
@@ -32,20 +37,14 @@ final class PublicLandingPresenter
         return [
             'presentation' => [
                 'is_placeholder' => true,
-                'source' => 'temporary_landing_presentation',
+                'source' => 'mixed_landing_presentation',
+                'database_domains' => ['interests', 'activities', 'communities'],
+                'placeholder_domains' => ['opportunities', 'programs', 'statistics', 'stories'],
                 'interests_source' => $databaseInterests->isNotEmpty() ? 'database' : 'placeholder_fallback',
             ],
             'interests' => $interests,
-            'activities' => [
-                ['category' => 'Teknologi', 'title' => 'Workshop Web Development untuk Pemula', 'date' => '18 Oktober 2026', 'location' => 'Gedung Pemuda Pemalang', 'quota' => '32 dari 40 peserta', 'progress' => 80, 'image' => 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80', 'badge' => 'Pendaftaran Dibuka'],
-                ['category' => 'Lingkungan', 'title' => 'Aksi Pemuda Hijau: Tanam 1.000 Mangrove', 'date' => '26 Oktober 2026', 'location' => 'Pantai Widuri, Pemalang', 'quota' => '76 dari 100 peserta', 'progress' => 76, 'image' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=900&q=80', 'badge' => 'Pendaftaran Dibuka'],
-                ['category' => 'Kreatif', 'title' => 'Kelas Fotografi dan Cerita dari Pemalang', 'date' => '2 November 2026', 'location' => 'Pendopo Kabupaten Pemalang', 'quota' => '21 dari 35 peserta', 'progress' => 60, 'image' => 'https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?auto=format&fit=crop&w=900&q=80', 'badge' => 'Kuota Terbatas'],
-            ],
-            'communities' => [
-                ['initials' => 'KP', 'name' => 'Komunitas Programmer Pemalang', 'category' => 'Teknologi', 'members' => '286 anggota', 'activities' => '18 kegiatan'],
-                ['initials' => 'PP', 'name' => 'Pemuda Peduli Pemalang', 'category' => 'Sosial & Lingkungan', 'members' => '194 anggota', 'activities' => '26 kegiatan'],
-                ['initials' => 'SK', 'name' => 'Sanggar Kreatif Ikhlas', 'category' => 'Seni & Budaya', 'members' => '128 anggota', 'activities' => '14 kegiatan'],
-            ],
+            'activities' => $this->activities->featured(),
+            'communities' => $this->communities->featured(),
             'opportunities' => [
                 ['type' => 'Beasiswa', 'title' => 'Beasiswa Pemuda Berprestasi 2026', 'provider' => 'Dindikpora Kabupaten Pemalang', 'deadline' => '30 Oktober 2026', 'icon' => '🎓'],
                 ['type' => 'Relawan', 'title' => 'Relawan Festival Literasi Pemalang', 'provider' => 'Forum Literasi Daerah', 'deadline' => '5 November 2026', 'icon' => '🙌'],

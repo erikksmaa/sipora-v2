@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Presenters\PublicLandingPresenter;
+use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -57,7 +58,20 @@ class PublicLandingPageTest extends TestCase
         $presentation = app(PublicLandingPresenter::class)->present()['presentation'];
 
         $this->assertTrue($presentation['is_placeholder']);
-        $this->assertSame('temporary_landing_presentation', $presentation['source']);
+        $this->assertSame('mixed_landing_presentation', $presentation['source']);
+        $this->assertSame(['interests', 'activities', 'communities'], $presentation['database_domains']);
+        $this->assertSame(['opportunities', 'programs', 'statistics', 'stories'], $presentation['placeholder_domains']);
+    }
+
+    public function test_landing_uses_real_public_activity_and_community_data(): void
+    {
+        $this->seed(DatabaseSeeder::class);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('Workshop Web Development Pemula')
+            ->assertSee('Komunitas Programmer Pemalang')
+            ->assertDontSee('Activity Belum Terbit');
     }
 
     public function test_no_future_domain_migration_was_added_for_the_landing_page(): void

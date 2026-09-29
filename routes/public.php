@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ActivityDiscoveryController;
 use App\Http\Controllers\ActivityRegistrationController;
+use App\Http\Controllers\CommunityDiscoveryController;
+use App\Http\Controllers\GlobalSearchController;
 use App\Http\Controllers\PublicActivityController;
 use App\Http\Controllers\PublicCertificateController;
 use App\Http\Controllers\PublicCommunityController;
@@ -10,6 +13,9 @@ use App\Http\Controllers\Youth\CommunityMembershipController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', PublicLandingController::class)->name('home');
+Route::get('/activities', ActivityDiscoveryController::class)->name('activities.index');
+Route::get('/communities', CommunityDiscoveryController::class)->name('communities.index');
+Route::get('/search', GlobalSearchController::class)->name('search.index');
 Route::get('/communities/{organization}', [PublicCommunityController::class, 'show'])->name('communities.show');
 Route::get('/communities/{organization}/logo', [PublicCommunityController::class, 'logo'])->name('communities.logo');
 Route::get('/activities/{activity}', [PublicActivityController::class, 'show'])->name('activities.show');

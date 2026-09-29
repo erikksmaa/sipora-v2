@@ -36,6 +36,11 @@ class Organization extends Model
 
     public const REVIEW_REVISION = 'revision';
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by_user_id');
