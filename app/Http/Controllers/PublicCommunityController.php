@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
+use App\Services\Discovery\ProgramDiscoveryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class PublicCommunityController extends Controller
 {
-    public function show(Request $request, Organization $organization): View
+    public function show(Request $request, Organization $organization, ProgramDiscoveryService $programDiscovery): View
     {
         $this->ensurePublic($organization);
         $organization->load(['category', 'administrativeArea'])->loadCount([
@@ -25,8 +26,14 @@ final class PublicCommunityController extends Controller
             ->where('review_status', Activity::REVIEW_APPROVED)
             ->where('publication_status', Activity::PUBLICATION_PUBLISHED)
             ->with('category')->orderBy('start_at')->limit(6)->get();
+        $programs = $programDiscovery->publicQuery()
+            ->where('organization_id', $organization->getKey())
+            ->orderByRaw("FIELD(execution_status, 'running', 'completed')")
+            ->orderByDesc('start_date')
+            ->limit(6)
+            ->get();
 
-        return view('public.communities.show', compact('organization', 'membership', 'activities'));
+        return view('public.communities.show', compact('organization', 'membership', 'activities', 'programs'));
     }
 
     public function logo(Organization $organization): StreamedResponse

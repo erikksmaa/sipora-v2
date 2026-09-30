@@ -9,6 +9,9 @@ use App\Models\Opportunity;
 use App\Models\OpportunityCategory;
 use App\Models\Organization;
 use App\Models\OrganizationCategory;
+use App\Models\Program;
+use App\Models\ProgramCategory;
+use App\Models\ProgramProposal;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -25,10 +28,13 @@ class GlobalSearchTest extends TestCase
         $this->activity('Digital Draft Rahasia', $public, $category, $creator, $area, ['review_status' => 'draft', 'publication_status' => 'unpublished', 'published_at' => null]);
         $opportunityCategory = OpportunityCategory::create(['name' => 'Beasiswa', 'slug' => 'beasiswa']);
         Opportunity::create(['category_id' => $opportunityCategory->getKey(), 'title' => 'Beasiswa Digital Pemuda', 'slug' => 'beasiswa-digital-pemuda', 'provider_name' => 'Dindikpora', 'description' => 'Peluang digital.', 'administrative_area_id' => $area->getKey(), 'external_url' => 'https://example.test/beasiswa', 'deadline_at' => now()->addWeek(), 'publication_status' => Opportunity::STATUS_PUBLISHED, 'published_at' => now()->subMinute()]);
+        $programCategory = ProgramCategory::create(['name' => 'Pemberdayaan', 'slug' => 'pemberdayaan']);
+        $program = Program::create(['organization_id' => $public->getKey(), 'category_id' => $programCategory->getKey(), 'created_by_user_id' => $creator->getKey(), 'title' => 'Program Digital Publik', 'slug' => 'program-digital-publik', 'description' => 'Program publik.', 'execution_status' => Program::STATUS_RUNNING]);
+        ProgramProposal::create(['program_id' => $program->getKey(), 'version' => 1, 'status' => ProgramProposal::STATUS_APPROVED, 'submitted_at' => now()->subDay(), 'reviewed_at' => now()]);
 
         $this->get(route('search.index', ['q' => 'Digital']))
             ->assertOk()
-            ->assertSeeInOrder(['Activity', 'Digital Aman Publik', 'Community', $public->name, 'Opportunity', 'Beasiswa Digital Pemuda'])
+            ->assertSeeInOrder(['Activity', 'Digital Aman Publik', 'Community', $public->name, 'Opportunity', 'Beasiswa Digital Pemuda', 'Program', 'Program Digital Publik'])
             ->assertDontSee('Digital Draft Rahasia')
             ->assertDontSee($private->name);
     }

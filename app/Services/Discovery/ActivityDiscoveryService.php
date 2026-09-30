@@ -5,6 +5,7 @@ namespace App\Services\Discovery;
 use App\Models\Activity;
 use App\Models\ActivityCategory;
 use App\Models\AdministrativeArea;
+use App\Models\Organization;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -68,6 +69,9 @@ final class ActivityDiscoveryService
             ->where('publication_status', Activity::PUBLICATION_PUBLISHED)
             ->whereIn('execution_status', [Activity::EXECUTION_SCHEDULED, Activity::EXECUTION_ONGOING])
             ->where('end_at', '>=', now())
+            ->whereHas('organization', fn (Builder $organization): Builder => $organization
+                ->where('review_status', Organization::REVIEW_APPROVED)
+                ->where('operational_status', Organization::OPERATIONAL_ACTIVE))
             ->with(['category:id,name,slug', 'organization:id,name,slug', 'administrativeArea:id,name,code']);
     }
 

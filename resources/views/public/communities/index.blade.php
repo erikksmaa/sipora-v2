@@ -1,5 +1,7 @@
 @extends('layouts.public')
 @section('title', 'Jelajahi Community · SIPORA')
+@section('meta_description', 'Jelajahi Community aktif dan terverifikasi di SIPORA Kabupaten Pemalang.')
+@section('canonical', route('communities.index'))
 @section('content')
 <section class="bg-[#18245c] px-5 py-14 text-white"><div class="mx-auto max-w-7xl"><p class="text-xs font-black uppercase tracking-[.18em] text-orange-300">Tumbuh bersama</p><h1 class="mt-3 text-4xl font-black sm:text-5xl">Temukan Community yang tepat</h1><p class="mt-4 max-w-2xl text-lg leading-8 text-indigo-100">Jelajahi Community aktif dan terverifikasi di seluruh Kabupaten Pemalang.</p></div></section>
 <div class="mx-auto max-w-7xl px-5 py-10">

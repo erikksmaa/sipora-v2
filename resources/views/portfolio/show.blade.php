@@ -1,17 +1,15 @@
-@extends('layouts.base')
+@extends($portfolio['is_owner'] ? 'layouts.base' : 'layouts.public')
 @section('title', $portfolio['identity']['name'].' · Youth Portfolio SIPORA')
 @if(!$portfolio['is_owner'])
-@push('head')
-<meta name="description" content="Youth Portfolio SIPORA milik {{ $portfolio['identity']['name'] }}.">
-<link rel="canonical" href="{{ $portfolio['public_url'] }}">
-@endpush
+@section('meta_description', 'Youth Portfolio SIPORA milik '.$portfolio['identity']['name'].'.')
+@section('canonical', $portfolio['public_url'])
 @endif
 @section('content')
 @php
     $initials = collect(explode(' ', $portfolio['identity']['name']))->filter()->take(2)->map(fn($word) => mb_substr($word, 0, 1))->implode('');
     $hidden = fn(string $section) => $portfolio['is_owner'] && !($portfolio['visibility'][$section] ?? false);
 @endphp
-<div class="space-y-6">
+<div class="{{ $portfolio['is_owner'] ? '' : 'mx-auto max-w-7xl px-5 py-10' }} space-y-6">
     @if($portfolio['is_owner'])
         <section class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-[#243378]">
             <div><strong>Pratinjau Portfolio pemilik.</strong> Bagian bertanda privat tetap terlihat di sini, tetapi tidak tampil kepada publik.</div>
@@ -48,12 +46,12 @@
     </section>
 
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,.55fr)]">
-        <div class="space-y-6">
+        <div class="min-w-0 space-y-6">
             @if($portfolio['activities'] || $portfolio['is_owner'])
             <section class="sipora-card">
                 <div class="flex flex-wrap items-center justify-between gap-3"><div><p class="text-xs font-extrabold uppercase tracking-wider text-orange-600">Rekam jejak resmi</p><h2 class="mt-1 text-2xl font-black text-[#14205c]">Pengalaman Terverifikasi SIPORA</h2></div><x-portfolio.provenance-badge verified />@if($hidden('activity_passport'))<span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">Privat</span>@endif</div>
                 <div class="mt-5 space-y-4">@forelse($portfolio['activities'] as $activity)
-                    <article class="rounded-2xl border border-indigo-100 bg-[#f8f9ff] p-5"><div class="flex flex-wrap items-start justify-between gap-3"><div><p class="text-xs font-bold uppercase tracking-wider text-[#3346a8]">{{ $activity['category'] ?: 'Activity' }}</p><h3 class="mt-1 text-lg font-black text-[#14205c]">{{ $activity['title'] }}</h3><p class="mt-1 text-sm text-slate-600">{{ $activity['organizer'] }}</p></div><span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">Selesai</span></div><dl class="mt-4 grid gap-2 text-sm sm:grid-cols-2"><div><dt class="text-slate-500">Peran</dt><dd class="font-bold capitalize">{{ $activity['role'] }}</dd></div><div><dt class="text-slate-500">Periode</dt><dd class="font-bold">{{ $activity['period'] }}</dd></div></dl>@if($activity['certificate'])<div class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white p-3 text-sm"><span class="font-semibold text-slate-600">Sertifikat {{ $activity['certificate']['number'] }}</span><a class="font-bold text-[#243378]" href="{{ $activity['certificate']['verify_url'] }}">Verifikasi sertifikat →</a></div>@endif</article>
+                    <article class="rounded-2xl border border-indigo-100 bg-[#f8f9ff] p-5"><div class="flex flex-wrap items-start justify-between gap-3"><div><p class="text-xs font-bold uppercase tracking-wider text-[#3346a8]">{{ $activity['category'] ?: 'Activity' }}</p><h3 class="mt-1 text-lg font-black text-[#14205c]">@if($activity['url'])<a class="hover:underline" href="{{ $activity['url'] }}">{{ $activity['title'] }}</a>@else{{ $activity['title'] }}@endif</h3><p class="mt-1 text-sm text-slate-600">{{ $activity['organizer'] }}</p></div><span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">Selesai</span></div><dl class="mt-4 grid gap-2 text-sm sm:grid-cols-2"><div><dt class="text-slate-500">Peran</dt><dd class="font-bold capitalize">{{ $activity['role'] }}</dd></div><div><dt class="text-slate-500">Periode</dt><dd class="font-bold">{{ $activity['period'] }}</dd></div></dl>@if($activity['certificate'])<div class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white p-3 text-sm"><span class="font-semibold text-slate-600">Sertifikat {{ $activity['certificate']['number'] }}</span><a class="font-bold text-[#243378]" href="{{ $activity['certificate']['verify_url'] }}">Verifikasi sertifikat →</a></div>@endif</article>
                 @empty<p class="rounded-xl border-2 border-dashed border-slate-200 p-8 text-center text-sm text-slate-500">Belum ada Activity yang diselesaikan. @if($portfolio['is_owner'])Activity akan muncul setelah partisipasi dinyatakan selesai oleh pengelola.@endif</p>@endforelse</div>
             </section>
             @endif
@@ -71,7 +69,7 @@
             @endif
         </div>
 
-        <aside class="space-y-6">
+        <aside class="min-w-0 space-y-6">
             @if($portfolio['skills'] || $portfolio['is_owner'])<section class="sipora-card"><div class="flex items-center justify-between gap-3"><h2 class="text-xl font-black text-[#14205c]">Keahlian</h2><x-portfolio.provenance-badge />@if($hidden('skills'))<span class="text-xs font-bold text-amber-700">Privat</span>@endif</div><div class="mt-4 flex flex-wrap gap-2">@forelse($portfolio['skills'] as $skill)<span class="interest-chip">{{ $skill }}</span>@empty<p class="text-sm text-slate-500">Belum ada keahlian. @if($portfolio['is_owner'])<a class="font-bold text-[#243378]" href="{{ route('youth.skills.edit') }}">Tambahkan</a>@endif</p>@endforelse</div></section>@endif
 
             @if($portfolio['educations'] || $portfolio['is_owner'])<section class="sipora-card"><div class="flex flex-wrap items-center justify-between gap-2"><h2 class="text-xl font-black text-[#14205c]">Pendidikan</h2><x-portfolio.provenance-badge />@if($hidden('education'))<span class="text-xs font-bold text-amber-700">Privat</span>@endif</div><div class="mt-4 space-y-4">@forelse($portfolio['educations'] as $education)<article class="border-l-2 border-indigo-200 pl-4"><h3 class="font-bold">{{ $education['institution'] }}</h3><p class="text-sm text-slate-600">{{ $education['level'] }}{{ $education['field'] ? ' · '.$education['field'] : '' }}</p><p class="mt-1 text-xs text-slate-500">{{ $education['period'] }}</p></article>@empty<p class="text-sm text-slate-500">Belum ada riwayat pendidikan.</p>@endforelse</div></section>@endif

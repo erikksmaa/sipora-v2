@@ -2,6 +2,7 @@
 
 namespace App\Services\Youth;
 
+use App\Models\Activity;
 use App\Models\ActivityParticipation;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
@@ -84,6 +85,11 @@ final class YouthPortfolioService
                 'role' => $participation->activity_role,
                 'period' => $this->period($participation->activity->start_at, $participation->activity->end_at),
                 'completed_at' => $participation->completed_at?->translatedFormat('d M Y'),
+                'url' => $participation->activity->review_status === Activity::REVIEW_APPROVED
+                    && $participation->activity->publication_status === Activity::PUBLICATION_PUBLISHED
+                    && $participation->activity->organization->review_status === Organization::REVIEW_APPROVED
+                    && $participation->activity->organization->operational_status === Organization::OPERATIONAL_ACTIVE
+                        ? route('activities.show', $participation->activity) : null,
                 'certificate' => $allowed('show_certificates') && $participation->certificate ? [
                     'number' => $participation->certificate->certificate_number,
                     'verify_url' => route('certificates.verify', $participation->certificate->verification_code),

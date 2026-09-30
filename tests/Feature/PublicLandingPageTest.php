@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Presenters\PublicLandingPresenter;
+use App\Services\PublicStatisticsService;
 use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,10 +34,9 @@ class PublicLandingPageTest extends TestCase
                 'Kegiatan yang Bisa Kamu Ikuti',
                 'Temukan Komunitas',
                 'Opportunity untuk Pemuda',
-                'Program Unggulan Dindikpora Pemalang',
+                'Program yang Sedang Berjalan dan Selesai',
                 'Bangun Portofolio Terverifikasi Sejak Dini',
                 'Statistik publik SIPORA',
-                'Dari Pemuda, untuk Pemalang',
                 'Ambil langkah pertamamu bersama SIPORA',
             ]);
     }
@@ -59,8 +59,8 @@ class PublicLandingPageTest extends TestCase
 
         $this->assertTrue($presentation['is_placeholder']);
         $this->assertSame('mixed_landing_presentation', $presentation['source']);
-        $this->assertSame(['interests', 'activities', 'communities', 'opportunities'], $presentation['database_domains']);
-        $this->assertSame(['programs', 'statistics', 'stories'], $presentation['placeholder_domains']);
+        $this->assertSame(['interests', 'activities', 'communities', 'opportunities', 'programs', 'statistics'], $presentation['database_domains']);
+        $this->assertSame(['portfolio_showcase'], $presentation['placeholder_domains']);
     }
 
     public function test_landing_uses_real_public_activity_and_community_data(): void
@@ -72,7 +72,20 @@ class PublicLandingPageTest extends TestCase
             ->assertSee('Workshop Web Development Pemula')
             ->assertSee('Komunitas Programmer Pemalang')
             ->assertSee('Beasiswa Pengembangan Pemuda Pemalang')
+            ->assertSee('Program Pemuda Digital 2026')
             ->assertDontSee('Activity Belum Terbit');
+    }
+
+    public function test_public_statistics_match_exact_seeded_public_aggregates(): void
+    {
+        $this->seed(DatabaseSeeder::class);
+
+        $this->assertSame([
+            ['value' => 2, 'label' => 'Community aktif'],
+            ['value' => 4, 'label' => 'Activity publik'],
+            ['value' => 3, 'label' => 'Opportunity publik'],
+            ['value' => 1, 'label' => 'Program selesai'],
+        ], app(PublicStatisticsService::class)->summarize());
     }
 
     public function test_no_future_domain_migration_was_added_for_the_landing_page(): void

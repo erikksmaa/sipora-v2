@@ -1,5 +1,7 @@
 @extends('layouts.public')
 @section('title', 'Opportunity Hub · SIPORA')
+@section('meta_description', 'Temukan informasi Opportunity eksternal yang dikurasi Admin SIPORA Kabupaten Pemalang.')
+@section('canonical', route('opportunities.index'))
 @section('content')
 <section class="bg-[#18245c] px-5 py-14 text-white"><div class="mx-auto max-w-7xl"><p class="text-xs font-black uppercase tracking-[.18em] text-orange-300">Opportunity Hub</p><h1 class="mt-3 text-4xl font-black sm:text-5xl">Temukan peluang pengembangan diri</h1><p class="mt-4 max-w-2xl text-lg leading-8 text-indigo-100">Informasi peluang eksternal yang dikurasi Admin SIPORA. Pendaftaran dilakukan pada situs penyedia.</p></div></section>
 <div class="mx-auto max-w-7xl px-5 py-10">

@@ -1,5 +1,7 @@
 @extends('layouts.public')
 @section('title', 'Jelajahi Activity · SIPORA')
+@section('meta_description', 'Temukan Activity terverifikasi yang dipublikasikan Community di SIPORA Kabupaten Pemalang.')
+@section('canonical', route('activities.index'))
 @section('content')
 <section class="bg-[#18245c] px-5 py-14 text-white"><div class="mx-auto max-w-7xl"><p class="text-xs font-black uppercase tracking-[.18em] text-orange-300">Eksplorasi publik</p><h1 class="mt-3 text-4xl font-black sm:text-5xl">Temukan Activity untuk bertumbuh</h1><p class="mt-4 max-w-2xl text-lg leading-8 text-indigo-100">Cari kegiatan terverifikasi yang telah dipublikasikan oleh Community di SIPORA.</p></div></section>
 <div class="mx-auto max-w-7xl px-5 py-10">

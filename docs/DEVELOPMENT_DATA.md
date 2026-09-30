@@ -60,7 +60,13 @@ Guest scenarios:
 - Open `/activities` to see approved, published, upcoming Activity ordered by date. Search `teknologi`, filter category `Teknologi`, or filter the districts Pemalang, Taman, and Comal.
 - Open `/communities` to search approved, active Community and filter by category or district. Pending, revision, rejected, suspended, and archived Community records never appear.
 - Open `/search?q=teknologi` for grouped public Activity and Community results. Blank searches show an instruction state and wildcard characters are treated as literal input.
-- The landing page now reads upcoming Activity and active Community from the database. Opportunity, Program, public statistics, and youth stories remain isolated presentation placeholders until their domains exist.
+- The landing page reads Interests, public Activity, active Community, published Opportunity, eligible public Program, and aggregate public statistics from the database. Only the generic Youth Portfolio feature illustration remains presentation-only content; it is not a person, testimonial, or persisted domain record.
+
+## Phase 22 public test matrix
+
+Guest routes: `/`, `/activities`, `/communities`, `/opportunities`, `/programs`, `/search`, `/portfolio/erik-kusuma-rais`, and `/certificates/verify/{verification_code}`. Use the seeded public slugs and the current certificate `verification_code`; certificate codes are generated per fresh seed.
+
+Youth transition checks: the same public routes remain accessible after authentication, while owner-only Portfolio, Passport, Certificates, saved Opportunity, notification, and workspace routes continue to require the authenticated role and ownership context.
 
 Youth scenarios:
 
