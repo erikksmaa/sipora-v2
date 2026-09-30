@@ -6,11 +6,12 @@ use App\Http\Controllers\Verifier\FinancialReportVerificationController;
 use App\Http\Controllers\Verifier\ProgramEvaluationController;
 use App\Http\Controllers\Verifier\ProgramMonitoringController;
 use App\Http\Controllers\Verifier\ProgramProposalVerificationController;
+use App\Http\Controllers\Verifier\VerifierDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->name('verifier.')
     ->group(function (): void {
-        Route::view('/dashboard', 'workspaces.verifier')->name('dashboard');
+        Route::get('/dashboard', VerifierDashboardController::class)->name('dashboard');
         Route::get('/community-verifications', [CommunityVerificationController::class, 'index'])->name('community-verifications.index');
         Route::get('/community-verifications/{organization}', [CommunityVerificationController::class, 'show'])->name('community-verifications.show');
         Route::post('/community-verifications/{organization}/review', [CommunityVerificationController::class, 'review'])->name('community-verifications.review');

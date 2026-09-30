@@ -1,0 +1,5 @@
+@extends('layouts.youth')
+@section('title', 'Opportunity Tersimpan · SIPORA')
+@section('content')
+<div class="mx-auto max-w-6xl"><div class="flex flex-wrap items-end justify-between gap-4"><div><p class="text-xs font-black uppercase tracking-wider text-orange-600">Opportunity Hub</p><h1 class="mt-1 text-3xl font-black text-[#18245c]">Opportunity tersimpan</h1><p class="mt-2 text-slate-600">Daftar ini hanya pengingat. Pendaftaran tetap dilakukan di situs penyedia.</p></div><a class="landing-btn-secondary" href="{{ route('opportunities.index') }}">Jelajahi Opportunity</a></div><div class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">@forelse ($bookmarks as $bookmark)<x-discovery.opportunity-card :opportunity="$bookmark->opportunity" />@empty<div class="col-span-full rounded-3xl border-2 border-dashed border-slate-200 bg-white p-12 text-center"><h2 class="text-xl font-black text-[#18245c]">Belum ada Opportunity tersimpan</h2><p class="mt-2 text-slate-500">Simpan peluang yang ingin kamu lihat kembali.</p></div>@endforelse</div>@if ($bookmarks->hasPages())<div class="mt-8">{{ $bookmarks->links() }}</div>@endif</div>
+@endsection

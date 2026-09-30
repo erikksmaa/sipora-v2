@@ -18,7 +18,7 @@
             <span><strong class="block text-xl leading-none tracking-tight text-[#243378]">SIPORA</strong><small class="text-[10px] font-semibold uppercase tracking-[0.13em] text-slate-500">Pemuda Pemalang</small></span>
         </a>
         <div class="hidden items-center gap-7 text-sm font-semibold text-slate-600 lg:flex">
-            <a href="{{ route('home') }}" class="text-[#243378]">Beranda</a><a href="{{ route('activities.index') }}" class="transition hover:text-[#243378]">Activity</a><a href="{{ route('communities.index') }}" class="transition hover:text-[#243378]">Community</a><a href="{{ route('search.index') }}" class="transition hover:text-[#243378]">Pencarian</a><a href="{{ route('home') }}#peluang" class="transition hover:text-[#243378]">Peluang</a><a href="{{ route('home') }}#program" class="transition hover:text-[#243378]">Program</a>
+            <a href="{{ route('home') }}" class="text-[#243378]">Beranda</a><a href="{{ route('activities.index') }}" class="transition hover:text-[#243378]">Activity</a><a href="{{ route('communities.index') }}" class="transition hover:text-[#243378]">Community</a><a href="{{ route('opportunities.index') }}" class="transition hover:text-[#243378]">Opportunity</a><a href="{{ route('search.index') }}" class="transition hover:text-[#243378]">Pencarian</a><a href="{{ route('home') }}#program" class="transition hover:text-[#243378]">Program</a>
         </div>
         <div class="hidden items-center gap-3 sm:flex">
             @auth
@@ -31,7 +31,7 @@
     </nav>
     <div id="public-menu" x-cloak x-show="open" x-transition class="border-t border-slate-100 bg-white px-5 py-5 lg:hidden">
         <div class="mx-auto grid max-w-7xl gap-1 text-sm font-semibold">
-            @foreach (['Beranda' => route('home'), 'Activity' => route('activities.index'), 'Community' => route('communities.index'), 'Pencarian' => route('search.index'), 'Peluang' => route('home').'#peluang', 'Program' => route('home').'#program'] as $label => $href)<a href="{{ $href }}" @click="open = false" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">{{ $label }}</a>@endforeach
+            @foreach (['Beranda' => route('home'), 'Activity' => route('activities.index'), 'Community' => route('communities.index'), 'Opportunity' => route('opportunities.index'), 'Pencarian' => route('search.index'), 'Program' => route('home').'#program'] as $label => $href)<a href="{{ $href }}" @click="open = false" class="rounded-lg px-3 py-2.5 hover:bg-slate-50">{{ $label }}</a>@endforeach
             <div class="mt-3 flex gap-3 border-t border-slate-100 pt-4">@auth<a href="{{ route(\App\Support\Auth\HomeRoute::for(auth()->user())) }}" class="landing-btn-primary flex-1">Ruang Saya</a>@else<a href="{{ route('login') }}" class="btn-secondary flex-1">Masuk</a><a href="{{ route('register') }}" class="landing-btn-primary flex-1">Daftar</a>@endauth</div>
         </div>
     </div>

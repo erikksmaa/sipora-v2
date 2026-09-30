@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             InterestSeeder::class,
             SkillSeeder::class,
             ActivityCategorySeeder::class,
+            OpportunityCategorySeeder::class,
             UserSeeder::class,
             UserProfileSeeder::class,
             UserEnrichmentSeeder::class,
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ProgramCategorySeeder::class,
             ProgramSeeder::class,
             ActivitySeeder::class,
+            OpportunitySeeder::class,
             ProgramProposalSeeder::class,
             ProgramLogbookSeeder::class,
             FinancialReportSeeder::class,
@@ -41,6 +43,7 @@ class DatabaseSeeder extends Seeder
             ActivityParticipationSeeder::class,
             ActivityAttendanceSeeder::class,
             UserCertificateSeeder::class,
+            OpportunityBookmarkSeeder::class,
             NotificationSeeder::class,
         ]);
     }

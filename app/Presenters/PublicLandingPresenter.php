@@ -5,6 +5,7 @@ namespace App\Presenters;
 use App\Models\Interest;
 use App\Services\Discovery\ActivityDiscoveryService;
 use App\Services\Discovery\CommunityDiscoveryService;
+use App\Services\Discovery\OpportunityDiscoveryService;
 
 /**
  * Mixed public landing read model. Activity, Community, and Interest data come
@@ -15,6 +16,7 @@ final class PublicLandingPresenter
     public function __construct(
         private readonly ActivityDiscoveryService $activities,
         private readonly CommunityDiscoveryService $communities,
+        private readonly OpportunityDiscoveryService $opportunities,
     ) {}
 
     /** @return array<string, mixed> */
@@ -38,18 +40,14 @@ final class PublicLandingPresenter
             'presentation' => [
                 'is_placeholder' => true,
                 'source' => 'mixed_landing_presentation',
-                'database_domains' => ['interests', 'activities', 'communities'],
-                'placeholder_domains' => ['opportunities', 'programs', 'statistics', 'stories'],
+                'database_domains' => ['interests', 'activities', 'communities', 'opportunities'],
+                'placeholder_domains' => ['programs', 'statistics', 'stories'],
                 'interests_source' => $databaseInterests->isNotEmpty() ? 'database' : 'placeholder_fallback',
             ],
             'interests' => $interests,
             'activities' => $this->activities->featured(),
             'communities' => $this->communities->featured(),
-            'opportunities' => [
-                ['type' => 'Beasiswa', 'title' => 'Beasiswa Pemuda Berprestasi 2026', 'provider' => 'Dindikpora Kabupaten Pemalang', 'deadline' => '30 Oktober 2026', 'icon' => '🎓'],
-                ['type' => 'Relawan', 'title' => 'Relawan Festival Literasi Pemalang', 'provider' => 'Forum Literasi Daerah', 'deadline' => '5 November 2026', 'icon' => '🙌'],
-                ['type' => 'Inkubasi', 'title' => 'Inkubasi Wirausaha Muda Pemalang', 'provider' => 'Dinas Koperasi dan UMKM', 'deadline' => '12 November 2026', 'icon' => '🚀'],
-            ],
+            'opportunities' => $this->opportunities->featured(),
             'programs' => [
                 ['title' => 'Pemuda Digital 2026', 'description' => 'Pelatihan keterampilan digital dan pendampingan karier untuk pemuda Pemalang.', 'participants' => '742 peserta', 'progress' => 74, 'icon' => '⌘'],
                 ['title' => 'Wirausaha Muda Mandiri', 'description' => 'Penguatan ide usaha, mentoring, dan akses jejaring bagi wirausaha muda.', 'participants' => '386 peserta', 'progress' => 58, 'icon' => '↗'],

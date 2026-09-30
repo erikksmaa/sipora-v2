@@ -13,6 +13,9 @@ final class SiporaDatabaseChannel
     {
         /** @var array{notification_type:string,title:string,body:string,data:array<string,mixed>} $message */
         $message = $notification->toSiporaDatabase($notifiable);
+        // The approved schema requires a JSON object, including when no
+        // contextual identifiers are needed by the notification.
+        $message['data'] = (object) ($message['data'] ?? []);
 
         return UserNotification::create([
             'id' => BinaryUuid::generate(),

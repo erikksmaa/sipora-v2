@@ -113,3 +113,14 @@ Personalization is deterministic. It uses only Interest slugs that exactly match
 - An approved decision changes only the Program execution status to `completed`. Revision or rejection keeps it `running`, and a later decision must be submitted from the current evaluation version.
 - A Verifier who is also an active contextual leader or manager of the Program's Community may read the evidence but cannot submit a decision. Managers cannot create evaluations.
 - Completed Programs reject normal Program edits, new or changed Logbooks, new or changed E-LPJ data, and Activity relinking. Historical Proposal, Activity review, participation, Attendance, Certificate, Logbook review, and E-LPJ records remain unchanged.
+
+## Phase 21 Opportunity, notification, and analytics scenarios
+
+- Open `/opportunities` as a guest. Three published development Opportunities are ordered deterministically by their nearest deadline; the draft and archived fixtures do not appear. Search, category, district, and deadline filters use the approved database fields.
+- Open a public Opportunity detail to follow its external registration URL. SIPORA stores discovery and bookmark data only; it does not claim or record an external application.
+- Sign in as `youth1@sipora.test`. Youth Home shows a compact nearest-deadline Opportunity section and the saved Opportunity count. `/youth/opportunities/bookmarks` contains the seeded Beasiswa and Volunteer fixtures. These suggestions do not use an opaque score because the approved database has no Interest-to-Opportunity mapping.
+- Sign in as `admin@sipora.test` to create, edit, publish, or archive Opportunity records. Admin dashboard metrics are factual counts from current SIPORA records. They are not government recommendations, rankings, or predictions.
+- Sign in as `verifier@sipora.test` to see compact pending queue counts for the workflows already owned by Verifier.
+- Every authenticated workspace can open `/notifications`, mark one notification or all notifications read, and see only its own records. Action links are generated server-side for allowlisted notification types; a URL stored in notification JSON is never rendered directly.
+
+Opportunity categories and records above are deterministic local development data and are not official Dindikpora announcements.

@@ -6,6 +6,7 @@ use App\Http\Controllers\Youth\CommunityApplicationController;
 use App\Http\Controllers\Youth\IdentityVerificationController;
 use App\Http\Controllers\Youth\InterestController;
 use App\Http\Controllers\Youth\OnboardingController;
+use App\Http\Controllers\Youth\OpportunityBookmarkController;
 use App\Http\Controllers\Youth\ProfileController;
 use App\Http\Controllers\Youth\VisibilityController;
 use App\Http\Controllers\Youth\YouthAchievementController;
@@ -19,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('youth.')
     ->group(function (): void {
         Route::get('/home', YouthHomeController::class)->name('home');
+        Route::get('/opportunities/bookmarks', [OpportunityBookmarkController::class, 'index'])->name('opportunities.bookmarks');
+        Route::post('/opportunities/{opportunity}/bookmark', [OpportunityBookmarkController::class, 'store'])->name('opportunities.bookmark');
+        Route::delete('/opportunities/{opportunity}/bookmark', [OpportunityBookmarkController::class, 'destroy'])->name('opportunities.bookmark.destroy');
         Route::get('/portfolio', YouthPortfolioController::class)->name('portfolio.show');
         Route::get('/passport', [ActivityPassportController::class, 'index'])->name('passport.index');
         Route::get('/passport/{participation}', [ActivityPassportController::class, 'show'])->name('passport.show');

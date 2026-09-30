@@ -1,6 +1,15 @@
 @extends('layouts.verifier')
-@section('title', 'Beranda Verifier · SIPORA')
+@section('title', 'Dashboard Verifier · SIPORA')
 @section('verifier-content')
-<section class="overflow-hidden rounded-3xl bg-[#243378] p-6 text-white shadow-lg sm:p-8"><p class="text-sm font-bold text-orange-300">Tim Kurasi & Pengawasan</p><h1 class="mt-2 text-3xl font-extrabold">Dashboard Verifier Dindikpora</h1><p class="mt-2 max-w-2xl text-indigo-100">Tinjau kelayakan pengajuan komunitas melalui antrean resmi SIPORA.</p></section>
-<div class="mt-6 grid gap-4 md:grid-cols-2"><a href="{{ route('verifier.community-verifications.index') }}" class="sipora-card block border-t-4 border-t-orange-500 transition hover:-translate-y-0.5 hover:shadow-md"><p class="text-xs font-bold uppercase tracking-wider text-orange-600">Antrean aktif</p><h2 class="mt-2 text-xl font-bold text-[#243378]">Verifikasi komunitas</h2><p class="mt-2 text-sm text-slate-600">Periksa profil, data pemohon, dan berikan keputusan.</p><span class="mt-5 inline-block text-sm font-bold text-[#243378]">Buka antrean →</span></a><a href="{{ route('verifier.activity-verifications.index') }}" class="sipora-card block border-t-4 border-t-[#243378] transition hover:-translate-y-0.5 hover:shadow-md"><p class="text-xs font-bold uppercase tracking-wider text-[#243378]">Antrean aktif</p><h2 class="mt-2 text-xl font-bold text-[#243378]">Verifikasi Activity</h2><p class="mt-2 text-sm text-slate-600">Tinjau agenda komunitas sebelum dipublikasikan.</p><span class="mt-5 inline-block text-sm font-bold text-[#243378]">Buka antrean →</span></a></div>
+<div class="space-y-7"><section><p class="text-xs font-black uppercase tracking-[.16em] text-orange-600">Ringkasan antrean</p><h1 class="mt-2 text-3xl font-black text-[#18245c]">Dashboard Verifier</h1><p class="mt-2 text-sm text-slate-600">Jumlah item yang sedang menunggu tindakan sesuai kewenangan Verifier.</p></section>
+<section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+@foreach([
+ ['Community', $queues['communities'], route('verifier.community-verifications.index')],
+ ['Activity', $queues['activities'], route('verifier.activity-verifications.index')],
+ ['Proposal Program', $queues['proposals'], route('verifier.program-proposals.index')],
+ ['Logbook', $queues['logbooks'], route('verifier.program-monitoring.index')],
+ ['E-LPJ', $queues['financial_reports'], route('verifier.financial-reports.index')],
+ ['Evaluasi akhir siap', $queues['evaluations'], route('verifier.program-evaluations.index')],
+] as [$label, $value, $href])<a href="{{ $href }}" class="sipora-card transition hover:-translate-y-0.5 hover:border-indigo-300"><p class="text-sm font-semibold text-slate-500">{{ $label }}</p><p class="mt-3 text-3xl font-black text-[#243378]">{{ number_format($value) }}</p><p class="mt-3 text-xs font-bold text-[#3346a8]">Buka antrean →</p></a>@endforeach
+</section></div>
 @endsection

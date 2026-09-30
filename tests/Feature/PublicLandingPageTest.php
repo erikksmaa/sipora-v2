@@ -32,7 +32,7 @@ class PublicLandingPageTest extends TestCase
                 'Eksplorasi Sesuai Minatmu',
                 'Kegiatan yang Bisa Kamu Ikuti',
                 'Temukan Komunitas',
-                'Peluang untuk Pemuda',
+                'Opportunity untuk Pemuda',
                 'Program Unggulan Dindikpora Pemalang',
                 'Bangun Portofolio Terverifikasi Sejak Dini',
                 'Statistik publik SIPORA',
@@ -59,8 +59,8 @@ class PublicLandingPageTest extends TestCase
 
         $this->assertTrue($presentation['is_placeholder']);
         $this->assertSame('mixed_landing_presentation', $presentation['source']);
-        $this->assertSame(['interests', 'activities', 'communities'], $presentation['database_domains']);
-        $this->assertSame(['opportunities', 'programs', 'statistics', 'stories'], $presentation['placeholder_domains']);
+        $this->assertSame(['interests', 'activities', 'communities', 'opportunities'], $presentation['database_domains']);
+        $this->assertSame(['programs', 'statistics', 'stories'], $presentation['placeholder_domains']);
     }
 
     public function test_landing_uses_real_public_activity_and_community_data(): void
@@ -71,6 +71,7 @@ class PublicLandingPageTest extends TestCase
             ->assertOk()
             ->assertSee('Workshop Web Development Pemula')
             ->assertSee('Komunitas Programmer Pemalang')
+            ->assertSee('Beasiswa Pengembangan Pemuda Pemalang')
             ->assertDontSee('Activity Belum Terbit');
     }
 

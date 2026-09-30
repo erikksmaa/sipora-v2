@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\Activity;
 use App\Models\ActivityCategory;
 use App\Models\AdministrativeArea;
+use App\Models\Opportunity;
+use App\Models\OpportunityCategory;
 use App\Models\Organization;
 use App\Models\OrganizationCategory;
 use App\Models\User;
@@ -21,10 +23,12 @@ class GlobalSearchTest extends TestCase
         $private = $this->organization('Digital Internal Review', 'digital-internal', $creator, $public->category, $area, 'pending_review', 'inactive');
         $this->activity('Digital Aman Publik', $public, $category, $creator, $area);
         $this->activity('Digital Draft Rahasia', $public, $category, $creator, $area, ['review_status' => 'draft', 'publication_status' => 'unpublished', 'published_at' => null]);
+        $opportunityCategory = OpportunityCategory::create(['name' => 'Beasiswa', 'slug' => 'beasiswa']);
+        Opportunity::create(['category_id' => $opportunityCategory->getKey(), 'title' => 'Beasiswa Digital Pemuda', 'slug' => 'beasiswa-digital-pemuda', 'provider_name' => 'Dindikpora', 'description' => 'Peluang digital.', 'administrative_area_id' => $area->getKey(), 'external_url' => 'https://example.test/beasiswa', 'deadline_at' => now()->addWeek(), 'publication_status' => Opportunity::STATUS_PUBLISHED, 'published_at' => now()->subMinute()]);
 
         $this->get(route('search.index', ['q' => 'Digital']))
             ->assertOk()
-            ->assertSeeInOrder(['Activity', 'Digital Aman Publik', 'Community', $public->name])
+            ->assertSeeInOrder(['Activity', 'Digital Aman Publik', 'Community', $public->name, 'Opportunity', 'Beasiswa Digital Pemuda'])
             ->assertDontSee('Digital Draft Rahasia')
             ->assertDontSee($private->name);
     }

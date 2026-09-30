@@ -95,6 +95,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserNotification::class);
     }
 
+    public function opportunityBookmarks(): HasMany
+    {
+        return $this->hasMany(OpportunityBookmark::class);
+    }
+
     public function createdOrganizations(): HasMany
     {
         return $this->hasMany(Organization::class, 'created_by_user_id');

@@ -141,7 +141,7 @@ class ProgramEvaluationTest extends TestCase
     public function test_schema_and_public_boundary_are_preserved(): void
     {
         $this->assertTrue(Schema::hasTable('program_evaluations'));
-        $this->assertFalse(Schema::hasTable('opportunities'));
+        $this->assertTrue(Schema::hasTable('opportunities'));
         $routes = collect(app('router')->getRoutes()->getRoutes());
         $this->assertFalse($routes->contains(fn ($route) => str_starts_with((string) $route->getName(), 'public.program-evaluations')));
     }
