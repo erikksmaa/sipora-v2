@@ -11,6 +11,7 @@ use App\Models\Organization;
 use App\Models\Program;
 use App\Models\ProgramCategory;
 use App\Services\Community\ManagedCommunityService;
+use App\Services\FinancialReportTotalsService;
 use App\Services\ProgramProgressService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,16 +45,17 @@ final class ProgramController extends Controller
         return to_route('manager.programs.show', [$organization, $program])->with('status', 'Rencana Program berhasil disimpan.');
     }
 
-    public function show(Request $request, Organization $organization, Program $program, ManagedCommunityService $managed, ProgramProgressService $progress): View
+    public function show(Request $request, Organization $organization, Program $program, ManagedCommunityService $managed, ProgramProgressService $progress, FinancialReportTotalsService $totals): View
     {
         $this->ensureBelongs($organization, $program);
         Gate::authorize('view', $program);
-        $program->load(['category', 'creator', 'activities.category', 'proposals.reviewer', 'latestProposal', 'logbooks.creator', 'logbooks.media', 'financialReports.items', 'financialReports.reviewer']);
+        $program->load(['category', 'creator', 'activities.category', 'proposals.reviewer', 'latestProposal', 'logbooks.creator', 'logbooks.media', 'financialReports.items', 'financialReports.reviewer', 'latestFinancialReport.items', 'evaluations.verifier', 'latestEvaluation.verifier']);
 
         return view('manager.programs.show', [
             'organization' => $organization,
             'program' => $program,
             'metrics' => $progress->summarize($program),
+            'finalFinancialSummary' => $program->latestFinancialReport ? $totals->summarize($program->latestFinancialReport) : null,
             'managedCommunities' => $managed->forUser($request->user()),
         ]);
     }

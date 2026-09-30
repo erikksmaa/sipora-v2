@@ -149,7 +149,7 @@ class FinancialReportTest extends TestCase
     {
         $this->assertTrue(Schema::hasTable('financial_reports'));
         $this->assertTrue(Schema::hasTable('financial_items'));
-        $this->assertFalse(Schema::hasTable('program_evaluations'));
+        $this->assertTrue(Schema::hasTable('program_evaluations'));
         [, , $program] = $this->context('uuid');
         $report = $this->report($program);
         $this->assertSame(16, strlen($report->getKey()));

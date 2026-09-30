@@ -20,6 +20,8 @@ class ProgramProposalSeeder extends Seeder
             ['program' => 'program-kepemimpinan-muda', 'status' => ProgramProposal::STATUS_DRAFT, 'budget' => null, 'reviewed' => false, 'notes' => null],
             ['program' => 'program-literasi-teknologi', 'status' => ProgramProposal::STATUS_APPROVED, 'budget' => 18000000, 'reviewed' => true, 'notes' => 'Proposal memenuhi persyaratan.'],
             ['program' => 'program-kolaborasi-digital', 'status' => ProgramProposal::STATUS_APPROVED, 'budget' => 12000000, 'reviewed' => true, 'notes' => 'Proposal memenuhi persyaratan.'],
+            ['program' => 'program-evaluasi-pemuda', 'status' => ProgramProposal::STATUS_APPROVED, 'budget' => 22000000, 'reviewed' => true, 'notes' => 'Proposal memenuhi persyaratan.'],
+            ['program' => 'program-tuntas-pemuda', 'status' => ProgramProposal::STATUS_APPROVED, 'budget' => 16000000, 'reviewed' => true, 'notes' => 'Proposal memenuhi persyaratan.'],
         ];
 
         foreach ($records as $record) {

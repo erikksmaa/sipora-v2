@@ -27,6 +27,8 @@ class ActivitySeeder extends Seeder
             ['slug' => 'latihan-kebugaran-pemuda', 'title' => 'Latihan Kebugaran Pemuda Pemalang', 'organization' => 'pemuda-olahraga-pemalang', 'program' => 'program-olahraga-komunitas', 'category' => 'olahraga', 'review' => 'approved', 'publication' => 'published', 'execution' => 'scheduled', 'days' => 8, 'district' => '33.27.12', 'mode' => 'offline'],
             ['slug' => 'bootcamp-digital-pemalang', 'title' => 'Bootcamp Digital Pemalang', 'organization' => 'pemuda-olahraga-pemalang', 'category' => 'teknologi', 'review' => 'approved', 'publication' => 'published', 'execution' => 'completed', 'days' => -10],
             ['slug' => 'seminar-kewirausahaan-digital', 'title' => 'Seminar Kewirausahaan Digital', 'organization' => 'komunitas-programmer-pemalang', 'category' => 'kewirausahaan', 'review' => 'approved', 'publication' => 'archived', 'execution' => 'completed', 'days' => -45],
+            ['slug' => 'lokakarya-evaluasi-pemuda', 'title' => 'Lokakarya Evaluasi Pemuda', 'organization' => 'komunitas-programmer-pemalang', 'program' => 'program-evaluasi-pemuda', 'category' => 'pendidikan', 'review' => 'approved', 'publication' => 'archived', 'execution' => 'completed', 'days' => -30],
+            ['slug' => 'lokakarya-tuntas-pemuda', 'title' => 'Lokakarya Tuntas Pemuda', 'organization' => 'komunitas-programmer-pemalang', 'program' => 'program-tuntas-pemuda', 'category' => 'pendidikan', 'review' => 'approved', 'publication' => 'archived', 'execution' => 'completed', 'days' => -60],
         ];
 
         foreach ($records as $record) {

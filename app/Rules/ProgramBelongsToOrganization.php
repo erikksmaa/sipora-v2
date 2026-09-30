@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\Activity;
 use App\Models\Organization;
 use App\Models\Program;
 use App\Support\BinaryUuid;
@@ -11,7 +12,7 @@ use InvalidArgumentException;
 
 final class ProgramBelongsToOrganization implements ValidationRule
 {
-    public function __construct(private readonly Organization $organization) {}
+    public function __construct(private readonly Organization $organization, private readonly ?Activity $activity = null) {}
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -23,7 +24,12 @@ final class ProgramBelongsToOrganization implements ValidationRule
             $exists = Program::query()
                 ->whereKey(BinaryUuid::bytes((string) $value))
                 ->where('organization_id', $this->organization->getKey())
-                ->whereIn('execution_status', [Program::STATUS_PLANNED, Program::STATUS_RUNNING])
+                ->where(function ($query): void {
+                    $query->whereIn('execution_status', [Program::STATUS_PLANNED, Program::STATUS_RUNNING]);
+                    if ($this->activity?->program_id) {
+                        $query->orWhereKey($this->activity->program_id);
+                    }
+                })
                 ->exists();
         } catch (InvalidArgumentException) {
             $exists = false;

@@ -28,6 +28,12 @@ final class FinancialReportSeeder extends Seeder
         $revisionProgram = Program::query()->where('slug', 'program-kolaborasi-digital')->firstOrFail();
         $this->approvedLogbook($revisionProgram, $manager, $verifier, 45);
         $this->report($revisionProgram, FinancialReport::STATUS_REVISION, [['expense', 'Produksi materi kolaborasi', '13000000.00', true]], $manager, $verifier, 'Sesuaikan bukti dan jelaskan realisasi yang melampaui anggaran.');
+
+        foreach ([['program-evaluasi-pemuda', '18500000.00', 90], ['program-tuntas-pemuda', '14500000.00', 100]] as [$slug, $amount, $progress]) {
+            $program = Program::query()->where('slug', $slug)->firstOrFail();
+            $this->approvedLogbook($program, $manager, $verifier, $progress);
+            $this->report($program, FinancialReport::STATUS_APPROVED, [['expense', 'Realisasi pelaksanaan Program', $amount, true]], $manager, $verifier, 'E-LPJ memenuhi persyaratan.');
+        }
     }
 
     private function report(Program $program, string $status, array $items, User $manager, ?User $verifier = null, ?string $reviewNotes = null): void

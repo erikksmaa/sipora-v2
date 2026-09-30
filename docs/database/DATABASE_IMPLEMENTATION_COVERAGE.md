@@ -23,5 +23,6 @@ The approved contract is `sipora_v2_mysql_backend_driven_clean_v2.sql`. Laravel 
 | Program Proposal | Implemented | `program_proposals`, private documents, versioned review workflow | 17 | Submit actor is represented by the privacy-safe activity-log causer because the approved table has no submitter column |
 | Program Logbook | Implemented | `program_logbooks`, private `program_logbook_media`, review workflow, factual monitoring service | 18 | Progress percentage is manager-reported data from the approved schema, not a generated score |
 | Program Finance / E-LPJ | Implemented | `financial_reports`, `financial_items`, private evidence, versioned review workflow | 19 | Totals are derived with decimal-string arithmetic; E-LPJ approval does not complete Program |
-| Program Evaluation | Future | Approved downstream Program table | 20 | Not created in Phase 19 |
+| Program Evaluation | Implemented | `program_evaluations`, eligibility service, Verifier decision workflow, and controlled Program completion | 20 | 1:N immutable decision history; approved final evaluation completes the Program |
+| Government Program workflow | Complete at domain level | Program Core → Proposal → Logbook → Financial / E-LPJ → Final Evaluation | 16–20 | Public Program discovery, Opportunity, analytics, and ranking remain outside this completed internal workflow |
 | Opportunities | Future | Approved Opportunity domain tables | Future | Added only in its feature phase |

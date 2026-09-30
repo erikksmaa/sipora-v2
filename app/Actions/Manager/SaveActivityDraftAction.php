@@ -24,9 +24,14 @@ final class SaveActivityDraftAction
         $values['category_id'] = BinaryUuid::bytes($values['category_id']);
         $values['program_id'] = filled($values['program_id'] ?? null) ? BinaryUuid::bytes($values['program_id']) : null;
         if ($oldProgramId !== $values['program_id']) {
-            $locked = collect([$oldProgramId, $values['program_id']])->filter()->contains(fn ($programId) => Program::query()->whereKey($programId)->first()?->proposalCompositionLocked());
+            $locked = collect([$oldProgramId, $values['program_id']])->filter()->contains(function ($programId): bool {
+                $program = Program::query()->whereKey($programId)->first();
+
+                return $program?->proposalCompositionLocked() === true
+                    || in_array($program?->execution_status, [Program::STATUS_COMPLETED, Program::STATUS_CANCELLED], true);
+            });
             if ($locked) {
-                throw ValidationException::withMessages(['program_id' => ['Komposisi Activity terkunci selama Proposal Program sedang ditinjau.']]);
+                throw ValidationException::withMessages(['program_id' => ['Komposisi Activity Program ini sedang dikunci.']]);
             }
         }
         $values['administrative_area_id'] = filled($values['administrative_area_id'] ?? null)

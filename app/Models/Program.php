@@ -75,6 +75,16 @@ class Program extends Model
         return $this->hasOne(FinancialReport::class)->ofMany('version', 'max');
     }
 
+    public function evaluations(): HasMany
+    {
+        return $this->hasMany(ProgramEvaluation::class)->orderByDesc('evaluated_at')->orderByDesc('created_at');
+    }
+
+    public function latestEvaluation(): HasOne
+    {
+        return $this->hasOne(ProgramEvaluation::class)->latestOfMany('evaluated_at');
+    }
+
     public function proposalCompositionLocked(): bool
     {
         $status = $this->relationLoaded('latestProposal') ? $this->latestProposal?->status : $this->latestProposal()->value('status');

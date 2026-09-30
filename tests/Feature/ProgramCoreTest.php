@@ -134,13 +134,13 @@ class ProgramCoreTest extends TestCase
 
         $this->assertTrue(Schema::hasTable('financial_reports'));
         $this->assertTrue(Schema::hasTable('financial_items'));
-        $this->assertFalse(Schema::hasTable('program_evaluations'));
+        $this->assertTrue(Schema::hasTable('program_evaluations'));
 
         $routes = collect(app('router')->getRoutes()->getRoutes())->map->getName()->filter();
         $this->assertTrue($routes->contains(fn (string $name): bool => str_contains($name, 'program-proposals')));
         $this->assertTrue($routes->contains(fn (string $name): bool => str_contains($name, 'program-logbooks')));
         $this->assertTrue($routes->contains(fn (string $name): bool => str_contains($name, 'financial')));
-        $this->assertFalse($routes->contains(fn (string $name): bool => str_contains($name, 'evaluation')));
+        $this->assertTrue($routes->contains(fn (string $name): bool => str_contains($name, 'evaluation')));
     }
 
     private function roleUser(string $role): User

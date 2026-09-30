@@ -3,6 +3,7 @@
 use App\Http\Controllers\Verifier\ActivityVerificationController;
 use App\Http\Controllers\Verifier\CommunityVerificationController;
 use App\Http\Controllers\Verifier\FinancialReportVerificationController;
+use App\Http\Controllers\Verifier\ProgramEvaluationController;
 use App\Http\Controllers\Verifier\ProgramMonitoringController;
 use App\Http\Controllers\Verifier\ProgramProposalVerificationController;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,7 @@ Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->na
         Route::get('/financial-reports/{report}', [FinancialReportVerificationController::class, 'show'])->name('financial-reports.show');
         Route::post('/financial-reports/{report}/review', [FinancialReportVerificationController::class, 'review'])->name('financial-reports.review');
         Route::get('/financial-reports/{report}/items/{item}/receipt', [FinancialReportVerificationController::class, 'receipt'])->name('financial-reports.items.receipt');
+        Route::get('/program-evaluations', [ProgramEvaluationController::class, 'index'])->name('program-evaluations.index');
+        Route::get('/program-evaluations/{program}', [ProgramEvaluationController::class, 'show'])->name('program-evaluations.show');
+        Route::post('/program-evaluations/{program}', [ProgramEvaluationController::class, 'store'])->name('program-evaluations.store');
     });

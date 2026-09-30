@@ -7,12 +7,14 @@ use App\Models\FinancialReport;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
 use App\Models\Program;
+use App\Models\ProgramEvaluation;
 use App\Models\ProgramLogbook;
 use App\Models\ProgramProposal;
 use App\Policies\ActivityPolicy;
 use App\Policies\FinancialReportPolicy;
 use App\Policies\OrganizationMembershipPolicy;
 use App\Policies\OrganizationPolicy;
+use App\Policies\ProgramEvaluationPolicy;
 use App\Policies\ProgramLogbookPolicy;
 use App\Policies\ProgramPolicy;
 use App\Policies\ProgramProposalPolicy;
@@ -49,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Program::class, ProgramPolicy::class);
         Gate::policy(ProgramProposal::class, ProgramProposalPolicy::class);
         Gate::policy(ProgramLogbook::class, ProgramLogbookPolicy::class);
+        Gate::policy(ProgramEvaluation::class, ProgramEvaluationPolicy::class);
         Gate::policy(FinancialReport::class, FinancialReportPolicy::class);
 
         Auth::provider('binary-uuid', fn ($app, array $config) => new BinaryUuidUserProvider($app['hash'], $config['model']));

@@ -104,3 +104,12 @@ Personalization is deterministic. It uses only Interest slugs that exactly match
 - Sign in as `youth1@sipora.test` and open the Program detail in the Manager workspace to manage the draft or explicitly create a new version from the revision report.
 - Sign in as `verifier@sipora.test` and open `/verifier/financial-reports` to review submitted E-LPJ records. Evidence is streamed from the private `financial_receipts` disk through authorized routes.
 - Approval, revision, and rejection preserve the Program's running state. Phase 20 owns final Program evaluation and completion.
+
+## Phase 20 final Program evaluation scenarios
+
+- Sign in as `verifier@sipora.test` and open `/verifier/program-evaluations`. `Program Evaluasi Pemuda` is running with the latest Proposal approved, at least one approved Logbook, and the latest E-LPJ approved, so it is eligible for a final decision.
+- `Program Pemuda Digital 2026` remains blocked because its newest E-LPJ is still a draft. The evaluation page lists each factual missing prerequisite rather than producing a score.
+- `Program Tuntas Pemuda` has an approved final evaluation and is completed. The Verifier can inspect its decision history, while its contextual manager can inspect the final factual summary in the Manager Program detail.
+- An approved decision changes only the Program execution status to `completed`. Revision or rejection keeps it `running`, and a later decision must be submitted from the current evaluation version.
+- A Verifier who is also an active contextual leader or manager of the Program's Community may read the evidence but cannot submit a decision. Managers cannot create evaluations.
+- Completed Programs reject normal Program edits, new or changed Logbooks, new or changed E-LPJ data, and Activity relinking. Historical Proposal, Activity review, participation, Attendance, Certificate, Logbook review, and E-LPJ records remain unchanged.

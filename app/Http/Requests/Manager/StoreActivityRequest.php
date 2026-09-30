@@ -19,7 +19,7 @@ class StoreActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'program_id' => ['nullable', 'uuid', new ProgramBelongsToOrganization($this->route('organization'))],
+            'program_id' => ['nullable', 'uuid', new ProgramBelongsToOrganization($this->route('organization'), $this->route('activity'))],
             'category_id' => ['required', 'uuid', new BinaryUuidExists('activity_categories')],
             'title' => ['required', 'string', 'max:220'],
             'description' => ['nullable', 'string', 'max:10000'],
