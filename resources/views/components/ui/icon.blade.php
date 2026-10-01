@@ -1,0 +1,36 @@
+@props(['name'])
+@php
+    $paths = match ($name) {
+        'activity', 'clipboard-check' => '<path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><rect width="6" height="4" x="9" y="3" rx="2"/><path d="m9 14 2 2 4-4"/>',
+        'award' => '<circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/>',
+        'badge-check' => '<path d="M12 2.5 15 4l3.5.5.5 3.5 1.5 3-1.5 3-.5 3.5-3.5.5-3 1.5-3-1.5-3.5-.5-.5-3.5-1.5-3 1.5-3 .5-3.5 3.5-.5Z"/><path d="m9 12 2 2 4-4"/>',
+        'bell' => '<path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>',
+        'briefcase' => '<rect width="20" height="14" x="2" y="7" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M2 12h20M10 12v2h4v-2"/>',
+        'building' => '<rect width="16" height="18" x="4" y="3" rx="2"/><path d="M9 21v-4h6v4M8 7h.01M12 7h.01M16 7h.01M8 11h.01M12 11h.01M16 11h.01"/>',
+        'calendar' => '<path d="M8 2v4M16 2v4M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/>',
+        'check' => '<path d="m5 12 4 4L19 6"/>',
+        'chevron-left' => '<path d="m15 18-6-6 6-6"/>',
+        'chevron-right' => '<path d="m9 18 6-6-6-6"/>',
+        'code' => '<path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/>',
+        'database' => '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/>',
+        'file-text' => '<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5Z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h8M8 9h2"/>',
+        'graduation-cap' => '<path d="m2 10 10-5 10 5-10 5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/>',
+        'layout-dashboard' => '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
+        'leaf' => '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 4.5 19 2 20 2c0 1-1 6.5-4.9 10.2C13 14.2 11 16.5 11 20Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6.94C9.7 12.78 12 10.5 13 8"/>',
+        'log-out' => '<path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>',
+        'menu' => '<path d="M4 6h16M4 12h16M4 18h16"/>',
+        'notebook' => '<path d="M2 6h4M2 10h4M2 14h4M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9.5 8h5M9.5 12H16"/>',
+        'palette' => '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.2a2 2 0 0 1 2-2h2a5 5 0 0 0 5-5C22 5.8 17.5 2 12 2Z"/>',
+        'panel-left' => '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/>',
+        'search' => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+        'shield-check' => '<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/><path d="m9 12 2 2 4-4"/>',
+        'sparkles' => '<path d="m12 3-1.9 4.8a2 2 0 0 1-1.2 1.2L4 11l4.9 1.9a2 2 0 0 1 1.2 1.2L12 19l1.9-4.9a2 2 0 0 1 1.2-1.2L20 11l-4.9-1.9a2 2 0 0 1-1.2-1.2Z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/>',
+        'trophy' => '<path d="M10 14.7v3.8M14 14.7v3.8M8 22h8M7 2h10v5a5 5 0 0 1-10 0Z"/><path d="M7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/>',
+        'users' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+        'wallet' => '<path d="M19 7V4a1 1 0 0 0-1-1H5a3 3 0 0 0 0 6h16v11a1 1 0 0 1-1 1H5a3 3 0 0 1-3-3V6"/><path d="M16 13h2"/>',
+        'x' => '<path d="M18 6 6 18M6 6l12 12"/>',
+        default => '<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>',
+    };
+@endphp
+@php($hasExplicitSize = str_contains((string) $attributes->get('class', ''), 'size-'))
+<svg {{ $attributes->class(['size-5' => ! $hasExplicitSize, 'shrink-0'])->merge(['aria-hidden' => 'true']) }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{!! $paths !!}</svg>

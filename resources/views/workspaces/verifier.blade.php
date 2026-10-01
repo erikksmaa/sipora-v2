@@ -1,15 +1,20 @@
 @extends('layouts.verifier')
 @section('title', 'Dashboard Verifier · SIPORA')
 @section('verifier-content')
-<div class="space-y-7"><section><p class="text-xs font-black uppercase tracking-[.16em] text-orange-600">Ringkasan antrean</p><h1 class="mt-2 text-3xl font-black text-[#18245c]">Dashboard Verifier</h1><p class="mt-2 text-sm text-slate-600">Jumlah item yang sedang menunggu tindakan sesuai kewenangan Verifier.</p></section>
-<section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-@foreach([
- ['Community', $queues['communities'], route('verifier.community-verifications.index')],
- ['Activity', $queues['activities'], route('verifier.activity-verifications.index')],
- ['Proposal Program', $queues['proposals'], route('verifier.program-proposals.index')],
- ['Logbook', $queues['logbooks'], route('verifier.program-monitoring.index')],
- ['E-LPJ', $queues['financial_reports'], route('verifier.financial-reports.index')],
- ['Evaluasi akhir siap', $queues['evaluations'], route('verifier.program-evaluations.index')],
-] as [$label, $value, $href])<a href="{{ $href }}" class="sipora-card transition hover:-translate-y-0.5 hover:border-indigo-300"><p class="text-sm font-semibold text-slate-500">{{ $label }}</p><p class="mt-3 text-3xl font-black text-[#243378]">{{ number_format($value) }}</p><p class="mt-3 text-xs font-bold text-[#3346a8]">Buka antrean →</p></a>@endforeach
-</section></div>
+<div class="space-y-7">
+    <x-ui.page-header eyebrow="Ringkasan antrean" title="Dashboard Pengawasan & Kurasi" description="Jumlah item yang sedang menunggu tindakan sesuai kewenangan Verifier Dindikpora.">
+        <x-slot:actions><x-ui.badge tone="success" icon="badge-check">Mode Verifier Aktif</x-ui.badge></x-slot:actions>
+    </x-ui.page-header>
+
+    <aside class="flex items-start gap-3 rounded-2xl border border-indigo-100 bg-indigo-50 p-4 text-sm text-primary"><span class="grid size-10 shrink-0 place-items-center rounded-xl bg-primary text-white"><x-ui.icon name="shield-check" /></span><div><strong class="font-extrabold">Kewenangan review operasional</strong><p class="mt-1 leading-6 text-slate-600">Community, Activity, Proposal, Logbook, E-LPJ, dan Evaluasi Program berada dalam antrean Verifier. Verifikasi identitas pribadi tetap menjadi kewenangan Admin.</p></div></aside>
+
+    <section aria-labelledby="verifier-queues"><h2 id="verifier-queues" class="sr-only">Antrean Verifier</h2><div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <x-ui.metric-card title="Community" :value="number_format($queues['communities'])" icon="building" :href="route('verifier.community-verifications.index')" action="Buka antrean" />
+        <x-ui.metric-card title="Activity" :value="number_format($queues['activities'])" icon="clipboard-check" tone="accent" :href="route('verifier.activity-verifications.index')" action="Buka antrean" />
+        <x-ui.metric-card title="Proposal Program" :value="number_format($queues['proposals'])" icon="file-text" tone="info" :href="route('verifier.program-proposals.index')" action="Buka antrean" />
+        <x-ui.metric-card title="Logbook" :value="number_format($queues['logbooks'])" icon="notebook" tone="success" :href="route('verifier.program-monitoring.index')" action="Buka antrean" />
+        <x-ui.metric-card title="E-LPJ" :value="number_format($queues['financial_reports'])" icon="wallet" tone="accent" :href="route('verifier.financial-reports.index')" action="Buka antrean" />
+        <x-ui.metric-card title="Evaluasi akhir siap" :value="number_format($queues['evaluations'])" icon="badge-check" tone="success" :href="route('verifier.program-evaluations.index')" action="Buka antrean" />
+    </div></section>
+</div>
 @endsection

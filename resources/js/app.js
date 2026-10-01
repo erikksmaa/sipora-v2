@@ -40,5 +40,20 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
     },
 }));
 
+Alpine.data('workspaceShell', () => ({
+    mobileOpen: false,
+    collapsed: false,
+    init() {
+        this.collapsed = window.localStorage.getItem('sipora.workspace.sidebar.collapsed') === 'true';
+        this.$watch('collapsed', (value) => window.localStorage.setItem('sipora.workspace.sidebar.collapsed', String(value)));
+    },
+    closeMobile() {
+        this.mobileOpen = false;
+    },
+    toggleCollapsed() {
+        this.collapsed = !this.collapsed;
+    },
+}));
+
 window.Alpine = Alpine;
 Alpine.start();
