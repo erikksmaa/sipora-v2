@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
             UserCertificateSeeder::class,
             OpportunityBookmarkSeeder::class,
             NotificationSeeder::class,
+            QualityAssuranceSeeder::class,
         ]);
     }
 }

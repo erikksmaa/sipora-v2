@@ -2,6 +2,8 @@
 
 Data in this document is for local development only. It is not production data, and the credentials must never be used in production.
 
+The dense cross-domain QA fixtures are created by `QualityAssuranceSeeder`. See [QA_TESTING_GUIDE.md](QA_TESTING_GUIDE.md) for the expanded account matrix, intentional system-table exclusions, effective test order, and risk checklist.
+
 ## Local database
 
 The canonical local database is `sipora`. Rebuild it with:

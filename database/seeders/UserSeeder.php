@@ -20,6 +20,11 @@ class UserSeeder extends Seeder
             ['name' => 'Bagas Prasetyo Utomo', 'email' => 'youth3@sipora.test', 'role' => 'youth'],
             ['name' => 'Dinda Ayu Lestari', 'email' => 'youth4@sipora.test', 'role' => 'youth'],
             ['name' => 'Rizky Aditya', 'email' => 'youth5@sipora.test', 'role' => 'youth'],
+            ['name' => 'Alya Rahmawati', 'email' => 'youth6@sipora.test', 'role' => 'youth'],
+            ['name' => 'Fajar Nugroho', 'email' => 'youth7@sipora.test', 'role' => 'youth'],
+            ['name' => 'Siti Maharani', 'email' => 'youth8@sipora.test', 'role' => 'youth'],
+            ['name' => 'Dimas Saputra', 'email' => 'youth9@sipora.test', 'role' => 'youth'],
+            ['name' => 'Nadia Kurnia', 'email' => 'youth10@sipora.test', 'role' => 'youth'],
         ] as $record) {
             $user = User::query()->updateOrCreate(
                 ['email' => $record['email']],
