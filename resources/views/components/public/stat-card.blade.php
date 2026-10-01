@@ -1,0 +1,3 @@
+@props(['icon' => 'activity', 'value', 'label', 'tone' => 'indigo'])
+@php($tones = ['indigo' => 'bg-indigo-50 text-primary', 'orange' => 'bg-orange-50 text-orange-700', 'green' => 'bg-emerald-50 text-emerald-700', 'blue' => 'bg-blue-50 text-blue-700'])
+<article {{ $attributes->class(['rounded-2xl border border-slate-200 bg-white p-4 shadow-card']) }}><div class="flex items-center gap-3"><span class="grid size-10 shrink-0 place-items-center rounded-xl {{ $tones[$tone] ?? $tones['indigo'] }}"><x-ui.icon :name="$icon" class="size-5" /></span><div><strong class="font-heading block text-3xl font-bold leading-none text-text-primary">{{ $value }}</strong><span class="mt-1 block text-xs font-semibold text-text-secondary">{{ $label }}</span></div></div></article>
