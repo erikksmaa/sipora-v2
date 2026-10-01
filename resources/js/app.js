@@ -47,8 +47,28 @@ Alpine.data('workspaceShell', () => ({
         this.collapsed = window.localStorage.getItem('sipora.workspace.sidebar.collapsed') === 'true';
         this.$watch('collapsed', (value) => window.localStorage.setItem('sipora.workspace.sidebar.collapsed', String(value)));
     },
-    closeMobile() {
+    openMobile() {
+        this.mobileOpen = true;
+        this.$nextTick(() => this.$refs.sidebar?.querySelector('[aria-label="Tutup navigasi"]')?.focus());
+    },
+    closeMobile(restoreFocus = false) {
         this.mobileOpen = false;
+        if (restoreFocus) this.$nextTick(() => this.$refs.mobileTrigger?.focus());
+    },
+    trapMobileFocus(event) {
+        if (!this.mobileOpen || window.innerWidth >= 1024) return;
+        const focusable = [...this.$refs.sidebar.querySelectorAll('a, button:not([disabled])')]
+            .filter((element) => element.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
     },
     toggleCollapsed() {
         this.collapsed = !this.collapsed;

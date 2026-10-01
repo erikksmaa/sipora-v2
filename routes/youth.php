@@ -10,6 +10,7 @@ use App\Http\Controllers\Youth\OpportunityBookmarkController;
 use App\Http\Controllers\Youth\ProfileController;
 use App\Http\Controllers\Youth\VisibilityController;
 use App\Http\Controllers\Youth\YouthAchievementController;
+use App\Http\Controllers\Youth\YouthActivityController;
 use App\Http\Controllers\Youth\YouthEducationController;
 use App\Http\Controllers\Youth\YouthHomeController;
 use App\Http\Controllers\Youth\YouthOrganizationExperienceController;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('youth.')
     ->group(function (): void {
         Route::get('/home', YouthHomeController::class)->name('home');
+        Route::get('/activities', YouthActivityController::class)->name('activities.index');
         Route::get('/opportunities/bookmarks', [OpportunityBookmarkController::class, 'index'])->name('opportunities.bookmarks');
         Route::post('/opportunities/{opportunity}/bookmark', [OpportunityBookmarkController::class, 'store'])->name('opportunities.bookmark');
         Route::delete('/opportunities/{opportunity}/bookmark', [OpportunityBookmarkController::class, 'destroy'])->name('opportunities.bookmark.destroy');
@@ -31,6 +33,7 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('yo
         Route::get('/certificates/{certificate}/download', [ActivityCertificateController::class, 'download'])->name('certificates.download');
         Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::get('/profile/privacy', [VisibilityController::class, 'edit'])->name('profile.privacy');
         Route::get('/profile/photo', [ProfileController::class, 'photo'])->name('profile.photo');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 

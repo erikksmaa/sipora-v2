@@ -1,4 +1,4 @@
-@extends($portfolio['is_owner'] ? 'layouts.base' : 'layouts.public')
+@extends($portfolio['is_owner'] ? 'layouts.youth' : 'layouts.public')
 @section('title', $portfolio['identity']['name'].' · Youth Portfolio SIPORA')
 @if(!$portfolio['is_owner'])
 @section('meta_description', 'Youth Portfolio SIPORA milik '.$portfolio['identity']['name'].'.')

@@ -47,7 +47,7 @@ class ActivityPassportTest extends TestCase
         $this->actingAs($owner)->get(route('youth.passport.index'))->assertOk()
             ->assertSee('Activity first-passport')->assertSee('Activity second-passport')->assertSee('2');
         $this->actingAs($owner)->get(route('youth.home'))->assertOk()
-            ->assertSee('Activity Passport')->assertSee('2</strong> Activity', false);
+            ->assertSee('Activity Passport')->assertSee('Activity selesai')->assertSee('2');
     }
 
     public function test_passport_detail_is_owner_only_and_guest_is_blocked(): void

@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Youth\UpdateVisibilityRequest;
 use App\Models\UserProfileVisibility;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class VisibilityController extends Controller
 {
+    public function edit(Request $request): View
+    {
+        return view('youth.profile.privacy', [
+            'user' => $request->user()->load('profileVisibility'),
+        ]);
+    }
+
     public function update(UpdateVisibilityRequest $request): RedirectResponse
     {
         UserProfileVisibility::updateOrCreate(['user_id' => $request->user()->getKey()], $request->validated());

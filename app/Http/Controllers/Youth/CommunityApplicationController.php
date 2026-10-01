@@ -11,6 +11,7 @@ use App\Http\Requests\Youth\UpdateCommunityRequest;
 use App\Models\AdministrativeArea;
 use App\Models\Organization;
 use App\Models\OrganizationCategory;
+use App\Models\OrganizationMembership;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -27,7 +28,13 @@ final class CommunityApplicationController extends Controller
             ->latest()
             ->paginate(9);
 
-        return view('youth.communities.index', compact('communities'));
+        $memberships = $request->user()->organizationMemberships()
+            ->where('membership_status', OrganizationMembership::STATUS_ACTIVE)
+            ->with(['organization.category'])
+            ->latest('approved_at')
+            ->get();
+
+        return view('youth.communities.index', compact('communities', 'memberships'));
     }
 
     public function create(): View

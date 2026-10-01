@@ -3,6 +3,17 @@
 @section('content')
 <div class="space-y-6">
 
+<x-workspace.page-header eyebrow="Profil" title="Profil Saya" description="Kelola identitas publik, minat, keahlian, dan riwayat yang membentuk Portfolio SIPORA.">
+    <a class="btn-secondary" href="{{ route('youth.profile.privacy') }}"><x-ui.icon name="shield-check" class="size-4" /> Privasi</a>
+    <a class="btn" href="{{ route('youth.profile.edit') }}"><x-ui.icon name="edit" class="size-4" /> Edit profil</a>
+</x-workspace.page-header>
+
+<nav class="flex gap-2 overflow-x-auto rounded-2xl border border-indigo-100 bg-white p-2" aria-label="Bagian profil">
+    @foreach(['skills-section' => 'Keahlian', 'education-section' => 'Pendidikan', 'org-section' => 'Organisasi', 'achievement-section' => 'Prestasi'] as $anchor => $label)
+        <a class="shrink-0 rounded-xl px-4 py-2 text-sm font-bold text-primary hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#{{ $anchor }}">{{ $label }}</a>
+    @endforeach
+</nav>
+
 {{-- Hero card --}}
 <section class="sipora-card">
     <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
@@ -15,7 +26,7 @@
         </div>
         <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-center gap-2">
-                <h1 class="text-3xl font-extrabold">{{ $user->profile?->full_name ?? $user->name }}</h1>
+                <h2 class="text-3xl font-extrabold">{{ $user->profile?->full_name ?? $user->name }}</h2>
                 <span class="rounded-full px-3 py-1 text-xs font-bold {{ $user->identity?->verification_status === 'verified' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700' }}">
                     {{ $user->identity?->verification_status === 'verified' ? 'Youth terverifikasi' : 'Belum terverifikasi' }}
                 </span>
@@ -33,14 +44,13 @@
                 @endif
             </div>
         </div>
-        <a class="btn-secondary" href="{{ route('youth.profile.edit') }}">Edit profil</a>
     </div>
 </section>
 
 {{-- Profile completion --}}
 <x-profile-completion :completion="$completion" />
 
-<div class="grid gap-6 lg:grid-cols-2">
+<div>
 
     {{-- Tentang saya --}}
     <section class="sipora-card">
@@ -50,23 +60,6 @@
             <div><dt class="font-semibold text-slate-500">Status</dt><dd class="mt-1">{{ $user->profile?->occupation_status ?: 'Belum diisi' }}</dd></div>
             <div><dt class="font-semibold text-slate-500">Kelayakan usia</dt><dd class="mt-1">{{ $eligibility['eligible'] === true ? 'Segmen inti Youth' : ($eligibility['eligible'] === false ? 'Di luar segmen inti' : 'Belum dihitung') }}</dd></div>
         </dl>
-    </section>
-
-    {{-- Privasi profil --}}
-    <section class="sipora-card">
-        <h2 class="text-xl font-bold">Privasi profil</h2>
-        <p class="mt-2 text-sm text-slate-600">NIK, dokumen identitas, tanggal lahir lengkap, alamat detail, telepon, dan email selalu privat.</p>
-        <form class="mt-5 space-y-3" method="post" action="{{ route('youth.profile.visibility.update') }}">
-            @csrf @method('PUT')
-            @foreach(['is_profile_public'=>'Publikasikan Portfolio','show_photo'=>'Tampilkan foto','show_bio'=>'Tampilkan bio','show_interests'=>'Tampilkan minat','show_skills'=>'Tampilkan keahlian','show_education'=>'Tampilkan pendidikan','show_organization_experience'=>'Tampilkan pengalaman organisasi mandiri','show_community_membership'=>'Tampilkan keanggotaan Community','show_activity_passport'=>'Tampilkan Activity Passport','show_certificates'=>'Tampilkan sertifikat','show_achievements'=>'Tampilkan prestasi'] as $key=>$label)
-                <label class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-3">
-                    <span class="font-medium">{{ $label }}</span>
-                    <input type="hidden" name="{{ $key }}" value="0">
-                    <input class="size-5 accent-[#243378]" type="checkbox" name="{{ $key }}" value="1" @checked($user->profileVisibility?->{$key} ?? true)>
-                </label>
-            @endforeach
-            <button class="btn mt-2 w-full" type="submit">Simpan privasi</button>
-        </form>
     </section>
 
 </div>
