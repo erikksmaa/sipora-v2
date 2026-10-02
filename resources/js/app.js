@@ -46,6 +46,13 @@ Alpine.data('workspaceShell', () => ({
     init() {
         this.collapsed = window.localStorage.getItem('sipora.workspace.sidebar.collapsed') === 'true';
         this.$watch('collapsed', (value) => window.localStorage.setItem('sipora.workspace.sidebar.collapsed', String(value)));
+        this.$watch('mobileOpen', (value) => {
+            document.documentElement.classList.toggle('overflow-hidden', value && window.innerWidth < 1024);
+        });
+        this._handleResize = () => {
+            if (window.innerWidth >= 1024 && this.mobileOpen) this.closeMobile(false);
+        };
+        window.addEventListener('resize', this._handleResize);
     },
     openMobile() {
         this.mobileOpen = true;
@@ -72,6 +79,52 @@ Alpine.data('workspaceShell', () => ({
     },
     toggleCollapsed() {
         this.collapsed = !this.collapsed;
+    },
+}));
+
+Alpine.data('publicNavigation', () => ({
+    open: false,
+    exploreOpen: false,
+    init() {
+        this.$watch('open', (value) => {
+            document.documentElement.classList.toggle('overflow-hidden', value && window.innerWidth < 1024);
+        });
+        this._handleResize = () => {
+            if (window.innerWidth >= 1024 && this.open) this.closeMobile(false);
+        };
+        window.addEventListener('resize', this._handleResize);
+    },
+    openMobile() {
+        this.open = true;
+        this.exploreOpen = false;
+        this.$nextTick(() => this.$refs.mobileClose?.focus());
+    },
+    closeMobile(restoreFocus = false) {
+        this.open = false;
+        if (restoreFocus) this.$nextTick(() => this.$refs.mobileTrigger?.focus());
+    },
+    closeExplore(restoreFocus = false) {
+        this.exploreOpen = false;
+        if (restoreFocus) this.$nextTick(() => this.$refs.exploreTrigger?.focus());
+    },
+    openExploreAndFocus() {
+        this.exploreOpen = true;
+        this.$nextTick(() => this.$refs.exploreMenu?.querySelector('a')?.focus());
+    },
+    trapMobileFocus(event) {
+        if (!this.open || window.innerWidth >= 1024) return;
+        const focusable = [...this.$refs.mobileMenu.querySelectorAll('a, button:not([disabled])')]
+            .filter((element) => element.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
     },
 }));
 

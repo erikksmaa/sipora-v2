@@ -15,7 +15,7 @@
 </head>
 <body class="min-h-screen bg-bg text-text-primary antialiased">
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:p-3">Lewati ke konten</a>
-<header x-data="{ open: false, exploreOpen: false }" @keydown.escape.window="open = false; exploreOpen = false" class="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-xl">
+<header x-data="publicNavigation" @keydown.escape.window="open ? closeMobile(true) : closeExplore(true)" class="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-xl">
     <nav class="mx-auto flex h-[74px] max-w-7xl items-center justify-between gap-6 px-5" aria-label="Navigasi publik">
         <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="SIPORA beranda">
             <span class="grid size-10 place-items-center rounded-xl bg-primary text-sm font-black text-white shadow-xs">SP</span>
@@ -24,8 +24,8 @@
         <div class="hidden h-full items-center gap-6 lg:flex">
             <a href="{{ route('home') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('home')]) @if(request()->routeIs('home')) aria-current="page" @endif>Beranda</a>
             <div class="relative flex h-full items-center" @click.outside="exploreOpen = false">
-                <button type="button" @click="exploreOpen = !exploreOpen" class="public-nav-link h-full gap-1" :aria-expanded="exploreOpen" aria-controls="explore-menu">Jelajahi <x-ui.icon name="chevron-down" class="size-4 transition" x-bind:class="exploreOpen && 'rotate-180'" /></button>
-                <div id="explore-menu" x-cloak x-show="exploreOpen" x-transition class="absolute left-1/2 top-[calc(100%-4px)] w-64 -translate-x-1/2 rounded-2xl border border-border bg-white p-2 shadow-lg">
+                <button x-ref="exploreTrigger" type="button" @click="exploreOpen = !exploreOpen" @keydown.arrow-down.prevent="openExploreAndFocus" @class(['public-nav-link h-full gap-1', 'public-nav-active' => request()->routeIs('activities.*', 'communities.*', 'opportunities.*', 'programs.*', 'youth-directory.*', 'portfolio.show')]) :aria-expanded="exploreOpen" aria-haspopup="menu" aria-controls="explore-menu">Jelajahi <x-ui.icon name="chevron-down" class="size-4 transition" x-bind:class="exploreOpen && 'rotate-180'" /></button>
+                <div x-ref="exploreMenu" id="explore-menu" x-cloak x-show="exploreOpen" x-transition role="menu" class="absolute left-1/2 top-[calc(100%-4px)] w-64 -translate-x-1/2 rounded-2xl border border-border bg-white p-2 shadow-lg">
                     @foreach ([['Activity', 'Temukan kegiatan pemuda', 'activity', 'activities.index'], ['Community', 'Bertumbuh bersama komunitas', 'building', 'communities.index'], ['Opportunity', 'Jelajahi peluang terkurasi', 'briefcase', 'opportunities.index'], ['Program', 'Lihat program kepemudaan', 'notebook', 'programs.index'], ['Pemuda', 'Lihat Portfolio yang dibagikan', 'users', 'youth-directory.index']] as [$label, $description, $icon, $routeName])<a href="{{ route($routeName) }}" @click="exploreOpen = false" @class(['flex min-h-12 items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-primary-50', 'bg-primary-50' => request()->routeIs($routeName, str($routeName)->before('.index').'.show') || ($routeName === 'youth-directory.index' && request()->routeIs('portfolio.show'))])><span class="grid size-9 place-items-center rounded-lg bg-surface-soft text-primary shadow-xs"><x-ui.icon :name="$icon" class="size-4" /></span><span><strong class="block text-sm text-text-primary">{{ $label }}</strong><small class="text-xs text-text-muted">{{ $description }}</small></span></a>@endforeach
                 </div>
             </div>
@@ -40,10 +40,10 @@
                 <a href="{{ route('login') }}" class="px-3 py-2 text-sm font-bold text-primary transition-colors hover:text-accent">Masuk</a><a href="{{ route('register') }}" class="landing-btn-primary !min-h-10 !px-5">Daftar</a>
             @endauth
         </div>
-        <button type="button" class="grid size-11 place-items-center rounded-[10px] border border-border bg-white text-primary shadow-xs lg:hidden" @click="open = !open" :aria-expanded="open" aria-controls="public-menu" aria-label="Buka menu"><x-ui.icon name="menu" /></button>
+        <button x-ref="mobileTrigger" type="button" class="grid size-11 place-items-center rounded-[10px] border border-border bg-white text-primary shadow-xs lg:hidden" @click="open ? closeMobile(true) : openMobile()" :aria-expanded="open" aria-controls="public-menu" aria-label="Buka menu"><x-ui.icon name="menu" /></button>
     </nav>
-    <div id="public-menu" x-cloak x-show="open" x-transition class="border-t border-border bg-white px-5 py-5 lg:hidden">
-        <div class="mx-auto grid max-w-7xl gap-1 text-sm font-semibold">
+    <div x-ref="mobileMenu" id="public-menu" x-cloak x-show="open" x-transition @keydown.tab="trapMobileFocus($event)" class="max-h-[calc(100dvh-74px)] overflow-y-auto border-t border-border bg-white px-5 py-5 lg:hidden">
+        <div class="mx-auto grid max-w-7xl gap-1 text-sm font-semibold"><div class="mb-2 flex items-center justify-between px-3"><span class="text-xs font-bold uppercase tracking-wider text-text-muted">Navigasi</span><button x-ref="mobileClose" type="button" class="grid size-10 place-items-center rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary" @click="closeMobile(true)" aria-label="Tutup menu"><x-ui.icon name="x" /></button></div>
             <a href="{{ route('home') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('home')])>Beranda</a><p class="px-3 pt-3 text-[10px] font-extrabold uppercase tracking-[.16em] text-text-muted">Jelajahi</p>
             @foreach (['Activity' => route('activities.index'), 'Community' => route('communities.index'), 'Opportunity' => route('opportunities.index'), 'Program' => route('programs.index'), 'Pemuda' => route('youth-directory.index')] as $label => $href)<a href="{{ $href }}" @click="open = false" class="flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary">{{ $label }}</a>@endforeach
             <a href="{{ route('about') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary','bg-primary-50 text-primary'=>request()->routeIs('about')])>Tentang SIPORA</a>
@@ -53,7 +53,7 @@
         </div>
     </div>
 </header>
-<main id="main">@yield('content')</main>
+<main id="main" tabindex="-1">@yield('content')</main>
 @hasSection('footer')@yield('footer')@else<x-public.footer/>@endif
 </body>
 </html>

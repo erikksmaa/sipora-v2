@@ -31,7 +31,10 @@ class YouthWorkspaceRenderingTest extends TestCase
             ->assertSee('Tersimpan')
             ->assertSee('Notifikasi')
             ->assertSee('Jelajahi SIPORA')
-            ->assertSee('aria-current="page"', false);
+            ->assertSee('aria-current="page"', false)
+            ->assertSee('x-data="workspaceShell"', false)
+            ->assertSee(':inert="mobileOpen"', false)
+            ->assertSee('<main id="main" tabindex="-1"', false);
     }
 
     public function test_personal_workspace_surfaces_render_inside_the_shared_youth_shell(): void

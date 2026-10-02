@@ -35,4 +35,14 @@ class PublicInformationPagesTest extends TestCase
         }
         $response->assertSee('Tentang SIPORA')->assertSee('Kontak')->assertSee('Pemuda');
     }
+
+    public function test_public_shell_exposes_keyboard_and_mobile_navigation_hooks(): void
+    {
+        $this->get(route('about'))->assertOk()
+            ->assertSee('x-data="publicNavigation"', false)
+            ->assertSee('x-ref="mobileTrigger"', false)
+            ->assertSee('x-ref="mobileClose"', false)
+            ->assertSee('aria-haspopup="menu"', false)
+            ->assertSee('<main id="main" tabindex="-1">', false);
+    }
 }
