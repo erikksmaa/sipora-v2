@@ -114,6 +114,31 @@ class ActivityWorkflowTest extends TestCase
         $this->assertSame(3, $manager->siporaNotifications()->count());
     }
 
+    public function test_verifier_cannot_discover_or_open_unsubmitted_activity_draft(): void
+    {
+        [$community, $manager] = $this->community('private-draft');
+        $draft = $this->activity($community, $manager, $this->activityCategory());
+        $verifier = $this->userWithRole('verifier');
+
+        $this->actingAs($verifier)->get(route('verifier.activity-verifications.index', ['status' => 'all']))
+            ->assertOk()->assertDontSee($draft->title);
+        $this->actingAs($verifier)->get(route('verifier.activity-verifications.show', $draft))->assertForbidden();
+    }
+
+    public function test_verifier_manager_conflict_is_blocked_for_activity_review(): void
+    {
+        [$community, $manager] = $this->community('review-conflict');
+        $manager->assignRole('verifier');
+        $activity = $this->activity($community, $manager, $this->activityCategory(), Activity::REVIEW_PENDING);
+
+        $this->actingAs($manager)->get(route('verifier.activity-verifications.index'))
+            ->assertOk()->assertDontSee($activity->title);
+        $this->actingAs($manager)->get(route('verifier.activity-verifications.show', $activity))->assertForbidden();
+        $this->actingAs($manager)->post(route('verifier.activity-verifications.review', $activity), ['decision' => Activity::REVIEW_APPROVED])
+            ->assertForbidden();
+        $this->assertSame(Activity::REVIEW_PENDING, $activity->fresh()->review_status);
+    }
+
     public function test_only_approved_activity_can_be_published_and_publicly_viewed(): void
     {
         [$community, $manager] = $this->community('publish');

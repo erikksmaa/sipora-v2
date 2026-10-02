@@ -225,6 +225,30 @@ class CommunityApplicationTest extends TestCase
         $this->assertSame(1, $owner->siporaNotifications()->count());
     }
 
+    public function test_verifier_manager_conflict_is_hidden_and_blocked_server_side(): void
+    {
+        $owner = $this->youth();
+        $community = $this->pendingCommunity($owner);
+        $verifier = $this->verifier();
+        $verifier->assignRole('youth');
+        OrganizationMembership::create([
+            'organization_id' => $community->getKey(),
+            'user_id' => $verifier->getKey(),
+            'access_role' => OrganizationMembership::ROLE_MANAGER,
+            'membership_status' => OrganizationMembership::STATUS_ACTIVE,
+            'requested_at' => now(),
+            'approved_at' => now(),
+            'approved_by' => $owner->getKey(),
+        ]);
+
+        $this->actingAs($verifier)->get(route('verifier.community-verifications.index'))
+            ->assertOk()->assertDontSee($community->name);
+        $this->actingAs($verifier)->get(route('verifier.community-verifications.show', $community))->assertForbidden();
+        $this->actingAs($verifier)->post(route('verifier.community-verifications.review', $community), ['decision' => 'approved'])
+            ->assertSessionHasErrors('decision');
+        $this->assertSame(Organization::REVIEW_PENDING, $community->fresh()->review_status);
+    }
+
     private function youth(): User
     {
         $user = User::factory()->create();

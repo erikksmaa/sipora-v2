@@ -10,7 +10,8 @@ final class ProgramProposalPolicy
 {
     public function view(User $user, ProgramProposal $proposal): bool
     {
-        return $user->hasRole('verifier') || $this->manages($user, $proposal);
+        return ($user->hasRole('verifier') && $proposal->status !== ProgramProposal::STATUS_DRAFT)
+            || $this->manages($user, $proposal);
     }
 
     public function update(User $user, ProgramProposal $proposal): bool

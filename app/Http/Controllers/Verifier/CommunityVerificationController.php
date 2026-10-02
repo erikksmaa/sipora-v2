@@ -26,6 +26,10 @@ final class CommunityVerificationController extends Controller
 
         $communities = Organization::query()
             ->whereHas('verificationRequests')
+            ->whereDoesntHave('memberships', fn ($memberships) => $memberships
+                ->where('user_id', $request->user()->getKey())
+                ->where('membership_status', 'active')
+                ->whereIn('access_role', ['leader', 'manager']))
             ->with(['creator.profile', 'category', 'latestVerificationRequest'])
             ->when($status !== 'all', fn ($query) => $query->where('review_status', $status))
             ->when($search !== '', fn ($query) => $query->where(function ($match) use ($search): void {
@@ -48,6 +52,7 @@ final class CommunityVerificationController extends Controller
 
     public function show(Organization $organization): View
     {
+        $this->denyConflict($organization);
         abort_unless($organization->verificationRequests()->exists(), 404);
         $organization->load(['creator.profile', 'category', 'administrativeArea', 'latestVerificationRequest.submitter']);
         $previousReview = $organization->verificationRequests()
@@ -74,6 +79,7 @@ final class CommunityVerificationController extends Controller
 
     public function logo(Organization $organization): StreamedResponse
     {
+        $this->denyConflict($organization);
         abort_unless($organization->verificationRequests()->exists(), 404);
         abort_unless($organization->logo_path && Storage::disk('community_media')->exists($organization->logo_path), 404);
         $mime = Storage::disk('community_media')->mimeType($organization->logo_path) ?: 'application/octet-stream';
@@ -91,5 +97,14 @@ final class CommunityVerificationController extends Controller
             'X-Content-Type-Options' => 'nosniff',
             'Content-Security-Policy' => "default-src 'none'; frame-ancestors 'self'",
         ]);
+    }
+
+    private function denyConflict(Organization $organization): void
+    {
+        abort_if($organization->memberships()
+            ->where('user_id', request()->user()->getKey())
+            ->where('membership_status', 'active')
+            ->whereIn('access_role', ['leader', 'manager'])
+            ->exists(), 403);
     }
 }

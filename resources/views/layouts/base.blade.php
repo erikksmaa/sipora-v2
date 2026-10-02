@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'SIPORA v2')</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">@vite(['resources/css/app.css', 'resources/js/app.js'])@stack('head')
+    <title>@yield('title', 'SIPORA v2')</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">@vite(['resources/css/app.css', 'resources/js/app.js'])@stack('head')
 </head>
 <body class="min-h-screen bg-bg text-text-primary antialiased">
 <a href="#main" class="sr-only focus:not-sr-only focus:block focus:p-3">Lewati ke konten</a>

@@ -168,6 +168,19 @@ class ProgramProposalTest extends TestCase
         $this->assertArrayNotHasKey('proposal_document_path', $proposal->toArray());
     }
 
+    public function test_unsubmitted_proposal_and_private_document_are_hidden_from_verifier(): void
+    {
+        [$organization, $manager, $program] = $this->context('private-proposal');
+        $proposal = $this->proposal($program, ProgramProposal::STATUS_DRAFT);
+        $verifier = $this->roleUser('verifier');
+
+        $this->actingAs($verifier)->get(route('verifier.program-proposals.index', ['status' => 'all']))
+            ->assertOk()->assertDontSee($program->title);
+        $this->actingAs($verifier)->get(route('verifier.program-proposals.show', $proposal))->assertForbidden();
+        $this->actingAs($verifier)->get(route('verifier.program-proposals.document', $proposal))->assertForbidden();
+        $this->actingAs($manager)->get(route('manager.program-proposals.document', [$organization, $program, $proposal]))->assertOk();
+    }
+
     public function test_schema_and_future_boundaries_are_preserved(): void
     {
         $this->assertTrue(Schema::hasTable('program_proposals'));

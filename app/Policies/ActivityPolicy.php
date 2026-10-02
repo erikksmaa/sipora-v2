@@ -48,6 +48,19 @@ final class ActivityPolicy
         return $this->manages($user, $activity);
     }
 
+    public function viewForVerification(User $user, Activity $activity): bool
+    {
+        return $user->hasRole('verifier')
+            && $activity->review_status !== Activity::REVIEW_DRAFT
+            && ! $this->manages($user, $activity);
+    }
+
+    public function review(User $user, Activity $activity): bool
+    {
+        return $this->viewForVerification($user, $activity)
+            && $activity->review_status === Activity::REVIEW_PENDING;
+    }
+
     private function manages(User $user, Activity $activity): bool
     {
         return OrganizationMembership::query()

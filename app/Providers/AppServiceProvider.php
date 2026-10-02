@@ -76,5 +76,7 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
         RateLimiter::for('oauth', fn (Request $request) => Limit::perMinute(10)->by($request->ip()));
+        RateLimiter::for('public-search', fn (Request $request) => Limit::perMinute(60)->by($request->ip()));
+        RateLimiter::for('certificate-verification', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
     }
 }

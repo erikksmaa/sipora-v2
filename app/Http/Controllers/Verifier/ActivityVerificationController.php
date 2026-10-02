@@ -8,6 +8,7 @@ use App\Http\Requests\Verifier\ReviewActivityRequest;
 use App\Models\Activity;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -21,6 +22,11 @@ final class ActivityVerificationController extends Controller
         $status = $input['status'] ?? Activity::REVIEW_PENDING;
         $search = trim($input['search'] ?? '');
         $activities = Activity::query()->with(['organization', 'category', 'creator'])
+            ->whereNot('review_status', Activity::REVIEW_DRAFT)
+            ->whereDoesntHave('organization.memberships', fn ($memberships) => $memberships
+                ->where('user_id', $request->user()->getKey())
+                ->where('membership_status', 'active')
+                ->whereIn('access_role', ['leader', 'manager']))
             ->when($status !== 'all', fn ($query) => $query->where('review_status', $status))
             ->when($search !== '', fn ($query) => $query->where(fn ($match) => $match->where('title', 'like', "%{$search}%")
                 ->orWhereHas('organization', fn ($organizations) => $organizations->where('name', 'like', "%{$search}%"))))
@@ -31,6 +37,7 @@ final class ActivityVerificationController extends Controller
 
     public function show(Activity $activity): View
     {
+        Gate::authorize('viewForVerification', $activity);
         $activity->load(['organization', 'category', 'creator.profile', 'administrativeArea', 'latestReview']);
 
         return view('verifier.activities.show', compact('activity'));
@@ -45,6 +52,7 @@ final class ActivityVerificationController extends Controller
 
     public function poster(Activity $activity): StreamedResponse
     {
+        Gate::authorize('viewForVerification', $activity);
         abort_unless($activity->poster_path && Storage::disk('activity_media')->exists($activity->poster_path), 404);
         $mime = Storage::disk('activity_media')->mimeType($activity->poster_path) ?: 'application/octet-stream';
 

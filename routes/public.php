@@ -19,12 +19,12 @@ use App\Http\Controllers\Youth\CommunityMembershipController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', PublicLandingController::class)->name('home');
-Route::get('/youth', PublicYouthDirectoryController::class)->name('youth-directory.index');
+Route::get('/youth', PublicYouthDirectoryController::class)->middleware('throttle:public-search')->name('youth-directory.index');
 Route::get('/about', [PublicInformationController::class, 'about'])->name('about');
 Route::get('/contact', [PublicInformationController::class, 'contact'])->name('contact');
 Route::get('/activities', ActivityDiscoveryController::class)->name('activities.index');
 Route::get('/communities', CommunityDiscoveryController::class)->name('communities.index');
-Route::get('/search', GlobalSearchController::class)->name('search.index');
+Route::get('/search', GlobalSearchController::class)->middleware('throttle:public-search')->name('search.index');
 Route::get('/opportunities', OpportunityDiscoveryController::class)->name('opportunities.index');
 Route::get('/opportunities/{opportunity}', [PublicOpportunityController::class, 'show'])->name('opportunities.show');
 Route::get('/programs', ProgramDiscoveryController::class)->name('programs.index');
@@ -33,7 +33,7 @@ Route::get('/communities/{organization}', [PublicCommunityController::class, 'sh
 Route::get('/communities/{organization}/logo', [PublicCommunityController::class, 'logo'])->name('communities.logo');
 Route::get('/activities/{activity}', [PublicActivityController::class, 'show'])->name('activities.show');
 Route::get('/activities/{activity}/poster', [PublicActivityController::class, 'poster'])->name('activities.poster');
-Route::get('/certificates/verify/{code}', PublicCertificateController::class)->name('certificates.verify');
+Route::get('/certificates/verify/{code}', PublicCertificateController::class)->middleware('throttle:certificate-verification')->name('certificates.verify');
 Route::get('/portfolio/{profile}/photo', [PublicYouthPortfolioController::class, 'photo'])->name('portfolio.photo');
 Route::get('/portfolio/{profile}', [PublicYouthPortfolioController::class, 'show'])->name('portfolio.show');
 

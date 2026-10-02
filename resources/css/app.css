@@ -1,526 +1,588 @@
 @import 'tailwindcss';
 
-[x-cloak] {
-    display: none !important;
-}
+[x-cloak] { display: none !important; }
+
+/* ==========================================================================
+   SIPORA — PIXEL ADVENTURE THEME v2
+   Flame #FE7743  -> aksi / CTA / api unggun
+   Cream #EFEEEA  -> kertas peta
+   Slate #273F4F  -> identitas, teks, langit malam
+   Black #000000  -> garis tepi pixel & bayangan keras
+
+   Aturan main:
+   - Hitam hanya untuk bingkai + bayangan. Flame hanya untuk aksi/sorotan.
+   - Setiap komponen punya "bingkai pixel" (box-shadow bertingkat, tanpa radius).
+   - Ornamen (burung, kepiting, pedang, hati, bintang, awan, matahari) = mask SVG,
+     warnanya ikut `color`, jadi bisa dipakai di mana saja tanpa file gambar.
+   ========================================================================== */
 
 :root {
-    /* Primary Navy Scale */
-    --sipora-primary-50: #F3F5FC;
-    --sipora-primary-100: #E8EBF8;
-    --sipora-primary-200: #CDD3EF;
-    --sipora-primary-300: #AAB4E1;
-    --sipora-primary-400: #7C8BCB;
-    --sipora-primary-500: #5668B4;
-    --sipora-primary-600: #3F509A;
-    --sipora-primary-700: #33427F;
-    --sipora-primary-800: #293665;
-    --sipora-primary-900: #202A4F;
-    --sipora-primary-950: #151B35;
-    --sipora-primary: #33427F;
-
-    /* Accent Orange Scale */
-    --sipora-orange-50: #FFF7ED;
-    --sipora-orange-100: #FFEDD5;
-    --sipora-orange-200: #FED7AA;
-    --sipora-orange-300: #FDBA74;
-    --sipora-orange-400: #FB923C;
-    --sipora-orange-500: #F97316;
-    --sipora-orange-600: #EA580C;
-    --sipora-orange-700: #C2410C;
-    --sipora-accent: #F97316;
-
-    /* Text */
-    --sipora-text: #172033;
-    --sipora-text-secondary: #526075;
-    --sipora-text-muted: #7B8799;
-    --sipora-text-inverse: #FFFFFF;
-
-    /* Surface */
-    --sipora-bg: #F7F8FC;
-    --sipora-surface: #FFFFFF;
-    --sipora-surface-soft: #F3F5F9;
-    --sipora-surface-muted: #EEF1F6;
-
-    /* Border */
-    --sipora-border: #E2E6EF;
-    --sipora-border-strong: #CDD3DF;
-
-    /* Semantic */
-    --sipora-success: #16865C;
-    --sipora-success-soft: #E9F7F0;
-    --sipora-warning: #D98A12;
-    --sipora-warning-soft: #FFF6DF;
-    --sipora-danger: #D64545;
-    --sipora-danger-soft: #FDECEC;
-    --sipora-info: #3B82C4;
-    --sipora-info-soft: #EAF3FB;
-
-    /* Hero Gradient & Decoration */
-    --sipora-hero-from: #2F3E78;
-    --sipora-hero-mid: #374989;
-    --sipora-hero-to: #44559B;
-    --sipora-hero-grid: rgba(255, 255, 255, 0.065);
+    --px-bird: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E");
+    --px-crab: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 5' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h-2zM9 0h2v1h-2zM0 1h2v1h-2zM4 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM1 2h9v1h-9zM2 3h7v1h-7zM0 4h1v1h-1zM2 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1z'/%3E%3C/svg%3E");
+    --px-sword: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 10' shape-rendering='crispEdges'%3E%3Cpath d='M9 0h2v1h-2zM8 1h2v1h-2zM7 2h2v1h-2zM6 3h2v1h-2zM5 4h2v1h-2zM3 5h5v1h-5zM4 6h2v1h-2zM3 7h2v1h-2zM2 8h2v1h-2zM0 9h3v1h-3z'/%3E%3C/svg%3E");
+    --px-heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 6' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h2v1h-2zM4 0h2v1h-2zM0 1h7v1h-7zM0 2h7v1h-7zM1 3h5v1h-5zM2 4h3v1h-3zM3 5h1v1h-1z'/%3E%3C/svg%3E");
+    --px-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v1h-1zM3 1h1v1h-1zM2 2h3v1h-3zM0 3h7v1h-7zM2 4h3v1h-3zM3 5h1v1h-1zM3 6h1v1h-1z'/%3E%3C/svg%3E");
+    --px-cloud: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E");
+    --px-coin: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath d='M2 0h4v1h-4zM1 1h6v1h-6zM0 2h8v4h-8zM1 6h6v1h-6zM2 7h4v1h-4z'/%3E%3C/svg%3E");
+    --px-mountain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' shape-rendering='crispEdges'%3E%3Cpath d='M0 10v-2h4v-2h4v-2h4v-2h4v2h4v-2h4v-2h4v2h4v2h4v2h4v2z'/%3E%3C/svg%3E");
 }
 
 @theme {
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-display: 'Big Shoulders Display', 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Pixelify Sans', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-pixel: 'Press Start 2P', 'Pixelify Sans', monospace;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-    /* Primary Navy */
-    --color-primary-50: #F3F5FC;
-    --color-primary-100: #E8EBF8;
-    --color-primary-200: #CDD3EF;
-    --color-primary-300: #AAB4E1;
-    --color-primary-400: #7C8BCB;
-    --color-primary-500: #5668B4;
-    --color-primary-600: #3F509A;
-    --color-primary-700: #33427F;
-    --color-primary-800: #293665;
-    --color-primary-900: #202A4F;
-    --color-primary-950: #151B35;
-    --color-primary: #33427F;
-    --color-primary-dark: #202A4F;
-    --color-interactive: #3F509A;
+    --color-ink: #000000;
 
-    /* Accent Orange */
-    --color-accent-50: #FFF7ED;
-    --color-accent-100: #FFEDD5;
-    --color-accent-200: #FED7AA;
-    --color-accent-300: #FDBA74;
-    --color-accent-400: #FB923C;
-    --color-accent-500: #F97316;
-    --color-accent-600: #EA580C;
-    --color-accent-700: #C2410C;
-    --color-accent: #F97316;
-    --color-accent-bright: #FB923C;
+    /* Primary: Slate #273F4F */
+    --color-primary-50: #F1F5F8;
+    --color-primary-100: #DFE8EE;
+    --color-primary-200: #BFD0DB;
+    --color-primary-300: #94AEBF;
+    --color-primary-400: #6389A1;
+    --color-primary-500: #436B84;
+    --color-primary-600: #345569;
+    --color-primary-700: #273F4F;
+    --color-primary-800: #1D303D;
+    --color-primary-900: #142029;
+    --color-primary-950: #0A1218;
+    --color-primary: #273F4F;
+    --color-primary-dark: #1D303D;
+    --color-interactive: #345569;
 
-    /* Surfaces & Backgrounds */
-    --color-surface: #FFFFFF;
-    --color-surface-soft: #F3F5F9;
-    --color-surface-muted: #EEF1F6;
-    --color-bg: #F7F8FC;
+    /* Alias lama: bg-indigo-* tetap jalan (kini slate) */
+    --color-indigo-50: #F1F5F8;
+    --color-indigo-100: #DFE8EE;
+    --color-indigo-200: #BFD0DB;
+    --color-indigo-300: #94AEBF;
+    --color-indigo-400: #6389A1;
+    --color-indigo-500: #436B84;
+    --color-indigo-600: #345569;
+    --color-indigo-700: #273F4F;
+    --color-indigo-800: #1D303D;
+    --color-indigo-900: #142029;
 
-    /* Borders */
-    --color-border: #E2E6EF;
-    --color-border-strong: #CDD3DF;
+    /* Accent: Flame #FE7743 */
+    --color-accent-50: #FFF3ED;
+    --color-accent-100: #FFE3D5;
+    --color-accent-200: #FFC6AA;
+    --color-accent-300: #FFA277;
+    --color-accent-400: #FE8D5C;
+    --color-accent-500: #FE7743;
+    --color-accent-600: #E85A24;
+    --color-accent-700: #BA4317;
+    --color-accent: #FE7743;
+    --color-accent-bright: #FE8D5C;
 
-    /* Text */
-    --color-text-primary: #172033;
-    --color-text-secondary: #526075;
-    --color-text-muted: #7B8799;
+    /* Cream #EFEEEA */
+    --color-cream-50: #FBFAF7;
+    --color-cream-100: #EFEEEA;
+    --color-cream-200: #E4E2DB;
+    --color-cream-300: #D3D0C6;
 
-    /* Semantics */
-    --color-success: #16865C;
-    --color-success-soft: #E9F7F0;
-    --color-warning: #D98A12;
-    --color-warning-soft: #FFF6DF;
-    --color-danger: #D64545;
-    --color-danger-soft: #FDECEC;
-    --color-info: #3B82C4;
-    --color-info-soft: #EAF3FB;
+    --color-surface: #FBFAF7;
+    --color-surface-soft: #E8E6E0;
+    --color-surface-muted: #DAD7CD;
+    --color-bg: #EFEEEA;
 
-    /* Calibrated Shadows */
-    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-    --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.06);
-    --shadow-md: 0 10px 24px rgba(15, 23, 42, 0.08);
-    --shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.10);
-    --shadow-card: 0 4px 12px rgba(15, 23, 42, 0.06);
-    --shadow-card-hover: 0 10px 24px rgba(15, 23, 42, 0.08);
+    --color-border: #CFCCC0;
+    --color-border-strong: #A9A598;
 
-    /* Radius standard scale */
-    --radius-sm: 8px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 18px;
-    --radius-2xl: 22px;
+    --color-text-primary: #273F4F;
+    --color-text-secondary: #46606F;
+    --color-text-muted: #667B87;
+
+    --color-success: #2F8F55;
+    --color-success-soft: #DDF1E4;
+    --color-warning: #A86400;
+    --color-warning-soft: #FFEBC2;
+    --color-danger: #C1121F;
+    --color-danger-soft: #FBDDDF;
+    --color-info: #2B76B0;
+    --color-info-soft: #DDEBF6;
+
+    --shadow-xs: 0 1px 0 rgba(0, 0, 0, 0.15);
+    --shadow-sm: 0 4px 0 rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 8px 0 rgba(0, 0, 0, 0.14);
+    --shadow-lg: 0 12px 0 rgba(0, 0, 0, 0.16);
+
+    --radius-sm: 0px;
+    --radius-md: 0px;
+    --radius-lg: 0px;
+    --radius-xl: 0px;
+    --radius-2xl: 0px;
+
+    --animate-bob: bob 2.4s steps(4, end) infinite;
+    --animate-blink: blink 1.6s steps(2, end) infinite;
+    --animate-scuttle: scuttle 14s steps(28, end) infinite alternate;
+    --animate-fly: fly 40s linear infinite;
+
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+    @keyframes scuttle { from { background-position-x: 6%; } to { background-position-x: 94%; } }
+    @keyframes fly { from { transform: translateX(-12vw); } to { transform: translateX(112vw); } }
 }
 
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 @layer base {
-
-    /* Indigo alias utilities mapped to Sipora primary colors */
-    .bg-indigo-50 {
-        background-color: var(--sipora-primary-50);
-    }
-
-    .bg-indigo-100 {
-        background-color: var(--sipora-primary-100);
-    }
-
-    .bg-indigo-200 {
-        background-color: var(--sipora-primary-200);
-    }
-
-    .bg-indigo-300 {
-        background-color: var(--sipora-primary-300);
-    }
-
-    .bg-indigo-400 {
-        background-color: var(--sipora-primary-400);
-    }
-
-    .bg-indigo-500 {
-        background-color: var(--sipora-primary-500);
-    }
-
-    .bg-indigo-600 {
-        background-color: var(--sipora-primary-600);
-    }
-
-    .bg-indigo-700 {
-        background-color: var(--sipora-primary-700);
-    }
-
-    .bg-indigo-800 {
-        background-color: var(--sipora-primary-800);
-    }
-
-    .bg-indigo-900 {
-        background-color: var(--sipora-primary-900);
-    }
-
-    .border-indigo-100 {
-        border-color: var(--sipora-primary-100);
-    }
-
-    .border-indigo-200 {
-        border-color: var(--sipora-primary-200);
-    }
-
-    .border-indigo-300 {
-        border-color: var(--sipora-primary-300);
-    }
-
-    .border-indigo-400 {
-        border-color: var(--sipora-primary-400);
-    }
-
-    .border-indigo-500 {
-        border-color: var(--sipora-primary-500);
-    }
-
-    .border-indigo-600 {
-        border-color: var(--sipora-primary-600);
-    }
-
-    .border-indigo-700 {
-        border-color: var(--sipora-primary-700);
-    }
-
-    .border-indigo-800 {
-        border-color: var(--sipora-primary-800);
-    }
-
-    .border-indigo-900 {
-        border-color: var(--sipora-primary-900);
-    }
-
-    .text-indigo-100 {
-        color: var(--sipora-primary-100);
-    }
-
-    .text-indigo-200 {
-        color: var(--sipora-primary-200);
-    }
-
-    .text-indigo-300 {
-        color: var(--sipora-primary-300);
-    }
-
-    .text-indigo-400 {
-        color: var(--sipora-primary-400);
-    }
-
-    .text-indigo-500 {
-        color: var(--sipora-primary-500);
-    }
-
-    .text-indigo-600 {
-        color: var(--sipora-primary-600);
-    }
-
-    .text-indigo-700 {
-        color: var(--sipora-primary-700);
-    }
-
-    .text-indigo-800 {
-        color: var(--sipora-primary-800);
-    }
-
-    .text-indigo-900 {
-        color: var(--sipora-primary-900);
-    }
-
-    html {
-        @apply scroll-smooth;
-    }
+    html { @apply scroll-smooth; }
 
     body {
-        @apply overflow-x-hidden font-sans text-[#172033] bg-[#F7F8FC];
+        @apply overflow-x-hidden font-sans text-text-primary antialiased;
+        background-color: var(--color-bg);
+        background-image: conic-gradient(rgba(39, 63, 79, 0.05) 25%, transparent 0 50%, rgba(39, 63, 79, 0.05) 0 75%, transparent 0);
+        background-size: 24px 24px;
     }
 
-    code,
-    kbd,
-    samp {
-        @apply font-mono;
-    }
+    h1, h2, h3, h4 { @apply font-display font-bold tracking-tight text-ink; }
+    code, kbd, samp { @apply font-mono; }
 
-    button,
-    a,
-    input,
-    select,
-    textarea {
-        @apply focus-visible:outline-none;
-    }
+    ::selection { background: var(--color-accent-500); color: #000; }
+
+    button, a, input, select, textarea { @apply focus-visible:outline-none; }
 
     :focus-visible {
-        outline: 3px solid #33427F;
-        outline-offset: 2px;
+        outline: 4px solid var(--color-accent-500);
+        outline-offset: 3px;
     }
+
+    /* scrollbar kotak */
+    ::-webkit-scrollbar { width: 14px; height: 14px; }
+    ::-webkit-scrollbar-track { background: var(--color-cream-200); border-left: 3px solid #000; }
+    ::-webkit-scrollbar-thumb { background: var(--color-accent-500); border: 3px solid #000; }
 }
 
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
 @layer components {
 
-    /* Primary Navy Button */
-    .btn,
-    .btn-primary {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-transparent bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-xs transition duration-150 hover:bg-primary-dark hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-55;
+    /* ---------- ORNAMEN SPRITE ----------
+       <span class="px-icon px-crab text-accent-500 text-2xl"></span> */
+    .px-icon {
+        display: inline-block;
+        height: 1em;
+        vertical-align: -0.1em;
+        background-color: currentColor;
+        -webkit-mask: var(--icon) center / contain no-repeat;
+        mask: var(--icon) center / contain no-repeat;
+        image-rendering: pixelated;
     }
 
-    /* Secondary Button: white/light background, navy text, #CDD3DF border */
-    .btn-secondary {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-[#CDD3DF] bg-white px-5 py-2.5 text-sm font-bold text-primary shadow-xs transition duration-150 hover:border-primary-300 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-55;
+    .px-bird { --icon: var(--px-bird); width: 2.6em; }
+    .px-crab { --icon: var(--px-crab); width: 2.2em; }
+    .px-sword { --icon: var(--px-sword); width: 1.1em; }
+    .px-heart { --icon: var(--px-heart); width: 1.17em; }
+    .px-star { --icon: var(--px-star); width: 1em; }
+    .px-cloud { --icon: var(--px-cloud); width: 3.5em; }
+    .px-coin { --icon: var(--px-coin); width: 1em; }
+
+    .px-bob { animation: var(--animate-bob); }
+    .px-blink { animation: var(--animate-blink); }
+
+    /* rantai pixel */
+    .px-divider {
+        height: 8px;
+        background:
+            repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, transparent 8px 32px) 16px 0 / auto 8px repeat-x,
+            repeating-linear-gradient(90deg, #000 0 16px, transparent 16px 32px) 0 0 / auto 8px repeat-x;
     }
 
-    .btn-outline {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-primary/30 bg-transparent px-5 py-2.5 text-sm font-bold text-primary transition duration-150 hover:border-primary hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-55;
+    /* baris hati (nyawa/rating): <span class="px-hearts"><i class="px-icon px-heart"></i>...</span> */
+    .px-hearts { @apply inline-flex items-center gap-1 text-lg text-accent-500; }
+    .px-hearts .off { @apply text-cream-300; }
+
+    /* ---------- BUTTON (3D arcade) ---------- */
+    :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
+        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral, .btn-outline-light, .landing-btn-primary, .landing-btn-secondary) {
+        --bc: #000;
+        --drop: 6px;
+        --bevel: inset 0 -4px 0 0 rgba(0, 0, 0, 0.22), inset 0 3px 0 0 rgba(255, 255, 255, 0.3);
+        @apply relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center gap-2 px-5 py-2.5 font-display text-base font-bold leading-none whitespace-nowrap;
+        margin-bottom: 6px;
+        box-shadow:
+            0 -3px 0 0 var(--bc),
+            3px 0 0 0 var(--bc),
+            -3px 0 0 0 var(--bc),
+            0 var(--drop) 0 0 var(--bc),
+            var(--bevel);
+        transition: transform 90ms steps(2, end), box-shadow 90ms steps(2, end), background-color 120ms, color 120ms;
     }
 
-    /* Ghost Button: navy text, transparent background, orange on hover */
+    :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
+        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral, .btn-outline-light, .landing-btn-primary, .landing-btn-secondary):hover {
+        transform: translateY(-2px);
+    }
+
+    :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
+        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral, .btn-outline-light, .landing-btn-primary, .landing-btn-secondary):active {
+        --drop: 3px;
+        transform: translateY(3px);
+    }
+
+    :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
+        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral, .btn-ghost):disabled,
+    :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
+        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral)[aria-disabled='true'] {
+        @apply pointer-events-none opacity-50;
+        transform: none;
+        filter: grayscale(0.6);
+    }
+
+    /* Solid */
+    .btn, .btn-primary { @apply bg-primary-700 text-cream-100; }
+    .btn:hover, .btn-primary:hover { @apply bg-primary-600; }
+
+    .btn-accent, .landing-btn-primary { @apply bg-accent-500 text-ink; }
+    .btn-accent:hover, .landing-btn-primary:hover { @apply bg-accent-400; }
+
+    .btn-danger { @apply bg-danger text-white; }
+    .btn-danger:hover { background-color: #D6202D; }
+
+    .btn-secondary, .landing-btn-secondary { @apply bg-cream-200 text-primary-700; }
+    .btn-secondary:hover, .landing-btn-secondary:hover { @apply bg-cream-300; }
+
+    /* OUTLINE — bingkai berwarna, isi penuh saat hover.
+       Tambah .btn-outline-* ke elemen apa pun (button / a). */
+    :is(.btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success,
+        .btn-outline-danger, .btn-outline-neutral, .btn-outline-light) {
+        --bevel: inset 0 0 0 0 transparent;
+        @apply bg-cream-50;
+    }
+
+    .btn-outline, .btn-outline-primary { --bc: var(--color-primary-700); @apply text-primary-700; }
+    .btn-outline:hover, .btn-outline-primary:hover { @apply bg-primary-700 text-cream-100; }
+
+    .btn-outline-accent { --bc: var(--color-accent-500); @apply text-accent-700; }
+    .btn-outline-accent:hover { @apply bg-accent-500 text-ink; }
+
+    .btn-outline-success { --bc: var(--color-success); @apply text-success; }
+    .btn-outline-success:hover { @apply bg-success text-white; }
+
+    .btn-outline-danger { --bc: var(--color-danger); @apply text-danger; }
+    .btn-outline-danger:hover { @apply bg-danger text-white; }
+
+    .btn-outline-neutral { --bc: var(--color-border-strong); @apply text-text-secondary; }
+    .btn-outline-neutral:hover { --bc: #000; @apply bg-cream-200 text-ink; }
+
+    .btn-outline-light { --bc: var(--color-cream-100); @apply bg-transparent text-cream-100; }
+    .btn-outline-light:hover { @apply bg-cream-100 text-primary-700; }
+
+    /* Ghost */
     .btn-ghost {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-4 py-2.5 text-sm font-bold text-text-secondary transition duration-150 hover:bg-surface-soft hover:text-accent focus-visible:outline-none disabled:pointer-events-none disabled:opacity-55;
+        @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 px-4 py-2.5 font-display text-base font-bold text-text-secondary transition duration-150;
+        @apply hover:bg-accent-100 hover:text-accent-700;
     }
 
-    /* Danger Button: semantic danger style */
-    .btn-danger {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-transparent bg-danger px-5 py-2.5 text-sm font-bold text-white transition duration-150 hover:bg-[#b83838] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-55;
-    }
+    /* Ukuran & bentuk */
+    .btn-sm { @apply min-h-9 px-3.5 py-2 text-sm; }
+    .btn-lg { @apply min-h-13 px-7 py-3.5 text-xl; }
+    .btn-block { @apply flex w-full; }
+    .btn-icon { @apply size-11 min-h-0 p-0; }
 
-    /* Landing Primary Accent Button: background #F97316, text #172033, hover #EA580C */
-    .landing-btn-primary {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-accent px-6 py-2.5 text-sm font-extrabold text-white shadow-xs transition duration-150 hover:-translate-y-0.5 hover:bg-accent-600 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
+    /* CTA besar: pedang menunjuk saat hover */
+    .btn-quest::before {
+        content: '';
+        width: 0;
+        height: 1em;
+        overflow: hidden;
+        background: currentColor;
+        -webkit-mask: var(--px-sword) left center / contain no-repeat;
+        mask: var(--px-sword) left center / contain no-repeat;
+        transition: width 120ms steps(3, end);
     }
+    .btn-quest:hover::before { width: 1.1em; }
 
-    .landing-btn-secondary {
-        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] border border-[#CDD3DF] bg-white px-6 py-2.5 text-sm font-extrabold text-primary shadow-xs transition duration-150 hover:-translate-y-0.5 hover:border-primary-300 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
-    }
-
-    /* Form Fields */
+    /* ---------- FORM ---------- */
     .field {
-        @apply block min-h-11 w-full rounded-[10px] border border-[#E2E6EF] bg-white px-3.5 py-2.5 text-sm text-text-primary shadow-xs transition placeholder:text-text-muted focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20;
+        --bc: #000;
+        @apply block min-h-11 w-full bg-surface px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-muted;
+        box-shadow:
+            0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc),
+            inset 0 4px 0 0 rgba(39, 63, 79, 0.1);
+    }
+    .field:hover { --bc: var(--color-primary-500); }
+    .field:focus { --bc: var(--color-accent-500); @apply bg-white; }
+
+    .field-label, .label { @apply mb-2 block font-display text-base font-bold text-ink; }
+    .field-error { @apply mt-2 text-sm font-bold text-danger; }
+    .field-error-state, .field-error-state:hover, .field-error-state:focus { --bc: var(--color-danger); }
+
+    /* ---------- CARD / PANEL ---------- */
+    :is(.sipora-card, .surface-card, .landing-card, .public-panel, .auth-card, .table-shell, .dialog-box) {
+        --bc: #000;
+        @apply bg-surface;
+        box-shadow:
+            0 -4px 0 0 var(--bc), 4px 0 0 0 var(--bc), -4px 0 0 0 var(--bc), 0 4px 0 0 var(--bc),
+            8px 8px 0 0 var(--drop-color, rgba(39, 63, 79, 0.28));
     }
 
-    .field-label,
-    .label {
-        @apply mb-1.5 block text-sm font-bold text-text-secondary;
+    .sipora-card { @apply min-w-0 p-5 sm:p-6; }
+    .public-panel { @apply p-5 sm:p-6; }
+    .auth-card { @apply mx-auto max-w-md p-6 sm:p-8; --drop-color: var(--color-accent-500); }
+
+    .surface-card { transition: transform 120ms steps(3, end), box-shadow 120ms steps(3, end); }
+    .surface-card-hover:hover, .landing-card:hover {
+        --drop-color: var(--color-accent-500);
+        transform: translate(-3px, -3px);
     }
 
-    .field-error {
-        @apply mt-1.5 text-sm font-semibold text-danger;
+    .landing-card { @apply relative p-6; transition: transform 120ms steps(3, end); }
+
+    /* bintang muncul di pojok saat hover */
+    .landing-card::after {
+        content: '';
+        position: absolute;
+        top: 10px; right: 10px;
+        width: 18px; height: 18px;
+        background: var(--color-accent-500);
+        -webkit-mask: var(--px-star) center / contain no-repeat;
+        mask: var(--px-star) center / contain no-repeat;
+        image-rendering: pixelated;
+        opacity: 0;
+        transition: opacity 120ms steps(2, end);
+    }
+    .landing-card:hover::after { opacity: 1; animation: var(--animate-blink); }
+
+    /* Kartu bersorot flame: untuk event/pengumuman penting */
+    .card-flame { --drop-color: var(--color-accent-500); }
+    .card-slate { @apply bg-primary-700 text-cream-100; --drop-color: var(--color-accent-500); }
+    .card-slate :is(h1, h2, h3, h4) { @apply text-cream-100; }
+
+    /* Kotak dialog RPG: judul menempel di tab atas.
+       <div class="dialog-box"><div class="dialog-title">Misi baru</div>…</div> */
+    .dialog-box { @apply relative mt-6 p-5 pt-7; --drop-color: var(--color-accent-500); }
+    .dialog-title {
+        @apply absolute -top-5 left-4 bg-accent-500 px-3 py-1 font-display text-sm font-bold text-ink;
+        box-shadow: 0 -3px 0 0 #000, 3px 0 0 0 #000, -3px 0 0 0 #000;
     }
 
-    /* Cards */
-    .auth-card {
-        @apply mx-auto max-w-md rounded-2xl border border-[#E2E6EF] bg-white p-6 shadow-sm sm:p-8;
+    /* Bar XP / progres */
+    .xp-bar {
+        @apply h-5 w-full bg-cream-200;
+        box-shadow: 0 -3px 0 0 #000, 3px 0 0 0 #000, -3px 0 0 0 #000, 0 3px 0 0 #000;
     }
-
-    .sipora-card {
-        @apply min-w-0 rounded-2xl border border-[#E2E6EF] bg-white p-5 shadow-sm sm:p-6;
-    }
-
-    .surface-card {
-        @apply rounded-2xl border border-[#E2E6EF] bg-white shadow-sm transition duration-200;
-    }
-
-    .surface-card-hover {
-        @apply hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md;
-    }
-
-    .landing-card {
-        @apply rounded-2xl border border-[#E2E6EF] bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-md;
+    .xp-bar > span {
+        display: block;
+        height: 100%;
+        background:
+            repeating-linear-gradient(90deg, transparent 0 14px, rgba(0, 0, 0, 0.18) 14px 16px),
+            var(--color-accent-500);
     }
 
     .interest-chip {
-        @apply inline-flex items-center rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-sm font-bold text-primary;
+        --bc: #000;
+        @apply inline-flex items-center gap-1.5 bg-accent-200 px-3 py-1 font-display text-sm font-bold text-ink transition duration-100 hover:bg-accent-500;
+        margin: 3px;
+        box-shadow: 0 -2px 0 0 var(--bc), 2px 0 0 0 var(--bc), -2px 0 0 0 var(--bc), 0 3px 0 0 var(--bc);
     }
 
     .landing-search {
-        @apply min-h-11 w-full rounded-[10px] border border-[#E2E6EF] bg-white px-4 text-sm text-text-primary transition placeholder:text-text-muted focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-500/20;
+        --bc: #000;
+        @apply min-h-12 w-full bg-surface px-5 text-sm text-text-primary placeholder:text-text-muted;
+        box-shadow:
+            0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc),
+            inset 0 4px 0 0 rgba(39, 63, 79, 0.1);
     }
+    .landing-search:focus { --bc: var(--color-accent-500); @apply bg-white; }
 
-    /* Public Navigation Link with Calibrated Active Underline */
+    /* ---------- ALERT ---------- */
+    .alert {
+        --bc: #000;
+        @apply relative flex items-start gap-3 bg-surface p-4 pl-5 text-sm font-medium text-text-primary;
+        box-shadow: 0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc);
+    }
+    .alert::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 8px; background: var(--bar, var(--color-accent-500)); }
+    .alert-success { --bar: var(--color-success); @apply bg-success-soft; }
+    .alert-warning { --bar: var(--color-warning); @apply bg-warning-soft; }
+    .alert-danger { --bar: var(--color-danger); @apply bg-danger-soft; }
+    .alert-info { --bar: var(--color-info); @apply bg-info-soft; }
+
+    /* ---------- NAVIGASI ---------- */
     .public-nav-link {
-        @apply relative inline-flex min-h-11 items-center px-1 text-sm font-bold text-text-secondary transition-colors duration-150 hover:text-primary;
+        @apply relative inline-flex min-h-11 items-center px-1 font-display text-base font-bold text-text-secondary transition-colors duration-100 hover:text-ink;
     }
-
     .public-nav-link::after {
-        content: "";
+        content: '';
         position: absolute;
-        left: 50%;
-        bottom: -5px;
-        width: 0;
-        height: 2px;
-        border-radius: 999px;
-        background: var(--sipora-accent);
-        transform: translateX(-50%);
-        transition: width 180ms ease;
+        left: 0; bottom: -2px;
+        width: 0; height: 4px;
+        background: repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, #000 8px 12px);
+        transition: width 160ms steps(4, end);
     }
-
     .public-nav-link:hover::after,
-    .public-nav-link[aria-current="page"]::after,
-    .public-nav-link.public-nav-active::after {
-        width: 70%;
-    }
+    .public-nav-link[aria-current='page']::after,
+    .public-nav-link.public-nav-active::after { width: 100%; }
+    .public-nav-active { @apply text-ink; }
 
-    .public-nav-active {
-        @apply text-primary;
-    }
-
-    /* Workspace Navigation Link */
     .workspace-nav-link {
-        @apply relative flex min-h-11 items-center gap-3 rounded-[10px] px-3 py-2.5 text-sm font-semibold text-text-secondary transition duration-150 hover:bg-primary-50 hover:text-primary;
+        --bc: transparent;
+        @apply relative flex min-h-11 items-center gap-3 px-3 py-2.5 font-display text-base font-bold text-text-secondary transition duration-100;
+        @apply hover:bg-accent-100 hover:text-ink;
     }
-
-    .workspace-nav-active {
-        @apply bg-primary text-white shadow-xs hover:bg-primary hover:text-white;
+    .workspace-nav-active, .workspace-nav-active:hover {
+        --bc: #000;
+        @apply bg-primary-700 text-cream-100;
+        box-shadow:
+            0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc),
+            6px 0 0 0 var(--color-accent-500);
     }
-
-    .workspace-nav-disabled {
-        @apply cursor-not-allowed text-text-muted hover:bg-transparent hover:text-text-muted;
+    .workspace-nav-active::after {
+        content: '';
+        position: absolute;
+        right: 14px; top: 50%;
+        width: 16px; height: 16px; margin-top: -8px;
+        background: var(--color-accent-500);
+        -webkit-mask: var(--px-sword) center / contain no-repeat;
+        mask: var(--px-sword) center / contain no-repeat;
+        image-rendering: pixelated;
     }
+    .workspace-nav-disabled { @apply cursor-not-allowed text-text-muted hover:bg-transparent hover:text-text-muted; }
 
-    /* Badges */
+    /* ---------- BADGE ---------- */
     .status-badge {
-        @apply inline-flex min-h-7 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold;
+        --bc: #000;
+        @apply inline-flex min-h-7 items-center gap-1.5 px-2.5 py-0.5 font-display text-sm font-bold;
+        margin: 2px;
+        box-shadow: 0 -2px 0 0 var(--bc), 2px 0 0 0 var(--bc), -2px 0 0 0 var(--bc), 0 2px 0 0 var(--bc);
     }
+    .badge-primary { @apply bg-primary-100 text-primary-700; --bc: var(--color-primary-700); }
+    .badge-accent { @apply bg-accent-100 text-accent-700; --bc: var(--color-accent-600); }
+    .badge-success { @apply bg-success-soft text-success; --bc: var(--color-success); }
+    .badge-warning { @apply bg-warning-soft text-warning; --bc: var(--color-warning); }
+    .badge-danger { @apply bg-danger-soft text-danger; --bc: var(--color-danger); }
+    .badge-info { @apply bg-info-soft text-info; --bc: var(--color-info); }
 
-    /* Table Shell */
-    .table-shell {
-        @apply max-w-full overflow-x-auto rounded-2xl border border-[#E2E6EF] bg-white shadow-sm;
-    }
+    /* ---------- TABEL ---------- */
+    .table-shell { @apply overflow-hidden; }
+    .table-shell table { @apply min-w-full divide-y-2 divide-border text-left text-sm; }
+    .table-shell thead { @apply bg-primary-700 font-display text-sm font-bold uppercase tracking-wider text-cream-100; }
+    .table-shell th { @apply px-5 py-3.5; }
+    .table-shell td { @apply px-5 py-4; }
+    .table-shell tbody tr { @apply transition-colors duration-100 hover:bg-accent-50; }
 
-    .table-shell table {
-        @apply min-w-full divide-y divide-[#E2E6EF] text-left text-sm;
-    }
-
-    .table-shell thead {
-        @apply bg-surface-soft text-xs font-extrabold uppercase tracking-wide text-text-secondary;
-    }
-
-    .table-shell th {
-        @apply px-5 py-3.5;
-    }
-
-    .table-shell td {
-        @apply px-5 py-4;
-    }
-
-    /* Public Page Intro */
+    /* ---------- HERO / HALAMAN PUBLIK ----------
+       Langit malam + matahari flame + pegunungan + burung & awan.
+       Tanah: kepiting berjalan bolak-balik di atas rumput api. */
     .public-page-intro {
         position: relative;
         overflow: hidden;
-        background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.10), transparent 30%),
-            linear-gradient(120deg, var(--sipora-hero-from) 0%, var(--sipora-hero-mid) 56%, var(--sipora-hero-to) 100%);
-        padding: 2.5rem 1.25rem;
-        color: white;
+        isolation: isolate;
+        padding: 3.5rem 1.25rem 6.5rem;
+        color: var(--color-cream-100);
+        background: linear-gradient(180deg, var(--color-primary-950) 0%, var(--color-primary-800) 55%, var(--color-primary-700) 100%);
     }
 
+    /* langit: burung, awan, bintang, matahari */
     .public-page-intro::before {
         content: '';
         pointer-events: none;
         position: absolute;
         inset: 0;
-        opacity: 1;
-        background-image: linear-gradient(var(--sipora-hero-grid) 1px, transparent 1px),
-            linear-gradient(90deg, var(--sipora-hero-grid) 1px, transparent 1px);
-        background-size: 32px 32px;
-        mask-image: linear-gradient(to right, black, transparent 85%);
+        z-index: -1;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23EFEEEA' d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23436B84' d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23345569' d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M4 0h4v1h-4zM2 1h8v1h-8zM1 2h10v8h-10zM2 10h8v1h-8zM4 11h4v1h-4z'/%3E%3Cpath fill='%23FFA277' d='M3 2h3v1h-3zM2 3h2v1h-2z'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cg fill='%23EFEEEA' fill-opacity='.6'%3E%3Cpath d='M3 4h1v1h-1zM15 9h1v1h-1zM8 18h1v1h-1zM20 21h1v1h-1z'/%3E%3C/g%3E%3Cpath fill='%23FE7743' d='M11 2h1v1h-1zM22 13h1v1h-1z'/%3E%3C/svg%3E");
+        background-size: 52px 20px, 39px 15px, 84px 24px, 56px 16px, 72px 72px, 96px 96px;
+        background-position: 76% 16%, 88% 34%, 58% 62%, 12% 22%, 90% 12%, 0 0;
+        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+        image-rendering: pixelated;
     }
 
-    .public-section-title {
-        @apply font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl;
+    /* tanah: kepiting (animasi), rumput api, garis hitam, tanah kotak-kotak */
+    .public-page-intro::after {
+        content: '';
+        pointer-events: none;
+        position: absolute;
+        inset: auto 0 0 0;
+        z-index: -1;
+        height: 44px;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M0 0h2v1h-2zM9 0h2v1h-2zM0 1h2v1h-2zM4 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM1 2h9v1h-9zM2 3h7v1h-7zM0 4h1v1h-1zM2 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1z'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' shape-rendering='crispEdges'%3E%3Cpath fill='%231D303D' d='M0 10v-2h4v-2h4v-2h4v-2h4v2h4v-2h4v-2h4v2h4v2h4v2h4v2z'/%3E%3C/svg%3E"),
+            repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, var(--color-accent-600) 8px 16px),
+            linear-gradient(#000, #000),
+            conic-gradient(#1D303D 25%, #345569 0 50%, #1D303D 0 75%, #345569 0);
+        background-size: 44px 20px, 240px 60px, 100% 6px, 100% 4px, 16px 16px;
+        background-position: 6% 4px, 0 -26px, 0 24px, 0 30px, 0 34px;
+        background-repeat: no-repeat, repeat-x, repeat-x, repeat-x, repeat-x;
+        image-rendering: pixelated;
+        animation: var(--animate-scuttle);
     }
 
-    .public-meta {
-        @apply flex items-center gap-2 text-sm text-text-secondary;
+    @media (max-width: 640px) {
+        .public-page-intro::before { opacity: 0.4; }
     }
+
+    .public-section-title { @apply font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl; }
+    .public-section-title::before {
+        content: '';
+        display: inline-block;
+        width: 0.8em; height: 0.72em;
+        margin-right: 0.4em;
+        background: var(--color-accent-500);
+        -webkit-mask: var(--px-sword) center / contain no-repeat;
+        mask: var(--px-sword) center / contain no-repeat;
+        image-rendering: pixelated;
+    }
+
+    .public-meta { @apply flex items-center gap-2 text-sm font-medium text-text-secondary; }
 
     .public-link {
-        @apply inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-primary transition duration-150 hover:text-accent;
+        @apply inline-flex min-h-11 items-center gap-2 font-display text-base font-bold text-primary-700 underline decoration-accent-500 decoration-4 underline-offset-4 transition duration-100 hover:bg-accent-500 hover:text-ink hover:no-underline;
     }
 
-    .public-panel {
-        @apply rounded-2xl border border-[#E2E6EF] bg-white p-5 shadow-sm sm:p-6;
+    /* keadaan kosong: kepiting menjaga halaman */
+    .public-empty { @apply border-4 border-dashed border-primary-300 bg-cream-50/70 p-10 text-center text-text-secondary; }
+    .public-empty::before {
+        content: '';
+        display: block;
+        width: 55px; height: 25px;
+        margin: 0 auto 1rem;
+        background: var(--color-accent-500);
+        -webkit-mask: var(--px-crab) center / contain no-repeat;
+        mask: var(--px-crab) center / contain no-repeat;
+        image-rendering: pixelated;
+        animation: var(--animate-bob);
     }
 
-    .public-empty {
-        @apply rounded-2xl border-2 border-dashed border-[#CDD3DF] bg-white p-10 text-center text-text-secondary;
+    /* ---------- TIPOGRAFI & UTILITAS ---------- */
+    .font-heading { @apply font-display; }
+    .page-title { @apply font-display text-3xl font-bold tracking-tight text-ink; }
+
+    .text-score { @apply font-pixel text-[10px] uppercase leading-relaxed tracking-wide; }
+
+    .text-highlight {
+        background-image: linear-gradient(transparent 58%, var(--color-accent-300) 58% 92%, transparent 92%);
+        @apply px-1;
     }
 
-    .font-heading {
-        @apply font-display;
-    }
+    .rupiah { @apply font-mono font-semibold text-text-secondary; }
 
-    .page-title {
-        @apply font-display text-3xl font-bold tracking-tight text-text-primary;
-    }
-
-    .rupiah {
-        @apply font-mono text-text-secondary;
-    }
+    /* burung terbang melintas: <span class="px-icon px-bird fly-across text-cream-100"></span> */
+    .fly-across { animation: var(--animate-fly); }
 }
 
-#main {
-    min-width: 0;
-    width: 100%;
-    max-width: 100vw;
-}
-
-#main .overflow-x-auto {
-    max-width: 100%;
-    contain: inline-size;
-}
-
-#main:focus {
-    outline: none;
-}
-
-.table-shell td,
-.table-shell th,
-.sipora-card,
-.public-panel {
-    overflow-wrap: anywhere;
-}
-
-@media (max-width: 639px) {
-    .table-shell th,
-    .table-shell td {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .page-title {
-        font-size: 1.75rem;
-        line-height: 2.1rem;
-    }
-}
+/* ==========================================================================
+   LAYOUT HELPERS
+   ========================================================================== */
+#main { min-width: 0; width: 100%; max-width: 100vw; }
+#main .overflow-x-auto { max-width: 100%; contain: inline-size; }
 
 @media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;

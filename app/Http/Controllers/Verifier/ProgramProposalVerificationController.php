@@ -22,6 +22,7 @@ final class ProgramProposalVerificationController extends Controller
         $status = $input['status'] ?? ProgramProposal::STATUS_SUBMITTED;
         $search = trim($input['search'] ?? '');
         $proposals = ProgramProposal::query()->with(['program.organization', 'program.category', 'submissionActivity.causer'])
+            ->whereNot('status', ProgramProposal::STATUS_DRAFT)
             ->when($status !== 'all', fn ($query) => $query->where('status', $status))
             ->when($search !== '', fn ($query) => $query->whereHas('program', fn ($programs) => $programs->where('title', 'like', "%{$search}%")->orWhereHas('organization', fn ($organizations) => $organizations->where('name', 'like', "%{$search}%"))))
             ->orderByDesc('submitted_at')->paginate(15)->withQueryString();
@@ -31,6 +32,7 @@ final class ProgramProposalVerificationController extends Controller
 
     public function show(ProgramProposal $proposal): View
     {
+        Gate::authorize('view', $proposal);
         $proposal->load(['program.organization', 'program.category', 'program.creator', 'program.activities.category', 'reviewer', 'submissionActivity.causer']);
 
         return view('verifier.program-proposals.show', compact('proposal'));

@@ -25,6 +25,18 @@ final class ReviewCommunityApplicationAction
         return DB::transaction(function () use ($verifier, $organization, $decision, $notes): Organization {
             $organization = Organization::query()->whereKey($organization->getKey())->lockForUpdate()->firstOrFail();
 
+            $conflict = OrganizationMembership::query()
+                ->where('organization_id', $organization->getKey())
+                ->where('user_id', $verifier->getKey())
+                ->where('membership_status', OrganizationMembership::STATUS_ACTIVE)
+                ->whereIn('access_role', [OrganizationMembership::ROLE_LEADER, OrganizationMembership::ROLE_MANAGER])
+                ->exists();
+            if ($conflict) {
+                throw ValidationException::withMessages([
+                    'decision' => ['Verifier tidak boleh meninjau Community yang dikelolanya.'],
+                ]);
+            }
+
             if ($organization->review_status !== Organization::REVIEW_PENDING) {
                 throw ValidationException::withMessages([
                     'decision' => ['Pengajuan tidak lagi menunggu verifikasi. Muat ulang antrean.'],

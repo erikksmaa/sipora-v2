@@ -7,6 +7,7 @@ use App\Models\ActivityReview;
 use App\Models\User;
 use App\Notifications\ActivityVerificationReviewed;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
 final class ReviewActivityAction
@@ -15,6 +16,7 @@ final class ReviewActivityAction
     {
         return DB::transaction(function () use ($verifier, $activity, $decision, $notes): Activity {
             $activity = Activity::query()->whereKey($activity->getKey())->lockForUpdate()->firstOrFail();
+            Gate::forUser($verifier)->authorize('review', $activity);
             if ($activity->review_status !== Activity::REVIEW_PENDING) {
                 throw ValidationException::withMessages(['decision' => ['Activity tidak lagi menunggu verifikasi.']]);
             }
