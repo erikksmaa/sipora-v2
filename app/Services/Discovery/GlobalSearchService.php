@@ -2,6 +2,7 @@
 
 namespace App\Services\Discovery;
 
+use App\Services\Youth\PublicYouthDirectoryService;
 use Illuminate\Support\Collection;
 
 final class GlobalSearchService
@@ -11,6 +12,7 @@ final class GlobalSearchService
         private readonly CommunityDiscoveryService $communities,
         private readonly OpportunityDiscoveryService $opportunities,
         private readonly ProgramDiscoveryService $programs,
+        private readonly PublicYouthDirectoryService $youth,
     ) {}
 
     /** @return array{query: string, activities: Collection, communities: Collection, opportunities: Collection, programs: Collection} */
@@ -19,7 +21,7 @@ final class GlobalSearchService
         $query = mb_substr(trim(is_string($input) ? $input : ''), 0, 120);
 
         if ($query === '') {
-            return ['query' => '', 'activities' => collect(), 'communities' => collect(), 'opportunities' => collect(), 'programs' => collect()];
+            return ['query' => '', 'activities' => collect(), 'communities' => collect(), 'opportunities' => collect(), 'programs' => collect(), 'youth' => collect()];
         }
 
         $activities = $this->activities->publicQuery();
@@ -40,6 +42,7 @@ final class GlobalSearchService
             'communities' => $communities->orderBy('name')->limit(8)->get(),
             'opportunities' => $opportunities->orderByRaw('deadline_at IS NULL')->orderBy('deadline_at')->limit(8)->get(),
             'programs' => $programs->orderByRaw("CASE execution_status WHEN 'running' THEN 0 ELSE 1 END")->orderByDesc('start_date')->limit(8)->get(),
+            'youth' => $this->youth->search($query),
         ];
     }
 }

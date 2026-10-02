@@ -10,6 +10,7 @@
     $hidden = fn(string $section) => $portfolio['is_owner'] && !($portfolio['visibility'][$section] ?? false);
 @endphp
 <div class="{{ $portfolio['is_owner'] ? '' : 'mx-auto max-w-7xl px-5 py-10' }} space-y-6">
+    @if(!$portfolio['is_owner'])<a class="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-accent" href="{{ route('youth-directory.index') }}"><x-ui.icon name="chevron-left" class="size-4" />Direktori Pemuda</a>@endif
     @if($portfolio['is_owner'])
         <section class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-primary">
             <div><strong>Pratinjau Portfolio pemilik.</strong> Bagian bertanda privat tetap terlihat di sini, tetapi tidak tampil kepada publik.</div>
