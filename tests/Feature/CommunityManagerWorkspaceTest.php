@@ -30,7 +30,7 @@ class CommunityManagerWorkspaceTest extends TestCase
         $this->membership($community, $manager, OrganizationMembership::ROLE_MANAGER, $leader);
         $this->membership($community, $member, OrganizationMembership::ROLE_MEMBER, $leader);
 
-        $this->actingAs($leader)->get(route('manager.dashboard', $community))->assertOk()->assertSee('Operational dashboard');
+        $this->actingAs($leader)->get(route('manager.dashboard', $community))->assertOk()->assertSee('Operasional Community');
         $this->actingAs($manager)->get(route('manager.dashboard', $community))->assertOk();
         $this->actingAs($member)->get(route('manager.dashboard', $community))->assertForbidden();
         $this->actingAs($outsider)->get(route('manager.dashboard', $community))->assertForbidden();
@@ -119,7 +119,7 @@ class CommunityManagerWorkspaceTest extends TestCase
 
         $this->actingAs($manager)->get(route('manager.dashboard', $communityA))
             ->assertOk()
-            ->assertSee('Ganti komunitas')
+            ->assertSee('Ganti Community')
             ->assertSee($communityA->name)
             ->assertSee($communityB->name)
             ->assertDontSee($communityC->name);

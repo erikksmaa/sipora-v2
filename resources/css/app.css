@@ -26,7 +26,7 @@
 
 @layer base {
     html { @apply scroll-smooth; }
-    body { @apply font-sans text-slate-900; }
+    body { @apply overflow-x-hidden font-sans text-slate-900; }
     code, kbd, samp { @apply font-mono; }
     button, a, input, select, textarea { @apply focus-visible:outline-none; }
     :focus-visible { outline: 3px solid #3346a8; outline-offset: 3px; }
@@ -42,7 +42,7 @@
     .field-label, .label { @apply mb-1.5 block text-sm font-bold text-slate-700; }
     .field-error { @apply mt-1.5 text-sm font-semibold text-red-700; }
     .auth-card { @apply mx-auto max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-card sm:p-8; }
-    .sipora-card { @apply rounded-2xl border border-slate-200/90 bg-white p-5 shadow-card sm:p-6; }
+    .sipora-card { @apply min-w-0 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-card sm:p-6; }
     .surface-card { @apply rounded-2xl border border-slate-200/90 bg-white shadow-card transition duration-200; }
     .surface-card-hover { @apply hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-card-hover; }
     .interest-chip { @apply inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1.5 text-sm font-bold text-primary; }
@@ -72,6 +72,9 @@
     .page-title { @apply font-display text-3xl font-bold tracking-tight text-slate-900; }
     .rupiah { @apply font-mono text-slate-700; }
 }
+
+#main { min-width: 0; width: 100%; max-width: 100vw; }
+#main .overflow-x-auto { max-width: 100%; contain: inline-size; }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }

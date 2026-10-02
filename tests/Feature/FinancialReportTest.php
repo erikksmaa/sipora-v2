@@ -41,6 +41,11 @@ class FinancialReportTest extends TestCase
         $report = FinancialReport::firstOrFail();
         $this->assertSame(FinancialReport::STATUS_DRAFT, $report->status);
         $this->assertSame(1, $report->version);
+        $this->actingAs($manager)
+            ->get(route('manager.financial-reports.show', [$organization, $program, $report]))
+            ->assertOk()
+            ->assertSee('Laporan Keuangan')
+            ->assertSee('RINCIAN TRANSAKSI');
         $this->actingAs($manager)->post(route('manager.financial-reports.store', [$organization, $program]))->assertForbidden();
         $this->actingAs($this->roleUser('youth'))->get(route('manager.financial-reports.show', [$organization, $program, $report]))->assertForbidden();
         $this->actingAs($this->roleUser('verifier'))->get(route('verifier.financial-reports.show', $report))->assertForbidden();

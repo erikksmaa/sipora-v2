@@ -3,22 +3,26 @@
 @csrf @if($editing) @method('PATCH') @endif
 @if($categories->isEmpty())<div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">Master kategori Activity belum tersedia. Hubungi administrator untuk menambahkan kategori yang disetujui.</div>@endif
 <div class="grid gap-5 md:grid-cols-2">
+<h2 class="md:col-span-2 border-b border-slate-200 pb-2 text-lg font-bold text-primary-dark">Identitas Activity</h2>
 <label class="md:col-span-2"><span class="label">Judul Activity</span><input class="field" name="title" value="{{ old('title',$activity->title) }}" required maxlength="220"></label>
 <label><span class="label">Kategori</span><select class="field" name="category_id" required><option value="">Pilih kategori</option>@foreach($categories as $category)<option value="{{ $category->uuid() }}" @selected(old('category_id',$activity->category?->uuid())===$category->uuid())>{{ $category->name }}</option>@endforeach</select></label>
 <label><span class="label">Program (opsional)</span><select class="field" name="program_id"><option value="">Activity mandiri</option>@foreach($programs as $program)<option value="{{ $program->uuid() }}" @selected(old('program_id',$activity->program?->uuid() ?? request('program_id'))===$program->uuid())>{{ $program->title }}</option>@endforeach</select><span class="mt-1 block text-xs text-slate-500">Hanya Program milik komunitas ini yang dapat dipilih.</span></label>
 <label><span class="label">Poster</span><input class="field" type="file" name="poster" accept="image/jpeg,image/png,image/webp"></label>
 <label class="md:col-span-2"><span class="label">Deskripsi</span><textarea class="field min-h-32" name="description">{{ old('description',$activity->description) }}</textarea></label>
+<h2 class="md:col-span-2 border-b border-slate-200 pb-2 pt-3 text-lg font-bold text-primary-dark">Lokasi dan format</h2>
 <label><span class="label">Jenis lokasi</span><select class="field" name="location_type" required>@foreach(['offline'=>'Luring','online'=>'Daring','hybrid'=>'Hybrid'] as $value=>$label)<option value="{{ $value }}" @selected(old('location_type',$activity->location_type ?: 'offline')===$value)>{{ $label }}</option>@endforeach</select></label>
 <label><span class="label">Nama lokasi</span><input class="field" name="venue_name" value="{{ old('venue_name',$activity->venue_name) }}" maxlength="180"></label>
 <label><span class="label">Wilayah</span><select class="field" name="administrative_area_id"><option value="">Pilih wilayah</option>@foreach($areas as $area)<option value="{{ $area->uuid() }}" @selected(old('administrative_area_id',$activity->administrativeArea?->uuid())===$area->uuid())>{{ $area->name }}</option>@endforeach</select></label>
 <label><span class="label">Tautan pertemuan</span><input class="field" type="url" name="meeting_url" value="{{ old('meeting_url',$activity->meeting_url) }}"></label>
 <label class="md:col-span-2"><span class="label">Alamat</span><textarea class="field" name="address_text">{{ old('address_text',$activity->address_text) }}</textarea></label>
+<h2 class="md:col-span-2 border-b border-slate-200 pb-2 pt-3 text-lg font-bold text-primary-dark">Jadwal dan pendaftaran</h2>
 <label><span class="label">Mulai</span><input class="field" type="datetime-local" name="start_at" value="{{ old('start_at',$activity->start_at?->format('Y-m-d\TH:i')) }}" required></label>
 <label><span class="label">Selesai</span><input class="field" type="datetime-local" name="end_at" value="{{ old('end_at',$activity->end_at?->format('Y-m-d\TH:i')) }}" required></label>
 <label><span class="label">Pendaftaran dibuka</span><input class="field" type="datetime-local" name="registration_open_at" value="{{ old('registration_open_at',$activity->registration_open_at?->format('Y-m-d\TH:i')) }}"></label>
 <label><span class="label">Pendaftaran ditutup</span><input class="field" type="datetime-local" name="registration_close_at" value="{{ old('registration_close_at',$activity->registration_close_at?->format('Y-m-d\TH:i')) }}"></label>
 <label><span class="label">Kuota</span><input class="field" type="number" min="1" name="quota" value="{{ old('quota',$activity->quota) }}"></label>
 <label><span class="label">Mode pendaftaran</span><select class="field" name="registration_mode"><option value="open" @selected(old('registration_mode',$activity->registration_mode ?: 'open')==='open')>Terbuka</option><option value="approval_required" @selected(old('registration_mode',$activity->registration_mode)==='approval_required')>Perlu persetujuan</option></select></label>
+<h2 class="md:col-span-2 border-b border-slate-200 pb-2 pt-3 text-lg font-bold text-primary-dark">Kelayakan peserta</h2>
 <label><span class="label">Usia minimum</span><input class="field" type="number" min="0" max="100" name="min_age" value="{{ old('min_age',$activity->min_age) }}"></label><label><span class="label">Usia maksimum</span><input class="field" type="number" min="0" max="100" name="max_age" value="{{ old('max_age',$activity->max_age) }}"></label>
 <label class="md:col-span-2"><span class="label">Catatan kelayakan</span><textarea class="field" name="eligibility_notes">{{ old('eligibility_notes',$activity->eligibility_notes) }}</textarea></label>
 </div>

@@ -22,10 +22,13 @@ final class CommunityMemberController extends Controller
         Gate::authorize('manageMemberships', $organization);
         $pending = $organization->memberships()->with('user.profile')
             ->where('membership_status', OrganizationMembership::STATUS_PENDING)->oldest('requested_at')->get();
+        $search = trim((string) $request->query('q', ''));
+        $search = mb_substr($search, 0, 80);
         $members = $organization->memberships()->with('user.profile')
             ->where('membership_status', OrganizationMembership::STATUS_ACTIVE)
+            ->when($search !== '', fn ($query) => $query->whereHas('user', fn ($user) => $user->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')))
             ->orderByRaw("FIELD(access_role, 'leader', 'manager', 'member')")
-            ->paginate(20);
+            ->paginate(20)->withQueryString();
         $actorMembership = $organization->memberships()->where('user_id', $request->user()->getKey())->firstOrFail();
 
         return view('manager.members.index', [
@@ -34,6 +37,7 @@ final class CommunityMemberController extends Controller
             'members' => $members,
             'actorMembership' => $actorMembership,
             'managedCommunities' => $managed->forUser($request->user()),
+            'search' => $search,
         ]);
     }
 

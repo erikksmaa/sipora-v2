@@ -2,7 +2,7 @@
 @section('title', $proposal->exists ? 'Edit Proposal Program' : 'Buat Proposal Program')
 @section('manager-content')
 <div class="mx-auto max-w-3xl space-y-6">
-    <header><p class="text-sm font-bold text-orange-600">PROGRAM · PROPOSAL</p><h1 class="mt-1 text-3xl font-black text-[#14205c]">{{ $proposal->exists ? 'Edit draft Proposal v'.$proposal->version : 'Buat draft Proposal' }}</h1><p class="mt-2 text-slate-600">{{ $program->title }}</p></header>
+    <x-workspace.page-header eyebrow="Program · Proposal" :title="$proposal->exists ? 'Edit draft Proposal v'.$proposal->version : 'Buat draft Proposal'" :description="$program->title" />
     <form method="POST" enctype="multipart/form-data" action="{{ $proposal->exists ? route('manager.program-proposals.update', [$organization, $program, $proposal]) : route('manager.program-proposals.store', [$organization, $program]) }}" class="space-y-6 rounded-2xl bg-white p-6 shadow-sm">
         @csrf @if($proposal->exists) @method('PATCH') @endif
         <div><label for="requested_budget" class="label">Anggaran yang diajukan (Rp)</label><input id="requested_budget" name="requested_budget" type="number" min="0" step="0.01" class="field" value="{{ old('requested_budget', $proposal->requested_budget) }}"><x-input-error :messages="$errors->get('requested_budget')" /></div>

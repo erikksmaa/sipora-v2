@@ -1,6 +1,6 @@
 @extends('layouts.manager')
 @section('title', 'Buat Program')
 @section('manager-content')
-<p class="text-sm font-bold text-orange-600">PROGRAM BARU</p><h1 class="mt-1 text-3xl font-black text-[#14205c]">Buat Rencana Program</h1><p class="mt-2 max-w-2xl text-slate-600">Simpan identitas dan tujuan Program. Pengajuan Proposal belum tersedia pada fase ini.</p>
+<x-workspace.page-header eyebrow="Program baru" title="Buat Rencana Program" description="Simpan identitas dan tujuan Program sebagai rencana awal." />
 @include('manager.programs._form')
 @endsection

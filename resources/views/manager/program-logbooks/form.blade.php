@@ -1,7 +1,7 @@
 @extends('layouts.manager')
 @section('title',$logbook->exists?'Edit Logbook':'Tambah Logbook')
 @section('manager-content')
-<div class="mx-auto max-w-3xl space-y-6"><header><p class="text-sm font-bold text-orange-600">PROGRAM · LOGBOOK</p><h1 class="mt-1 text-3xl font-black text-[#14205c]">{{ $logbook->exists?'Edit catatan pelaksanaan':'Catat pelaksanaan Program' }}</h1><p class="mt-2 text-slate-600">{{ $program->title }}</p></header>
+<div class="mx-auto max-w-3xl space-y-6"><x-workspace.page-header eyebrow="Program · Logbook" :title="$logbook->exists ? 'Edit catatan pelaksanaan' : 'Catat pelaksanaan Program'" :description="$program->title" />
 <form method="POST" action="{{ $logbook->exists?route('manager.program-logbooks.update',[$organization,$program,$logbook]):route('manager.program-logbooks.store',[$organization,$program]) }}" class="space-y-5 rounded-2xl bg-white p-6 shadow-sm">@csrf @if($logbook->exists)@method('PATCH')@endif
 <div><label class="label" for="log_date">Tanggal laporan</label><input class="field" type="date" id="log_date" name="log_date" value="{{ old('log_date',$logbook->log_date?->format('Y-m-d')) }}"><x-input-error :messages="$errors->get('log_date')" /></div>
 <div><label class="label" for="activity_id">Activity terkait (opsional)</label><select class="field" id="activity_id" name="activity_id"><option value="">Keseluruhan Program</option>@foreach($activities as $activity)<option value="{{ $activity->uuid() }}" @selected(old('activity_id',$logbook->activity?->uuid())===$activity->uuid())>{{ $activity->title }}</option>@endforeach</select><x-input-error :messages="$errors->get('activity_id')" /></div>
