@@ -54,21 +54,23 @@
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
         ]],
     ] : ($isAdmin ? [
-        ['label' => 'Utama', 'items' => [
+        ['label' => 'Overview', 'items' => [
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('admin.dashboard'), 'patterns' => ['admin.dashboard']],
-            ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
         ]],
         ['label' => 'Verifikasi', 'items' => [
             ['label' => 'Identitas Pemuda', 'icon' => 'shield-check', 'route' => route('admin.identity-verifications.index'), 'patterns' => ['admin.identity-verifications.*']],
-            ['label' => 'Validasi Community', 'icon' => 'building', 'disabled' => true],
         ]],
-        ['label' => 'Sistem & Audit', 'items' => [
-            ['label' => 'Log Audit', 'icon' => 'file-text', 'disabled' => true],
-            ['label' => 'Master Data', 'icon' => 'database', 'disabled' => true],
+        ['label' => 'Konten', 'items' => [
+            ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
+        ]],
+        ['label' => 'Sistem', 'items' => [
+            ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
         ]],
     ] : [
-        ['label' => 'Workspace', 'items' => [
+        ['label' => 'Overview', 'items' => [
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('verifier.dashboard'), 'patterns' => ['verifier.dashboard']],
+        ]],
+        ['label' => 'Verifikasi Ekosistem', 'items' => [
             ['label' => 'Community', 'icon' => 'building', 'route' => route('verifier.community-verifications.index'), 'patterns' => ['verifier.community-verifications.*']],
             ['label' => 'Activity', 'icon' => 'clipboard-check', 'route' => route('verifier.activity-verifications.index'), 'patterns' => ['verifier.activity-verifications.*']],
         ]],
@@ -78,8 +80,8 @@
             ['label' => 'E-LPJ Keuangan', 'icon' => 'wallet', 'route' => route('verifier.financial-reports.index'), 'patterns' => ['verifier.financial-reports.*']],
             ['label' => 'Evaluasi Akhir', 'icon' => 'badge-check', 'route' => route('verifier.program-evaluations.index'), 'patterns' => ['verifier.program-evaluations.*']],
         ]],
-        ['label' => 'Kepatuhan', 'items' => [
-            ['label' => 'Log Audit', 'icon' => 'file-text', 'disabled' => true],
+        ['label' => 'Account', 'items' => [
+            ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
         ]],
     ]));
     $currentNavLabel = collect($groups)
