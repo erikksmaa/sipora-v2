@@ -10,7 +10,7 @@
         <div class="mx-auto max-w-7xl">
             <div class="mb-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 @foreach([['registered', 'Pemuda Terdaftar', 'users'], ['identity_verified', 'Identitas Terverifikasi', 'shield-check'], ['public_portfolio', 'Portfolio Publik', 'user'], ['activity_participated', 'Pernah Mengikuti Activity', 'activity']] as [$key, $label, $icon])
-                    <x-public.stat-card :icon="$icon" :value="number_format($youthStatistics[$key])" :label="$label" tone="blue" />
+                    <x-public.stat-card :icon="$icon" :value="$youthStatistics[$key] === null ? '<5' : number_format($youthStatistics[$key])" :label="$label" tone="blue" />
                 @endforeach
             </div>
             <p class="mb-5 text-sm text-text-secondary">Berdasarkan pemuda yang terdaftar di SIPORA. Direktori ini hanya menampilkan Portfolio yang dipilih sebagai publik. <a class="font-bold text-primary underline" href="{{ route('statistics.index') }}">Lihat Statistik Pemuda</a></p>

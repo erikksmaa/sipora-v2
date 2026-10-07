@@ -21,6 +21,21 @@ class YouthStatisticsTest extends TestCase
         $this->seed(RolePermissionSeeder::class);
     }
 
+    public function test_public_summary_hides_small_headline_counts(): void
+    {
+        $user = User::factory()->create();
+        $user->assignRole('youth');
+        $user->identity()->create(['verification_status' => UserIdentity::STATUS_VERIFIED]);
+
+        $statistics = app(YouthStatisticsService::class);
+
+        $this->assertSame(1, $statistics->summary()['registered']);
+        $this->assertNull($statistics->publicSummary()['registered']);
+        $this->assertNull($statistics->publicSummary()['identity_verified']);
+        $this->assertSame(0, $statistics->publicSummary()['activity_participated']);
+        $this->get(route('home'))->assertOk()->assertSee('&lt;5', false);
+    }
+
     public function test_public_statistics_share_real_totals_and_suppress_small_buckets(): void
     {
         for ($number = 1; $number <= 6; $number++) {
@@ -46,12 +61,18 @@ class YouthStatisticsTest extends TestCase
         $this->assertNull(collect($public['gender'])->firstWhere('label', 'female')['count']);
         $this->assertSame(1, collect($admin['gender'])->firstWhere('label', 'female')['count']);
         $this->assertSame($service->summary(), $public['totals']);
+        $this->assertSame($service->summary(), $service->publicSummary());
+        $this->assertSame(0, collect($public['participation'])->firstWhere('label', 'Pernah mendaftar Activity')['count']);
+        $this->assertArrayHasKey('coverage', $public);
+        $this->assertArrayHasKey('interest_by_district', $admin['cross_insights']);
+        $this->assertArrayHasKey('skill_by_age', $admin['cross_insights']);
+        $this->assertArrayHasKey('completion_by_category', $admin['cross_insights']);
         $this->assertCount(12, $public['growth_monthly']);
         $this->assertSame(0, $public['growth_monthly'][0]['count']);
         $this->assertSame(0, collect($public['funnel'])->firstWhere('label', 'Mengikuti Activity')['count']);
         $this->assertSame(5, $service->public(['year' => now()->year])['totals']['registered']);
-        $this->assertNull($service->public(['year' => now()->subYear()->year])['totals']['registered']);
         $this->assertSame(0, $service->public(['year' => now()->year])['totals']['certificate']);
+        $this->assertNull($service->public(['year' => now()->subYear()->year])['totals']['registered']);
         $this->assertArrayHasKey('ecosystem', $public);
 
         $this->get(route('statistics.index'))->assertOk()->assertSee('Statistik Pemuda')->assertSee('Berdasarkan pemuda yang terdaftar di SIPORA')->assertSee('data-chart="growth"', false)->assertDontSee('Private Youth 1');

@@ -245,7 +245,7 @@
         <p class="mt-3 text-center text-sm text-text-secondary">Berdasarkan pemuda yang terdaftar di SIPORA, bukan seluruh populasi pemuda Kabupaten Pemalang.</p>
         <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
             @foreach([['registered', 'Pemuda Terdaftar', 'users'], ['identity_verified', 'Identitas Terverifikasi', 'shield-check'], ['public_portfolio', 'Portfolio Publik', 'user'], ['activity_participated', 'Pernah Mengikuti Activity', 'activity']] as [$key, $label, $icon])
-                <x-public.stat-card :icon="$icon" :value="number_format($youthStatistics[$key])" :label="$label" tone="blue" />
+                <x-public.stat-card :icon="$icon" :value="$youthStatistics[$key] === null ? '<5' : number_format($youthStatistics[$key])" :label="$label" tone="blue" />
             @endforeach
         </div>
         <div class="mt-8 text-center"><a href="{{ route('statistics.index') }}" class="btn-secondary">Lihat Statistik Pemuda</a></div>

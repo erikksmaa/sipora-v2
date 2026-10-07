@@ -16,7 +16,7 @@ final class PublicYouthDirectoryController extends Controller
             'areas' => $directory->areas(),
             'query' => mb_substr(trim($request->string('q')->toString()), 0, 120),
             'selectedArea' => mb_substr(trim($request->string('area')->toString()), 0, 120),
-            'youthStatistics' => $statistics->summary(),
+            'youthStatistics' => $statistics->publicSummary(),
         ]);
     }
 }

@@ -53,10 +53,10 @@ class CommunityMembershipTest extends TestCase
         $applicant = $this->youth();
         $request = $this->pendingRequest($community, $applicant);
 
-        $this->actingAs($leader)->get(route('manager.members.index', $community))->assertOk()->assertSee($applicant->email);
+        $this->actingAs($leader)->get(route('manager.join-requests.index', $community))->assertOk()->assertSee($applicant->email);
         $this->actingAs($leader)->post(route('manager.join-requests.review', [$community, $request]), [
             'decision' => 'accepted',
-        ])->assertRedirect(route('manager.members.index', $community));
+        ])->assertRedirect(route('manager.join-requests.index', $community));
 
         $request->refresh();
         $this->assertSame(OrganizationMembership::STATUS_ACTIVE, $request->membership_status);

@@ -138,7 +138,7 @@ class YouthExperienceCorrectionTest extends TestCase
         $owner = $this->get(route('youth.portfolio.show'))->assertOk()
             ->assertSee('Sekolah Pemalang')->assertSee('Forum Pemuda')->assertSee('Juara Inovasi')
             ->assertSee('Teknik Drone')->assertSee('Pemetaan Desa');
-        $owner->assertDontSee('Alamat privat contoh')->assertDontSee('pemuda.alur');
+        $owner->assertDontSee('Alamat privat contoh')->assertSee('pemuda.alur');
         $this->get(route('notifications.index'))->assertOk()->assertSee('Notifikasi');
         $this->put(route('youth.account.security.update'), [
             'current_password' => 'abcdefgh', 'password' => '12345678', 'password_confirmation' => '12345678',

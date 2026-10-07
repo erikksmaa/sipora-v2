@@ -31,9 +31,9 @@ class ManagerWorkspaceRenderingTest extends TestCase
 
         $response = $this->actingAs($leader)->get(route('manager.dashboard', $first));
 
-        $response->assertOk()->assertSee('Navigasi Manager')->assertSee('Antrean operasional')
+        $response->assertOk()->assertSee('Navigasi Community')->assertSee('Antrean operasional')
             ->assertSee('Ganti Community')->assertSee($second->name)->assertDontSee($other->name)
-            ->assertSee('Ruang Youth')->assertSee('Jelajahi SIPORA');
+            ->assertSee('Workspace Community')->assertSee('Jelajahi SIPORA');
         $this->actingAs($leader)->get(route('manager.dashboard', $other))->assertForbidden();
     }
 

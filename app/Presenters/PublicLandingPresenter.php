@@ -53,7 +53,7 @@ final class PublicLandingPresenter
             'communities' => $this->communities->featured(),
             'opportunities' => $this->opportunities->featured(),
             'programs' => $this->programs->featured(),
-            'youthStatistics' => $this->statistics->summary(),
+            'youthStatistics' => $this->statistics->publicSummary(),
         ];
     }
 }
