@@ -1,0 +1,47 @@
+.eco-map-page { --eco-bg: var(--color-bg, #efeeea); --eco-surface: var(--color-surface, #fff); --eco-border: var(--color-border, #d8d5ce); --eco-text: var(--color-text-primary, #273f4f); --eco-muted: var(--color-text-secondary, #536b79); background: var(--eco-bg); color: var(--eco-text); padding: 2.5rem 1.25rem 4rem; }
+.eco-map-page-admin { padding: 1.5rem 0 3rem; background: transparent; }
+.eco-map-container { width: min(100%, 80rem); margin-inline: auto; }
+.eco-map-intro, .eco-map-toolbar, .eco-map-table-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem; }
+.eco-map-intro { margin-bottom: 1.5rem; }
+.eco-map-intro > div { max-width: 47rem; }
+.eco-map-intro h2, .eco-map-table-heading h2 { font-family: 'Pixelify Sans', sans-serif; font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1.2; font-weight: 700; }
+.eco-map-intro p:not(.eco-map-eyebrow), .eco-map-table-heading p, .eco-map-note { color: var(--eco-muted); line-height: 1.6; }
+.eco-map-eyebrow { margin-bottom: .35rem; color: #d45124; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.eco-map-panel { margin-bottom: 1.25rem; padding: 1.35rem; border: 1px solid var(--eco-border); border-radius: .35rem; background: var(--eco-surface); box-shadow: 4px 4px 0 rgba(39,63,79,.12); }
+.eco-map-toolbar { margin-bottom: 1.1rem; align-items: end; }
+.eco-map-layers legend, .eco-map-district-picker { margin-bottom: .4rem; font-size: .8rem; font-weight: 750; }
+.eco-map-layer-options { display: flex; flex-wrap: wrap; gap: .5rem; }
+.eco-map-layer-options label { cursor: pointer; }
+.eco-map-layer-options input { position: absolute; opacity: 0; }
+.eco-map-layer-options span { display: inline-flex; min-height: 2.65rem; align-items: center; padding: .4rem .8rem; border: 1px solid var(--eco-border); background: var(--eco-surface); color: var(--eco-text); font-weight: 700; }
+.eco-map-layer-options input:checked + span { border-color: #294454; background: #294454; color: #fff; box-shadow: 2px 3px 0 #142029; }
+.eco-map-layer-options input:focus-visible + span { outline: 3px solid #fe7743; outline-offset: 3px; }
+.eco-map-district-picker { display: grid; gap: .3rem; min-width: min(100%, 13rem); }
+.eco-map-district-picker select { min-height: 2.65rem; padding: .4rem .65rem; border: 1px solid var(--eco-border); border-radius: .2rem; background: var(--eco-surface); color: var(--eco-text); }
+.eco-map-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(15rem, 1fr); gap: 1.1rem; }
+.eco-map-canvas-wrap { min-width: 0; }
+.eco-map-canvas { width: 100%; height: min(65vh, 34rem); min-height: 22rem; border: 1px solid var(--eco-border); background-color: #e8ede9; background-image: linear-gradient(#d3dcd8 1px, transparent 1px), linear-gradient(90deg, #d3dcd8 1px, transparent 1px); background-size: 28px 28px; }
+.eco-map-canvas .leaflet-control-zoom a { background: var(--eco-surface); color: var(--eco-text); border-color: var(--eco-border); }
+.eco-map-canvas .leaflet-tooltip { background: var(--eco-surface); border-color: var(--eco-border); color: var(--eco-text); box-shadow: 2px 3px 0 rgba(39,63,79,.18); }
+.eco-map-error { margin-top: .75rem; color: #ab3f23; }
+.eco-map-legend { display: flex; flex-wrap: wrap; gap: .65rem 1.1rem; padding-top: .8rem; color: var(--eco-muted); font-size: .8rem; }
+.eco-map-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.eco-map-swatch { width: 1rem; height: 1rem; border: 1px solid #6b7f87; }
+.eco-map-swatch-zero { background: #d9dfdf; }.eco-map-swatch-hidden { background: #b6bab8; }.eco-map-swatch-low { background: #8aa3af; }.eco-map-swatch-high { background: #345d75; }
+.eco-map-detail { align-self: stretch; padding: 1.2rem; border: 1px solid var(--eco-border); background: var(--eco-bg); }
+.eco-map-detail h3 { font-family: 'Pixelify Sans', sans-serif; font-size: 1.55rem; line-height: 1.2; }
+.eco-map-detail > p:not(.eco-map-eyebrow) { margin-top: .65rem; color: var(--eco-muted); line-height: 1.5; }
+.eco-map-selected-values { margin: 1.2rem 0; }
+.eco-map-selected-values > div { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem 0; border-top: 1px solid var(--eco-border); }
+.eco-map-selected-values dt { color: var(--eco-muted); }.eco-map-selected-values dd { font-weight: 800; font-variant-numeric: tabular-nums; }
+.eco-map-table-heading { margin-bottom: 1rem; }.eco-map-table-heading p { max-width: 35rem; font-size: .85rem; }
+.eco-map-table-wrap { overflow-x: auto; }.eco-map-table { width: 100%; min-width: 38rem; border-collapse: collapse; font-size: .9rem; }
+.eco-map-table th, .eco-map-table td { padding: .75rem .6rem; border-bottom: 1px solid var(--eco-border); text-align: right; font-variant-numeric: tabular-nums; }
+.eco-map-table th:first-child { text-align: left; }.eco-map-table thead { background: var(--eco-bg); }.eco-map-table tbody tr:hover, .eco-map-table .eco-map-row-active { background: var(--eco-bg); }
+.eco-map-table button { text-align: left; color: var(--eco-text); text-decoration: underline; text-decoration-color: #fe7743; text-underline-offset: .2rem; }
+.eco-map-table button:focus-visible { outline: 3px solid #fe7743; outline-offset: 2px; }.eco-map-note { margin-top: 1.5rem; font-size: .82rem; }.eco-map-note a { text-decoration: underline; }
+[data-theme="dark"] .eco-map-page { --eco-bg: #14232d; --eco-surface: #203541; --eco-border: #48616f; --eco-text: #f3f0e9; --eco-muted: #bbcad2; }
+[data-theme="dark"] .eco-map-canvas { background-color: #172d38; background-image: linear-gradient(#25404b 1px, transparent 1px), linear-gradient(90deg, #25404b 1px, transparent 1px); }
+[data-theme="dark"] .eco-map-swatch-zero { background: #314854; }[data-theme="dark"] .eco-map-swatch-hidden { background: #65727a; }[data-theme="dark"] .eco-map-swatch-low { background: #668da3; }[data-theme="dark"] .eco-map-swatch-high { background: #a4bfd0; }
+@media (max-width: 800px) { .eco-map-layout { grid-template-columns: 1fr; }.eco-map-canvas { height: 24rem; }.eco-map-detail { padding: 1rem; } }
+@media (max-width: 560px) { .eco-map-page { padding: 1.5rem .75rem 3rem; }.eco-map-panel { padding: .9rem; }.eco-map-layer-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }.eco-map-layer-options label, .eco-map-layer-options span { width: 100%; justify-content: center; }.eco-map-district-picker { width: 100%; }.eco-map-canvas { height: 21rem; min-height: 0; } }

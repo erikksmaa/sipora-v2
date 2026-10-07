@@ -66,6 +66,7 @@
     ] : ($isAdmin ? [
         ['label' => 'Overview', 'items' => [
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('admin.dashboard'), 'patterns' => ['admin.dashboard']],
+            ['label' => 'Peta Ekosistem', 'icon' => 'globe', 'route' => route('admin.ecosystem-map.index'), 'patterns' => ['admin.ecosystem-map.*']],
         ]],
         ['label' => 'Verifikasi', 'items' => [
             ['label' => 'Identitas Pemuda', 'icon' => 'shield-check', 'route' => route('admin.identity-verifications.index'), 'patterns' => ['admin.identity-verifications.*']],

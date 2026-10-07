@@ -10,6 +10,7 @@
     description="Berdasarkan pemuda yang terdaftar di SIPORA. Angka ini tidak mewakili seluruh populasi pemuda Kabupaten Pemalang."
     icon="users" variant="youth" />
 <div class="stats-dashboard"><div class="stats-container">
+    <div class="mb-5 flex justify-end"><a class="btn-secondary" href="{{ route('ecosystem-map.index') }}">Jelajahi Peta Ekosistem</a></div>
     <form method="GET" action="{{ route('statistics.index') }}" class="stats-filters" aria-label="Filter statistik pemuda">
         <label>Tahun<select name="year"><option value="">Semua tahun</option>@foreach($options['years'] as $year)<option value="{{ $year }}" @selected(($filters['year'] ?? null) === $year)>{{ $year }}</option>@endforeach</select></label>
         <label>Kecamatan<select name="district"><option value="">Semua kecamatan</option>@foreach($options['districts'] as $district)<option value="{{ $district['code'] }}" @selected(($filters['district'] ?? null) === $district['code'])>{{ $district['name'] }}</option>@endforeach</select></label>

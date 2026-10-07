@@ -22,7 +22,10 @@ final class YouthStatisticsService
 
     public const AGE_BUCKETS = ['under_15' => '<15', '15_19' => '15–19', '20_24' => '20–24', '25_29' => '25–29', '30_34' => '30–34', '35_plus' => '35+'];
 
-    public function __construct(private readonly ProgramDiscoveryService $programs) {}
+    public function __construct(
+        private readonly ProgramDiscoveryService $programs,
+        private readonly EcosystemGeographyService $geography,
+    ) {}
 
     /** @return array<string,int> */
     public function summary(array $filters = []): array
@@ -49,7 +52,7 @@ final class YouthStatisticsService
         foreach (['growth_monthly', 'growth_yearly', 'age', 'gender', 'districts', 'interests', 'skills', 'participation'] as $key) {
             $data[$key] = $this->suppress($data[$key]);
         }
-        $data['coverage'] = array_map(fn (array $row): array => array_merge(['district' => $row['district']], array_map(fn (int $count): ?int => $this->publicCount($count), array_diff_key($row, ['district' => true]))), $data['coverage']);
+        $data['coverage'] = $this->geography->suppress($data['coverage'], self::PUBLIC_THRESHOLD);
         $data['funnel'] = $this->suppress($data['funnel']);
         foreach ($data['ecosystem'] as $domain => $rows) {
             $data['ecosystem'][$domain] = $this->suppress($rows);
@@ -66,6 +69,16 @@ final class YouthStatisticsService
         $data['cross_insights'] = $this->crossInsights();
 
         return $data;
+    }
+
+    public function publicGeography(): array
+    {
+        return $this->geography->suppress($this->geography->coverage($this->youth()), self::PUBLIC_THRESHOLD);
+    }
+
+    public function adminGeography(): array
+    {
+        return $this->geography->coverage($this->youth());
     }
 
     /** @return array<string, mixed> */
@@ -150,7 +163,7 @@ final class YouthStatisticsService
             'interests' => $this->rows($interests),
             'skills' => $this->rows($skills),
             'participation' => $this->participation($filters, $totals),
-            'coverage' => $this->coverage($filters),
+            'coverage' => $this->geography->coverage($this->youth($filters)),
             'ecosystem' => $this->ecosystem(),
         ];
     }
@@ -223,64 +236,6 @@ final class YouthStatisticsService
             ['label' => 'Memiliki sertifikat SIPORA', 'count' => $totals['certificate']],
             ['label' => 'Anggota Community aktif', 'count' => $members],
         ];
-    }
-
-    /** Geographic counts use the record's own location; Program uses its Community location. */
-    private function coverage(array $filters): array
-    {
-        $districts = AdministrativeArea::query()->where('area_level', 'district')->orderBy('name')->get(['id', 'name']);
-        $youthIds = $this->youth($filters)->select('users.id');
-        $youth = DB::table('user_addresses AS address')
-            ->join('administrative_areas AS area', 'area.id', '=', 'address.administrative_area_id')
-            ->leftJoin('administrative_areas AS parent', 'parent.id', '=', 'area.parent_id')
-            ->whereNull('address.deleted_at')->whereNull('area.deleted_at')
-            ->where('address.address_type', 'domicile')->where('address.is_primary', true)
-            ->whereIn('address.user_id', $youthIds)
-            ->selectRaw("CASE WHEN area.area_level = 'district' THEN area.name ELSE parent.name END AS district, COUNT(DISTINCT address.user_id) AS total")
-            ->groupBy('district')->pluck('total', 'district');
-        $participated = DB::table('activity_participations AS participation')
-            ->join('user_addresses AS address', 'address.user_id', '=', 'participation.user_id')
-            ->join('administrative_areas AS area', 'area.id', '=', 'address.administrative_area_id')
-            ->leftJoin('administrative_areas AS parent', 'parent.id', '=', 'area.parent_id')
-            ->whereNull('participation.deleted_at')->whereNull('address.deleted_at')->whereNull('area.deleted_at')
-            ->where('participation.registration_status', ActivityParticipation::REGISTRATION_ACCEPTED)
-            ->where('address.address_type', 'domicile')->where('address.is_primary', true)
-            ->whereIn('participation.user_id', $this->youth($filters)->select('users.id'))
-            ->selectRaw("CASE WHEN area.area_level = 'district' THEN area.name ELSE parent.name END AS district, COUNT(DISTINCT participation.user_id) AS total")
-            ->groupBy('district')->pluck('total', 'district');
-        $community = $this->areaCounts('organizations', 'community', 'community.administrative_area_id', fn ($query) => $query
-            ->where('community.review_status', Organization::REVIEW_APPROVED)
-            ->where('community.operational_status', Organization::OPERATIONAL_ACTIVE));
-        $activity = $this->areaCounts('activities', 'activity', 'activity.administrative_area_id', fn ($query) => $query
-            ->where('activity.review_status', Activity::REVIEW_APPROVED)
-            ->where('activity.publication_status', Activity::PUBLICATION_PUBLISHED));
-        $program = $this->areaCounts('programs', 'program', 'community.administrative_area_id', fn ($query) => $query
-            ->join('organizations AS community', 'community.id', '=', 'program.organization_id')
-            ->whereNull('community.deleted_at')
-            ->whereIn('program.id', $this->programs->publicQuery()->setEagerLoads([])->select('programs.id')));
-
-        return $districts->map(fn ($district): array => [
-            'district' => $district->name,
-            'youth' => (int) ($youth[$district->name] ?? 0),
-            'participated' => (int) ($participated[$district->name] ?? 0),
-            'community' => (int) ($community[$district->name] ?? 0),
-            'activity' => (int) ($activity[$district->name] ?? 0),
-            'program' => (int) ($program[$district->name] ?? 0),
-        ])->all();
-    }
-
-    private function areaCounts(string $table, string $alias, string $areaColumn, callable $scope): Collection
-    {
-        $query = DB::table($table.' AS '.$alias)->whereNull($alias.'.deleted_at');
-        $scope($query);
-
-        return $query->join('administrative_areas AS area', 'area.id', '=', DB::raw($areaColumn))
-            ->leftJoin('administrative_areas AS parent', 'parent.id', '=', 'area.parent_id')
-            ->whereNull('area.deleted_at')
-            ->where(fn ($q) => $q->where('area.area_level', 'district')
-                ->orWhere(fn ($village) => $village->where('area.area_level', 'village')->where('parent.area_level', 'district')->whereNull('parent.deleted_at')))
-            ->selectRaw("CASE WHEN area.area_level = 'district' THEN area.name ELSE parent.name END AS district, COUNT(DISTINCT {$alias}.id) AS total")
-            ->groupBy('district')->pluck('total', 'district');
     }
 
     /** Operational breakdowns stay aggregate; no person or document fields are selected. */

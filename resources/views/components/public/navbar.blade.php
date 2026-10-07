@@ -11,12 +11,12 @@
             <a href="{{ route('home') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('home')]) @if(request()->routeIs('home')) aria-current="page" @endif>Beranda</a>
             <div class="relative flex h-full items-center" @click.outside="exploreOpen = false">
                 <button x-ref="exploreTrigger" type="button" @click="exploreOpen = !exploreOpen"
-                    @keydown.arrow-down.prevent="openExploreAndFocus" @class(['public-nav-link h-full gap-1', 'public-nav-active' => request()->routeIs('activities.*', 'communities.*', 'opportunities.*', 'programs.*', 'youth-directory.*', 'portfolio.show')]) :aria-expanded="exploreOpen"
+                    @keydown.arrow-down.prevent="openExploreAndFocus" @class(['public-nav-link h-full gap-1', 'public-nav-active' => request()->routeIs('activities.*', 'communities.*', 'opportunities.*', 'programs.*', 'youth-directory.*', 'portfolio.show', 'ecosystem-map.*')]) :aria-expanded="exploreOpen"
                     aria-haspopup="menu" aria-controls="explore-menu">Jelajahi <x-ui.icon name="chevron-down"
                         class="size-4 transition" x-bind:class="exploreOpen && 'rotate-180'" /></button>
                 <div x-ref="exploreMenu" id="explore-menu" x-cloak x-show="exploreOpen" x-transition role="menu"
                     class="absolute left-1/2 top-[calc(100%-4px)] w-64 -translate-x-1/2 rounded-2xl border border-border bg-white p-2 shadow-lg">
-                    @foreach ([['Activity', 'Temukan kegiatan pemuda', 'activity', 'activities.index'], ['Community', 'Bertumbuh bersama komunitas', 'building', 'communities.index'], ['Opportunity', 'Jelajahi peluang terkurasi', 'briefcase', 'opportunities.index'], ['Program', 'Lihat program kepemudaan', 'notebook', 'programs.index'], ['Pemuda', 'Lihat Portfolio yang dibagikan', 'users', 'youth-directory.index']] as [$label, $description, $icon, $routeName])<a
+                    @foreach ([['Activity', 'Temukan kegiatan pemuda', 'activity', 'activities.index'], ['Community', 'Bertumbuh bersama komunitas', 'building', 'communities.index'], ['Opportunity', 'Jelajahi peluang terkurasi', 'briefcase', 'opportunities.index'], ['Program', 'Lihat program kepemudaan', 'notebook', 'programs.index'], ['Pemuda', 'Lihat Portfolio yang dibagikan', 'users', 'youth-directory.index'], ['Peta Ekosistem', 'Cakupan per kecamatan', 'globe', 'ecosystem-map.index']] as [$label, $description, $icon, $routeName])<a
                         href="{{ route($routeName) }}" @click="exploreOpen = false" @class(['flex min-h-12 items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-primary-50', 'bg-primary-50' => request()->routeIs($routeName, str($routeName)->before('.index') . '.show') || ($routeName === 'youth-directory.index' && request()->routeIs('portfolio.show'))])><span
                             class="grid size-9 place-items-center rounded-lg bg-surface-soft text-primary shadow-xs"><x-ui.icon
                                 :name="$icon" class="size-4" /></span><span><strong
@@ -64,7 +64,7 @@
                     @click="closeMobile(true)" aria-label="Tutup menu"><x-ui.icon name="x" /></button></div>
             <a href="{{ route('home') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('home')])>Beranda</a>
             <p class="px-3 pt-3 text-[10px] font-extrabold uppercase tracking-[.16em] text-text-muted">Jelajahi</p>
-            @foreach (['Activity' => route('activities.index'), 'Community' => route('communities.index'), 'Opportunity' => route('opportunities.index'), 'Program' => route('programs.index'), 'Pemuda' => route('youth-directory.index')] as $label => $href)<a
+            @foreach (['Activity' => route('activities.index'), 'Community' => route('communities.index'), 'Opportunity' => route('opportunities.index'), 'Program' => route('programs.index'), 'Pemuda' => route('youth-directory.index'), 'Peta Ekosistem' => route('ecosystem-map.index')] as $label => $href)<a
                 href="{{ $href }}" @click="open = false"
             class="flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary">{{ $label }}</a>@endforeach
             <a href="{{ route('statistics.index') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('statistics.index')])>Statistik Pemuda</a>
