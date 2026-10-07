@@ -47,6 +47,6 @@ class IdentityVerificationController extends Controller
             $request->file('document_file')
         );
 
-        return back()->with('status', 'Dokumen identitas berhasil diajukan dan sedang menunggu proses verifikasi.');
+        return to_route('youth.onboarding')->with('status', 'Dokumen identitas berhasil diajukan dan sedang menunggu proses verifikasi.');
     }
 }

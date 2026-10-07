@@ -72,7 +72,7 @@ final class ActivityDiscoveryService
             ->whereHas('organization', fn (Builder $organization): Builder => $organization
                 ->where('review_status', Organization::REVIEW_APPROVED)
                 ->where('operational_status', Organization::OPERATIONAL_ACTIVE))
-            ->with(['category:id,name,slug', 'organization:id,name,slug', 'administrativeArea:id,name,code']);
+            ->with(['category:id,name,slug', 'organization:id,name,slug,logo_path,review_status,operational_status', 'administrativeArea:id,name,code']);
     }
 
     public function featured(int $limit = 3): Collection

@@ -28,10 +28,27 @@ final class ActivityController extends Controller
     public function index(Request $request, Organization $organization, ManagedCommunityService $managed): View
     {
         Gate::authorize('manageMemberships', $organization);
-        $activities = $organization->activities()->with('category')->latest()->paginate(15);
+        $filters = $request->only(['q', 'review', 'publication', 'execution', 'per_page']);
+        $filters['q'] = mb_substr(trim((string) ($filters['q'] ?? '')), 0, 80);
+        $filters['per_page'] = in_array((int) ($filters['per_page'] ?? 15), [5, 15, 30], true) ? (int) ($filters['per_page'] ?? 15) : 15;
+        $allowed = [
+            'review' => [Activity::REVIEW_DRAFT, Activity::REVIEW_PENDING, Activity::REVIEW_REVISION, Activity::REVIEW_REJECTED, Activity::REVIEW_APPROVED],
+            'publication' => [Activity::PUBLICATION_UNPUBLISHED, Activity::PUBLICATION_PUBLISHED, Activity::PUBLICATION_ARCHIVED],
+            'execution' => [Activity::EXECUTION_SCHEDULED, Activity::EXECUTION_ONGOING, Activity::EXECUTION_COMPLETED, Activity::EXECUTION_CANCELLED],
+        ];
+        $activities = $organization->activities()->with('category')
+            ->when($filters['q'] !== '', fn ($query) => $query->where('title', 'like', '%'.$filters['q'].'%'));
+        foreach ($allowed as $field => $values) {
+            if (in_array($filters[$field] ?? null, $values, true)) {
+                $activities->where($field.'_status', $filters[$field]);
+            } else {
+                $filters[$field] = '';
+            }
+        }
+        $activities = $activities->latest()->paginate($filters['per_page'])->withQueryString();
 
         return view('manager.activities.index', ['organization' => $organization, 'activities' => $activities,
-            'managedCommunities' => $managed->forUser($request->user())]);
+            'filters' => $filters, 'managedCommunities' => $managed->forUser($request->user())]);
     }
 
     public function create(Request $request, Organization $organization, ManagedCommunityService $managed): View

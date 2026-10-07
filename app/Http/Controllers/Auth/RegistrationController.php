@@ -18,6 +18,6 @@ class RegistrationController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return to_route('verification.notice');
+        return to_route('verification.notice')->with('status', 'Akun berhasil dibuat. Silakan verifikasi alamat email Anda.');
     }
 }

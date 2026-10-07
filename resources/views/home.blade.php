@@ -5,18 +5,16 @@
 @section('content')
 @php($primaryCta = auth()->check() ? route(\App\Support\Auth\HomeRoute::for(auth()->user())) : route('register'))
 <section id="beranda"
-    class="relative overflow-hidden bg-gradient-to-br from-[#2F3E78] via-[#374989] to-[#44559B] text-white">
-    <div class="pointer-events-none absolute inset-0 opacity-15"
-        style="background-image: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.12) 0, transparent 35%), radial-gradient(circle at 15% 85%, rgba(249, 115, 22, 0.08) 0, transparent 25%)">
-    </div>
+    class="relative overflow-hidden bg-primary-800 text-white">
     <div class="pointer-events-none absolute inset-0"
-        style="opacity: 0.065; background-size: 32px 32px; background-image: linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)">
+        style="opacity: 0.032; background-size: 64px 64px; background-image: linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)">
     </div>
     <div
         class="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-12 lg:grid-cols-[1.05fr_.95fr] lg:pb-24 lg:pt-16">
         <div class="relative z-10">
+            <span class="px-icon px-bird absolute -top-4 right-8 hidden text-accent-300/70 sm:block" aria-hidden="true"></span>
             <span
-                class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.14em] text-white/90 shadow-xs"><span
+                class="font-display-accent inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-white/90 shadow-xs"><span
                     class="size-2 rounded-full bg-accent"></span> Platform kepemudaan Kabupaten Pemalang</span>
             <h1
                 class="font-heading mt-6 max-w-2xl text-[3rem] font-bold leading-[0.98] tracking-[-0.025em] text-white sm:text-[3.5rem] lg:text-[3.85rem]">
@@ -39,39 +37,37 @@
                     Gratis untuk bergabung</span><span class="inline-flex items-center gap-1.5"><x-ui.icon
                         name="shield-check" class="size-4 text-accent-300" /> Activity melalui verifikasi</span></div>
         </div>
-        <div class="relative mx-auto w-full max-w-lg lg:mx-0">
-            <div class="absolute -left-5 top-12 hidden h-24 w-16 rounded-2xl bg-accent-500/80 blur-[1px] lg:block">
+        <div class="landing-adventure-frame mx-auto w-full max-w-lg lg:mx-0">
+            <div class="landing-adventure-scene" role="img"
+                aria-label="Ilustrasi petualangan pixel: pemuda menjelajahi peta, komunitas, dan rekam pengalaman yang dapat diverifikasi">
+                <span class="landing-adventure-label" aria-hidden="true">Peta Petualangan Pemuda</span>
+                <span class="landing-adventure-sun" aria-hidden="true"></span>
+                <span class="landing-adventure-cloud landing-adventure-cloud--one" aria-hidden="true"></span>
+                <span class="landing-adventure-cloud landing-adventure-cloud--two" aria-hidden="true"></span>
+                <span class="landing-adventure-hill landing-adventure-hill--back" aria-hidden="true"></span>
+                <span class="landing-adventure-hill landing-adventure-hill--front" aria-hidden="true"></span>
+                <span class="landing-adventure-route" aria-hidden="true"></span>
+                <span class="px-sprite px-castle landing-adventure-castle" aria-hidden="true"></span>
+                <span class="px-sprite px-pine landing-adventure-pine landing-adventure-pine--one" aria-hidden="true"></span>
+                <span class="px-sprite px-pine landing-adventure-pine landing-adventure-pine--two" aria-hidden="true"></span>
+                <span class="px-sprite px-knight landing-adventure-knight" aria-hidden="true"></span>
+                <span class="px-sprite px-chest landing-adventure-chest" aria-hidden="true"></span>
+                <span class="px-sprite px-map landing-adventure-map" aria-hidden="true"></span>
+                <span class="landing-adventure-ground" aria-hidden="true"></span>
             </div>
-            <div
-                class="relative overflow-hidden rounded-[22px] border-[6px] border-white/20 bg-primary-700/60 p-1.5 shadow-lg backdrop-blur-xs">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=85"
-                    alt="Pemuda berkolaborasi dalam kegiatan" class="h-[27rem] w-full rounded-[16px] object-cover"
-                    fetchpriority="high">
-                <div
-                    class="absolute left-6 top-6 rounded-full bg-warning px-3.5 py-1.5 text-xs font-black uppercase tracking-wider text-text-primary shadow-xs">
-                    Kolaborasi Pemuda</div>
-                <div
-                    class="absolute bottom-6 left-6 right-6 rounded-xl border border-white/80 bg-white/95 p-3.5 shadow-md backdrop-blur-md">
-                    <div class="flex items-center gap-3"><span
-                            class="grid size-10 shrink-0 place-items-center rounded-lg bg-primary-50 text-primary"><x-ui.icon
-                                name="badge-check" class="size-5" /></span>
-                        <div class="min-w-0"><strong class="block text-sm font-bold text-text-primary">Rekam yang dapat
-                                diverifikasi</strong><span class="text-xs text-text-secondary">Sertifikat SIPORA
-                                memiliki kode verifikasi publik</span></div>
-                    </div>
-                </div>
+            <div class="landing-adventure-proof">
+                <span class="landing-adventure-proof-icon"><x-ui.icon name="badge-check" class="size-5" /></span>
+                <div class="min-w-0"><strong class="block text-sm font-bold text-text-primary">Rekam yang dapat diverifikasi</strong><span
+                        class="text-xs text-text-secondary">Sertifikat SIPORA memiliki kode verifikasi publik</span></div>
             </div>
         </div>
     </div>
-    <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-6 w-full text-bg" viewBox="0 0 1440 80"
-        preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 46C280 78 490 73 720 54c260-22 430-30 720 2v24H0Z" fill="currentColor" />
-    </svg>
+    <div class="landing-adventure-edge" aria-hidden="true"></div>
 </section>
 
 <section class="relative z-20 -mt-9 px-5" aria-label="Pencarian publik">
     <form method="GET" action="{{ route('search.index') }}"
-        class="mx-auto max-w-[1140px] rounded-2xl border border-border bg-white p-5 shadow-md sm:p-6">
+        class="mx-auto max-w-[1140px] rounded-lg border-2 border-primary-700/75 bg-white p-5 shadow-md sm:p-6">
         <div class="grid gap-3 lg:grid-cols-[1fr_auto]">
             <label class="relative"><span class="sr-only">Cari Activity, Community, Opportunity, atau
                     Program</span><x-ui.icon name="search"
@@ -89,7 +85,7 @@
     </form>
 </section>
 
-<section class="bg-surface-soft px-5 pb-20 pt-24">
+<section class="landing-section-scene px-section-paper px-zig-left px-5 pb-20 pt-24">
     <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Jelajahi Minat" title="Eksplorasi Sesuai Minatmu"
             description="Mulai dari hal yang kamu sukai dan temukan ruang bertumbuh bersama pemuda lainnya." centered />
         @php($interestIcons = ['code', 'activity', 'briefcase', 'palette', 'graduation-cap', 'leaf', 'users', 'trophy'])
@@ -106,7 +102,7 @@
     </div>
 </section>
 
-<section id="kegiatan" class="px-5 py-20">
+<section id="kegiatan" class="landing-section-scene px-section-white px-zig-right px-5 py-20">
     <div class="mx-auto max-w-7xl">
         <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><x-public.section-heading
                 eyebrow="Terjadwal Berikutnya" title="Kegiatan yang Bisa Kamu Ikuti"
@@ -120,7 +116,7 @@
     </div>
 </section>
 
-<section id="komunitas" class="bg-surface-soft px-5 py-20">
+<section id="komunitas" class="landing-section-scene px-section-paper px-zig-left px-5 py-20">
     <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Tumbuh Bersama" title="Temukan Komunitas"
             description="Terhubung dengan orang-orang yang berbagi minat dan tujuan yang sama." centered />
         <div class="mt-10 grid gap-6 lg:grid-cols-3">@forelse ($communities as $community)<x-discovery.community-card
@@ -132,7 +128,7 @@
     </div>
 </section>
 
-<section id="peluang" class="px-5 py-20">
+<section id="peluang" class="landing-section-scene px-section-white px-zig-right px-5 py-20">
     <div class="mx-auto max-w-7xl">
         <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end"><x-public.section-heading
                 eyebrow="Buka Jalanmu" title="Opportunity untuk Pemuda"
@@ -147,7 +143,7 @@
     </div>
 </section>
 
-<section id="program" class="bg-surface-soft px-5 py-20">
+<section id="program" class="landing-section-scene px-section-paper px-zig-left px-5 py-20">
     <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Program Pemuda"
             title="Program yang Sedang Berjalan dan Selesai"
             description="Program publik berasal dari Community aktif dan memiliki Proposal yang telah disetujui."
@@ -161,7 +157,7 @@
     </div>
 </section>
 
-<section class="px-5 py-20">
+<section class="px-section-white px-zig-right px-5 py-20">
     <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Cara Kerja SIPORA"
             title="Dari menemukan ruang hingga membangun rekam jejak"
             description="SIPORA menghubungkan pencarian kegiatan, partisipasi, verifikasi, dan Portfolio dalam satu alur yang jelas."
@@ -181,7 +177,8 @@
     </div>
 </section>
 
-<section class="bg-primary-900 px-5 py-16 text-white">
+<div class="px-divider-loot bg-primary-900" aria-hidden="true"></div>
+<section class="landing-dark-panel bg-primary-900 px-5 py-16 text-white">
     <div class="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1fr_auto]">
         <div>
             <p class="text-xs font-extrabold uppercase tracking-[.18em] text-accent-300">Ekosistem terverifikasi</p>
@@ -243,23 +240,22 @@
 
 <section class="bg-surface-soft px-5 py-16" aria-label="Statistik publik SIPORA">
     <div class="mx-auto max-w-7xl">
-        <p class="mb-8 text-center text-xs font-bold uppercase tracking-[0.18em] text-accent-600">Ringkasan faktual data
-            publik SIPORA</p>
-        <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">@foreach ($statistics as $index => $stat)<x-public.stat-card
-            :icon="['building', 'activity', 'briefcase', 'notebook'][$index]" :value="number_format($stat['value'])"
-        :label="$stat['label']" :tone="['blue', 'orange', 'green', 'indigo'][$index]" />@endforeach</div>
+        <p class="text-center text-xs font-bold uppercase tracking-[0.18em] text-accent-600">Statistik publik SIPORA</p>
+        <h2 class="font-heading mt-2 text-center text-3xl font-bold text-text-primary">Ekosistem SIPORA dalam Angka</h2>
+        <p class="mt-3 text-center text-sm text-text-secondary">Berdasarkan pemuda yang terdaftar di SIPORA, bukan seluruh populasi pemuda Kabupaten Pemalang.</p>
+        <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            @foreach([['registered', 'Pemuda Terdaftar', 'users'], ['identity_verified', 'Identitas Terverifikasi', 'shield-check'], ['public_portfolio', 'Portfolio Publik', 'user'], ['activity_participated', 'Pernah Mengikuti Activity', 'activity']] as [$key, $label, $icon])
+                <x-public.stat-card :icon="$icon" :value="number_format($youthStatistics[$key])" :label="$label" tone="blue" />
+            @endforeach
+        </div>
+        <div class="mt-8 text-center"><a href="{{ route('statistics.index') }}" class="btn-secondary">Lihat Statistik Pemuda</a></div>
     </div>
 </section>
 
-<section
-    class="relative overflow-hidden bg-gradient-to-br from-[#2F3E78] via-[#374989] to-[#44559B] px-5 py-20 text-center text-white">
-    <div class="absolute inset-0 opacity-10"
-        style="background-image: radial-gradient(circle at 20% 20%, white 0, transparent 25%), radial-gradient(circle at 80% 80%, #F97316 0, transparent 24%)">
-    </div>
+<section class="landing-dark-panel relative overflow-hidden bg-primary-800 px-5 py-20 text-center text-white">
     <div class="relative mx-auto max-w-3xl">
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-accent-300">Giliranmu untuk bertumbuh</p>
-        <h2 class="font-heading mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Ambil langkah pertamamu bersama
-            SIPORA.</h2>
+        <h2 class="font-heading mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Ambil langkah pertamamu bersama SIPORA.</h2>
         <p class="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/85 sm:text-lg">Bergabung dengan ekosistem pemuda
             Pemalang dan temukan lebih banyak cara untuk belajar, berkarya, dan berdampak.</p>
         <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><a href="{{ $primaryCta }}"

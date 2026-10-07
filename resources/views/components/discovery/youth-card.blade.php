@@ -2,8 +2,8 @@
 @php($initials = collect(explode(' ', $profile['name']))->filter()->take(2)->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))->implode(''))
 <article {{ $attributes->class('group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-xs transition duration-200 hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-sm') }}>
     <div class="flex gap-4 p-5">
-        <div class="grid size-20 shrink-0 place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-primary-100 to-primary-300 text-lg font-black text-primary" aria-hidden="{{ $profile['photo_url'] ? 'true' : 'false' }}">
-            @if($profile['photo_url'])<img class="h-full w-full object-cover" src="{{ $profile['photo_url'] }}" alt="Foto {{ $profile['name'] }}" loading="lazy">@else<span>{{ $initials ?: 'YP' }}</span>@endif
+        <div class="grid size-20 shrink-0 place-items-center overflow-hidden rounded-2xl bg-primary-100 text-lg font-black text-primary" aria-hidden="{{ $profile['photo_url'] ? 'true' : 'false' }}">
+            @if($profile['photo_url'])<img data-media-fallback class="h-full w-full object-cover" src="{{ $profile['photo_url'] }}" alt="Foto {{ $profile['name'] }}" loading="lazy">@else<span>{{ $initials ?: 'YP' }}</span>@endif
         </div>
         <div class="min-w-0 flex-1"><h2 class="text-lg font-bold leading-6 text-text-primary">{{ $profile['name'] }}</h2>@if($profile['headline'])<p class="mt-1 text-sm font-semibold text-primary">{{ $profile['headline'] }}</p>@endif @if($profile['domicile'])<p class="mt-1 flex items-center gap-1.5 text-xs text-text-muted"><x-ui.icon name="map-pin" class="size-3.5" />{{ $profile['domicile'] }}, Pemalang</p>@endif</div>
     </div>

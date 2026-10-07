@@ -14,7 +14,7 @@ final class ActivityPassportService
             ->where('user_id', $user->getKey())
             ->where('registration_status', ActivityParticipation::REGISTRATION_ACCEPTED)
             ->where('completion_status', ActivityParticipation::COMPLETION_COMPLETED)
-            ->with(['activity.organization', 'activity.category', 'certificate'])
+            ->with(['activity' => fn ($activity) => $activity->withCount('sessions'), 'activity.organization', 'activity.category', 'certificate'])
             ->withCount([
                 'attendances as present_count' => fn ($query) => $query->where('attendance_status', 'present'),
                 'attendances as absent_count' => fn ($query) => $query->where('attendance_status', 'absent'),

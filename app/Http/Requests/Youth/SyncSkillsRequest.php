@@ -20,6 +20,8 @@ final class SyncSkillsRequest extends FormRequest
         return [
             'skills' => ['nullable', 'array'],
             'skills.*' => ['string', new BinaryUuidExists('skills')],
+            'other_selected' => ['sometimes', 'boolean'],
+            'custom_skill' => ['required_if:other_selected,1', 'nullable', 'string', 'min:2', 'max:120'],
         ];
     }
 }

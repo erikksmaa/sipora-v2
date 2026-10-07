@@ -34,7 +34,7 @@ class AuthRequest extends FormRequest
         if ($this->routeIs('register.store')) {
             $rules['name'] = ['required', 'string', 'max:255'];
             $rules['email'][] = 'unique:users,email';
-            $rules['password'] = ['required', 'confirmed', Password::min(12), 'max:72'];
+            $rules['password'] = ['required', 'confirmed', Password::min(8), 'max:72'];
         } elseif ($this->routeIs('login.store')) {
             $rules['password'] = ['required', 'string', 'max:72'];
             $rules['remember'] = ['sometimes', 'boolean'];

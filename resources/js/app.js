@@ -1,5 +1,46 @@
 import './bootstrap';
+import './media';
+import { showAlert } from './alerts';
 import Alpine from 'alpinejs';
+
+Alpine.data('themeToggle', () => ({
+    dark: document.documentElement.dataset.theme === 'dark',
+    init() {
+        this._sync = () => { this.dark = document.documentElement.dataset.theme === 'dark'; };
+        window.addEventListener('sipora:theme', this._sync);
+    },
+    toggle() {
+        this.dark = !this.dark;
+        const value = this.dark ? 'dark' : 'light';
+        document.documentElement.dataset.theme = value;
+        try { localStorage.setItem('sipora.theme', value); } catch (_) { /* Storage may be disabled. */ }
+        window.dispatchEvent(new Event('sipora:theme'));
+    },
+}));
+
+Alpine.data('biodataStepper', (initial = 0) => ({
+    step: initial,
+    steps: ['Biodata', 'Alamat', 'Kontak', 'Identitas', 'Konfirmasi'],
+    next() {
+        const panel = this.$refs.panels.querySelector(`[data-step="${this.step}"]`);
+        for (const input of panel.querySelectorAll('input, select, textarea')) {
+            if (!input.checkValidity()) { input.reportValidity(); input.focus(); return; }
+        }
+        this.step = Math.min(this.step + 1, this.steps.length - 1);
+        this.$nextTick(() => this.$refs.stepTitle?.focus());
+    },
+    previous() { this.step = Math.max(this.step - 1, 0); this.$nextTick(() => this.$refs.stepTitle?.focus()); },
+}));
+
+Alpine.data('bulkAttendance', (statuses) => ({
+    statuses,
+    count(status) {
+        return Object.values(this.statuses).filter((value) => value === status).length;
+    },
+    markAllPresent() {
+        for (const participantId of Object.keys(this.statuses)) this.statuses[participantId] = 'present';
+    },
+}));
 
 Alpine.data('recaptchaForm', (siteKey, action) => ({
     busy: false,
@@ -22,6 +63,7 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
         this.error = '';
         if (!siteKey) {
             this.error = 'Security verification is unavailable. Please try again later.';
+            showAlert('warning', this.error);
             return;
         }
         this.busy = true;
@@ -35,6 +77,7 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
             this.$el.submit();
         } catch {
             this.error = 'Security verification failed. Please try again.';
+            showAlert('error', this.error);
             this.busy = false;
         }
     },
@@ -43,8 +86,13 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
 Alpine.data('workspaceShell', () => ({
     mobileOpen: false,
     collapsed: false,
+    openGroup: '',
     init() {
         this.collapsed = window.localStorage.getItem('sipora.workspace.sidebar.collapsed') === 'true';
+        const current = this.$el.dataset.currentGroup || 'Overview';
+        this.openGroup = current;
+        try { this.openGroup = current || window.localStorage.getItem(`sipora.workspace.${this.$el.dataset.workspace}.group`) || 'Overview'; } catch (_) { /* No persistence available. */ }
+        if (/^#(skills|education|org|achievement|training|verified-records)-section$/.test(location.hash)) this.openGroup = 'Portfolio';
         this.$watch('collapsed', (value) => window.localStorage.setItem('sipora.workspace.sidebar.collapsed', String(value)));
         this.$watch('mobileOpen', (value) => {
             document.documentElement.classList.toggle('overflow-hidden', value && window.innerWidth < 1024);
@@ -79,6 +127,10 @@ Alpine.data('workspaceShell', () => ({
     },
     toggleCollapsed() {
         this.collapsed = !this.collapsed;
+    },
+    toggleGroup(label) {
+        this.openGroup = this.openGroup === label ? '' : label;
+        try { localStorage.setItem(`sipora.workspace.${this.$el.dataset.workspace}.group`, this.openGroup); } catch (_) { /* No persistence available. */ }
     },
 }));
 

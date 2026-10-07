@@ -22,10 +22,12 @@ class DesignSystemRenderingTest extends TestCase
         $this->get(route('home'))
             ->assertOk()
             ->assertSee('public-nav-active', false)
-            ->assertSee('Big+Shoulders+Display', false)
-            ->assertSee('family=Inter', false)
+            ->assertSee('Plus+Jakarta+Sans', false)
+            ->assertSee('Pixelify+Sans', false)
+            ->assertSee('Press+Start+2P', false)
             ->assertSee('JetBrains+Mono', false)
-            ->assertSee('bg-gradient-to-br', false)
+            ->assertSee('bg-primary-800', false)
+            ->assertSee('px-footer px-zig-mountain', false)
             ->assertSee('Temukan ruang untuk');
     }
 
@@ -36,6 +38,7 @@ class DesignSystemRenderingTest extends TestCase
         $this->actingAs($admin)->get(route('admin.dashboard'))
             ->assertOk()
             ->assertSee('workspaceShell', false)
+            ->assertSee('workspace-stage', false)
             ->assertSee('Dashboard Tata Kelola SIPORA')
             ->assertSee('aria-label="Breadcrumb"', false)
             ->assertSee('Ciutkan sidebar')
@@ -49,6 +52,7 @@ class DesignSystemRenderingTest extends TestCase
         $this->actingAs($verifier)->get(route('verifier.dashboard'))
             ->assertOk()
             ->assertSee('workspaceShell', false)
+            ->assertSee('workspace-stage', false)
             ->assertSee('Dashboard Pengawasan &amp; Kurasi', false)
             ->assertSee('E-LPJ Keuangan')
             ->assertDontSee('Identitas Pemuda');

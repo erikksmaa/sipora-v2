@@ -172,7 +172,7 @@ class ActivityWorkflowTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole($role);
 
-        return $user;
+        return $role === 'youth' ? $this->completeYouthOnboarding($user) : $user;
     }
 
     private function community(string $slug): array

@@ -32,6 +32,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserSocialAccount::class);
     }
 
+    public function contactLinks(): HasOne
+    {
+        return $this->hasOne(UserContactLink::class);
+    }
+
+    public function customPortfolioTags(): HasMany
+    {
+        return $this->hasMany(UserCustomPortfolioTag::class);
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(UserProfile::class);

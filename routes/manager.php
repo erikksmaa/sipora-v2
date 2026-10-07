@@ -5,20 +5,30 @@ use App\Http\Controllers\Manager\ActivityController;
 use App\Http\Controllers\Manager\ActivityParticipantController;
 use App\Http\Controllers\Manager\ActivitySessionController;
 use App\Http\Controllers\Manager\CommunityMemberController;
+use App\Http\Controllers\Manager\CommunityOperationsController;
 use App\Http\Controllers\Manager\CommunityWorkspaceController;
 use App\Http\Controllers\Manager\FinancialReportController;
 use App\Http\Controllers\Manager\ProgramController;
 use App\Http\Controllers\Manager\ProgramLogbookController;
 use App\Http\Controllers\Manager\ProgramProposalController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('manager.')
+Route::middleware(['auth', 'verified', 'role:youth', 'youth.stage:complete'])->prefix('manage')->name('manager.')
     ->group(function (): void {
         Route::get('/{organization}', [CommunityWorkspaceController::class, 'show'])->name('dashboard');
         Route::get('/{organization}/profile', [CommunityWorkspaceController::class, 'edit'])->name('profile.edit');
         Route::patch('/{organization}/profile', [CommunityWorkspaceController::class, 'update'])->name('profile.update');
         Route::get('/{organization}/members', [CommunityMemberController::class, 'index'])->name('members.index');
+        Route::get('/{organization}/join-requests', [CommunityMemberController::class, 'joinRequests'])->name('join-requests.index');
         Route::post('/{organization}/join-requests/{membership}/review', [CommunityMemberController::class, 'review'])->name('join-requests.review');
+        Route::get('/{organization}/notifications', [NotificationController::class, 'managerIndex'])->name('notifications.index');
+        Route::get('/{organization}/sessions', [CommunityOperationsController::class, 'sessions'])->name('operations.sessions');
+        Route::get('/{organization}/participants', [CommunityOperationsController::class, 'participants'])->name('operations.participants');
+        Route::get('/{organization}/attendance', [CommunityOperationsController::class, 'attendance'])->name('operations.attendance');
+        Route::get('/{organization}/proposals', [CommunityOperationsController::class, 'proposals'])->name('operations.proposals');
+        Route::get('/{organization}/logbooks', [CommunityOperationsController::class, 'logbooks'])->name('operations.logbooks');
+        Route::get('/{organization}/financial-reports', [CommunityOperationsController::class, 'financialReports'])->name('operations.financial-reports');
         Route::patch('/{organization}/members/{membership}/role', [CommunityMemberController::class, 'updateRole'])->name('members.role.update');
         Route::delete('/{organization}/members/{membership}', [CommunityMemberController::class, 'destroy'])->name('members.destroy');
         Route::get('/{organization}/programs', [ProgramController::class, 'index'])->name('programs.index');
@@ -80,5 +90,6 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('manage')->name('m
         Route::post('/{organization}/activities/{activity}/participants/{participation}/completion', [ActivityParticipantController::class, 'complete'])->name('activities.participants.complete');
         Route::post('/{organization}/activities/{activity}/participants/{participation}/certificate', [ActivityParticipantController::class, 'issueCertificate'])->name('activities.participants.certificate');
         Route::get('/{organization}/activities/{activity}/sessions/{session}/attendance', [ActivityAttendanceController::class, 'index'])->name('activities.attendance.index');
+        Route::put('/{organization}/activities/{activity}/sessions/{session}/attendance', [ActivityAttendanceController::class, 'bulkUpdate'])->name('activities.attendance.bulk-update');
         Route::put('/{organization}/activities/{activity}/sessions/{session}/attendance/{participation}', [ActivityAttendanceController::class, 'update'])->name('activities.attendance.update');
     });

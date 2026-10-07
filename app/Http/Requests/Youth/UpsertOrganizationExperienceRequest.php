@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Youth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 final class UpsertOrganizationExperienceRequest extends FormRequest
 {
@@ -23,6 +24,7 @@ final class UpsertOrganizationExperienceRequest extends FormRequest
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'is_current' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', 'max:1000'],
+            'evidence' => ['nullable', File::types(['pdf', 'jpg', 'jpeg', 'png'])->max(5 * 1024)],
         ];
     }
 }

@@ -20,6 +20,7 @@ use App\Services\Youth\YouthPortfolioService;
 use App\Support\BinaryUuid;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -37,6 +38,7 @@ class YouthPortfolioTest extends TestCase
     public function test_youth_can_view_composed_owner_portfolio_and_guest_cannot_open_workspace(): void
     {
         $owner = $this->youth('owner-portfolio', 'Pemilik Portfolio');
+        $this->completeYouthOnboarding($owner);
         $context = $this->verifiedContext($owner);
         $this->participation($context['activity'], $owner, 'accepted', 'completed');
         foreach ([['accepted', 'no_show'], ['accepted', 'pending'], ['rejected', 'pending'], ['cancelled', 'pending']] as $index => [$registration, $completion]) {
@@ -67,6 +69,7 @@ class YouthPortfolioTest extends TestCase
             'show_skills' => false, 'show_education' => false,
             'show_organization_experience' => false, 'show_achievements' => false,
         ], ['email' => 'private@example.test']);
+        $this->completeYouthOnboarding($owner);
         $owner->profile->update(['phone' => '081234567890', 'bio' => 'Bio aman untuk publik']);
         $skill = Skill::create(['name' => 'Keahlian Rahasia', 'slug' => 'keahlian-rahasia']);
         $owner->skills()->attach($skill->getKey(), ['id' => BinaryUuid::generate(), 'is_self_reported' => true]);
@@ -112,6 +115,42 @@ class YouthPortfolioTest extends TestCase
             ->assertSee(route('certificates.verify', $certificate->verification_code), false)
             ->assertDontSee(route('youth.certificates.download', $certificate), false)
             ->assertDontSee('Keahlian Terverifikasi');
+    }
+
+    public function test_public_profile_shows_valid_social_links_and_visible_experience_and_achievement_evidence(): void
+    {
+        Storage::fake('portfolio_evidence');
+        $owner = $this->youth('evidence-portfolio', 'Pemilik Bukti');
+        $this->completeYouthOnboarding($owner);
+        $owner->contactLinks()->create([
+            'instagram' => 'pemuda.pemalang', 'facebook' => null,
+            'linkedin' => 'https://www.linkedin.com/in/pemuda-pemalang',
+        ]);
+
+        $this->actingAs($owner)->post(route('youth.organization-experiences.store'), [
+            'organization_name' => 'Forum Pemuda',
+            'evidence' => UploadedFile::fake()->image('pengalaman.png'),
+        ])->assertRedirect();
+        $this->post(route('youth.achievements.store'), [
+            'title' => 'Juara Inovasi',
+            'evidence' => UploadedFile::fake()->create('penghargaan.pdf', 100, 'application/pdf'),
+        ])->assertRedirect();
+
+        $experience = $owner->organizationExperiences()->firstOrFail();
+        $achievement = $owner->achievements()->firstOrFail();
+        $public = $this->get(route('portfolio.show', 'evidence-portfolio'))->assertOk()
+            ->assertSee('https://www.instagram.com/pemuda.pemalang/', false)
+            ->assertSee('https://www.linkedin.com/in/pemuda-pemalang', false)
+            ->assertDontSee('Facebook')
+            ->assertSee(route('portfolio.evidence', ['evidence-portfolio', 'organization', $experience->uuid()]), false)
+            ->assertSee(route('portfolio.evidence', ['evidence-portfolio', 'achievement', $achievement->uuid()]), false);
+        $public->assertSeeInOrder(['Pengalaman Organisasi Mandiri', 'Prestasi']);
+        $this->get(route('portfolio.evidence', ['evidence-portfolio', 'organization', $experience->uuid()]))->assertOk();
+        $this->get(route('portfolio.evidence', ['evidence-portfolio', 'achievement', $achievement->uuid()]))->assertOk();
+
+        $owner->profileVisibility->update(['show_achievements' => false]);
+        $this->get(route('portfolio.evidence', ['evidence-portfolio', 'achievement', $achievement->uuid()]))->assertNotFound();
+        $this->get(route('portfolio.show', 'evidence-portfolio'))->assertDontSee('Juara Inovasi');
     }
 
     public function test_private_portfolio_and_hidden_photo_are_not_publicly_accessible(): void

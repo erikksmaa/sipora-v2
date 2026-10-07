@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -32,16 +33,23 @@ class GoogleAuthController extends Controller
             // Stateful Socialite verifies the OAuth state before exchanging code.
             $user = $authenticate->execute(Socialite::driver('google')->user());
         } catch (InvalidStateException|GuzzleException|UniqueConstraintViolationException|ValidationException $exception) {
+            // Do not log the callback URL, authorization code, tokens, or account data.
+            Log::warning('Google sign-in callback failed.', [
+                'failure_type' => class_basename($exception),
+            ]);
+
             return to_route('login')->withErrors([
                 'email' => $exception instanceof ValidationException
                     ? $exception->errors()['email'][0]
-                    : 'Google sign-in failed. Please try again or use email sign-in.',
+                    : ($exception instanceof InvalidStateException
+                        ? 'Sesi masuk Google tidak cocok atau sudah kedaluwarsa. Buka kembali halaman masuk dan coba sekali lagi.'
+                        : 'Google sign-in failed. Please try again or use email sign-in.'),
             ]);
         }
         Auth::login($user);
         $request->session()->regenerate();
 
-        return to_route(HomeRoute::for($user));
+        return to_route(HomeRoute::for($user))->with('status', 'Selamat datang! Anda berhasil masuk melalui Google.');
     }
 
     private function configured(): bool

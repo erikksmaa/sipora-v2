@@ -7,7 +7,7 @@ use App\Services\Discovery\ActivityDiscoveryService;
 use App\Services\Discovery\CommunityDiscoveryService;
 use App\Services\Discovery\OpportunityDiscoveryService;
 use App\Services\Discovery\ProgramDiscoveryService;
-use App\Services\PublicStatisticsService;
+use App\Services\YouthStatisticsService;
 
 /**
  * Mixed public landing read model. Approved domains and statistics come from
@@ -20,7 +20,7 @@ final class PublicLandingPresenter
         private readonly CommunityDiscoveryService $communities,
         private readonly OpportunityDiscoveryService $opportunities,
         private readonly ProgramDiscoveryService $programs,
-        private readonly PublicStatisticsService $statistics,
+        private readonly YouthStatisticsService $statistics,
     ) {}
 
     /** @return array<string, mixed> */
@@ -53,7 +53,7 @@ final class PublicLandingPresenter
             'communities' => $this->communities->featured(),
             'opportunities' => $this->opportunities->featured(),
             'programs' => $this->programs->featured(),
-            'statistics' => $this->statistics->summarize(),
+            'youthStatistics' => $this->statistics->summary(),
         ];
     }
 }

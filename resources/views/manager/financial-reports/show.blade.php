@@ -84,7 +84,7 @@
                             <p class="rupiah font-black text-[#14205c]">{{ $money->rupiah($item->amount) }}</p>
                         </div>
                         @if ($item->receipt_path)
-                            <a class="mt-3 inline-block text-sm font-bold text-[#243378] hover:underline" target="_blank" href="{{ route('manager.financial-reports.items.receipt', [$organization, $program, $report, $item]) }}">Buka bukti transaksi</a>
+                            <x-media.receipt :url="route('manager.financial-reports.items.receipt', [$organization, $program, $report, $item])" :image="in_array(strtolower(pathinfo($item->receipt_path, PATHINFO_EXTENSION)), ['jpg','jpeg','png','webp'])" />
                         @endif
                         @can('update', $report)
                             <details class="mt-4">

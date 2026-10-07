@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             OpportunityBookmarkSeeder::class,
             NotificationSeeder::class,
             QualityAssuranceSeeder::class,
+            MediaFixtureSeeder::class,
         ]);
     }
 }

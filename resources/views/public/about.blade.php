@@ -3,12 +3,13 @@
 @section('meta_description', 'Pelajari cara SIPORA menghubungkan pemuda, Community, Activity, Opportunity, Program, dan Dindikpora Kabupaten Pemalang.')
 @section('canonical', route('about'))
 @section('content')
-    <x-public.page-intro eyebrow="Tentang Platform" title="Ekosistem pemuda dalam satu ruang"
+    <x-public.page-intro eyebrow="Tentang Platform" title="Ekosistem pemuda dalam satu ruang" variant="about"
         description="SIPORA menghubungkan pemuda, Community, Activity, Opportunity, Program, dan proses verifikasi Dindikpora Kabupaten Pemalang." />
     <section class="px-5 py-16">
-        <div class="mx-auto max-w-6xl">
+        <div class="mx-auto max-w-6xl"><x-media.representative class="mb-8" domain="about" identity="ecosystem" label="Ilustrasi kolaborasi pemuda dan komunitas" />
             <div class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
                 <div>
+                    <div class="mb-5 flex items-center gap-3"><x-brand-logo size="size-14" /><span class="text-sm font-bold text-text-secondary">Dindikpora Kabupaten Pemalang</span></div>
                     <p class="text-xs font-bold uppercase tracking-wider text-accent-600">Apa itu SIPORA?</p>
                     <h2 class="font-heading mt-2 text-3xl font-bold text-text-primary">Ruang digital untuk menemukan,
                         berpartisipasi, dan mencatat pengalaman.</h2>

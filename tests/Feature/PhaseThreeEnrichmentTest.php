@@ -25,7 +25,7 @@ class PhaseThreeEnrichmentTest extends TestCase
 
     private function youth(): User
     {
-        return User::factory()->create()->assignRole('youth');
+        return $this->completeYouthOnboarding(User::factory()->create()->assignRole('youth'), 'profile');
     }
 
     public function test_youth_can_sync_self_reported_skills_and_invalid_uuid_is_rejected(): void
@@ -39,6 +39,10 @@ class PhaseThreeEnrichmentTest extends TestCase
 
         $this->assertCount(2, $user->fresh()->skills);
         $this->assertTrue($user->fresh()->userSkills->every(fn ($skill): bool => $skill->is_self_reported));
+
+        $this->actingAs($user)->get('/youth/skills')
+            ->assertOk()
+            ->assertSee('value="'.$skills->first()->uuid().'" checked', false);
 
         $this->actingAs($user)->put('/youth/skills', ['skills' => ['not-a-uuid']])
             ->assertSessionHasErrors('skills.0');
@@ -135,7 +139,7 @@ class PhaseThreeEnrichmentTest extends TestCase
         $this->assertFalse($visibility->show_skills);
         $this->assertFalse($visibility->show_achievements);
 
-        $this->assertSame(0, app(ProfileCompletionService::class)->calculate($user->fresh())['percentage']);
+        $this->assertSame(50, app(ProfileCompletionService::class)->calculate($user->fresh())['percentage']);
         $user->userSkills()->create([
             'id' => BinaryUuid::generate(), 'skill_id' => $skill->getKey(), 'is_self_reported' => true,
         ]);
@@ -147,6 +151,6 @@ class PhaseThreeEnrichmentTest extends TestCase
             'id' => BinaryUuid::generate(), 'user_id' => $user->getKey(),
             'title' => 'Prestasi Mandiri', 'verification_status' => 'self_reported',
         ]);
-        $this->assertSame(30, app(ProfileCompletionService::class)->calculate($user->fresh())['percentage']);
+        $this->assertSame(80, app(ProfileCompletionService::class)->calculate($user->fresh())['percentage']);
     }
 }

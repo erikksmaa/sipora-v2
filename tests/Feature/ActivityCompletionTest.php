@@ -150,7 +150,7 @@ class ActivityCompletionTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 
     private function participation(Activity $activity, User $user, string $registration = ActivityParticipation::REGISTRATION_ACCEPTED, string $completion = ActivityParticipation::COMPLETION_PENDING): ActivityParticipation

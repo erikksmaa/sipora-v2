@@ -1,31 +1,311 @@
 @import 'tailwindcss';
+@import './media.css';
+@import 'sweetalert2/dist/sweetalert2.min.css';
+@import './alerts.css';
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
 
 /* ==========================================================================
-   SIPORA — PIXEL ADVENTURE THEME v2
-   Flame #FE7743  -> aksi / CTA / api unggun
-   Cream #EFEEEA  -> kertas peta
-   Slate #273F4F  -> identitas, teks, langit malam
-   Black #000000  -> garis tepi pixel & bayangan keras
+   SIPORA — PIXEL ADVENTURE THEME  ·  "modern digital playground"
+   Palet inti:
+     Flame  #FE7743  -> aksi / CTA / "api unggun"
+     Cream  #EFEEEA  -> latar kertas peta
+     Slate  #273F4F  -> identitas utama, teks
+     Black  #000000  -> garis tepi pixel & bayangan
 
-   Aturan main:
-   - Hitam hanya untuk bingkai + bayangan. Flame hanya untuk aksi/sorotan.
-   - Setiap komponen punya "bingkai pixel" (box-shadow bertingkat, tanpa radius).
-   - Ornamen (burung, kepiting, pedang, hati, bintang, awan, matahari) = mask SVG,
-     warnanya ikut `color`, jadi bisa dipakai di mana saja tanpa file gambar.
+   Prinsip revisi ini:
+     1. Warna datar, bukan gradient. Kedalaman dibuat dengan blok warna keras
+        (pita langit, bayangan blok) seperti seni pixel sungguhan, jadi tidak silau.
+     2. Latar halaman tenang: krem rata, confetti sangat jarang, titik grid samar.
+     3. Semua kartu memakai bingkai pixel bergerigi (sudut "terpotong"), termasuk
+        kartu lama yang masih memakai utilitas Tailwind (lihat bagian NORMALISASI).
+     4. Karakter & properti petualangan (ksatria, helm, perisai, peti harta, peta,
+        kastil, pinus, api unggun) tersedia sebagai sprite + adegan footer + pembatas.
    ========================================================================== */
 
+/* Variabel animasi: awan di hero bergeser per-langkah (terasa pixel). */
+@property --drift {
+    syntax: '<length>';
+    inherits: false;
+    initial-value: 0px;
+}
+
 :root {
+    /* ---- Sprite satu warna (mask, warnanya ikut `color`) ---- */
     --px-bird: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E");
     --px-crab: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 5' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h-2zM9 0h2v1h-2zM0 1h2v1h-2zM4 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM1 2h9v1h-9zM2 3h7v1h-7zM0 4h1v1h-1zM2 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1z'/%3E%3C/svg%3E");
     --px-sword: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 10' shape-rendering='crispEdges'%3E%3Cpath d='M9 0h2v1h-2zM8 1h2v1h-2zM7 2h2v1h-2zM6 3h2v1h-2zM5 4h2v1h-2zM3 5h5v1h-5zM4 6h2v1h-2zM3 7h2v1h-2zM2 8h2v1h-2zM0 9h3v1h-3z'/%3E%3C/svg%3E");
     --px-heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 6' shape-rendering='crispEdges'%3E%3Cpath d='M1 0h2v1h-2zM4 0h2v1h-2zM0 1h7v1h-7zM0 2h7v1h-7zM1 3h5v1h-5zM2 4h3v1h-3zM3 5h1v1h-1z'/%3E%3C/svg%3E");
     --px-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v1h-1zM3 1h1v1h-1zM2 2h3v1h-3zM0 3h7v1h-7zM2 4h3v1h-3zM3 5h1v1h-1zM3 6h1v1h-1z'/%3E%3C/svg%3E");
     --px-cloud: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E");
-    --px-coin: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath d='M2 0h4v1h-4zM1 1h6v1h-6zM0 2h8v4h-8zM1 6h6v1h-6zM2 7h4v1h-4z'/%3E%3C/svg%3E");
-    --px-mountain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' shape-rendering='crispEdges'%3E%3Cpath d='M0 10v-2h4v-2h4v-2h4v-2h4v2h4v-2h4v-2h4v2h4v2h4v2h4v2z'/%3E%3C/svg%3E");
+
+    /* ---- Lapisan latar halaman (tenang) ----
+       dots     : titik grid slate 2px tiap 64px, sangat samar
+       confetti : hanya 7 serpihan per kotak 480px, sengaja jarang */
+    --bg-dots: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Cpath fill='%23273F4F' fill-opacity='.09' d='M0 0h1v1h-1z'/%3E%3C/svg%3E");
+    --bg-confetti: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' fill-opacity='.45' d='M20 15h1v1h-1zM95 70h1v1h-1z'/%3E%3Cpath fill='%23273F4F' fill-opacity='.16' d='M60 100h1v1h-1zM100 20h1v1h-1zM35 60h1v1h-1z'/%3E%3Cpath fill='%23FE7743' fill-opacity='.4' d='M75 34h1v3h-1zM74 35h3v1h-3z'/%3E%3Cpath fill='%23273F4F' fill-opacity='.12' d='M15 94h1v3h-1zM14 95h3v1h-3z'/%3E%3C/svg%3E");
+
+    /* ---- Lapisan hero gelap ---- */
+    --hero-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60' shape-rendering='crispEdges'%3E%3Cpath fill='%23EFEEEA' fill-opacity='.6' d='M8 6h1v1h-1zM41 17h1v1h-1zM24 49h1v1h-1z'/%3E%3Cpath fill='%23EFEEEA' fill-opacity='.3' d='M33 8h1v1h-1zM52 40h1v1h-1z'/%3E%3Cpath fill='%23FE7743' fill-opacity='.7' d='M16 30h1v1h-1z'/%3E%3C/svg%3E");
+    --hero-bird: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23EFEEEA' fill-opacity='.75' d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E");
+    --hero-cloud-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath fill='%236389A1' fill-opacity='.35' d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E");
+    --hero-cloud-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23436B84' fill-opacity='.55' d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E");
+    --hero-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' fill-opacity='.45' d='M3 0h3v1h-3zM1 1h7v1h-7zM0 2h9v5h-9zM1 7h7v1h-7zM3 8h3v1h-3z'/%3E%3C/svg%3E");
+    --hero-crab: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M0 0h2v1h-2zM9 0h2v1h-2zM0 1h2v1h-2zM4 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM1 2h9v1h-9zM2 3h7v1h-7zM0 4h1v1h-1zM2 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1z'/%3E%3C/svg%3E");
+    /* Siluet bukit pixel berwarna cream: halaman "naik" ke dalam hero secara bergerigi */
+    --hero-skyline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 6' shape-rendering='crispEdges'%3E%3Cpath fill='%23EFEEEA' d='M0 5h24v1h-24zM2 4h5v1h-5zM12 4h4v1h-4zM19 4h3v1h-3zM3 3h3v1h-3zM13 3h2v1h-2zM4 2h1v1h-1z'/%3E%3C/svg%3E");
 }
+
+/* ===== SPRITES (digenerate dari pixel-art ASCII; palet Flame/Slate/Cream) ===== */
+:root {
+    --sp-knight: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 13' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M5 0h2v1h-2zM4 1h3v1h-3zM5 8h2v1h-2zM5 9h2v1h-2z'/%3E%3Cpath fill='%230A1218' d='M3 2h6v1h-6zM2 3h1v1h-1zM9 3h1v1h-1zM2 4h1v1h-1zM4 4h4v1h-4zM9 4h1v1h-1zM2 5h1v1h-1zM9 5h1v1h-1zM3 6h6v1h-6zM1 7h2v1h-2zM9 7h2v1h-2zM0 8h1v1h-1zM2 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM1 9h2v1h-2zM9 9h2v1h-2zM3 10h1v1h-1zM8 10h1v1h-1zM3 11h1v1h-1zM5 11h2v1h-2zM8 11h1v1h-1zM2 12h8v1h-8z'/%3E%3Cpath fill='%2394AEBF' d='M3 3h6v1h-6zM3 4h1v1h-1zM8 4h1v1h-1zM3 5h6v1h-6z'/%3E%3Cpath fill='%23436B84' d='M3 7h6v1h-6zM3 8h2v1h-2zM7 8h2v1h-2zM3 9h2v1h-2zM7 9h2v1h-2zM4 10h4v1h-4zM4 11h1v1h-1zM7 11h1v1h-1z'/%3E%3Cpath fill='%23EFEEEA' d='M1 8h1v1h-1zM10 8h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-chest: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 9' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M2 0h10v1h-10zM1 1h1v1h-1zM12 1h1v1h-1zM0 2h1v1h-1zM13 2h1v1h-1zM0 3h14v1h-14zM0 4h1v1h-1zM13 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM13 5h1v1h-1zM0 6h1v1h-1zM13 6h1v1h-1zM0 7h1v1h-1zM13 7h1v1h-1zM0 8h14v1h-14z'/%3E%3Cpath fill='%23BA4317' d='M2 1h1v1h-1zM11 1h1v1h-1zM1 2h1v1h-1zM12 2h1v1h-1z'/%3E%3Cpath fill='%23FE7743' d='M3 1h8v1h-8zM2 2h10v1h-10z'/%3E%3Cpath fill='%23273F4F' d='M1 4h1v1h-1zM12 4h1v1h-1zM1 5h1v1h-1zM12 5h1v1h-1zM1 6h1v1h-1zM12 6h1v1h-1zM1 7h12v1h-12z'/%3E%3Cpath fill='%23436B84' d='M2 4h4v1h-4zM8 4h4v1h-4zM2 5h4v1h-4zM8 5h4v1h-4zM2 6h10v1h-10z'/%3E%3Cpath fill='%23FFA277' d='M6 4h2v1h-2zM6 5h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-shield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 11' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M0 0h10v1h-10zM0 1h1v1h-1zM9 1h1v1h-1zM0 2h1v1h-1zM9 2h1v1h-1zM0 3h1v1h-1zM9 3h1v1h-1zM0 4h1v1h-1zM9 4h1v1h-1zM0 5h1v1h-1zM9 5h1v1h-1zM1 6h1v1h-1zM8 6h1v1h-1zM1 7h1v1h-1zM8 7h1v1h-1zM2 8h1v1h-1zM7 8h1v1h-1zM3 9h1v1h-1zM6 9h1v1h-1zM4 10h2v1h-2z'/%3E%3Cpath fill='%23436B84' d='M1 1h3v1h-3zM6 1h3v1h-3zM1 2h3v1h-3zM6 2h3v1h-3zM1 4h3v1h-3zM6 4h3v1h-3zM1 5h3v1h-3zM6 5h3v1h-3zM2 6h2v1h-2zM6 6h2v1h-2zM2 7h2v1h-2zM6 7h2v1h-2zM3 8h4v1h-4zM4 9h2v1h-2z'/%3E%3Cpath fill='%23FE7743' d='M4 1h2v1h-2zM4 2h2v1h-2zM1 3h8v1h-8zM4 4h2v1h-2zM4 5h2v1h-2zM4 6h2v1h-2zM4 7h2v1h-2z'/%3E%3C/svg%3E");
+    --sp-map: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 9' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M1 0h12v1h-12zM0 1h1v1h-1zM13 1h1v1h-1zM0 2h1v1h-1zM13 2h1v1h-1zM0 3h1v1h-1zM13 3h1v1h-1zM0 4h1v1h-1zM13 4h1v1h-1zM0 5h1v1h-1zM13 5h1v1h-1zM0 6h1v1h-1zM13 6h1v1h-1zM0 7h1v1h-1zM13 7h1v1h-1zM1 8h12v1h-12z'/%3E%3Cpath fill='%23EFEEEA' d='M1 1h12v1h-12zM1 2h8v1h-8zM10 2h1v1h-1zM12 2h1v1h-1zM1 3h9v1h-9zM11 3h2v1h-2zM1 4h8v1h-8zM10 4h1v1h-1zM12 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM7 5h1v1h-1zM10 5h3v1h-3zM1 6h1v1h-1zM4 6h1v1h-1zM7 6h6v1h-6zM1 7h12v1h-12z'/%3E%3Cpath fill='%23FE7743' d='M9 2h1v1h-1zM11 2h1v1h-1zM10 3h1v1h-1zM9 4h1v1h-1zM11 4h1v1h-1z'/%3E%3Cpath fill='%2394AEBF' d='M2 5h2v1h-2zM5 5h2v1h-2zM8 5h2v1h-2zM2 6h2v1h-2zM5 6h2v1h-2z'/%3E%3C/svg%3E");
+    --sp-helmet: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 11' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M3 0h4v1h-4zM2 1h6v1h-6z'/%3E%3Cpath fill='%230A1218' d='M2 2h6v1h-6zM1 3h1v1h-1zM8 3h1v1h-1zM0 4h1v1h-1zM9 4h1v1h-1zM0 5h1v1h-1zM9 5h1v1h-1zM0 6h1v1h-1zM2 6h2v1h-2zM6 6h2v1h-2zM9 6h1v1h-1zM0 7h1v1h-1zM2 7h2v1h-2zM6 7h2v1h-2zM9 7h1v1h-1zM0 8h1v1h-1zM4 8h2v1h-2zM9 8h1v1h-1zM1 9h1v1h-1zM4 9h2v1h-2zM8 9h1v1h-1zM2 10h6v1h-6z'/%3E%3Cpath fill='%2394AEBF' d='M2 3h6v1h-6zM1 4h2v1h-2zM4 4h5v1h-5zM1 5h8v1h-8zM1 6h1v1h-1zM4 6h2v1h-2zM8 6h1v1h-1zM1 7h1v1h-1zM4 7h2v1h-2zM8 7h1v1h-1zM1 8h3v1h-3zM6 8h3v1h-3zM2 9h2v1h-2zM6 9h2v1h-2z'/%3E%3Cpath fill='%23EFEEEA' d='M3 4h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-castle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 17' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M4 0h1v1h-1zM4 1h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM0 4h9v1h-9zM0 5h1v1h-1zM8 5h1v1h-1zM0 6h1v1h-1zM8 6h1v1h-1zM0 7h1v1h-1zM3 7h3v1h-3zM8 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM5 8h1v1h-1zM8 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM8 9h1v1h-1zM0 10h1v1h-1zM8 10h1v1h-1zM0 11h1v1h-1zM8 11h1v1h-1zM0 12h1v1h-1zM8 12h1v1h-1zM0 13h1v1h-1zM3 13h3v1h-3zM8 13h1v1h-1zM0 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM8 14h1v1h-1zM0 15h1v1h-1zM3 15h1v1h-1zM5 15h1v1h-1zM8 15h1v1h-1zM0 16h9v1h-9z'/%3E%3Cpath fill='%23FE7743' d='M5 0h3v1h-3zM5 1h2v1h-2zM4 8h1v1h-1zM4 9h1v1h-1z'/%3E%3Cpath fill='%23436B84' d='M1 5h7v1h-7zM1 6h7v1h-7zM1 7h2v1h-2zM6 7h2v1h-2zM1 8h2v1h-2zM6 8h2v1h-2zM1 9h2v1h-2zM6 9h2v1h-2zM1 10h7v1h-7zM1 11h7v1h-7zM1 12h7v1h-7zM1 13h2v1h-2zM6 13h2v1h-2zM1 14h2v1h-2zM6 14h2v1h-2zM1 15h2v1h-2zM6 15h2v1h-2z'/%3E%3Cpath fill='%23BA4317' d='M4 14h1v1h-1zM4 15h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-pine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 10' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M4 0h1v1h-1zM3 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM6 2h1v1h-1zM1 3h1v1h-1zM7 3h1v1h-1zM2 4h1v1h-1zM6 4h1v1h-1zM1 5h1v1h-1zM7 5h1v1h-1zM0 6h1v1h-1zM8 6h1v1h-1zM1 7h3v1h-3zM5 7h3v1h-3zM3 8h1v1h-1zM5 8h1v1h-1zM3 9h3v1h-3z'/%3E%3Cpath fill='%23436B84' d='M4 1h1v1h-1zM3 2h3v1h-3zM2 3h5v1h-5zM3 4h3v1h-3zM2 5h5v1h-5zM1 6h7v1h-7z'/%3E%3Cpath fill='%23BA4317' d='M4 7h1v1h-1zM4 8h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-campfire: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M5 0h1v1h-1zM4 1h3v1h-3zM3 2h2v1h-2zM6 2h2v1h-2zM3 3h1v1h-1zM7 3h1v1h-1zM2 4h2v1h-2zM7 4h2v1h-2z'/%3E%3Cpath fill='%23FFA277' d='M5 2h1v1h-1zM4 3h3v1h-3zM4 4h3v1h-3z'/%3E%3Cpath fill='%230A1218' d='M1 5h9v1h-9zM0 6h1v1h-1zM5 6h1v1h-1zM10 6h1v1h-1zM1 7h9v1h-9z'/%3E%3Cpath fill='%23BA4317' d='M1 6h4v1h-4zM6 6h4v1h-4z'/%3E%3C/svg%3E");
+    --sp-ruby: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 5' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M1 0h5v1h-5zM0 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM5 2h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM3 4h1v1h-1z'/%3E%3Cpath fill='%23FFA277' d='M1 1h2v1h-2z'/%3E%3Cpath fill='%23FE7743' d='M3 1h3v1h-3zM2 2h3v1h-3z'/%3E%3Cpath fill='%23BA4317' d='M3 3h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-gem: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 5' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M1 0h5v1h-5zM0 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM5 2h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM3 4h1v1h-1z'/%3E%3Cpath fill='%23EFEEEA' d='M1 1h2v1h-2z'/%3E%3Cpath fill='%2394AEBF' d='M3 1h3v1h-3zM2 2h3v1h-3zM3 3h1v1h-1z'/%3E%3C/svg%3E");
+    --sp-coin: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' shape-rendering='crispEdges'%3E%3Cpath fill='%230A1218' d='M1 0h4v1h-4zM0 1h1v1h-1zM5 1h1v1h-1zM0 2h1v1h-1zM5 2h1v1h-1zM0 3h1v1h-1zM5 3h1v1h-1zM0 4h1v1h-1zM5 4h1v1h-1zM1 5h4v1h-4z'/%3E%3Cpath fill='%23FFA277' d='M1 1h4v1h-4zM1 2h1v1h-1zM4 2h1v1h-1zM1 3h1v1h-1zM4 3h1v1h-1zM1 4h4v1h-4z'/%3E%3Cpath fill='%23FE7743' d='M2 2h1v1h-1zM2 3h1v1h-1z'/%3E%3Cpath fill='%23BA4317' d='M3 2h1v1h-1zM3 3h1v1h-1z'/%3E%3C/svg%3E");
+    --mk-zig: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M7 0h2v1h-2zM5 1h6v1h-6zM3 2h10v1h-10zM0 3h16v1h-16z'/%3E%3C/svg%3E");
+    --mk-ramp-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M12 0h4v1h-4zM8 1h8v1h-8zM4 2h12v1h-12zM0 3h16v1h-16z'/%3E%3C/svg%3E");
+    --mk-ramp-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M0 0h4v1h-4zM0 1h8v1h-8zM0 2h12v1h-12zM0 3h16v1h-16z'/%3E%3C/svg%3E");
+    --mk-mountain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M8 1h3v1h-3zM6 2h7v1h-7zM4 3h11v1h-11zM27 3h3v1h-3zM2 4h15v1h-15zM25 4h7v1h-7zM0 5h19v1h-19zM23 5h11v1h-11zM0 6h36v1h-36zM38 6h2v1h-2zM0 7h40v1h-40z'/%3E%3C/svg%3E");
+    --sp-ground: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23C9D5DC' d='M8 1h3v1h-3zM6 2h7v1h-7zM4 3h11v1h-11zM27 3h3v1h-3zM2 4h15v1h-15zM25 4h7v1h-7zM0 5h19v1h-19zM23 5h11v1h-11zM0 6h36v1h-36zM38 6h2v1h-2zM0 7h40v1H0z'/%3E%3C/svg%3E");
+    --sp-loot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 12' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M15 1h4v1h-4zM14 2h6v1h-6zM38 2h2v1h-2zM38 3h2v1h-2zM35 4h8v1h-8zM38 5h2v1h-2zM59 5h1v1h-1zM61 5h1v1h-1zM38 6h2v1h-2zM60 6h1v1h-1zM38 7h2v1h-2zM59 7h1v1h-1zM61 7h1v1h-1zM5 8h3v1h-3zM28 8h1v1h-1zM38 8h2v1h-2zM82 8h1v1h-1zM91 8h3v1h-3zM4 9h3v1h-3zM28 9h1v1h-1zM82 9h1v1h-1zM90 9h3v1h-3z'/%3E%3Cpath fill='%230A1218' d='M34 1h10v1h-10zM34 2h1v1h-1zM43 2h1v1h-1zM14 3h6v1h-6zM34 3h1v1h-1zM43 3h1v1h-1zM51 3h12v1h-12zM13 4h1v1h-1zM20 4h1v1h-1zM34 4h1v1h-1zM43 4h1v1h-1zM50 4h1v1h-1zM63 4h1v1h-1zM12 5h1v1h-1zM21 5h1v1h-1zM34 5h1v1h-1zM43 5h1v1h-1zM50 5h1v1h-1zM63 5h1v1h-1zM12 6h1v1h-1zM21 6h1v1h-1zM27 6h4v1h-4zM34 6h1v1h-1zM43 6h1v1h-1zM50 6h1v1h-1zM63 6h1v1h-1zM81 6h4v1h-4zM3 7h5v1h-5zM12 7h1v1h-1zM14 7h2v1h-2zM18 7h2v1h-2zM21 7h1v1h-1zM26 7h1v1h-1zM31 7h1v1h-1zM35 7h1v1h-1zM42 7h1v1h-1zM50 7h1v1h-1zM63 7h1v1h-1zM69 7h5v1h-5zM80 7h1v1h-1zM85 7h1v1h-1zM89 7h5v1h-5zM2 8h1v1h-1zM8 8h1v1h-1zM12 8h1v1h-1zM14 8h2v1h-2zM18 8h2v1h-2zM21 8h1v1h-1zM26 8h1v1h-1zM31 8h1v1h-1zM35 8h1v1h-1zM42 8h1v1h-1zM50 8h1v1h-1zM63 8h1v1h-1zM68 8h1v1h-1zM74 8h1v1h-1zM80 8h1v1h-1zM85 8h1v1h-1zM88 8h1v1h-1zM94 8h1v1h-1zM3 9h1v1h-1zM7 9h1v1h-1zM12 9h1v1h-1zM16 9h2v1h-2zM21 9h1v1h-1zM26 9h1v1h-1zM31 9h1v1h-1zM36 9h1v1h-1zM41 9h1v1h-1zM50 9h1v1h-1zM63 9h1v1h-1zM69 9h1v1h-1zM73 9h1v1h-1zM80 9h1v1h-1zM85 9h1v1h-1zM89 9h1v1h-1zM93 9h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM13 10h1v1h-1zM16 10h2v1h-2zM20 10h1v1h-1zM26 10h1v1h-1zM31 10h1v1h-1zM37 10h1v1h-1zM40 10h1v1h-1zM50 10h1v1h-1zM63 10h1v1h-1zM70 10h1v1h-1zM72 10h1v1h-1zM80 10h1v1h-1zM85 10h1v1h-1zM90 10h1v1h-1zM92 10h1v1h-1zM5 11h1v1h-1zM14 11h6v1h-6zM27 11h4v1h-4zM38 11h2v1h-2zM51 11h12v1h-12zM71 11h1v1h-1zM81 11h4v1h-4zM91 11h1v1h-1z'/%3E%3Cpath fill='%23436B84' d='M35 2h3v1h-3zM40 2h3v1h-3zM35 3h3v1h-3zM40 3h3v1h-3zM35 5h3v1h-3zM40 5h3v1h-3zM35 6h3v1h-3zM40 6h3v1h-3zM36 7h2v1h-2zM40 7h2v1h-2zM36 8h2v1h-2zM40 8h2v1h-2zM37 9h4v1h-4zM38 10h2v1h-2z'/%3E%3Cpath fill='%2394AEBF' d='M14 4h6v1h-6zM13 5h2v1h-2zM16 5h5v1h-5zM13 6h8v1h-8zM13 7h1v1h-1zM16 7h2v1h-2zM20 7h1v1h-1zM13 8h1v1h-1zM16 8h2v1h-2zM20 8h1v1h-1zM52 8h2v1h-2zM55 8h2v1h-2zM58 8h2v1h-2zM71 8h3v1h-3zM13 9h3v1h-3zM18 9h3v1h-3zM52 9h2v1h-2zM55 9h2v1h-2zM70 9h3v1h-3zM14 10h2v1h-2zM18 10h2v1h-2zM71 10h1v1h-1z'/%3E%3Cpath fill='%23EFEEEA' d='M51 4h12v1h-12zM15 5h1v1h-1zM51 5h8v1h-8zM60 5h1v1h-1zM62 5h1v1h-1zM51 6h9v1h-9zM61 6h2v1h-2zM51 7h8v1h-8zM60 7h1v1h-1zM62 7h1v1h-1zM51 8h1v1h-1zM54 8h1v1h-1zM57 8h1v1h-1zM60 8h3v1h-3zM69 8h2v1h-2zM51 9h1v1h-1zM54 9h1v1h-1zM57 9h6v1h-6zM51 10h12v1h-12z'/%3E%3Cpath fill='%23FFA277' d='M27 7h4v1h-4zM81 7h4v1h-4zM3 8h2v1h-2zM27 8h1v1h-1zM30 8h1v1h-1zM81 8h1v1h-1zM84 8h1v1h-1zM89 8h2v1h-2zM27 9h1v1h-1zM30 9h1v1h-1zM81 9h1v1h-1zM84 9h1v1h-1zM27 10h4v1h-4zM81 10h4v1h-4z'/%3E%3Cpath fill='%23BA4317' d='M29 8h1v1h-1zM83 8h1v1h-1zM29 9h1v1h-1zM83 9h1v1h-1zM5 10h1v1h-1zM91 10h1v1h-1z'/%3E%3C/svg%3E");
+}
+
+/* Pakai: <span class="px-sprite px-knight h-16"></span> (tinggi diatur dengan utilitas Tailwind) */
+.px-sprite {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2.5rem;
+    background: var(--sprite) center / contain no-repeat;
+    image-rendering: pixelated;
+}
+.px-knight { --sprite: var(--sp-knight); aspect-ratio: 12 / 13; }
+.px-chest { --sprite: var(--sp-chest); aspect-ratio: 14 / 9; }
+.px-shield { --sprite: var(--sp-shield); aspect-ratio: 10 / 11; }
+.px-map { --sprite: var(--sp-map); aspect-ratio: 14 / 9; }
+.px-helmet { --sprite: var(--sp-helmet); aspect-ratio: 10 / 11; }
+.px-castle { --sprite: var(--sp-castle); aspect-ratio: 9 / 17; }
+.px-pine { --sprite: var(--sp-pine); aspect-ratio: 9 / 10; }
+.px-campfire { --sprite: var(--sp-campfire); aspect-ratio: 11 / 8; }
+.px-ruby { --sprite: var(--sp-ruby); aspect-ratio: 7 / 5; }
+.px-gem { --sprite: var(--sp-gem); aspect-ratio: 7 / 5; }
+.px-coin { --sprite: var(--sp-coin); aspect-ratio: 6 / 6; }
+
+/* Adegan petualangan: kastil, hutan pinus, ksatria chibi, api unggun, peti harta. Taruh di atas footer. */
+.px-scene {
+    --u: 4px;
+    height: calc(17 * var(--u) + 16px);
+    background-color: var(--color-primary-900);
+    background-image:
+        var(--sp-castle),
+        var(--sp-pine),
+        var(--sp-pine),
+        var(--sp-knight),
+        var(--sp-campfire),
+        var(--sp-chest),
+        var(--sp-pine),
+        repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, transparent 8px 16px),
+        linear-gradient(var(--color-primary-700), var(--color-primary-700));
+    background-size:
+        calc(9 * var(--u)) calc(17 * var(--u)),
+        calc(9 * var(--u)) calc(10 * var(--u)),
+        calc(9 * var(--u)) calc(10 * var(--u)),
+        calc(12 * var(--u)) calc(13 * var(--u)),
+        calc(11 * var(--u)) calc(8 * var(--u)),
+        calc(14 * var(--u)) calc(9 * var(--u)),
+        calc(9 * var(--u)) calc(10 * var(--u)),
+        100% 2px,
+        100% 8px;
+    background-position:
+        left 4% bottom 8px,
+        left 16% bottom 8px,
+        left 21% bottom 8px,
+        left 42% bottom 8px,
+        left 52% bottom 8px,
+        left 73% bottom 8px,
+        left 90% bottom 8px,
+        left 0 bottom 8px,
+        left 0 bottom 0;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+@media (max-width: 640px) { .px-scene { --u: 3px; } }
+
+/* Hero beranda: diorama peta pixel, memakai sprite yang sama dengan footer. */
+.landing-adventure-frame {
+    position: relative;
+    padding: 8px;
+    border: 2px solid var(--color-primary-300);
+    border-radius: 5px;
+    background: var(--color-primary-700);
+    box-shadow: 8px 10px 0 rgba(10, 18, 24, 0.24);
+}
+
+.landing-adventure-scene {
+    position: relative;
+    height: 27rem;
+    overflow: hidden;
+    border: 2px solid var(--color-primary-950);
+    border-radius: 2px;
+    background-color: var(--color-primary-100);
+    background-image:
+        linear-gradient(rgba(39, 63, 79, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(39, 63, 79, 0.055) 1px, transparent 1px);
+    background-size: 36px 36px;
+    image-rendering: pixelated;
+}
+
+.landing-adventure-label {
+    position: absolute;
+    z-index: 8;
+    top: 1.25rem;
+    left: 1.25rem;
+    padding: 0.55rem 0.8rem;
+    border: 2px solid var(--color-primary-950);
+    background: var(--color-accent-500);
+    box-shadow: 3px 4px 0 var(--color-primary-950);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.landing-adventure-sun {
+    position: absolute;
+    top: 14%;
+    right: 13%;
+    width: 64px;
+    height: 64px;
+    background: var(--color-accent-300);
+    clip-path: polygon(25% 0, 75% 0, 75% 13%, 88% 13%, 88% 25%, 100% 25%, 100% 75%, 88% 75%, 88% 88%, 75% 88%, 75% 100%, 25% 100%, 25% 88%, 13% 88%, 13% 75%, 0 75%, 0 25%, 13% 25%, 13% 13%, 25% 13%);
+}
+
+.landing-adventure-cloud {
+    position: absolute;
+    width: 110px;
+    height: 34px;
+    background: var(--hero-cloud-a) center / contain no-repeat;
+    opacity: 0.65;
+}
+
+.landing-adventure-cloud--one { top: 27%; left: 15%; }
+.landing-adventure-cloud--two { top: 37%; right: 5%; width: 82px; opacity: 0.45; }
+
+.landing-adventure-hill {
+    position: absolute;
+    right: -2%;
+    bottom: 25%;
+    left: -2%;
+    height: 42%;
+    clip-path: polygon(0 55%, 11% 55%, 11% 42%, 19% 42%, 19% 30%, 32% 30%, 32% 43%, 41% 43%, 41% 59%, 55% 59%, 55% 45%, 65% 45%, 65% 25%, 77% 25%, 77% 38%, 89% 38%, 89% 52%, 100% 52%, 100% 100%, 0 100%);
+}
+
+.landing-adventure-hill--back { background: var(--color-primary-200); }
+.landing-adventure-hill--front {
+    bottom: 14%;
+    height: 35%;
+    background: var(--color-primary-400);
+    clip-path: polygon(0 45%, 14% 45%, 14% 58%, 29% 58%, 29% 38%, 45% 38%, 45% 52%, 57% 52%, 57% 32%, 72% 32%, 72% 47%, 87% 47%, 87% 36%, 100% 36%, 100% 100%, 0 100%);
+}
+
+.landing-adventure-route {
+    position: absolute;
+    z-index: 3;
+    right: 26%;
+    bottom: 24%;
+    width: 40%;
+    height: 23%;
+    border-right: 4px dashed var(--color-cream-100);
+    border-bottom: 4px dashed var(--color-cream-100);
+    opacity: 0.85;
+}
+
+.landing-adventure-scene .px-sprite { position: absolute; z-index: 5; }
+.landing-adventure-castle { right: 13%; bottom: 28%; height: 11.5rem; }
+.landing-adventure-pine { height: 4.5rem; }
+.landing-adventure-pine--one { left: 14%; bottom: 27%; }
+.landing-adventure-pine--two { left: 25%; bottom: 26%; height: 3.5rem; }
+.landing-adventure-knight { left: 43%; bottom: 29%; height: 7rem; }
+.landing-adventure-chest { right: 12%; bottom: 28%; height: 3.8rem; }
+.landing-adventure-map { left: 30%; top: 25%; height: 3.1rem; transform: rotate(-8deg); }
+
+.landing-adventure-ground {
+    position: absolute;
+    z-index: 6;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 15%;
+    border-top: 5px solid var(--color-primary-950);
+    background: var(--color-primary-700);
+    background-image: repeating-linear-gradient(90deg, var(--color-accent-500) 0 9px, transparent 9px 26px);
+    background-size: 100% 3px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+.landing-adventure-proof {
+    position: absolute;
+    z-index: 9;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem;
+    border: 2px solid var(--color-primary-700);
+    border-radius: 3px;
+    background: var(--color-cream-50);
+    box-shadow: 4px 5px 0 var(--color-primary-950);
+}
+
+.landing-adventure-proof-icon {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: none;
+    place-items: center;
+    border: 1px solid var(--color-primary-300);
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+}
+
+.landing-adventure-edge {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 16px;
+    background: var(--color-bg);
+    -webkit-mask: var(--mk-ramp-r) left bottom / 64px 16px repeat-x;
+    mask: var(--mk-ramp-r) left bottom / 64px 16px repeat-x;
+    image-rendering: pixelated;
+}
+
+@media (max-width: 640px) {
+    .landing-adventure-scene { height: 22rem; }
+    .landing-adventure-castle { bottom: 34%; height: 8.5rem; }
+    .landing-adventure-knight { bottom: 34%; height: 5.5rem; }
+    .landing-adventure-pine { height: 3.25rem; }
+    .landing-adventure-pine--two { height: 2.75rem; }
+    .landing-adventure-chest { bottom: 34%; height: 3rem; }
+    .landing-adventure-map { height: 2.3rem; }
+    .landing-adventure-proof { right: 1rem; bottom: 1rem; left: 1rem; }
+    .landing-adventure-proof span.text-xs { font-size: 0.68rem; }
+}
+
 
 @theme {
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
@@ -33,9 +313,9 @@
     --font-pixel: 'Press Start 2P', 'Pixelify Sans', monospace;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-    --color-ink: #000000;
+    --color-ink: #17242C;
 
-    /* Primary: Slate #273F4F */
+    /* Primary: Slate */
     --color-primary-50: #F1F5F8;
     --color-primary-100: #DFE8EE;
     --color-primary-200: #BFD0DB;
@@ -51,7 +331,7 @@
     --color-primary-dark: #1D303D;
     --color-interactive: #345569;
 
-    /* Alias lama: bg-indigo-* tetap jalan (kini slate) */
+    /* Alias lama: bg-indigo-* tetap jalan, kini berwarna slate */
     --color-indigo-50: #F1F5F8;
     --color-indigo-100: #DFE8EE;
     --color-indigo-200: #BFD0DB;
@@ -63,7 +343,7 @@
     --color-indigo-800: #1D303D;
     --color-indigo-900: #142029;
 
-    /* Accent: Flame #FE7743 */
+    /* Accent: Flame orange */
     --color-accent-50: #FFF3ED;
     --color-accent-100: #FFE3D5;
     --color-accent-200: #FFC6AA;
@@ -75,24 +355,28 @@
     --color-accent: #FE7743;
     --color-accent-bright: #FE8D5C;
 
-    /* Cream #EFEEEA */
-    --color-cream-50: #FBFAF7;
-    --color-cream-100: #EFEEEA;
-    --color-cream-200: #E4E2DB;
-    --color-cream-300: #D3D0C6;
+    /* Cream */
+    --color-cream-50: #FFFEFB;
+    --color-cream-100: #FAF8F3;
+    --color-cream-200: #F2EFE7;
+    --color-cream-300: #E5E1D6;
 
-    --color-surface: #FBFAF7;
-    --color-surface-soft: #E8E6E0;
-    --color-surface-muted: #DAD7CD;
-    --color-bg: #EFEEEA;
+    /* Surface */
+    --color-surface: #FFFFFD;
+    --color-surface-soft: #FCFAF6;
+    --color-surface-muted: #F3F0E8;
+    --color-bg: #FAF8F3;
 
-    --color-border: #CFCCC0;
-    --color-border-strong: #A9A598;
+    /* Border */
+    --color-border: #E6E2D8;
+    --color-border-strong: #C2BEB2;
 
+    /* Text */
     --color-text-primary: #273F4F;
     --color-text-secondary: #46606F;
     --color-text-muted: #667B87;
 
+    /* Semantic */
     --color-success: #2F8F55;
     --color-success-soft: #DDF1E4;
     --color-warning: #A86400;
@@ -102,57 +386,89 @@
     --color-info: #2B76B0;
     --color-info-soft: #DDEBF6;
 
-    --shadow-xs: 0 1px 0 rgba(0, 0, 0, 0.15);
-    --shadow-sm: 0 4px 0 rgba(0, 0, 0, 0.12);
-    --shadow-md: 0 8px 0 rgba(0, 0, 0, 0.14);
-    --shadow-lg: 0 12px 0 rgba(0, 0, 0, 0.16);
+    --shadow-xs: 0 1px 2px rgba(20, 32, 41, 0.08);
+    --shadow-sm: 2px 3px 0 rgba(39, 63, 79, 0.13);
+    --shadow-md: 4px 6px 0 rgba(39, 63, 79, 0.14);
+    --shadow-lg: 7px 9px 0 rgba(20, 32, 41, 0.16);
 
-    --radius-sm: 0px;
-    --radius-md: 0px;
-    --radius-lg: 0px;
-    --radius-xl: 0px;
-    --radius-2xl: 0px;
-
-    --animate-bob: bob 2.4s steps(4, end) infinite;
-    --animate-blink: blink 1.6s steps(2, end) infinite;
-    --animate-scuttle: scuttle 14s steps(28, end) infinite alternate;
-    --animate-fly: fly 40s linear infinite;
-
-    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
-    @keyframes scuttle { from { background-position-x: 6%; } to { background-position-x: 94%; } }
-    @keyframes fly { from { transform: translateX(-12vw); } to { transform: translateX(112vw); } }
+    /* Sudut sengaja kecil: bingkai kartu bergerigi dibuat lewat box-shadow, bukan radius. */
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 4px;
+    --radius-xl: 4px;
+    --radius-2xl: 4px;
 }
 
 /* ==========================================================================
    BASE
    ========================================================================== */
 @layer base {
-    html { @apply scroll-smooth; }
+    html {
+        @apply scroll-smooth;
+    }
 
     body {
         @apply overflow-x-hidden font-sans text-text-primary antialiased;
+        /* Krem rata + confetti jarang + titik grid samar. Tanpa gradient. */
         background-color: var(--color-bg);
-        background-image: conic-gradient(rgba(39, 63, 79, 0.05) 25%, transparent 0 50%, rgba(39, 63, 79, 0.05) 0 75%, transparent 0);
-        background-size: 24px 24px;
+        background-image: var(--bg-confetti), var(--bg-dots);
+        background-size: 480px 480px, 64px 64px;
+        background-position: 0 0, 0 0;
+        background-repeat: repeat, repeat;
     }
 
-    h1, h2, h3, h4 { @apply font-display font-bold tracking-tight text-ink; }
-    code, kbd, samp { @apply font-mono; }
+    h1, h2, h3, h4 {
+        @apply font-sans font-bold tracking-tight text-ink;
+    }
 
-    ::selection { background: var(--color-accent-500); color: #000; }
+    code, kbd, samp {
+        @apply font-mono;
+    }
 
-    button, a, input, select, textarea { @apply focus-visible:outline-none; }
+    ::selection {
+        background: var(--color-accent-500);
+        color: #000;
+    }
+
+    button, a, input, select, textarea {
+        @apply focus-visible:outline-none;
+    }
 
     :focus-visible {
-        outline: 4px solid var(--color-accent-500);
+        outline: 3px solid var(--color-accent-500);
         outline-offset: 3px;
     }
 
-    /* scrollbar kotak */
-    ::-webkit-scrollbar { width: 14px; height: 14px; }
-    ::-webkit-scrollbar-track { background: var(--color-cream-200); border-left: 3px solid #000; }
-    ::-webkit-scrollbar-thumb { background: var(--color-accent-500); border: 3px solid #000; }
+    /* Scrollbar pixel: jempol slate berbingkai, menyala flame saat disentuh. */
+    ::-webkit-scrollbar {
+        width: 14px;
+        height: 14px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--color-cream-200);
+        border-left: 2px solid var(--color-primary-700);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--color-primary-600);
+        border: 2px solid var(--color-primary-950);
+        box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.22), inset -2px -2px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-accent-500);
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: var(--color-cream-200);
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+        html {
+            scrollbar-color: var(--color-primary-600) var(--color-cream-200);
+        }
+    }
 }
 
 /* ==========================================================================
@@ -160,8 +476,9 @@
    ========================================================================== */
 @layer components {
 
-    /* ---------- ORNAMEN SPRITE ----------
-       <span class="px-icon px-crab text-accent-500 text-2xl"></span> */
+    /* ---------- ORNAMEN SPRITE SATU WARNA ----------
+       Pakai: <span class="px-icon px-crab text-accent-500"></span>
+       Ukuran mengikuti font-size induk (atur dengan text-2xl, dst). */
     .px-icon {
         display: inline-block;
         height: 1em;
@@ -178,310 +495,674 @@
     .px-heart { --icon: var(--px-heart); width: 1.17em; }
     .px-star { --icon: var(--px-star); width: 1em; }
     .px-cloud { --icon: var(--px-cloud); width: 3.5em; }
-    .px-coin { --icon: var(--px-coin); width: 1em; }
 
-    .px-bob { animation: var(--animate-bob); }
-    .px-blink { animation: var(--animate-blink); }
-
-    /* rantai pixel */
+    /* Garis pemisah pendek: jejak kotak flame & slate seperti koin di jalur level. */
     .px-divider {
-        height: 8px;
+        height: 6px;
         background:
-            repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, transparent 8px 32px) 16px 0 / auto 8px repeat-x,
-            repeating-linear-gradient(90deg, #000 0 16px, transparent 16px 32px) 0 0 / auto 8px repeat-x;
+            repeating-linear-gradient(
+                90deg,
+                var(--color-accent-500) 0 6px,
+                transparent 6px 12px,
+                var(--color-primary-700) 12px 18px,
+                transparent 18px 30px
+            ) 0 0 / auto 6px repeat-x;
     }
 
-    /* baris hati (nyawa/rating): <span class="px-hearts"><i class="px-icon px-heart"></i>...</span> */
-    .px-hearts { @apply inline-flex items-center gap-1 text-lg text-accent-500; }
-    .px-hearts .off { @apply text-cream-300; }
+    /* Adegan pembatas yang jarang; tidak mengulang deret ikon yang sama. */
+    .px-divider-loot {
+        position: relative;
+        height: 72px;
+        background-color: var(--color-primary-900);
+        background-image:
+            var(--sp-castle), var(--sp-pine), var(--sp-knight), var(--sp-campfire), var(--sp-chest);
+        background-size: 30px 58px, 27px 30px, 36px 39px, 35px 25px, 42px 27px;
+        background-position: left 7% bottom 4px, left 29% bottom 24px, left 49% bottom 7px, left 76% bottom 18px, left 91% bottom 4px;
+        background-repeat: no-repeat;
+        image-rendering: pixelated;
+    }
 
-    /* ---------- BUTTON (3D arcade) ---------- */
+    .px-divider-loot::before {
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        left: 0;
+        height: 24px;
+        background: var(--color-primary-900);
+        content: '';
+        -webkit-mask: var(--mk-mountain) left bottom / 160px 24px repeat-x;
+        mask: var(--mk-mountain) left bottom / 160px 24px repeat-x;
+    }
+
+    /* ---------- LATAR UTILITAS ---------- */
+    .px-grid {
+        background-image: var(--bg-dots);
+        background-size: 64px 64px;
+    }
+
+    .px-confetti {
+        background-image: var(--bg-confetti);
+        background-size: 480px 480px;
+    }
+
+    /* ---------- SECTION BERWARNA + TEPI ZIGZAG ----------
+       Beri tiap section kelas warna (.px-section-*) dan salah satu kelas tepi:
+         .px-zig          piramida pixel (gerigi ke atas)
+         .px-zig-left     tangga naik ke kiri
+         .px-zig-right    tangga naik ke kanan
+         .px-zig-mountain barisan gunung
+       Atau bungkus semua section dengan .px-zig-auto: ganjil = kiri, genap = kanan.
+       Catatan: jangan pasang overflow-hidden pada section yang memakai tepi ini. */
+    .px-section-paper,
+    .px-section-white,
+    .px-section-slate,
+    .px-section-flame {
+        position: relative;
+    }
+
+    .px-section-paper {
+        background-color: var(--color-surface-soft);
+        --zig-color: var(--color-surface-soft);
+    }
+
+    .px-section-white {
+        background-color: var(--color-surface);
+        --zig-color: var(--color-surface);
+    }
+
+    .px-section-slate {
+        background-color: var(--color-primary-800);
+        color: var(--color-cream-100);
+        --zig-color: var(--color-primary-800);
+    }
+
+    .px-section-flame {
+        background-color: var(--color-accent-500);
+        color: var(--color-ink);
+        --zig-color: var(--color-accent-500);
+    }
+
+    .px-section-slate :is(h1, h2, h3, h4) {
+        color: var(--color-cream-100);
+    }
+
+    :is(.px-zig, .px-zig-left, .px-zig-right, .px-zig-mountain) {
+        position: relative;
+        --zh: 16px;
+        --mw: 64px;
+    }
+
+    .px-zig { --m: var(--mk-zig); }
+    .px-zig-left { --m: var(--mk-ramp-l); }
+    .px-zig-right { --m: var(--mk-ramp-r); }
+    .px-zig-mountain { --m: var(--mk-mountain); --zh: 32px; --mw: 160px; }
+
+    :is(.px-zig, .px-zig-left, .px-zig-right, .px-zig-mountain)::before,
+    .px-zig-auto > :is(.px-section-paper, .px-section-slate, .px-section-flame):not(:first-child)::before {
+        content: '';
+        pointer-events: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(var(--zh, 16px) * -1 + 1px);
+        height: var(--zh, 16px);
+        background-color: var(--zig-color, var(--color-primary-800));
+        -webkit-mask: var(--m, var(--mk-zig)) left bottom / var(--mw, 64px) var(--zh, 16px) repeat-x;
+        mask: var(--m, var(--mk-zig)) left bottom / var(--mw, 64px) var(--zh, 16px) repeat-x;
+        image-rendering: pixelated;
+    }
+
+    .px-zig-auto > :nth-child(odd) { --m: var(--mk-ramp-l); }
+    .px-zig-auto > :nth-child(even) { --m: var(--mk-ramp-r); }
+
+    .landing-section-scene {
+        --m: var(--mk-mountain);
+        --mw: 160px;
+        --zh: 24px;
+    }
+
+    .landing-section-scene::after {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 52px;
+        pointer-events: none;
+        content: '';
+        background-image: var(--sp-map), var(--sp-pine), var(--sp-knight), var(--sp-chest), var(--sp-ground);
+        background-size: 38px 25px, 28px 31px, 31px 34px, 35px 23px, 160px 16px;
+        background-position: left 8% bottom 14px, left 31% bottom 5px, left 65% bottom 18px, left 90% bottom 8px, left bottom;
+        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x;
+        image-rendering: pixelated;
+    }
+
+    .landing-section-scene.px-zig-right::after {
+        background-image: var(--sp-pine), var(--sp-campfire), var(--sp-map), var(--sp-helmet), var(--sp-ground);
+        background-size: 27px 30px, 38px 28px, 40px 26px, 29px 32px, 160px 16px;
+        background-position: left 12% bottom 16px, left 44% bottom 5px, left 72% bottom 12px, left 94% bottom 20px, left bottom;
+    }
+
+    @media (max-width: 640px) {
+        .landing-section-scene::after,
+        .landing-section-scene.px-zig-right::after {
+            background-image: var(--sp-pine), var(--sp-chest), var(--sp-ground);
+            background-size: 24px 27px, 32px 21px, 160px 16px;
+            background-position: left 14% bottom 9px, left 84% bottom 15px, left bottom;
+            background-repeat: no-repeat, no-repeat, repeat-x;
+        }
+
+        .px-divider-loot {
+            background-image: var(--sp-castle), var(--sp-knight), var(--sp-chest);
+            background-size: 25px 48px, 31px 34px, 35px 23px;
+            background-position: left 10% bottom 4px, left 53% bottom 15px, left 88% bottom 4px;
+        }
+    }
+
+    /* ---------- FOOTER PETUALANGAN ----------
+       <footer class="px-footer px-zig-mountain">
+         <div class="px-scene" aria-hidden="true"></div>
+         <div class="px-footer-body"> ...isi footer... </div>
+       </footer> */
+    .px-footer {
+        --zig-color: var(--color-primary-900);
+        background-color: var(--color-primary-900);
+        color: var(--color-cream-200);
+    }
+
+    .px-footer-body {
+        background-color: var(--color-primary-800);
+        color: var(--color-cream-200);
+    }
+
+    .landing-dark-panel :is(h1, h2, h3, h4),
+    .community-detail-hero :is(h1, h2, h3, h4) {
+        color: var(--color-cream-100);
+    }
+
+    .community-card-banner {
+        background-color: var(--color-primary-800);
+    }
+
+    .community-card-banner::before,
+    .community-card-banner::after {
+        position: absolute;
+        content: '';
+        border: 3px solid var(--color-accent-400);
+        opacity: .6;
+        transform: rotate(45deg);
+    }
+
+    .community-card-banner::before { left: 34px; top: 28px; width: 30px; height: 30px; }
+    .community-card-banner::after { left: 55px; top: 42px; width: 12px; height: 12px; opacity: .4; }
+
+    .px-footer :is(h1, h2, h3, h4),
+    .px-footer-body :is(h1, h2, h3, h4) {
+        color: var(--color-cream-100);
+    }
+
+    /* ---------- BUTTON ----------
+       Blok 3D bergerigi: hover naik, klik "tertekan" seperti tombol arcade. */
     :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
-        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
         .btn-outline-neutral, .btn-outline-light, .landing-btn-primary, .landing-btn-secondary) {
-        --bc: #000;
-        --drop: 6px;
-        --bevel: inset 0 -4px 0 0 rgba(0, 0, 0, 0.22), inset 0 3px 0 0 rgba(255, 255, 255, 0.3);
-        @apply relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center gap-2 px-5 py-2.5 font-display text-base font-bold leading-none whitespace-nowrap;
-        margin-bottom: 6px;
+        --bc: var(--color-primary-950);
+        --drop: 4px;
+        --bevel: inset 0 -2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+        @apply relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center gap-2 rounded-sm border-2 px-5 py-2.5 font-sans text-sm font-extrabold leading-none whitespace-nowrap;
+        border-color: var(--bc);
+        margin-bottom: 4px;
         box-shadow:
-            0 -3px 0 0 var(--bc),
-            3px 0 0 0 var(--bc),
-            -3px 0 0 0 var(--bc),
             0 var(--drop) 0 0 var(--bc),
             var(--bevel);
-        transition: transform 90ms steps(2, end), box-shadow 90ms steps(2, end), background-color 120ms, color 120ms;
+        transition: transform 110ms ease, box-shadow 110ms ease, background-color 150ms, color 150ms;
     }
 
     :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
-        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
         .btn-outline-neutral, .btn-outline-light, .landing-btn-primary, .landing-btn-secondary):hover {
-        transform: translateY(-2px);
+        transform: translateY(-1px);
     }
 
     :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
-        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
         .btn-outline-neutral, .btn-outline-light, .landing-btn-primary, .landing-btn-secondary):active {
-        --drop: 3px;
-        transform: translateY(3px);
+        --drop: 2px;
+        transform: translateY(2px);
     }
 
     :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
-        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
-        .btn-outline-neutral, .btn-ghost):disabled,
-    :is(.btn, .btn-primary, .btn-accent, .btn-secondary, .btn-danger,
-        .btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
-        .btn-outline-neutral)[aria-disabled='true'] {
+        .btn-outline, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral, .btn-ghost):disabled {
         @apply pointer-events-none opacity-50;
         transform: none;
         filter: grayscale(0.6);
     }
 
-    /* Solid */
-    .btn, .btn-primary { @apply bg-primary-700 text-cream-100; }
-    .btn:hover, .btn-primary:hover { @apply bg-primary-600; }
+    /* Kilau pixel berbentuk "L" di pojok kiri-atas tombol solid. */
+    :is(.btn, .btn-primary, .btn-accent, .btn-danger, .landing-btn-primary) {
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+            linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+        background-size: 8px 2px, 2px 8px;
+        background-position: 5px 4px, 5px 4px;
+        background-repeat: no-repeat;
+    }
 
-    .btn-accent, .landing-btn-primary { @apply bg-accent-500 text-ink; }
-    .btn-accent:hover, .landing-btn-primary:hover { @apply bg-accent-400; }
+    /* ---------- Solid: Primary (slate) ---------- */
+    .btn,
+    .btn-primary {
+        @apply bg-primary-700 text-cream-100;
+        --bc: var(--color-primary-950);
+    }
 
-    .btn-danger { @apply bg-danger text-white; }
-    .btn-danger:hover { background-color: #D6202D; }
+    .btn:hover,
+    .btn-primary:hover {
+        @apply bg-primary-600;
+    }
 
-    .btn-secondary, .landing-btn-secondary { @apply bg-cream-200 text-primary-700; }
-    .btn-secondary:hover, .landing-btn-secondary:hover { @apply bg-cream-300; }
+    /* ---------- Solid: Accent / CTA (flame) ---------- */
+    .btn-accent,
+    .landing-btn-primary {
+        @apply bg-accent-500 text-ink;
+        --bc: #8D3518;
+    }
 
-    /* OUTLINE — bingkai berwarna, isi penuh saat hover.
-       Tambah .btn-outline-* ke elemen apa pun (button / a). */
-    :is(.btn-outline, .btn-outline-primary, .btn-outline-accent, .btn-outline-success,
-        .btn-outline-danger, .btn-outline-neutral, .btn-outline-light) {
+    .btn-accent:hover,
+    .landing-btn-primary:hover {
+        @apply bg-accent-400;
+    }
+
+    /* ---------- Solid: Danger ---------- */
+    .btn-danger {
+        @apply bg-danger text-white;
+    }
+
+    .btn-danger:hover {
+        background-color: #D6202D;
+    }
+
+    /* ---------- Solid: Secondary (kertas perkamen) ---------- */
+    .btn-secondary,
+    .landing-btn-secondary {
+        @apply bg-cream-50 text-primary-700;
+        --bc: var(--color-primary-600);
+    }
+
+    .btn-secondary:hover,
+    .landing-btn-secondary:hover {
+        @apply bg-cream-200;
+    }
+
+    /* ---------- OUTLINE: bingkai berwarna, isi penuh saat hover ---------- */
+    :is(.btn-outline, .btn-outline-accent, .btn-outline-success, .btn-outline-danger,
+        .btn-outline-neutral, .btn-outline-light) {
         --bevel: inset 0 0 0 0 transparent;
         @apply bg-cream-50;
     }
 
-    .btn-outline, .btn-outline-primary { --bc: var(--color-primary-700); @apply text-primary-700; }
-    .btn-outline:hover, .btn-outline-primary:hover { @apply bg-primary-700 text-cream-100; }
+    .btn-outline {
+        --bc: var(--color-primary-700);
+        @apply text-primary-700;
+    }
 
-    .btn-outline-accent { --bc: var(--color-accent-500); @apply text-accent-700; }
-    .btn-outline-accent:hover { @apply bg-accent-500 text-ink; }
+    .btn-outline:hover {
+        @apply bg-primary-700 text-cream-100;
+    }
 
-    .btn-outline-success { --bc: var(--color-success); @apply text-success; }
-    .btn-outline-success:hover { @apply bg-success text-white; }
+    .btn-outline-accent {
+        --bc: var(--color-accent-500);
+        @apply text-accent-700;
+    }
 
-    .btn-outline-danger { --bc: var(--color-danger); @apply text-danger; }
-    .btn-outline-danger:hover { @apply bg-danger text-white; }
+    .btn-outline-accent:hover {
+        @apply bg-accent-500 text-ink;
+    }
 
-    .btn-outline-neutral { --bc: var(--color-border-strong); @apply text-text-secondary; }
-    .btn-outline-neutral:hover { --bc: #000; @apply bg-cream-200 text-ink; }
+    .btn-outline-success {
+        --bc: var(--color-success);
+        @apply text-success;
+    }
 
-    .btn-outline-light { --bc: var(--color-cream-100); @apply bg-transparent text-cream-100; }
-    .btn-outline-light:hover { @apply bg-cream-100 text-primary-700; }
+    .btn-outline-success:hover {
+        @apply bg-success text-white;
+    }
 
-    /* Ghost */
+    .btn-outline-danger {
+        --bc: var(--color-danger);
+        @apply text-danger;
+    }
+
+    .btn-outline-danger:hover {
+        @apply bg-danger text-white;
+    }
+
+    .btn-outline-neutral {
+        --bc: var(--color-border-strong);
+        @apply text-text-secondary;
+    }
+
+    .btn-outline-neutral:hover {
+        --bc: #000;
+        @apply bg-cream-200 text-ink;
+    }
+
+    /* outline di atas hero gelap */
+    .btn-outline-light {
+        --bc: var(--color-cream-100);
+        @apply bg-transparent text-cream-100;
+    }
+
+    .btn-outline-light:hover {
+        @apply bg-cream-100 text-primary-700;
+    }
+
+    /* ---------- Ghost: tanpa bingkai ---------- */
     .btn-ghost {
-        @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 px-4 py-2.5 font-display text-base font-bold text-text-secondary transition duration-150;
+        @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-sm px-4 py-2.5 font-sans text-sm font-bold text-text-secondary transition duration-150;
         @apply hover:bg-accent-100 hover:text-accent-700;
     }
 
-    /* Ukuran & bentuk */
-    .btn-sm { @apply min-h-9 px-3.5 py-2 text-sm; }
-    .btn-lg { @apply min-h-13 px-7 py-3.5 text-xl; }
-    .btn-block { @apply flex w-full; }
-    .btn-icon { @apply size-11 min-h-0 p-0; }
-
-    /* CTA besar: pedang menunjuk saat hover */
-    .btn-quest::before {
-        content: '';
-        width: 0;
-        height: 1em;
-        overflow: hidden;
-        background: currentColor;
-        -webkit-mask: var(--px-sword) left center / contain no-repeat;
-        mask: var(--px-sword) left center / contain no-repeat;
-        transition: width 120ms steps(3, end);
+    /* ---------- Ukuran & bentuk ---------- */
+    .btn-sm {
+        @apply min-h-9 px-3.5 py-2 text-sm;
     }
-    .btn-quest:hover::before { width: 1.1em; }
+
+    .btn-lg {
+        @apply min-h-13 px-7 py-3.5 text-xl;
+    }
+
+    .btn-block {
+        @apply flex w-full;
+    }
+
+    .btn-icon {
+        @apply size-11 min-h-0 p-0;
+    }
 
     /* ---------- FORM ---------- */
     .field {
-        --bc: #000;
-        @apply block min-h-11 w-full bg-surface px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-muted;
-        box-shadow:
-            0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc),
-            inset 0 4px 0 0 rgba(39, 63, 79, 0.1);
+        @apply block min-h-11 w-full rounded-sm border-2 border-border-strong bg-surface px-3.5 py-2.5 text-sm text-text-primary shadow-xs placeholder:text-text-muted;
+        transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
     }
-    .field:hover { --bc: var(--color-primary-500); }
-    .field:focus { --bc: var(--color-accent-500); @apply bg-white; }
 
-    .field-label, .label { @apply mb-2 block font-display text-base font-bold text-ink; }
-    .field-error { @apply mt-2 text-sm font-bold text-danger; }
-    .field-error-state, .field-error-state:hover, .field-error-state:focus { --bc: var(--color-danger); }
+    .field:hover {
+        @apply border-primary-400;
+    }
 
-    /* ---------- CARD / PANEL ---------- */
-    :is(.sipora-card, .surface-card, .landing-card, .public-panel, .auth-card, .table-shell, .dialog-box) {
-        --bc: #000;
+    .field:focus {
+        @apply border-accent-500 bg-white ring-3 ring-accent-100;
+    }
+
+    .field-label,
+    .label {
+        @apply mb-2 block font-sans text-sm font-bold text-text-primary;
+    }
+
+    .field-error {
+        @apply mt-2 text-sm font-bold text-danger;
+    }
+
+    .field-error-state,
+    .field-error-state:hover,
+    .field-error-state:focus {
+        @apply border-danger ring-danger-soft;
+    }
+
+    /* ---------- CARD / PANEL ----------
+       Bingkai bergerigi (sudut terpotong) + bayangan blok digambar di bagian
+       "BINGKAI PIXEL" paling bawah file ini, supaya berlaku juga untuk kartu
+       yang memakai utilitas Tailwind. Di sini hanya warna & jarak.
+       Variabel: --pf tebal bingkai, --pc warna bingkai, --drop-color warna bayangan. */
+    :is(.sipora-card, .surface-card, .landing-card, .public-panel, .auth-card, .table-shell) {
         @apply bg-surface;
-        box-shadow:
-            0 -4px 0 0 var(--bc), 4px 0 0 0 var(--bc), -4px 0 0 0 var(--bc), 0 4px 0 0 var(--bc),
-            8px 8px 0 0 var(--drop-color, rgba(39, 63, 79, 0.28));
     }
 
-    .sipora-card { @apply min-w-0 p-5 sm:p-6; }
-    .public-panel { @apply p-5 sm:p-6; }
-    .auth-card { @apply mx-auto max-w-md p-6 sm:p-8; --drop-color: var(--color-accent-500); }
-
-    .surface-card { transition: transform 120ms steps(3, end), box-shadow 120ms steps(3, end); }
-    .surface-card-hover:hover, .landing-card:hover {
-        --drop-color: var(--color-accent-500);
-        transform: translate(-3px, -3px);
+    .sipora-card {
+        @apply min-w-0 p-5 sm:p-6;
     }
 
-    .landing-card { @apply relative p-6; transition: transform 120ms steps(3, end); }
+    .public-panel {
+        @apply p-5 sm:p-6;
+    }
 
-    /* bintang muncul di pojok saat hover */
+    .auth-card {
+        @apply mx-auto max-w-md p-6 sm:p-8;
+        --drop-color: rgba(254, 119, 67, 0.4);
+    }
+
+    .surface-card {
+        transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    .surface-card-hover:hover,
+    .landing-card:hover {
+        --drop-color: rgba(254, 119, 67, 0.45);
+        --pc: var(--color-accent-700);
+        transform: translate(-2px, -2px);
+    }
+
+    .landing-card {
+        @apply relative p-6;
+        transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    /* bintang kecil muncul di pojok saat hover */
     .landing-card::after {
         content: '';
         position: absolute;
-        top: 10px; right: 10px;
-        width: 18px; height: 18px;
+        top: 10px;
+        right: 10px;
+        width: 13px;
+        height: 13px;
         background: var(--color-accent-500);
         -webkit-mask: var(--px-star) center / contain no-repeat;
         mask: var(--px-star) center / contain no-repeat;
         image-rendering: pixelated;
         opacity: 0;
-        transition: opacity 120ms steps(2, end);
-    }
-    .landing-card:hover::after { opacity: 1; animation: var(--animate-blink); }
-
-    /* Kartu bersorot flame: untuk event/pengumuman penting */
-    .card-flame { --drop-color: var(--color-accent-500); }
-    .card-slate { @apply bg-primary-700 text-cream-100; --drop-color: var(--color-accent-500); }
-    .card-slate :is(h1, h2, h3, h4) { @apply text-cream-100; }
-
-    /* Kotak dialog RPG: judul menempel di tab atas.
-       <div class="dialog-box"><div class="dialog-title">Misi baru</div>…</div> */
-    .dialog-box { @apply relative mt-6 p-5 pt-7; --drop-color: var(--color-accent-500); }
-    .dialog-title {
-        @apply absolute -top-5 left-4 bg-accent-500 px-3 py-1 font-display text-sm font-bold text-ink;
-        box-shadow: 0 -3px 0 0 #000, 3px 0 0 0 #000, -3px 0 0 0 #000;
+        transition: opacity 150ms ease;
     }
 
-    /* Bar XP / progres */
-    .xp-bar {
-        @apply h-5 w-full bg-cream-200;
-        box-shadow: 0 -3px 0 0 #000, 3px 0 0 0 #000, -3px 0 0 0 #000, 0 3px 0 0 #000;
+    .landing-card:hover::after {
+        opacity: 1;
     }
-    .xp-bar > span {
-        display: block;
-        height: 100%;
-        background:
-            repeating-linear-gradient(90deg, transparent 0 14px, rgba(0, 0, 0, 0.18) 14px 16px),
-            var(--color-accent-500);
+
+    /* Varian kartu (pakai bersama .sipora-card / .surface-card) */
+    .sipora-card-accent {
+        @apply bg-accent-50;
+        --pc: var(--color-accent-700);
+        --drop-color: rgba(254, 119, 67, 0.35);
+    }
+
+    .sipora-card-soft {
+        @apply bg-cream-100;
+    }
+
+    .sipora-card-dark {
+        @apply bg-primary-700 text-cream-100;
+        --pc: var(--color-primary-950);
+        --drop-color: rgba(10, 18, 24, 0.3);
+    }
+
+    .sipora-card-dark :is(h1, h2, h3, h4) {
+        color: var(--color-cream-100);
+    }
+
+    /* Kotak di dalam kartu (mis. item jadwal, daftar sesi): bingkai tipis, tanpa bayangan */
+    .px-inset {
+        @apply bg-cream-50 p-4;
+        --pf: 2px;
+        --pc: var(--color-border-strong);
+        --drop-color: transparent;
+    }
+
+    /* Ubin ikon persegi, ganti kotak ikon membulat yang lama */
+    .icon-tile,
+    .icon-tile-dark,
+    .icon-tile-accent {
+        @apply inline-flex size-11 shrink-0 items-center justify-center;
+        --pf: 2px;
+    }
+
+    .icon-tile {
+        @apply bg-primary-50 text-primary-700;
+        --pc: var(--color-primary-300);
+    }
+
+    .icon-tile-dark {
+        @apply bg-primary-700 text-cream-100;
+        --pc: var(--color-primary-950);
+    }
+
+    .icon-tile-accent {
+        @apply bg-accent-100 text-accent-700;
+        --pc: var(--color-accent-500);
     }
 
     .interest-chip {
-        --bc: #000;
-        @apply inline-flex items-center gap-1.5 bg-accent-200 px-3 py-1 font-display text-sm font-bold text-ink transition duration-100 hover:bg-accent-500;
-        margin: 3px;
-        box-shadow: 0 -2px 0 0 var(--bc), 2px 0 0 0 var(--bc), -2px 0 0 0 var(--bc), 0 3px 0 0 var(--bc);
+        @apply inline-flex items-center gap-1.5 rounded-sm border-2 border-accent-500 bg-accent-100 px-3 py-1 font-sans text-sm font-bold text-ink transition duration-150 hover:bg-accent-500;
+    }
+
+    .interest-chip:hover {
+        box-shadow: 0 2px 0 var(--color-accent-700);
+        transform: translateY(-1px);
     }
 
     .landing-search {
-        --bc: #000;
-        @apply min-h-12 w-full bg-surface px-5 text-sm text-text-primary placeholder:text-text-muted;
-        box-shadow:
-            0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc),
-            inset 0 4px 0 0 rgba(39, 63, 79, 0.1);
+        @apply min-h-12 w-full rounded-sm border-2 border-primary-700/70 bg-surface px-5 text-sm text-text-primary shadow-sm placeholder:text-text-muted;
     }
-    .landing-search:focus { --bc: var(--color-accent-500); @apply bg-white; }
 
-    /* ---------- ALERT ---------- */
-    .alert {
-        --bc: #000;
-        @apply relative flex items-start gap-3 bg-surface p-4 pl-5 text-sm font-medium text-text-primary;
-        box-shadow: 0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc);
+    .landing-search:focus {
+        @apply border-accent-500 bg-white ring-3 ring-accent-100;
     }
-    .alert::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 8px; background: var(--bar, var(--color-accent-500)); }
-    .alert-success { --bar: var(--color-success); @apply bg-success-soft; }
-    .alert-warning { --bar: var(--color-warning); @apply bg-warning-soft; }
-    .alert-danger { --bar: var(--color-danger); @apply bg-danger-soft; }
-    .alert-info { --bar: var(--color-info); @apply bg-info-soft; }
 
     /* ---------- NAVIGASI ---------- */
     .public-nav-link {
-        @apply relative inline-flex min-h-11 items-center px-1 font-display text-base font-bold text-text-secondary transition-colors duration-100 hover:text-ink;
+        @apply relative inline-flex min-h-11 items-center px-1 font-sans text-sm font-bold text-text-secondary transition-colors duration-150 hover:text-ink;
     }
+
+    /* Jejak pixel tetap dekat dengan label aktif. */
     .public-nav-link::after {
         content: '';
         position: absolute;
-        left: 0; bottom: -2px;
-        width: 0; height: 4px;
-        background: repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, #000 8px 12px);
+        left: 0;
+        bottom: 17px;
+        width: 0;
+        height: 3px;
+        background: repeating-linear-gradient(90deg, var(--color-accent-500) 0 7px, var(--color-primary-700) 7px 10px);
         transition: width 160ms steps(4, end);
     }
+
     .public-nav-link:hover::after,
     .public-nav-link[aria-current='page']::after,
-    .public-nav-link.public-nav-active::after { width: 100%; }
-    .public-nav-active { @apply text-ink; }
+    .public-nav-link.public-nav-active::after {
+        width: 100%;
+    }
+
+    .public-nav-active {
+        @apply text-ink;
+    }
 
     .workspace-nav-link {
         --bc: transparent;
-        @apply relative flex min-h-11 items-center gap-3 px-3 py-2.5 font-display text-base font-bold text-text-secondary transition duration-100;
+        @apply relative flex min-h-11 items-center gap-3 rounded-sm px-3 py-2.5 font-sans text-sm font-bold text-text-secondary transition duration-150;
         @apply hover:bg-accent-100 hover:text-ink;
     }
-    .workspace-nav-active, .workspace-nav-active:hover {
-        --bc: #000;
+
+    .workspace-nav-link:hover {
+        box-shadow: inset 3px 0 0 var(--color-accent-300);
+    }
+
+    .workspace-nav-active,
+    .workspace-nav-active:hover {
+        --bc: var(--color-primary-950);
         @apply bg-primary-700 text-cream-100;
         box-shadow:
-            0 -3px 0 0 var(--bc), 3px 0 0 0 var(--bc), -3px 0 0 0 var(--bc), 0 3px 0 0 var(--bc),
-            6px 0 0 0 var(--color-accent-500);
+            inset 4px 0 0 var(--color-accent-500),
+            2px 3px 0 rgba(20, 32, 41, 0.16);
     }
+
+    /* penunjuk kursor pedang pada menu aktif */
     .workspace-nav-active::after {
         content: '';
         position: absolute;
-        right: 14px; top: 50%;
-        width: 16px; height: 16px; margin-top: -8px;
+        right: 14px;
+        top: 50%;
+        width: 12px;
+        height: 12px;
+        margin-top: -6px;
         background: var(--color-accent-500);
         -webkit-mask: var(--px-sword) center / contain no-repeat;
         mask: var(--px-sword) center / contain no-repeat;
         image-rendering: pixelated;
     }
-    .workspace-nav-disabled { @apply cursor-not-allowed text-text-muted hover:bg-transparent hover:text-text-muted; }
+
+    .workspace-nav-disabled {
+        @apply cursor-not-allowed text-text-muted hover:bg-transparent hover:text-text-muted;
+    }
 
     /* ---------- BADGE ---------- */
     .status-badge {
-        --bc: #000;
-        @apply inline-flex min-h-7 items-center gap-1.5 px-2.5 py-0.5 font-display text-sm font-bold;
-        margin: 2px;
-        box-shadow: 0 -2px 0 0 var(--bc), 2px 0 0 0 var(--bc), -2px 0 0 0 var(--bc), 0 2px 0 0 var(--bc);
+        @apply inline-flex min-h-7 items-center gap-1.5 rounded-sm border px-2.5 py-0.5 font-sans text-xs font-bold;
     }
-    .badge-primary { @apply bg-primary-100 text-primary-700; --bc: var(--color-primary-700); }
-    .badge-accent { @apply bg-accent-100 text-accent-700; --bc: var(--color-accent-600); }
-    .badge-success { @apply bg-success-soft text-success; --bc: var(--color-success); }
-    .badge-warning { @apply bg-warning-soft text-warning; --bc: var(--color-warning); }
-    .badge-danger { @apply bg-danger-soft text-danger; --bc: var(--color-danger); }
-    .badge-info { @apply bg-info-soft text-info; --bc: var(--color-info); }
+
+    .badge-primary { @apply border-primary-300 bg-primary-100 text-primary-700; }
+    .badge-accent { @apply border-accent-300 bg-accent-100 text-accent-700; }
+    .badge-success { @apply border-green-200 bg-success-soft text-success; }
+    .badge-warning { @apply border-amber-200 bg-warning-soft text-warning; }
+    .badge-danger { @apply border-red-200 bg-danger-soft text-danger; }
+    .badge-info { @apply border-blue-200 bg-info-soft text-info; }
 
     /* ---------- TABEL ---------- */
-    .table-shell { @apply overflow-hidden; }
-    .table-shell table { @apply min-w-full divide-y-2 divide-border text-left text-sm; }
-    .table-shell thead { @apply bg-primary-700 font-display text-sm font-bold uppercase tracking-wider text-cream-100; }
-    .table-shell th { @apply px-5 py-3.5; }
-    .table-shell td { @apply px-5 py-4; }
-    .table-shell tbody tr { @apply transition-colors duration-100 hover:bg-accent-50; }
+    .table-shell {
+        @apply overflow-hidden;
+    }
+
+    .table-shell table {
+        @apply min-w-full divide-y divide-border text-left text-sm;
+    }
+
+    .table-shell thead {
+        @apply bg-primary-700 font-sans text-xs font-bold uppercase tracking-wider text-cream-100;
+        /* jejak flame di tepi bawah header, seperti garis lantai level */
+        background-image: repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, transparent 8px 18px);
+        background-size: 100% 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+    }
+
+    .table-shell th {
+        @apply px-5 py-3.5;
+    }
+
+    .table-shell td {
+        @apply px-5 py-4;
+    }
+
+    .table-shell tbody tr {
+        @apply transition-colors duration-100 hover:bg-accent-50;
+    }
+
+    .table-shell tbody tr:nth-child(even):not(:hover) {
+        background-color: rgba(245, 243, 238, 0.7);
+    }
 
     /* ---------- HERO / HALAMAN PUBLIK ----------
-       Langit malam + matahari flame + pegunungan + burung & awan.
-       Tanah: kepiting berjalan bolak-balik di atas rumput api. */
+       Langit petualangan dengan tiga pita warna keras (bukan gradient), bintang jarang,
+       matahari pixel, burung, dan dua awan yang bergeser per-langkah.
+       Dasarnya berupa siluet bukit cream bergerigi dengan kepiting di jalur flame. */
     .public-page-intro {
+        --hero-emblem: var(--sp-shield);
+        --hero-emblem-size: 74px 82px;
+        --hero-emblem-position: 88% 38%;
         position: relative;
         overflow: hidden;
         isolation: isolate;
-        padding: 3.5rem 1.25rem 6.5rem;
+        padding: 3.75rem 1.25rem 5.5rem;
         color: var(--color-cream-100);
-        background: linear-gradient(180deg, var(--color-primary-950) 0%, var(--color-primary-800) 55%, var(--color-primary-700) 100%);
+        background-color: var(--color-primary-800);
+        box-shadow: inset 0 4px 0 var(--color-accent-500);
     }
 
-    /* langit: burung, awan, bintang, matahari */
     .public-page-intro::before {
         content: '';
         pointer-events: none;
@@ -489,19 +1170,93 @@
         inset: 0;
         z-index: -1;
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23EFEEEA' d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E"),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M0 0h2v1h-2zM11 0h2v1h-2zM1 1h3v1h-3zM9 1h3v1h-3zM3 2h3v1h-3zM7 2h3v1h-3zM5 3h3v1h-3zM6 4h1v1h-1z'/%3E%3C/svg%3E"),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23436B84' d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E"),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23345569' d='M5 0h4v1h-4zM3 1h8v1h-8zM0 2h14v1h-14zM1 3h12v1h-12z'/%3E%3C/svg%3E"),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M4 0h4v1h-4zM2 1h8v1h-8zM1 2h10v8h-10zM2 10h8v1h-8zM4 11h4v1h-4z'/%3E%3Cpath fill='%23FFA277' d='M3 2h3v1h-3zM2 3h2v1h-2z'/%3E%3C/svg%3E"),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cg fill='%23EFEEEA' fill-opacity='.6'%3E%3Cpath d='M3 4h1v1h-1zM15 9h1v1h-1zM8 18h1v1h-1zM20 21h1v1h-1z'/%3E%3C/g%3E%3Cpath fill='%23FE7743' d='M11 2h1v1h-1zM22 13h1v1h-1z'/%3E%3C/svg%3E");
-        background-size: 52px 20px, 39px 15px, 84px 24px, 56px 16px, 72px 72px, 96px 96px;
-        background-position: 76% 16%, 88% 34%, 58% 62%, 12% 22%, 90% 12%, 0 0;
-        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+            var(--hero-emblem),
+            var(--hero-bird),
+            var(--hero-bird),
+            var(--hero-cloud-a),
+            var(--hero-cloud-b),
+            var(--hero-sun),
+            var(--hero-stars);
+        background-size:
+            var(--hero-emblem-size),
+            44px 17px,
+            32px 12px,
+            108px 31px,
+            72px 21px,
+            54px 54px,
+            240px 240px;
+        background-position:
+            var(--hero-emblem-position),
+            80% 20%,
+            91% 42%,
+            calc(66% + var(--drift, 0px)) 68%,
+            calc(6% + var(--drift, 0px)) 24%,
+            93% 60%,
+            0 0;
+        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
         image-rendering: pixelated;
+        opacity: 0.72;
+        animation: px-drift 18s steps(18, end) infinite alternate;
     }
 
-    /* tanah: kepiting (animasi), rumput api, garis hitam, tanah kotak-kotak */
+    .public-page-intro--about {
+        --hero-emblem: var(--sp-castle);
+        --hero-emblem-size: 72px 136px;
+        --hero-emblem-position: 88% 42%;
+    }
+
+    .public-page-intro--activity {
+        --hero-emblem: var(--sp-shield);
+        --hero-emblem-size: 88px 96px;
+        --hero-emblem-position: 88% 40%;
+    }
+
+    .public-page-intro--community {
+        --hero-emblem: var(--sp-map);
+        --hero-emblem-size: 118px 76px;
+        --hero-emblem-position: 88% 38%;
+    }
+
+    .public-page-intro--opportunity {
+        --hero-emblem: var(--sp-chest);
+        --hero-emblem-size: 118px 76px;
+        --hero-emblem-position: 88% 43%;
+    }
+
+    .public-page-intro--program {
+        --hero-emblem: var(--sp-helmet);
+        --hero-emblem-size: 80px 88px;
+        --hero-emblem-position: 88% 40%;
+    }
+
+    .public-page-intro--youth {
+        --hero-emblem: var(--sp-knight);
+        --hero-emblem-size: 82px 90px;
+        --hero-emblem-position: 88% 42%;
+    }
+
+    .public-page-intro--contact {
+        --hero-emblem: var(--sp-campfire);
+        --hero-emblem-size: 108px 78px;
+        --hero-emblem-position: 88% 46%;
+    }
+
+    .public-page-intro--search {
+        --hero-emblem: var(--sp-map);
+        --hero-emblem-size: 92px 60px;
+        --hero-emblem-position: 12% 46%;
+    }
+
+    @keyframes px-drift {
+        to {
+            --drift: 36px;
+        }
+    }
+
+    .public-page-intro :is(h1, h2, h3, h4) {
+        color: var(--color-cream-100);
+    }
+
     .public-page-intro::after {
         content: '';
         pointer-events: none;
@@ -510,83 +1265,387 @@
         z-index: -1;
         height: 44px;
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 5' shape-rendering='crispEdges'%3E%3Cpath fill='%23FE7743' d='M0 0h2v1h-2zM9 0h2v1h-2zM0 1h2v1h-2zM4 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM1 2h9v1h-9zM2 3h7v1h-7zM0 4h1v1h-1zM2 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1z'/%3E%3C/svg%3E"),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' shape-rendering='crispEdges'%3E%3Cpath fill='%231D303D' d='M0 10v-2h4v-2h4v-2h4v-2h4v2h4v-2h4v-2h4v2h4v2h4v2h4v2z'/%3E%3C/svg%3E"),
-            repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, var(--color-accent-600) 8px 16px),
-            linear-gradient(#000, #000),
-            conic-gradient(#1D303D 25%, #345569 0 50%, #1D303D 0 75%, #345569 0);
-        background-size: 44px 20px, 240px 60px, 100% 6px, 100% 4px, 16px 16px;
-        background-position: 6% 4px, 0 -26px, 0 24px, 0 30px, 0 34px;
-        background-repeat: no-repeat, repeat-x, repeat-x, repeat-x, repeat-x;
+            var(--hero-crab),
+            repeating-linear-gradient(90deg, var(--color-accent-500) 0 6px, transparent 6px 14px),
+            var(--hero-skyline);
+        background-size: 34px 15px, 100% 2px, 72px 18px;
+        background-position: 12% 9px, 0 24px, 0 100%;
+        background-repeat: no-repeat, no-repeat, repeat-x;
         image-rendering: pixelated;
-        animation: var(--animate-scuttle);
     }
 
-    @media (max-width: 640px) {
-        .public-page-intro::before { opacity: 0.4; }
+    .public-section-title {
+        @apply font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl;
     }
 
-    .public-section-title { @apply font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl; }
+    /* pedang kecil di depan judul bagian */
     .public-section-title::before {
         content: '';
         display: inline-block;
-        width: 0.8em; height: 0.72em;
-        margin-right: 0.4em;
+        width: 0.62em;
+        height: 0.58em;
+        margin-right: 0.3em;
         background: var(--color-accent-500);
         -webkit-mask: var(--px-sword) center / contain no-repeat;
         mask: var(--px-sword) center / contain no-repeat;
         image-rendering: pixelated;
     }
 
-    .public-meta { @apply flex items-center gap-2 text-sm font-medium text-text-secondary; }
-
-    .public-link {
-        @apply inline-flex min-h-11 items-center gap-2 font-display text-base font-bold text-primary-700 underline decoration-accent-500 decoration-4 underline-offset-4 transition duration-100 hover:bg-accent-500 hover:text-ink hover:no-underline;
+    .public-meta {
+        @apply flex items-center gap-2 text-sm font-medium text-text-secondary;
     }
 
-    /* keadaan kosong: kepiting menjaga halaman */
-    .public-empty { @apply border-4 border-dashed border-primary-300 bg-cream-50/70 p-10 text-center text-text-secondary; }
+    .public-link {
+        @apply inline-flex min-h-11 items-center gap-2 font-sans text-sm font-bold text-primary-700 underline decoration-accent-500 decoration-2 underline-offset-4 transition duration-150 hover:text-accent-700;
+    }
+
+    /* keadaan kosong: peti harta kosong menunggu diisi */
+    .public-empty {
+        @apply rounded-sm border-2 border-dashed border-primary-300 bg-cream-50 p-10 text-center text-text-secondary;
+    }
+
     .public-empty::before {
         content: '';
         display: block;
-        width: 55px; height: 25px;
+        width: 56px;
+        height: 36px;
         margin: 0 auto 1rem;
-        background: var(--color-accent-500);
-        -webkit-mask: var(--px-crab) center / contain no-repeat;
-        mask: var(--px-crab) center / contain no-repeat;
+        background: var(--sp-chest) center / contain no-repeat;
         image-rendering: pixelated;
-        animation: var(--animate-bob);
     }
 
     /* ---------- TIPOGRAFI & UTILITAS ---------- */
     .font-heading { @apply font-display; }
-    .page-title { @apply font-display text-3xl font-bold tracking-tight text-ink; }
 
-    .text-score { @apply font-pixel text-[10px] uppercase leading-relaxed tracking-wide; }
+    .font-display-accent { @apply font-display; }
 
+    .page-title {
+        @apply font-display text-3xl font-bold tracking-tight text-ink;
+    }
+
+    /* label gaya skor game (pakai hemat, ukuran kecil) */
+    .text-score {
+        @apply font-pixel text-[10px] uppercase leading-relaxed tracking-wide;
+    }
+
+    /* sorot teks gaya stabilo */
     .text-highlight {
         background-image: linear-gradient(transparent 58%, var(--color-accent-300) 58% 92%, transparent 92%);
         @apply px-1;
     }
 
-    .rupiah { @apply font-mono font-semibold text-text-secondary; }
-
-    /* burung terbang melintas: <span class="px-icon px-bird fly-across text-cream-100"></span> */
-    .fly-across { animation: var(--animate-fly); }
+    .rupiah {
+        @apply font-mono font-semibold text-text-secondary;
+    }
 }
 
 /* ==========================================================================
    LAYOUT HELPERS
    ========================================================================== */
-#main { min-width: 0; width: 100%; max-width: 100vw; }
-#main .overflow-x-auto { max-width: 100%; contain: inline-size; }
+@layer components {
+    /* Admin & verifier: latar paling tenang (hanya titik grid), bingkai tipis tanpa bayangan. */
+    body:is(.workspace-admin, .workspace-verifier),
+    body:has(.workspace-admin, .workspace-verifier) {
+        background-image: var(--bg-dots);
+        background-size: 64px 64px;
+        background-repeat: repeat;
+    }
+
+    :is(.workspace-admin, .workspace-verifier) {
+        --pf: 2px;
+        --pc: var(--color-border-strong);
+        --drop-color: transparent;
+    }
+
+    :is(.workspace-admin, .workspace-verifier) .surface-card-hover:hover {
+        --pc: var(--color-primary-300);
+        --drop-color: rgba(20, 32, 41, 0.08);
+        transform: translateY(-1px);
+    }
+
+    :is(.workspace-admin, .workspace-verifier) .workspace-nav-active {
+        box-shadow: inset 3px 0 0 var(--color-accent-500);
+    }
+
+    :is(.workspace-admin, .workspace-verifier) .workspace-nav-active::after {
+        content: none;
+    }
+}
+
+#main {
+    min-width: 0;
+    width: 100%;
+    max-width: 100vw;
+}
+
+#main .overflow-x-auto {
+    max-width: 100%;
+    contain: inline-size;
+}
+
+@media (max-width: 640px) {
+    .public-page-intro::before {
+        opacity: 0.85;
+    }
+}
 
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+    }
+}
+
+/* ==========================================================================
+   BINGKAI PIXEL  (sengaja di luar @layer agar menang atas utilitas Tailwind)
+   Sudut "terpotong" dibuat dari empat bayangan lurus + satu bayangan blok.
+   Berlaku untuk: semua kelas kartu SIPORA, DAN kartu lama yang memakai
+   utilitas seperti `rounded-xl border bg-white shadow-sm`. Warna latar tetap
+   mengikuti kelas aslinya; hanya bentuk bingkainya yang diganti.
+   Pengecualian: tambahkan kelas `px-flat` pada elemen yang tidak boleh dibingkai.
+   ========================================================================== */
+
+/* 1) Kartu bernama */
+:is(.sipora-card, .surface-card, .landing-card, .public-panel, .auth-card, .table-shell, .px-frame, .px-inset),
+/* 2) Kartu lama: wadah membulat yang punya border/shadow */
+:is(div, section, article, aside, details, form, dialog):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):not(
+        .px-flat, .btn, .field, .public-empty, .icon-tile, .icon-tile-dark, .icon-tile-accent,
+        [class*="btn-"], [class*="size-"], [class*="animate-"], [class*="border-dashed"],
+        [class~="border-l"], [class~="border-l-4"], [class~="border-l-2"], [class~="border-r"],
+        [class~="border-t"], [class~="border-b"], .status-badge, .interest-chip
+    ) {
+    border-width: 0;
+    border-radius: 0;
+    box-shadow:
+        0 calc(var(--pf, 3px) * -1) 0 0 var(--pc, var(--color-primary-700)),
+        0 var(--pf, 3px) 0 0 var(--pc, var(--color-primary-700)),
+        calc(var(--pf, 3px) * -1) 0 0 0 var(--pc, var(--color-primary-700)),
+        var(--pf, 3px) 0 0 0 var(--pc, var(--color-primary-700)),
+        calc(var(--pf, 3px) * 2) calc(var(--pf, 3px) * 3) 0 0 var(--drop-color, rgba(39, 63, 79, 0.16));
+}
+
+/* Kotak bersarang di dalam kartu: bingkai tipis, tanpa bayangan blok */
+:where(.sipora-card, .surface-card, .landing-card, .public-panel, .auth-card, .px-frame)
+:is(div, section, article, aside, details, form):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):not(.px-flat, [class*="btn-"], [class*="size-"]) {
+    --pf: 2px;
+    --pc: var(--color-border-strong);
+    --drop-color: transparent;
+}
+
+/* Warna bingkai mengikuti warna kartu lama */
+:is(div, section, article, aside, details, form):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):is([class*="accent"], [class*="amber"], [class*="orange"], [class*="yellow"]):not(.px-flat) {
+    --pc: var(--color-accent-700);
+}
+
+:is(div, section, article, aside, details, form):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):is([class*="danger"], [class*="red-"], [class*="rose"]):not(.px-flat) {
+    --pc: var(--color-danger);
+}
+
+:is(div, section, article, aside, details, form):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):is([class*="success"], [class*="green-"], [class*="emerald"]):not(.px-flat) {
+    --pc: var(--color-success);
+}
+
+:is(div, section, article, aside, details, form):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):is([class*="info"], [class*="blue-"], [class*="sky-"]):not(.px-flat) {
+    --pc: var(--color-info);
+}
+
+:is(div, section, article, aside, details, form):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class~="border"], [class~="border-2"], [class*="shadow"]):is([class*="bg-primary-7"], [class*="bg-primary-8"], [class*="bg-primary-9"], [class*="bg-ink"]):not(.px-flat) {
+    --pc: var(--color-primary-950);
+}
+
+/* Ubin ikon: kotak ikon membulat lama (size-10 rounded-xl ...) menjadi persegi bergerigi */
+:is(.icon-tile, .icon-tile-dark, .icon-tile-accent),
+:is(div, span):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"]):is([class*="size-9"], [class*="size-10"], [class*="size-11"], [class*="size-12"], [class*="size-14"], [class*="size-16"], [class*="h-9"][class*="w-9"], [class*="h-10"][class*="w-10"], [class*="h-11"][class*="w-11"], [class*="h-12"][class*="w-12"]):not(.px-flat, .px-sprite, .px-icon) {
+    --pf: 2px;
+    border-width: 0;
+    border-radius: 0;
+    box-shadow:
+        0 calc(var(--pf) * -1) 0 0 var(--pc, var(--color-primary-300)),
+        0 var(--pf) 0 0 var(--pc, var(--color-primary-300)),
+        calc(var(--pf) * -1) 0 0 0 var(--pc, var(--color-primary-300)),
+        var(--pf) 0 0 0 var(--pc, var(--color-primary-300));
+}
+
+:is(div, span):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"]):is([class*="size-9"], [class*="size-10"], [class*="size-11"], [class*="size-12"], [class*="size-14"], [class*="size-16"], [class*="h-10"][class*="w-10"], [class*="h-11"][class*="w-11"], [class*="h-12"][class*="w-12"]):is([class*="bg-primary-7"], [class*="bg-primary-8"], [class*="bg-primary-9"], [class*="bg-ink"]):not(.px-flat) {
+    --pc: var(--color-primary-950);
+}
+
+:is(div, span):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"]):is([class*="size-9"], [class*="size-10"], [class*="size-11"], [class*="size-12"], [class*="size-14"], [class*="size-16"], [class*="h-10"][class*="w-10"], [class*="h-11"][class*="w-11"], [class*="h-12"][class*="w-12"]):is([class*="bg-accent"], [class*="bg-amber"]):not(.px-flat) {
+    --pc: var(--color-accent-500);
+}
+
+/* ==========================================================================
+   WORKSPACE ADVENTURE STAGE
+   Satu lembar permainan yang utuh mencegah konten terlihat langsung berlubang
+   ke latar halaman. Ornamen role dibuat tunggal dan sangat samar.
+   ========================================================================== */
+.workspace-stage {
+    --workspace-emblem: var(--sp-map);
+    --workspace-drop: rgba(39, 63, 79, 0.14);
+    position: relative;
+    isolation: isolate;
+    min-height: calc(100vh - 7.5rem);
+    padding: clamp(1rem, 2vw, 2rem);
+    border: 2px solid var(--color-primary-700);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.96);
+    box-shadow: 6px 8px 0 var(--workspace-drop);
+}
+
+.workspace-stage::before {
+    content: '';
+    position: absolute;
+    inset: 8px 8px auto;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--color-accent-500) 0 8px, transparent 8px 18px);
+    opacity: 0.7;
+}
+
+.workspace-stage::after {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    top: 2rem;
+    right: 2rem;
+    width: 78px;
+    height: 60px;
+    background: var(--workspace-emblem) center / contain no-repeat;
+    image-rendering: pixelated;
+    opacity: 0.055;
+}
+
+.workspace-youth .workspace-stage { --workspace-emblem: var(--sp-map); }
+.workspace-manager .workspace-stage { --workspace-emblem: var(--sp-chest); }
+.workspace-admin .workspace-stage { --workspace-emblem: var(--sp-shield); --workspace-drop: rgba(39, 63, 79, 0.09); }
+.workspace-verifier .workspace-stage { --workspace-emblem: var(--sp-helmet); --workspace-drop: rgba(39, 63, 79, 0.09); }
+
+/* Menangkap kartu lama yang hanya memakai utilitas modern, tetapi dibatasi di
+   dalam stage supaya navigasi dan komponen kecil tidak ikut berubah. */
+.workspace-stage
+:is(article, section, aside, form, div):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class*="bg-white"], [class*="bg-surface"], [class*="bg-primary-50"], [class*="bg-orange-50"], [class*="bg-amber-50"]):not(.px-flat, [class*="size-"], [class*="btn-"]) {
+    border-radius: 3px;
+    border-color: var(--color-primary-300);
+    box-shadow: 4px 5px 0 rgba(39, 63, 79, 0.09);
+}
+
+.workspace-stage
+:is(article, section, aside, form, div):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"], [class*="rounded-3xl"]):is([class*="bg-white"], [class*="bg-surface"]):hover {
+    border-color: var(--color-primary-400);
+}
+
+.workspace-admin .workspace-stage,
+.workspace-verifier .workspace-stage {
+    background-color: rgba(255, 255, 255, 0.985);
+}
+
+/* Youth progression keeps the active task prominent and prior tasks compact. */
+.onboarding-timeline { margin-left: 1.15rem; border-left: 2px solid var(--color-border-strong); }
+.onboarding-timeline-item { position: relative; padding: 0 0 1.2rem 2rem; }
+.onboarding-timeline-marker { position: absolute; left: -1.12rem; top: 1rem; display: grid; width: 2.15rem; height: 2.15rem; place-items: center; border: 2px solid var(--color-border-strong); background: var(--color-surface); color: var(--color-text-muted); font-weight: 800; }
+.onboarding-timeline-marker.is-current { border-color: var(--color-accent-500); background: var(--color-accent-500); color: var(--color-primary-950); }
+.onboarding-timeline-marker.is-done { border-color: var(--color-success); background: var(--color-success-soft); color: var(--color-success); }
+.onboarding-quiet { --pf: 2px; --pc: var(--color-border-strong); --drop-color: transparent; padding-block: 0.9rem; }
+.onboarding-current { --pc: var(--color-accent-500); }
+.biodata-steps { display: flex; gap: .5rem; overflow-x: auto; padding: .2rem .2rem 1rem; }
+.biodata-steps li { display: flex; min-width: max-content; flex: 1; align-items: center; gap: .5rem; color: var(--color-text-muted); font-size: .8rem; font-weight: 700; }
+.biodata-steps li:not(:last-child)::after { content: ''; height: 2px; min-width: 1rem; flex: 1; background: var(--color-border); }
+.biodata-step-number { display: grid; width: 2rem; height: 2rem; flex: none; place-items: center; border: 2px solid var(--color-border-strong); background: var(--color-surface-soft); }
+.biodata-steps .is-current { color: var(--color-text-primary); }
+.biodata-steps .is-current .biodata-step-number { border-color: var(--color-accent-500); background: var(--color-accent-500); color: var(--color-primary-950); }
+.biodata-steps .is-done .biodata-step-number { border-color: var(--color-success); color: var(--color-success); }
+.workspace-group-toggle { display: flex; min-height: 2.6rem; align-items: center; justify-content: space-between; gap: .5rem; padding: .45rem .75rem; color: var(--color-text-secondary); font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.workspace-group-toggle:hover, .workspace-group-toggle:focus-visible { color: var(--color-text-primary); background: var(--color-surface-muted); }
+.theme-toggle:focus-visible { outline: 3px solid var(--color-accent-500); outline-offset: 2px; }
+
+/* Color tokens are remapped rather than applying a photographic inversion. */
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --color-ink: #F1F5F3;
+    --color-bg: #14242E;
+    --color-surface: #263B49;
+    --color-surface-soft: #2C4351;
+    --color-surface-muted: #334C5A;
+    --color-border: #496271;
+    --color-border-strong: #678091;
+    --color-text-primary: #F2F4EE;
+    --color-text-secondary: #D2DEE2;
+    --color-text-muted: #B5C7CF;
+    --color-primary-50: #2C4351;
+    --color-primary-100: #365363;
+    --color-interactive: #F9AD86;
+    --color-indigo-50: #2C4351;
+    --color-indigo-100: #365363;
+    --color-success-soft: #173F33;
+    --color-warning-soft: #4A381D;
+    --color-danger-soft: #4A2930;
+    --color-info-soft: #203D54;
+    --color-success: #8DE0AD;
+    --color-warning: #F4C176;
+    --color-danger: #FF9BA5;
+    --color-info: #A7D4F2;
+}
+html[data-theme="dark"] body { background-image: none; }
+html[data-theme="dark"] :is(.bg-white, .bg-white\/90, .bg-white\/95) { background-color: var(--color-surface); }
+html[data-theme="dark"] :is(.text-primary, .text-primary-700, .text-indigo-700, .text-slate-600, .text-slate-500) { color: var(--color-text-secondary); }
+html[data-theme="dark"] :is(.workspace-stage, .workspace-admin .workspace-stage, .workspace-verifier .workspace-stage) { background-color: #203440; box-shadow: 6px 8px 0 rgba(0,0,0,.25); }
+html[data-theme="dark"] :is(.field, .field:focus) { background-color: var(--color-surface); color: var(--color-text-primary); }
+html[data-theme="dark"] .table-shell tbody tr:nth-child(even):not(:hover) { background-color: #2C4351; }
+html[data-theme="dark"] :is(.btn-secondary, .btn-outline, .workspace-nav-link, .public-nav-link) { color: var(--color-text-primary); }
+html[data-theme="dark"] :is(.btn-secondary, .btn-outline, .btn-outline-accent, .btn-outline-success, .btn-outline-danger, .btn-outline-neutral, .btn-outline-light, .landing-btn-secondary) { background-color: var(--color-surface-soft); }
+html[data-theme="dark"] .landing-adventure-proof { background-color: var(--color-surface); }
+html[data-theme="dark"] :is(.public-page-intro, .sipora-card-dark, .px-scene) { color: #F2F4EE; }
+html[data-theme="dark"] .public-page-intro :is(h1,h2,h3,h4) { color: #F2F4EE; }
+html[data-theme="dark"] :is(.status-badge, .interest-chip) { border-color: var(--color-border-strong); }
+html[data-theme="dark"] .workspace-stage :is([class*="bg-[#eef0ff]"], [class*="bg-[#f8f9ff]"], [class*="bg-[#f6f7ff]"]) { background-color: var(--color-surface-soft); }
+html[data-theme="dark"] .workspace-stage :is([class*="text-[#14205c]"], [class*="text-[#243378]"], [class*="text-[#3346a8]"]) { color: var(--color-text-primary); }
+html[data-theme="dark"] .workspace-stage :is(.text-slate-400, .text-slate-500, .text-slate-600) { color: var(--color-text-secondary); }
+html[data-theme="dark"] .workspace-stage .text-primary-dark { color: var(--color-text-primary); }
+html[data-theme="dark"] :is(.workspace-stage, #workspace-sidebar) :is(.text-emerald-700, .text-green-700) { color: var(--color-success); }
+html[data-theme="dark"] :is(.workspace-stage, #workspace-sidebar) :is(.text-amber-700, .text-orange-600, .text-orange-700) { color: var(--color-warning); }
+html[data-theme="dark"] .workspace-stage :is(.bg-blue-50, .bg-violet-50, .bg-emerald-50, .bg-amber-50, .bg-orange-50) { background-color: var(--color-surface-soft); }
+html[data-theme="dark"] :is(.btn, .btn-primary) { background-color: #52758A; color: #F8F7F2; --bc: #172D39; }
+html[data-theme="dark"] :is(.btn, .btn-primary):hover { background-color: #648CA1; }
+html[data-theme="dark"] :is(.btn-secondary, .landing-btn-secondary, .btn-outline, .btn-outline-neutral) { background-color: #344E5D; color: #F2F4EE; --bc: #7290A0; }
+html[data-theme="dark"] :is(.btn-secondary, .landing-btn-secondary, .btn-outline, .btn-outline-neutral):hover { background-color: #416173; color: #FFFFFF; }
+html[data-theme="dark"] :is(.btn-accent, .landing-btn-primary) { background-color: #FE7743; color: #172633; }
+html[data-theme="dark"] :is(.btn-accent, .landing-btn-primary):hover { background-color: #FFA073; }
+html[data-theme="dark"] :is(.field, select.field, textarea.field) { border-color: #678091; background-color: #1F3543; color: #F2F4EE; }
+html[data-theme="dark"] :is(.field, select.field, textarea.field):focus { border-color: #FE7743; outline-color: #FE7743; }
+html[data-theme="dark"] :is(.workspace-stage, .public-page-intro) :is(.bg-slate-50, .bg-indigo-50, .bg-primary-50, .bg-cream-50) { background-color: var(--color-surface-soft); }
+html[data-theme="dark"] :is(.workspace-stage, .public-page-intro) :is(.border-slate-200, .border-indigo-100) { border-color: var(--color-border); }
+html[data-theme="dark"] :is(.workspace-stage, .public-page-intro) :is(.text-slate-700, .text-indigo-700) { color: var(--color-text-primary); }
+html[data-theme="dark"] :is(.interest-chip, .onboarding-timeline-marker, .biodata-step-number) { background-color: var(--color-surface-soft); color: var(--color-text-primary); }
+html[data-theme="dark"] :is(.public-nav-link, .workspace-nav-link):hover { background-color: var(--color-surface-muted); color: #FFFFFF; }
+
+.workspace-admin .workspace-stage
+:is(article, section, aside, form, div):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"]):is([class*="bg-white"], [class*="bg-surface"]),
+.workspace-verifier .workspace-stage
+:is(article, section, aside, form, div):is([class*="rounded-lg"], [class*="rounded-xl"], [class*="rounded-2xl"]):is([class*="bg-white"], [class*="bg-surface"]) {
+    box-shadow: 3px 4px 0 rgba(39, 63, 79, 0.065);
+}
+
+@media (max-width: 640px) {
+    .workspace-stage {
+        min-height: calc(100vh - 6.5rem);
+        border-width: 1px;
+        box-shadow: 3px 4px 0 var(--workspace-drop);
+    }
+
+    .workspace-stage::after {
+        width: 52px;
+        height: 42px;
+        top: 1.5rem;
+        right: 1rem;
+    }
+
+    .public-page-intro {
+        --hero-emblem-size: 54px 58px;
+        --hero-emblem-position: 88% 22%;
     }
 }
 

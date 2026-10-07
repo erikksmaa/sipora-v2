@@ -24,13 +24,15 @@ class YouthWorkspaceRenderingTest extends TestCase
         $this->actingAs($youth)->get(route('youth.home'))
             ->assertOk()
             ->assertSee('Ruang Saya')
-            ->assertSee('Profil Saya')
-            ->assertSee('Pendaftaran Saya')
-            ->assertSee('Activity Passport')
+            ->assertSee('Biodata')
+            ->assertSee('Kesiapan Profil')
+            ->assertSee('Informasi Akun')
+            ->assertSee('Keamanan')
             ->assertSee('Community Saya')
-            ->assertSee('Tersimpan')
+            ->assertSee('Opportunity Tersimpan')
             ->assertSee('Notifikasi')
             ->assertSee('Jelajahi SIPORA')
+            ->assertSee('aria-disabled="true"', false)
             ->assertSee('aria-current="page"', false)
             ->assertSee('x-data="workspaceShell"', false)
             ->assertSee(':inert="mobileOpen"', false)
@@ -39,7 +41,7 @@ class YouthWorkspaceRenderingTest extends TestCase
 
     public function test_personal_workspace_surfaces_render_inside_the_shared_youth_shell(): void
     {
-        $youth = User::factory()->create()->assignRole('youth');
+        $youth = $this->completeYouthOnboarding(User::factory()->create()->assignRole('youth'));
 
         $routes = [
             'youth.profile.show' => 'Profil Saya',

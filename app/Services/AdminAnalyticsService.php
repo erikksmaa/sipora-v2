@@ -13,11 +13,14 @@ use App\Models\UserIdentity;
 
 final class AdminAnalyticsService
 {
-    public function overview(): array
+    public function __construct(private readonly YouthStatisticsService $youthStatistics) {}
+
+    public function overview(?array $youthTotals = null): array
     {
+        $youthTotals ??= $this->youthStatistics->summary();
         return [
             'youth' => [
-                'registered' => User::role('youth')->count(),
+                'registered' => $youthTotals['registered'],
                 'with_profile' => User::role('youth')->whereHas('profile')->count(),
                 'identity' => UserIdentity::query()->selectRaw('verification_status, COUNT(*) AS total')->groupBy('verification_status')->pluck('total', 'verification_status')->map(fn ($value): int => (int) $value)->all(),
             ],

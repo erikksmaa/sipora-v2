@@ -30,13 +30,13 @@ class YouthProfileTest extends TestCase
     public function test_youth_can_view_and_update_own_profile(): void
     {
         $user = $this->youth();
+        $this->completeYouthOnboarding($user, 'identity');
         $this->actingAs($user)->get('/youth/profile')->assertOk()->assertSee($user->name);
 
-        $this->actingAs($user)->put('/youth/profile', $this->validProfile(['full_name' => 'Erik Kusuma']))
+        $this->actingAs($user)->put('/youth/profile', $this->validProfile(['bio' => 'Erik membangun komunitas digital.']))
             ->assertRedirect('/youth/profile');
 
-        $this->assertDatabaseHas('user_profiles', ['user_id' => $user->getKey(), 'full_name' => 'Erik Kusuma']);
-        $this->assertSame('Erik Kusuma', $user->fresh()->name);
+        $this->assertDatabaseHas('user_profiles', ['user_id' => $user->getKey(), 'bio' => 'Erik membangun komunitas digital.']);
         $this->assertNotNull($user->fresh()->identity);
         $this->assertNotNull($user->fresh()->profileVisibility);
     }
@@ -44,7 +44,8 @@ class YouthProfileTest extends TestCase
     public function test_all_phase_two_stitch_based_pages_render_for_youth_only(): void
     {
         $youth = $this->youth();
-        foreach (['/youth/home', '/youth/profile', '/youth/profile/edit', '/youth/onboarding', '/youth/interests', '/youth/identity-verification'] as $uri) {
+        $this->completeYouthOnboarding($youth);
+        foreach (['/youth/home', '/youth/biodata', '/youth/profile', '/youth/profile/edit', '/youth/onboarding', '/youth/interests', '/youth/identity-verification', '/youth/account', '/youth/account/security'] as $uri) {
             $this->actingAs($youth)->get($uri)->assertOk();
         }
 
@@ -58,42 +59,49 @@ class YouthProfileTest extends TestCase
     public function test_invalid_profile_input_is_rejected(): void
     {
         $user = $this->youth();
+        $this->completeYouthOnboarding($user, 'identity');
         $this->actingAs($user)->from('/youth/profile/edit')->put('/youth/profile', $this->validProfile([
-            'full_name' => 'A', 'birth_date' => '2099-01-01', 'phone' => 'not-a-phone',
-        ]))->assertRedirect('/youth/profile/edit')->assertSessionHasErrors(['full_name', 'birth_date', 'phone']);
-        $this->assertDatabaseCount('user_profiles', 0);
+            'bio' => '', 'occupation_status' => 'invalid',
+        ]))->assertRedirect('/youth/profile/edit')->assertSessionHasErrors(['bio', 'occupation_status']);
+        $this->assertNull($user->fresh()->profile->bio);
     }
 
     public function test_guest_and_other_user_cannot_update_a_profile(): void
     {
         $owner = $this->youth();
         $other = $this->youth();
+        $this->completeYouthOnboarding($owner, 'identity');
+        $this->completeYouthOnboarding($other, 'identity');
         app(UpdateYouthProfileAction::class)->execute($owner, $this->validProfile(['full_name' => 'Owner Name']));
 
         $this->put('/youth/profile', $this->validProfile())->assertRedirect('/login');
-        $this->actingAs($other)->put('/youth/profile', $this->validProfile(['full_name' => 'Other Name', 'user_id' => $owner->uuid()]));
+        $this->actingAs($other)->put('/youth/profile', $this->validProfile(['bio' => 'Other Bio', 'user_id' => $owner->uuid()]));
 
         $this->assertSame('Owner Name', $owner->fresh()->profile->full_name);
-        $this->assertSame('Other Name', $other->fresh()->profile->full_name);
+        $this->assertSame('Other Bio', $other->fresh()->profile->bio);
+        $this->assertNotSame('Other Bio', $owner->fresh()->profile->bio);
     }
 
     public function test_onboarding_is_resumable(): void
     {
         $user = $this->youth();
-        $this->actingAs($user)->get('/youth/onboarding')->assertOk()->assertSee('Profil dasar');
-        app(UpdateYouthProfileAction::class)->execute($user, $this->validProfile());
-        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('Domisili saat ini');
-        app(UpdateDomicileAction::class)->execute($user, ['administrative_area_id' => AdministrativeArea::where('area_level', 'district')->firstOrFail()->uuid()]);
-        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('Pilih minatmu');
-        app(SyncUserInterestsAction::class)->execute($user, [Interest::firstOrFail()->uuid()]);
-        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('Profil dasar siap');
+        $this->actingAs($user)->get('/youth/onboarding')->assertOk()->assertSee('Biodata');
+        $this->completeYouthOnboarding($user, 'biodata');
+        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('Verifikasi Identitas');
+        $this->completeYouthOnboarding($user, 'identity');
+        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('Profil');
+        $this->completeYouthOnboarding($user, 'profile');
+        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('Portfolio');
+        $this->completeYouthOnboarding($user);
+        $this->actingAs($user->fresh())->get('/youth/onboarding')->assertOk()->assertSee('selesai');
     }
 
     public function test_interests_can_be_selected_updated_and_invalid_ids_are_rejected(): void
     {
         $user = $this->youth();
+        $this->completeYouthOnboarding($user, 'profile');
         $ids = Interest::take(2)->get()->map->uuid()->all();
-        $this->actingAs($user)->put('/youth/interests', ['interests' => $ids])->assertRedirect('/youth/profile');
+        $this->actingAs($user)->put('/youth/interests', ['interests' => $ids])->assertRedirect('/youth/interests');
         $this->assertSame(2, $user->fresh()->interests()->count());
 
         $this->actingAs($user)->from('/youth/interests')->put('/youth/interests', ['interests' => ['018f7890-1234-7abc-8def-0123456789ab']])
@@ -121,6 +129,7 @@ class YouthProfileTest extends TestCase
     public function test_sensitive_fields_are_not_exposed_on_youth_home_or_profile_summary(): void
     {
         $user = $this->youth();
+        $this->completeYouthOnboarding($user, 'identity');
         app(UpdateYouthProfileAction::class)->execute($user, $this->validProfile(['phone' => '+628123456789', 'birth_date' => '1998-03-14']));
         app(UpdateDomicileAction::class)->execute($user, ['administrative_area_id' => AdministrativeArea::where('area_level', 'district')->firstOrFail()->uuid(), 'address_line' => 'Private Address 123']);
         foreach (['/youth/home', '/youth/profile'] as $uri) {
@@ -143,6 +152,7 @@ class YouthProfileTest extends TestCase
     {
         Storage::fake('public');
         $user = $this->youth();
+        $this->completeYouthOnboarding($user, 'identity');
         $this->actingAs($user)->put('/youth/profile', $this->validProfile(['profile_photo' => UploadedFile::fake()->image('avatar.jpg', 400, 400)]));
         Storage::disk('public')->assertExists($user->fresh()->profile->profile_photo_path);
 

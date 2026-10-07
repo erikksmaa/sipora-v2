@@ -1,6 +1,6 @@
 @props(['action', 'recaptcha' => null])
 @php($useRecaptcha = $recaptcha && config('recaptcha.enabled'))
-<form method="post" action="{{ $action }}" class="space-y-5"
+<form method="post" action="{{ $action }}" class="space-y-5" @if($recaptcha === 'login') data-confirm="false" @endif
     @if($useRecaptcha)
         x-data="recaptchaForm(@js(config('recaptcha.site_key')), @js(config('recaptcha.actions.'.$recaptcha)))"
         @submit.prevent="submit"

@@ -9,8 +9,6 @@ use App\Models\Organization;
 use App\Models\OrganizationCategory;
 use App\Models\OrganizationMembership;
 use App\Models\User;
-use App\Models\UserIdentity;
-use App\Models\UserProfile;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
@@ -123,14 +121,11 @@ class ActivityRegistrationTest extends TestCase
         $this->assertSame(ActivityParticipation::REGISTRATION_ACCEPTED, $lateParticipation->fresh()->registration_status);
     }
 
-    public function test_identity_membership_and_age_eligibility_are_enforced(): void
+    public function test_onboarded_youth_still_needs_membership_and_age_eligibility(): void
     {
         [$community, $manager, $activity] = $this->context('eligibility', ['requires_identity_verification' => true, 'members_only' => true, 'min_age' => 18, 'max_age' => 30]);
         $youth = $this->youth();
-        UserProfile::create(['user_id' => $youth->getKey(), 'public_slug' => 'pemuda-belum-layak', 'full_name' => 'Pemuda Belum Layak', 'birth_date' => now()->subYears(17)->toDateString()]);
-        $this->actingAs($youth)->post(route('activities.register', $activity))->assertSessionHasErrors('registration');
-        UserIdentity::create(['user_id' => $youth->getKey(), 'verification_status' => UserIdentity::STATUS_VERIFIED, 'verification_method' => 'kia', 'verified_at' => now()]);
-        $youth->unsetRelation('identity');
+        $youth->profile->update(['birth_date' => now()->subYears(17)->toDateString()]);
         $this->actingAs($youth)->post(route('activities.register', $activity))->assertSessionHasErrors('registration');
         $this->membership($community, $youth, OrganizationMembership::ROLE_MEMBER, $manager);
         $this->actingAs($youth)->post(route('activities.register', $activity))->assertSessionHasErrors('registration');
@@ -167,7 +162,7 @@ class ActivityRegistrationTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 
     private function participation(Activity $activity, User $user, string $status = ActivityParticipation::REGISTRATION_PENDING): ActivityParticipation

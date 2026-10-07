@@ -127,6 +127,54 @@ class ActivityAttendanceTest extends TestCase
         ActivityAttendance::create($attributes);
     }
 
+    public function test_bulk_attendance_defaults_to_present_and_persists_twenty_participants_in_one_request(): void
+    {
+        [$community, $manager, $activity, $session] = $this->context('bulk');
+        $participants = collect(range(1, 20))->map(fn ($number) => $this->participation($activity, $this->youth(['name' => 'Peserta '.$number])));
+        $this->participation($activity, $this->youth(['name' => 'Peserta Pending']), ActivityParticipation::REGISTRATION_PENDING);
+        $page = route('manager.activities.attendance.index', [$community, $activity, $session]);
+        $save = route('manager.activities.attendance.bulk-update', [$community, $activity, $session]);
+
+        $response = $this->actingAs($manager)->get($page)->assertOk()->assertSee('Tandai Semua Hadir')->assertSee('Simpan Presensi')->assertDontSee('Peserta Pending');
+        foreach ($participants as $participant) {
+            $response->assertSee('attendance['.$participant->uuid().'][status]', false);
+        }
+        $this->assertSame(20, substr_count($response->getContent(), '][status]"'));
+        $this->assertDatabaseCount('activity_attendances', 0);
+
+        $entries = $participants->mapWithKeys(fn ($participant) => [$participant->uuid() => ['status' => 'present', 'notes' => null]])->all();
+        foreach ($participants->slice(17, 2) as $participant) $entries[$participant->uuid()]['status'] = 'absent';
+        $entries[$participants[19]->uuid()] = ['status' => 'excused', 'notes' => 'Izin keluarga'];
+        $this->actingAs($manager)->put($save, ['attendance' => $entries])->assertRedirect()->assertSessionHas('status');
+        $this->assertDatabaseCount('activity_attendances', 20);
+        $this->assertSame(17, ActivityAttendance::where('attendance_status', 'present')->count());
+        $this->assertSame(2, ActivityAttendance::where('attendance_status', 'absent')->count());
+        $this->assertSame(1, ActivityAttendance::where('attendance_status', 'excused')->count());
+        $this->assertSame('Izin keluarga', ActivityAttendance::where('attendance_status', 'excused')->firstOrFail()->notes);
+        $this->actingAs($manager)->get($page)->assertOk()->assertSee('data-confirm-title="Perbarui presensi?"', false)->assertSee('value="excused" selected', false);
+
+        $entries[$participants[19]->uuid()]['status'] = 'present';
+        $entries[$participants[18]->uuid()]['status'] = 'present';
+        $this->actingAs($manager)->put($save, ['attendance' => $entries])->assertRedirect();
+        $this->assertDatabaseCount('activity_attendances', 20);
+        $this->assertSame(19, ActivityAttendance::where('attendance_status', 'present')->count());
+        $this->assertSame(1, ActivityAttendance::where('attendance_status', 'absent')->count());
+    }
+
+    public function test_bulk_attendance_rejects_foreign_participants_and_other_community_manager(): void
+    {
+        [$community, $manager, $activity, $session] = $this->context('bulk-secure');
+        [, $otherManager, $otherActivity] = $this->context('bulk-other');
+        $participant = $this->participation($activity, $this->youth());
+        $foreign = $this->participation($otherActivity, $this->youth());
+        $save = route('manager.activities.attendance.bulk-update', [$community, $activity, $session]);
+        $entries = [$participant->uuid() => ['status' => 'present'], $foreign->uuid() => ['status' => 'absent']];
+
+        $this->actingAs($otherManager)->put($save, ['attendance' => $entries])->assertForbidden();
+        $this->actingAs($manager)->put($save, ['attendance' => $entries])->assertSessionHasErrors('attendance');
+        $this->assertDatabaseCount('activity_attendances', 0);
+    }
+
     private function context(string $slug): array
     {
         $manager = $this->youth();
@@ -155,7 +203,7 @@ class ActivityAttendanceTest extends TestCase
         $user = User::factory()->create($attributes);
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 
     private function participation(Activity $activity, User $user, string $status = ActivityParticipation::REGISTRATION_ACCEPTED): ActivityParticipation

@@ -5,7 +5,7 @@
 <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 @forelse($programs as $program)
     <a href="{{ route('manager.programs.show', [$organization, $program]) }}" class="grid gap-4 border-b border-slate-100 p-5 transition hover:bg-slate-50 md:grid-cols-[1fr_auto] md:items-center">
-        <div><p class="text-xs font-bold uppercase tracking-wide text-orange-600">{{ $program->category?->name }}</p><h2 class="mt-1 text-lg font-extrabold text-[#14205c]">{{ $program->title }}</h2><p class="mt-1 text-sm text-slate-500">{{ $program->start_date?->translatedFormat('d M Y') ?? 'Periode belum ditentukan' }}@if($program->end_date) – {{ $program->end_date->translatedFormat('d M Y') }}@endif · {{ $program->activities_count }} Activity</p></div>
+        <div><x-media.representative domain="programs" :identity="$program->slug" compact class="mb-3 max-w-sm" /><p class="text-xs font-bold uppercase tracking-wide text-orange-600">{{ $program->category?->name }}</p><h2 class="mt-1 text-lg font-extrabold text-[#14205c]">{{ $program->title }}</h2><p class="mt-1 text-sm text-slate-500">{{ $program->start_date?->translatedFormat('d M Y') ?? 'Periode belum ditentukan' }}@if($program->end_date) – {{ $program->end_date->translatedFormat('d M Y') }}@endif · {{ $program->activities_count }} Activity</p></div>
         <x-program.status-badge :status="$program->execution_status" />
     </a>
 @empty

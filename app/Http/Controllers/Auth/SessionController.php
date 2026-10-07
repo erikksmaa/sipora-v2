@@ -19,7 +19,7 @@ class SessionController extends Controller
         }
         $request->session()->regenerate();
 
-        return to_route(HomeRoute::for($request->user()));
+        return to_route(HomeRoute::for($request->user()))->with('status', 'Selamat datang! Anda berhasil masuk ke SIPORA.');
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -28,6 +28,6 @@ class SessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return to_route('home');
+        return to_route('home')->with('status', 'Anda berhasil keluar dari SIPORA.');
     }
 }

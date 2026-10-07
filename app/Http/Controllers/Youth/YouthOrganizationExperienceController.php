@@ -3,24 +3,36 @@
 namespace App\Http\Controllers\Youth;
 
 use App\Actions\Youth\DeleteOrganizationExperienceAction;
+use App\Actions\Youth\SavePortfolioEvidenceAction;
 use App\Actions\Youth\UpsertOrganizationExperienceAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Youth\UpsertOrganizationExperienceRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 final class YouthOrganizationExperienceController extends Controller
 {
-    public function store(UpsertOrganizationExperienceRequest $request, UpsertOrganizationExperienceAction $action): RedirectResponse
+    public function store(UpsertOrganizationExperienceRequest $request, UpsertOrganizationExperienceAction $action, SavePortfolioEvidenceAction $saveEvidence): RedirectResponse
     {
-        $action->execute($request->user(), $request->validated());
+        DB::transaction(function () use ($request, $action, $saveEvidence): void {
+            $experience = $action->execute($request->user(), $request->validated());
+            if ($request->hasFile('evidence')) {
+                $saveEvidence->execute($request->user(), 'organization', $experience, $request->file('evidence'));
+            }
+        });
 
         return back()->with('status', 'Pengalaman organisasi berhasil ditambahkan.');
     }
 
-    public function update(UpsertOrganizationExperienceRequest $request, UpsertOrganizationExperienceAction $action, string $experience): RedirectResponse
+    public function update(UpsertOrganizationExperienceRequest $request, UpsertOrganizationExperienceAction $action, SavePortfolioEvidenceAction $saveEvidence, string $experience): RedirectResponse
     {
-        $action->execute($request->user(), $request->validated(), $experience);
+        DB::transaction(function () use ($request, $action, $saveEvidence, $experience): void {
+            $record = $action->execute($request->user(), $request->validated(), $experience);
+            if ($request->hasFile('evidence')) {
+                $saveEvidence->execute($request->user(), 'organization', $record, $request->file('evidence'));
+            }
+        });
 
         return back()->with('status', 'Pengalaman organisasi berhasil diperbarui.');
     }

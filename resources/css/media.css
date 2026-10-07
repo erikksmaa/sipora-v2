@@ -1,0 +1,17 @@
+/* Phase 23C: media framing only; preserve the current Pixel Adventure theme. */
+.media-representative { position: relative; min-width: 0; width: 100%; overflow: hidden; background: var(--color-surface-muted); }
+.media-representative img { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 320px; object-fit: cover; }
+.media-representative figcaption { padding: 6px 12px; font-size: 10px; color: var(--color-text-muted); background: var(--color-surface-soft); }
+.media-representative-compact img { max-height: 160px; }
+.media-evidence { display: grid; gap: 8px; max-width: 320px; margin-top: 12px; }
+.media-evidence img { width: 100%; max-height: 220px; object-fit: contain; background: var(--color-surface-muted); border: 1px solid var(--color-border); }
+.media-evidence small { font-size: 11px; color: var(--color-text-muted); }
+.media-document { display: grid; place-items: center; min-height: 80px; background: var(--color-surface-soft); }
+.media-failed { display: grid; place-items: center; min-height: 48px; background: var(--color-primary-50); color: var(--color-primary); font-weight: 700; font-size: 12px; overflow: hidden; text-align: center; }
+.media-profile-summary { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; min-width: 0; }
+.media-profile-summary img { width: 72px; height: 72px; flex-shrink: 0; object-fit: cover; border: 2px solid var(--color-primary); }
+
+.media-activity { min-width: 0; overflow: hidden; }
+.media-activity > img { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 320px; object-fit: cover; }
+.media-community { display: inline-grid; place-items: center; width: 56px; height: 56px; flex-shrink: 0; background: var(--color-primary-50); border: 2px solid var(--color-primary); overflow: hidden; }
+.media-community img { width: 100%; height: 100%; object-fit: contain; }

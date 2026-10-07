@@ -20,8 +20,6 @@ final class CommunityMemberController extends Controller
     public function index(Request $request, Organization $organization, ManagedCommunityService $managed): View
     {
         Gate::authorize('manageMemberships', $organization);
-        $pending = $organization->memberships()->with('user.profile')
-            ->where('membership_status', OrganizationMembership::STATUS_PENDING)->oldest('requested_at')->get();
         $search = trim((string) $request->query('q', ''));
         $search = mb_substr($search, 0, 80);
         $members = $organization->memberships()->with('user.profile')
@@ -33,11 +31,23 @@ final class CommunityMemberController extends Controller
 
         return view('manager.members.index', [
             'organization' => $organization,
-            'pending' => $pending,
             'members' => $members,
             'actorMembership' => $actorMembership,
             'managedCommunities' => $managed->forUser($request->user()),
             'search' => $search,
+        ]);
+    }
+
+    public function joinRequests(Request $request, Organization $organization, ManagedCommunityService $managed): View
+    {
+        Gate::authorize('manageMemberships', $organization);
+
+        return view('manager.members.join-requests', [
+            'organization' => $organization,
+            'pending' => $organization->memberships()->with('user.profile')
+                ->where('membership_status', OrganizationMembership::STATUS_PENDING)
+                ->oldest('requested_at')->paginate(20),
+            'managedCommunities' => $managed->forUser($request->user()),
         ]);
     }
 
@@ -48,7 +58,7 @@ final class CommunityMemberController extends Controller
         $validated = $request->validate(['decision' => ['required', Rule::in(['accepted', 'rejected'])]]);
         $action->execute($request->user(), $membership, $validated['decision']);
 
-        return to_route('manager.members.index', $organization)->with('status', 'Permintaan bergabung telah diproses.');
+        return to_route('manager.join-requests.index', $organization)->with('status', 'Permintaan bergabung telah diproses.');
     }
 
     public function updateRole(Request $request, Organization $organization, OrganizationMembership $membership, ChangeCommunityMemberRoleAction $action): RedirectResponse

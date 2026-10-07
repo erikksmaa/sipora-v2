@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Youth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 final class UpsertAchievementRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ final class UpsertAchievementRequest extends FormRequest
             'issuer_name' => ['nullable', 'string', 'max:180'],
             'achievement_date' => ['nullable', 'date'],
             'description' => ['nullable', 'string', 'max:1000'],
+            'evidence' => ['nullable', File::types(['pdf', 'jpg', 'jpeg', 'png'])->max(5 * 1024)],
         ];
     }
 }

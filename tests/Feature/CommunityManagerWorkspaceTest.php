@@ -130,7 +130,7 @@ class CommunityManagerWorkspaceTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 
     private function community(string $slug): array

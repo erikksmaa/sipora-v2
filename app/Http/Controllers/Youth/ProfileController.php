@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Youth\UpdateProfileRequest;
 use App\Services\Youth\ProfileCompletionService;
 use App\Services\Youth\YouthEligibilityService;
+use App\Services\Youth\YouthOnboardingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,14 +16,17 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProfileController extends Controller
 {
-    public function show(Request $request, ProfileCompletionService $completion, YouthEligibilityService $eligibility): View
+    public function show(Request $request, ProfileCompletionService $completion, YouthEligibilityService $eligibility, YouthOnboardingService $onboardingService): View
     {
         $user = $request->user()->load([
             'profile', 'primaryDomicile.administrativeArea', 'interests', 'identity', 'profileVisibility',
-            'skills', 'educations', 'organizationExperiences', 'achievements',
         ]);
 
-        return view('youth.profile.show', compact('user') + ['completion' => $completion->calculate($user), 'eligibility' => $eligibility->for($user)]);
+        return view('youth.profile.show', compact('user') + [
+            'completion' => $completion->calculate($user),
+            'eligibility' => $eligibility->for($user),
+            'onboarding' => $onboardingService->state($user),
+        ]);
     }
 
     public function edit(Request $request): View

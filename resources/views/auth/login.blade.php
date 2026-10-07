@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.auth')
 @section('title', 'Sign in · SIPORA v2')
 @section('content')
 <section class="auth-card">

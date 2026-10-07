@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.auth')
 @section('content')
 <section class="auth-card">
     <h1 class="mb-6 text-2xl font-bold">Reset your password</h1>

@@ -19,12 +19,14 @@ class ManagerWorkspaceRenderingTest extends TestCase
         $this->seed(RolePermissionSeeder::class);
         $leader = User::factory()->create();
         $leader->assignRole('youth');
+        $this->completeYouthOnboarding($leader);
         $category = OrganizationCategory::create(['name' => 'Komunitas Uji', 'slug' => 'komunitas-uji']);
 
         $first = $this->community('community-satu', $category, $leader);
         $second = $this->community('community-dua', $category, $leader);
         $outsider = User::factory()->create();
         $outsider->assignRole('youth');
+        $this->completeYouthOnboarding($outsider);
         $other = $this->community('community-lain', $category, $outsider);
 
         $response = $this->actingAs($leader)->get(route('manager.dashboard', $first));
@@ -40,6 +42,7 @@ class ManagerWorkspaceRenderingTest extends TestCase
         $this->seed(RolePermissionSeeder::class);
         $leader = User::factory()->create();
         $leader->assignRole('youth');
+        $this->completeYouthOnboarding($leader);
         $category = OrganizationCategory::create(['name' => 'Komunitas Uji', 'slug' => 'komunitas-uji']);
         $organization = $this->community('community-satu', $category, $leader);
         $member = User::factory()->create(['name' => 'Nama Unik Anggota']);

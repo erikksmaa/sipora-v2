@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.auth')
 @section('content')
 <section class="auth-card">
     <h1 class="mb-4 text-2xl font-bold">Verify your email</h1>

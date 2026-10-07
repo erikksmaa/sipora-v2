@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Actions\Manager\RecordActivityAttendanceAction;
+use App\Actions\Manager\BulkRecordActivityAttendanceAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Manager\BulkRecordActivityAttendanceRequest;
 use App\Http\Requests\Manager\RecordActivityAttendanceRequest;
 use App\Models\Activity;
 use App\Models\ActivityParticipation;
@@ -24,12 +26,12 @@ final class ActivityAttendanceController extends Controller
         $participants = $activity->participations()
             ->where('registration_status', ActivityParticipation::REGISTRATION_ACCEPTED)
             ->with(['user.profile', 'attendances' => fn ($query) => $query->where('activity_session_id', $session->getKey())])
-            ->orderBy('requested_at')->paginate(20);
+            ->orderBy('requested_at')->get();
         $counts = $session->attendances()
             ->whereHas('participation', fn ($query) => $query->where('registration_status', ActivityParticipation::REGISTRATION_ACCEPTED))
             ->selectRaw('attendance_status, COUNT(*) total')
             ->groupBy('attendance_status')->pluck('total', 'attendance_status');
-        $acceptedCount = $activity->participations()->where('registration_status', ActivityParticipation::REGISTRATION_ACCEPTED)->count();
+        $acceptedCount = $participants->count();
 
         return view('manager.attendance.index', [
             'organization' => $organization,
@@ -42,6 +44,14 @@ final class ActivityAttendanceController extends Controller
             'unmarkedCount' => $acceptedCount - (int) $counts->sum(),
             'managedCommunities' => $managed->forUser($request->user()),
         ]);
+    }
+
+    public function bulkUpdate(BulkRecordActivityAttendanceRequest $request, Organization $organization, Activity $activity, ActivitySession $session, BulkRecordActivityAttendanceAction $action): RedirectResponse
+    {
+        $this->ensureNested($organization, $activity, $session);
+        $action->execute($request->user(), $activity, $session, $request->validated('attendance'));
+
+        return back()->with('status', 'Presensi seluruh peserta berhasil disimpan.');
     }
 
     public function update(RecordActivityAttendanceRequest $request, Organization $organization, Activity $activity, ActivitySession $session, ActivityParticipation $participation, RecordActivityAttendanceAction $action): RedirectResponse

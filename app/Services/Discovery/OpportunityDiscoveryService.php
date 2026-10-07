@@ -44,7 +44,7 @@ final class OpportunityDiscoveryService
             ->where('publication_status', Opportunity::STATUS_PUBLISHED)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
-            ->with(['category:id,name,slug', 'organization:id,name,slug,review_status,operational_status', 'administrativeArea:id,name,code']);
+            ->with(['category:id,name,slug', 'organization:id,name,slug,logo_path,review_status,operational_status', 'administrativeArea:id,name,code']);
     }
 
     public function featured(int $limit = 3): Collection

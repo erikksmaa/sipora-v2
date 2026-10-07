@@ -216,6 +216,6 @@ class CertificateTest extends TestCase
         $user = User::factory()->create($attributes);
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 }

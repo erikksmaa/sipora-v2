@@ -3,8 +3,9 @@
 @section('content')
 <div class="mx-auto max-w-4xl space-y-6">
     <div>
-        <a class="text-sm font-bold text-[#243378]" href="{{ route('youth.profile.show') }}">← Kembali ke profil</a>
-        <h1 class="mt-3 text-3xl font-extrabold">Verifikasi Identitas Youth</h1>
+        <a class="text-sm font-bold text-[#243378]" href="{{ route('youth.onboarding') }}">← Kembali ke tahapan akun</a>
+        <p class="mt-3 text-xs font-extrabold uppercase tracking-widest text-accent-600">Aktivasi Akun · Identitas dan Konfirmasi</p>
+        <h1 class="mt-2 text-3xl font-extrabold">Verifikasi Identitas Youth</h1>
         <p class="mt-2 text-slate-600">Verifikasi identitas berbeda dari login Google dan verifikasi email. Dokumenmu disimpan secara privat dan hanya dapat diakses oleh admin SIPORA yang berwenang.</p>
     </div>
 
@@ -36,7 +37,7 @@
                 };
             @endphp
             <span class="grid size-14 place-items-center rounded-full {{ $statusColor }} text-2xl font-bold">
-                {{ $identity->verification_status === 'verified' ? '✓' : ($identity->verification_status === 'rejected' ? '✕' : '⏳') }}
+                <x-ui.icon :name="$identity->verification_status === 'verified' ? 'badge-check' : ($identity->verification_status === 'rejected' ? 'x' : 'clock')" class="size-7" />
             </span>
             <div>
                 <p class="text-sm font-semibold text-slate-500">Status verifikasi identitas</p>
@@ -49,15 +50,15 @@
 
         @if($identity->verification_status === 'verified')
             <div class="mt-5 rounded-xl bg-green-50 p-4 text-sm text-green-800">
-                ✓ Identitas Anda telah terverifikasi secara resmi. Tidak ada aksi lebih lanjut yang diperlukan.
+                Identitas Anda telah terverifikasi secara resmi. Tidak ada aksi lebih lanjut yang diperlukan.
             </div>
         @elseif($identity->verification_status === 'pending')
             <div class="mt-5 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
-                ⏳ Dokumen Anda sedang dalam antrean peninjauan oleh admin SIPORA. Proses ini biasanya membutuhkan 1–3 hari kerja. Anda akan mendapat notifikasi setelah proses selesai.
+                Dokumen Anda sedang dalam antrean peninjauan oleh admin SIPORA. Anda akan mendapat notifikasi setelah proses selesai.
             </div>
         @elseif($identity->verification_status === 'rejected')
             <div class="mt-5 rounded-xl bg-red-50 p-4 text-sm text-red-800">
-                ✕ Pengajuan sebelumnya ditolak.
+                Pengajuan sebelumnya ditolak.
                 @if($latestVerification?->review_notes)
                     <strong class="block mt-1">Alasan: {{ $latestVerification->review_notes }}</strong>
                 @endif
@@ -123,6 +124,8 @@
                         <li>· Kamu dapat mengajukan ulang jika diminta revisi atau pengajuan ditolak.</li>
                     </ul>
                 </div>
+
+                <label class="flex items-start gap-3 text-sm text-text-secondary"><input class="mt-1 size-4" type="checkbox" required><span>Saya sudah memeriksa jenis dokumen, nomor, dan file yang akan diajukan. Pengajuan ini akan ditinjau Admin.</span></label>
 
                 <div class="flex justify-end">
                     <button class="btn" type="submit">Kirim pengajuan verifikasi</button>

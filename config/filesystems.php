@@ -46,6 +46,14 @@ return [
             'throw' => true,
         ],
 
+        'portfolio_evidence' => [
+            'driver' => 'local',
+            'root' => storage_path('app/portfolio-evidence'),
+            'visibility' => 'private',
+            'serve' => false,
+            'throw' => true,
+        ],
+
         'community_media' => [
             'driver' => 'local',
             'root' => storage_path('app/community-media'),

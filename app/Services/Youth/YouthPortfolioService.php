@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\ActivityParticipation;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
+use App\Models\PortfolioEvidence;
 use App\Models\User;
 use App\Models\UserCertificate;
 use App\Models\UserProfile;
@@ -33,9 +34,11 @@ final class YouthPortfolioService
         $user->load([
             'profile',
             'profileVisibility',
+            'contactLinks',
             'primaryDomicile.administrativeArea',
             'interests' => fn ($query) => $query->orderBy('name'),
             'skills' => fn ($query) => $query->orderBy('name'),
+            'customPortfolioTags',
             'educations',
             'organizationExperiences',
             'achievements' => fn ($query) => $query->whereIn('verification_status', ['self_reported', 'pending', 'verified']),
@@ -66,6 +69,17 @@ final class YouthPortfolioService
         $profile = $user->profile;
         $visibility = $user->profileVisibility;
         $allowed = fn (string $field): bool => ! $public || (bool) $visibility?->{$field};
+        $socialLinks = [];
+        foreach (['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn'] as $platform => $label) {
+            $url = $this->socialUrl($platform, $user->contactLinks?->{$platform});
+            if ($url) {
+                $socialLinks[] = ['label' => $label, 'url' => $url];
+            }
+        }
+        $experienceEvidence = $allowed('show_organization_experience')
+            ? PortfolioEvidence::query()->where('user_id', $user->getKey())->where('record_type', 'organization')
+                ->get()->keyBy(fn (PortfolioEvidence $evidence) => bin2hex($evidence->record_id))
+            : collect();
 
         $communities = $allowed('show_community_membership')
             ? $user->organizationMemberships->map(fn ($membership): array => [
@@ -115,6 +129,11 @@ final class YouthPortfolioService
                 'date' => $achievement->achievement_date?->translatedFormat('M Y'),
                 'description' => $achievement->description,
                 'provenance' => $achievement->verification_status === 'verified' ? 'verified' : 'self_reported',
+                'evidence_url' => $achievement->evidence_path
+                    ? ($public
+                        ? route('portfolio.evidence', [$profile->public_slug, 'achievement', $achievement->uuid()])
+                        : route('youth.portfolio.evidence.file', ['achievement', $achievement->uuid()]))
+                    : null,
             ])->values()->all()
             : [];
 
@@ -132,8 +151,16 @@ final class YouthPortfolioService
                     ? ($public ? route('portfolio.photo', $profile->public_slug) : route('youth.profile.photo'))
                     : null,
             ],
-            'interests' => $allowed('show_interests') ? $user->interests->pluck('name')->all() : [],
-            'skills' => $allowed('show_skills') ? $user->skills->pluck('name')->all() : [],
+            'social_links' => $socialLinks,
+            'interests' => $allowed('show_interests') ? $user->interests->pluck('name')->merge($user->customPortfolioTags->where('kind', 'interest')->pluck('name'))->values()->all() : [],
+            'skills' => $allowed('show_skills') ? $user->skills->pluck('name')->merge($user->customPortfolioTags->where('kind', 'skill')->pluck('name'))->values()->all() : [],
+            'external_certificates' => $public ? [] : $user->certificates()
+                ->where('source_type', UserCertificate::SOURCE_EXTERNAL)->latest('issued_at')->get()
+                ->map(fn ($certificate): array => [
+                    'name' => $certificate->name,
+                    'issuer' => $certificate->issuer_name,
+                    'issued_at' => $certificate->issued_at?->translatedFormat('d M Y'),
+                ])->all(),
             'educations' => $allowed('show_education') ? $user->educations->map(fn ($education): array => [
                 'level' => $education->education_level,
                 'institution' => $education->institution_name,
@@ -147,6 +174,11 @@ final class YouthPortfolioService
                     'role' => $experience->role_title,
                     'period' => $this->period($experience->start_date, $experience->end_date, $experience->is_current),
                     'description' => $experience->description,
+                    'evidence_url' => $experienceEvidence->get(bin2hex($experience->getKey()))?->file_path
+                        ? ($public
+                            ? route('portfolio.evidence', [$profile->public_slug, 'organization', $experience->uuid()])
+                            : route('youth.portfolio.evidence.file', ['organization', $experience->uuid()]))
+                        : null,
                 ])->values()->all() : [],
             'achievements' => $achievements,
             'communities' => $communities,
@@ -179,5 +211,23 @@ final class YouthPortfolioService
         $until = $current ? 'Sekarang' : ($end?->translatedFormat('M Y') ?: null);
 
         return $until ? $from.' – '.$until : $from;
+    }
+
+    private function socialUrl(string $platform, ?string $value): ?string
+    {
+        $value = trim($value ?? '');
+        if ($value === '') {
+            return null;
+        }
+
+        return match ($platform) {
+            'instagram' => preg_match('/^[A-Za-z0-9._]{1,30}$/D', $value)
+                ? 'https://www.instagram.com/'.$value.'/' : null,
+            'facebook' => preg_match('/^(?:https:\/\/(?:www\.)?facebook\.com\/[A-Za-z0-9._-]+\/?|[A-Za-z0-9._-]{3,80})$/D', $value)
+                ? (str_starts_with($value, 'https://') ? $value : 'https://www.facebook.com/'.$value) : null,
+            'linkedin' => preg_match('/^(?:https:\/\/(?:www\.)?linkedin\.com\/in\/[A-Za-z0-9-]+\/?|[A-Za-z0-9-]{3,100})$/D', $value)
+                ? (str_starts_with($value, 'https://') ? $value : 'https://www.linkedin.com/in/'.$value) : null,
+            default => null,
+        };
     }
 }

@@ -1,10 +1,97 @@
 @extends('layouts.manager')
-@section('title','Presensi · '.$activity->title)
+@section('title', 'Presensi · '.$activity->title)
 @section('manager-content')
-<x-workspace.page-header eyebrow="Presensi & kehadiran" title="Manajemen Kehadiran" :description="$activity->title.' · Sesi '.$session->session_number"><a class="btn-secondary" href="{{ route('manager.activities.sessions.index',[$organization,$activity]) }}">Semua sesi</a></x-workspace.page-header>
-<div class="mt-4 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm font-bold text-primary">{{ $session->title }} · {{ $session->start_at->translatedFormat('d M Y, H:i') }}–{{ $session->end_at->format('H:i') }}</div>
-<div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><div class="rounded-2xl bg-white p-5 shadow-sm"><p class="text-xs font-bold uppercase text-slate-500">Peserta diterima</p><p class="mt-2 text-3xl font-black text-[#14205c]">{{ $acceptedCount }}</p></div>@foreach(['present'=>'Hadir','absent'=>'Tidak hadir','excused'=>'Izin'] as $key=>$label)<div class="rounded-2xl bg-white p-5 shadow-sm"><p class="text-xs font-bold uppercase text-slate-500">{{ $label }}</p><p class="mt-2 text-3xl font-black text-[#14205c]">{{ $counts[$key] ?? 0 }}</p></div>@endforeach</div>
-<div class="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><label for="session-selector" class="mb-2 block text-xs font-bold uppercase text-slate-500">Pilih sesi</label><select id="session-selector" class="field !min-h-10 w-full md:w-auto" onchange="if(this.value) window.location=this.value">@foreach($sessions as $option)<option value="{{ route('manager.activities.attendance.index',[$organization,$activity,$option]) }}" @selected($option->is($session))>Sesi {{ $option->session_number }} — {{ $option->title }}</option>@endforeach</select><p class="mt-2 text-xs text-slate-500">{{ $unmarkedCount }} peserta belum ditandai pada sesi ini.</p></div>
-<div class="mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white"><table class="min-w-full text-left text-sm"><thead class="bg-[#eef0ff] text-xs uppercase text-[#243378]"><tr><th class="p-4">Peserta</th><th class="p-4">Status kehadiran</th><th class="p-4">Check-in / out</th><th class="p-4">Catatan</th><th class="p-4">Tindakan</th></tr></thead><tbody>@forelse($participants as $participant)@php($attendance=$participant->attendances->first())<tr class="border-t border-slate-100"><td class="p-4"><p class="font-bold text-[#14205c]">{{ $participant->user->profile?->full_name ?: $participant->user->name }}</p><p class="text-xs text-slate-500">Peserta diterima</p></td><td colspan="4" class="p-4"><form class="grid items-end gap-3 lg:grid-cols-[150px_180px_180px_1fr_auto]" method="POST" action="{{ route('manager.activities.attendance.update',[$organization,$activity,$session,$participant]) }}">@csrf @method('PUT')<div><label class="mb-1 block text-xs font-bold text-slate-500">Status</label><select class="field !min-h-10" name="attendance_status" required>@foreach(['present'=>'Hadir','absent'=>'Tidak hadir','excused'=>'Izin'] as $value=>$label)<option value="{{ $value }}" @selected(old('attendance_status',$attendance?->attendance_status)===$value)>{{ $label }}</option>@endforeach</select></div><div><label class="mb-1 block text-xs font-bold text-slate-500">Check-in</label><input class="field !min-h-10" type="datetime-local" name="checked_in_at" value="{{ old('checked_in_at',$attendance?->checked_in_at?->format('Y-m-d\TH:i')) }}"></div><div><label class="mb-1 block text-xs font-bold text-slate-500">Check-out</label><input class="field !min-h-10" type="datetime-local" name="checked_out_at" value="{{ old('checked_out_at',$attendance?->checked_out_at?->format('Y-m-d\TH:i')) }}"></div><div><label class="mb-1 block text-xs font-bold text-slate-500">Catatan</label><input class="field !min-h-10" name="notes" maxlength="3000" value="{{ old('notes',$attendance?->notes) }}" placeholder="Opsional"></div><button class="btn-primary">{{ $attendance ? 'Perbarui' : 'Simpan' }}</button></form></td></tr>@empty<tr><td colspan="5" class="p-10 text-center"><p class="font-bold text-[#14205c]">Belum ada peserta diterima</p><p class="mt-2 text-sm text-slate-500">Peserta pending, ditolak, atau dibatalkan tidak ditampilkan sebagai target presensi.</p></td></tr>@endforelse</tbody></table></div><div class="mt-5">{{ $participants->links() }}</div>
-<div class="mt-6 rounded-2xl border border-[#cbd3ff] bg-[#eef0ff] p-5 text-sm text-[#243378]"><p class="font-bold">Presensi adalah bukti partisipasi per sesi.</p><p class="mt-1">Pencatatan di halaman ini tidak mengubah status penyelesaian peserta secara otomatis.</p></div>
+@php
+    $statusLabels = ['present' => 'Hadir', 'absent' => 'Tidak Hadir', 'excused' => 'Izin'];
+    $initialStatuses = $participants->mapWithKeys(function ($participant) use ($statusLabels) {
+        $status = old('attendance.'.$participant->uuid().'.status', $participant->attendances->first()?->attendance_status ?? 'present');
+        return [$participant->uuid() => array_key_exists($status, $statusLabels) ? $status : 'present'];
+    })->all();
+    $hasSavedAttendance = $counts->sum() > 0;
+@endphp
+
+<x-workspace.page-header eyebrow="Presensi & kehadiran" title="Manajemen Kehadiran" :description="$activity->title.' · Sesi '.$session->session_number.' — '.$session->title">
+    <a class="btn-secondary" href="{{ route('manager.activities.sessions.index', [$organization, $activity]) }}">Semua sesi</a>
+</x-workspace.page-header>
+
+<div class="mt-4 rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm font-semibold text-text-primary">
+    {{ $session->title }} · {{ $session->start_at->translatedFormat('d M Y, H:i') }}–{{ $session->end_at->format('H:i') }}
+</div>
+
+<div class="mt-5" x-data="bulkAttendance(@js($initialStatuses))">
+    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-live="polite">
+        <div class="rounded-xl border border-border bg-white p-4 shadow-sm">
+            <p class="text-xs font-bold uppercase text-text-muted">Peserta diterima</p>
+            <p class="mt-2 text-2xl font-extrabold text-text-primary">{{ $acceptedCount }}</p>
+        </div>
+        @foreach($statusLabels as $status => $label)
+            <div class="rounded-xl border border-border bg-white p-4 shadow-sm">
+                <p class="text-xs font-bold uppercase text-text-muted">{{ $label }}</p>
+                <p class="mt-2 text-2xl font-extrabold text-text-primary" x-text="count('{{ $status }}')">{{ $status === 'present' ? $acceptedCount - ($counts['absent'] ?? 0) - ($counts['excused'] ?? 0) : ($counts[$status] ?? 0) }}</p>
+            </div>
+        @endforeach
+    </div>
+
+    <form class="mt-5" method="POST" action="{{ route('manager.activities.attendance.bulk-update', [$organization, $activity, $session]) }}"
+          @if($hasSavedAttendance) data-confirm="Presensi yang sudah tersimpan pada sesi ini akan diperbarui." data-confirm-title="Perbarui presensi?" data-confirm-button="Ya, simpan" @endif>
+        @csrf
+        @method('PUT')
+        <div class="rounded-xl border border-border bg-white p-4 shadow-sm">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                    <label for="session-selector" class="mb-2 block text-xs font-bold uppercase text-text-muted">Pilih sesi</label>
+                    <select id="session-selector" class="field !min-h-10 w-full md:w-auto" onchange="if (this.value) window.location = this.value">
+                        @foreach($sessions as $option)
+                            <option value="{{ route('manager.activities.attendance.index', [$organization, $activity, $option]) }}" @selected($option->is($session))>Sesi {{ $option->session_number }} — {{ $option->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @if($acceptedCount)
+                    <button type="button" class="btn-secondary !min-h-10" x-on:click="markAllPresent()">Tandai Semua Hadir</button>
+                @endif
+            </div>
+            <p class="mt-3 text-xs text-text-muted">{{ $unmarkedCount }} peserta belum memiliki presensi tersimpan. Pilihan Hadir baru disimpan setelah Anda menekan Simpan Presensi.</p>
+        </div>
+
+        <div class="mt-5 overflow-hidden rounded-xl border border-border bg-white shadow-sm">
+            <div class="hidden gap-4 border-b border-border bg-surface-soft px-5 py-3 text-xs font-bold uppercase text-text-muted md:grid md:grid-cols-[minmax(0,1fr)_11rem_minmax(0,1.5fr)]">
+                <span>Peserta</span><span>Status kehadiran</span><span>Catatan</span>
+            </div>
+            @forelse($participants as $participant)
+                @php($attendance = $participant->attendances->first())
+                <div class="grid gap-3 border-b border-border p-4 last:border-0 md:grid-cols-[minmax(0,1fr)_11rem_minmax(0,1.5fr)] md:items-center md:gap-4 md:px-5">
+                    <div class="min-w-0">
+                        <p class="font-bold text-text-primary">{{ $participant->user->profile?->full_name ?: $participant->user->name }}</p>
+                        <p class="text-xs text-text-muted">Peserta diterima</p>
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-xs font-bold text-text-muted md:sr-only" for="status-{{ $participant->uuid() }}">Status kehadiran {{ $participant->user->name }}</label>
+                        <select id="status-{{ $participant->uuid() }}" class="field !min-h-10 w-full" name="attendance[{{ $participant->uuid() }}][status]" x-model="statuses['{{ $participant->uuid() }}']" required>
+                            @foreach($statusLabels as $value => $label)
+                                <option value="{{ $value }}" @selected($initialStatuses[$participant->uuid()] === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-xs font-bold text-text-muted md:sr-only" for="notes-{{ $participant->uuid() }}">Catatan {{ $participant->user->name }}</label>
+                        <input id="notes-{{ $participant->uuid() }}" class="field !min-h-10 w-full" name="attendance[{{ $participant->uuid() }}][notes]" maxlength="3000" value="{{ old('attendance.'.$participant->uuid().'.notes', $attendance?->notes) }}" placeholder="Catatan opsional">
+                    </div>
+                </div>
+            @empty
+                <div class="p-10 text-center">
+                    <p class="font-bold text-text-primary">Belum ada peserta diterima</p>
+                    <p class="mt-2 text-sm text-text-muted">Peserta pending, ditolak, atau dibatalkan tidak ditampilkan sebagai target presensi.</p>
+                </div>
+            @endforelse
+        </div>
+        @if($acceptedCount)
+            <div class="mt-5 flex justify-end"><button type="submit" class="btn-primary">Simpan Presensi</button></div>
+        @endif
+    </form>
+</div>
+
+<div class="mt-6 rounded-xl border border-border bg-surface-soft p-5 text-sm text-text-secondary">
+    <p class="font-bold text-text-primary">Presensi adalah bukti partisipasi per sesi.</p>
+    <p class="mt-1">Pencatatan di halaman ini tidak mengubah status penyelesaian peserta secara otomatis.</p>
+</div>
 @endsection

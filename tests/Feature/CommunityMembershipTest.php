@@ -131,7 +131,7 @@ class CommunityMembershipTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 
     private function activeCommunity(string $slug = 'komunitas-aktif'): array

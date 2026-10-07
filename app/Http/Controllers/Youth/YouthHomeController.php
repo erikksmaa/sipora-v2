@@ -8,19 +8,26 @@ use App\Models\OrganizationMembership;
 use App\Services\Activity\ActivityPassportService;
 use App\Services\Youth\ProfileCompletionService;
 use App\Services\Youth\YouthEligibilityService;
+use App\Services\Youth\YouthOnboardingService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class YouthHomeController extends Controller
 {
-    public function __invoke(Request $request, ProfileCompletionService $completion, YouthEligibilityService $eligibility, ActivityPassportService $passport): View
+    public function __invoke(Request $request, ProfileCompletionService $completion, YouthEligibilityService $eligibility, ActivityPassportService $passport, YouthOnboardingService $onboardingService): View
     {
         $user = $request->user()->load(['profile', 'primaryDomicile.administrativeArea', 'interests', 'identity']);
+        $onboarding = $onboardingService->state($user);
+
+        if (! $onboarding['onboardingComplete']) {
+            return view('youth.home', compact('user', 'onboarding'));
+        }
 
         $passportQuery = $passport->queryFor($user);
 
         return view('youth.home', [
             'user' => $user,
+            'onboarding' => $onboarding,
             'completion' => $completion->calculate($user),
             'eligibility' => $eligibility->for($user),
             'passportCount' => (clone $passportQuery)->count(),

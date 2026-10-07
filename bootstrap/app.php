@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureYouthOnboardingStage;
 use App\Http\Middleware\SecurityHeaders;
 use App\Support\Auth\HomeRoute;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(SecurityHeaders::class);
         $middleware->alias([
+            'youth.stage' => EnsureYouthOnboardingStage::class,
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
         ]);

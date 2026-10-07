@@ -113,7 +113,7 @@ class ActivitySessionTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('youth');
 
-        return $user;
+        return $this->completeYouthOnboarding($user);
     }
 
     private function membership(Organization $community, User $user, string $role, User $approver): void

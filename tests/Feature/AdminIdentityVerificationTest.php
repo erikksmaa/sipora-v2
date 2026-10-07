@@ -27,7 +27,9 @@ class AdminIdentityVerificationTest extends TestCase
 
     private function userWithRole(string $role): User
     {
-        return User::factory()->create()->assignRole($role);
+        $user = User::factory()->create()->assignRole($role);
+
+        return $role === 'youth' ? $this->completeYouthOnboarding($user, 'biodata') : $user;
     }
 
     private function pendingSubmission(?User $youth = null): UserIdentityVerification

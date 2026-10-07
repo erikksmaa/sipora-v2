@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasBinaryUuid;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'verified_by',
     'verified_at',
 ])]
+#[Hidden(['user_id', 'evidence_path', 'verified_by'])]
 class UserAchievement extends Model
 {
     use HasBinaryUuid, SoftDeletes;

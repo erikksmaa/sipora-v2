@@ -25,7 +25,7 @@ class IdentitySubmissionTest extends TestCase
 
     private function youth(): User
     {
-        return User::factory()->create()->assignRole('youth');
+        return $this->completeYouthOnboarding(User::factory()->create()->assignRole('youth'), 'biodata');
     }
 
     private function validSubmission(array $overrides = []): array
