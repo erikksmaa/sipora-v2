@@ -52,6 +52,7 @@
             ['label' => 'Privasi Portfolio', 'icon' => 'shield-check', 'route' => route('youth.profile.privacy'), 'patterns' => ['youth.profile.privacy'], 'requires' => 'portfolio'],
         ]],
         ['label' => 'Aktivitas Saya', 'items' => [
+            ['label' => 'Development Pathway', 'icon' => 'sparkles', 'route' => route('youth.development-pathway.index'), 'patterns' => ['youth.development-pathway.*'], 'requires' => 'portfolio'],
             ['label' => 'Activity Saya', 'icon' => 'clipboard-check', 'route' => route('youth.activities.index'), 'patterns' => ['youth.activities.*'], 'requires' => 'complete'],
             ['label' => 'Community Saya', 'icon' => 'building', 'route' => route('youth.communities.index'), 'patterns' => ['youth.communities.*'], 'requires' => 'complete'],
             ['label' => 'Opportunity Tersimpan', 'icon' => 'bookmark', 'route' => route('youth.opportunities.bookmarks'), 'patterns' => ['youth.opportunities.*'], 'requires' => 'complete'],

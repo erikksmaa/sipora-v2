@@ -7,6 +7,7 @@ use App\Http\Controllers\Youth\ActivityPassportController;
 use App\Http\Controllers\Youth\BiodataController;
 use App\Http\Controllers\Youth\CommunityApplicationController;
 use App\Http\Controllers\Youth\CustomPortfolioTagController;
+use App\Http\Controllers\Youth\DevelopmentPathwayController;
 use App\Http\Controllers\Youth\ExternalCertificateController;
 use App\Http\Controllers\Youth\IdentityVerificationController;
 use App\Http\Controllers\Youth\InterestController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('yo
         Route::put('/account/security', [AccountSecurityController::class, 'update'])->name('account.security.update');
 
         Route::get('/activities', YouthActivityController::class)->middleware('youth.stage:complete')->name('activities.index');
+        Route::get('/development-pathway', DevelopmentPathwayController::class)->middleware('youth.stage:portfolio')->name('development-pathway.index');
         Route::get('/opportunities/bookmarks', [OpportunityBookmarkController::class, 'index'])->middleware('youth.stage:complete')->name('opportunities.bookmarks');
         Route::post('/opportunities/{opportunity}/bookmark', [OpportunityBookmarkController::class, 'store'])->middleware('youth.stage:complete')->name('opportunities.bookmark');
         Route::delete('/opportunities/{opportunity}/bookmark', [OpportunityBookmarkController::class, 'destroy'])->name('opportunities.bookmark.destroy');
