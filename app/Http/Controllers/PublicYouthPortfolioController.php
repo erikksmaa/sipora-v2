@@ -15,7 +15,10 @@ final class PublicYouthPortfolioController extends Controller
         $presentation = $portfolio->forPublicSlug($profile);
         abort_unless($presentation, 404);
 
-        return view('portfolio.show', ['portfolio' => $presentation]);
+        $target = UserProfile::where('public_slug', $profile)->value('user_id');
+        $canFollow = auth()->user()?->hasRole('youth') && auth()->user()->getKey() !== $target;
+        $socialFollowed = $canFollow && \App\Models\SocialFollow::where('user_id', auth()->user()->getKey())->where('youth_id', $target)->exists();
+        return view('portfolio.show', ['portfolio' => $presentation, 'canFollow' => $canFollow, 'socialFollowed' => $socialFollowed]);
     }
 
     public function photo(string $profile): StreamedResponse

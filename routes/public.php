@@ -63,3 +63,19 @@ Route::middleware(['auth', 'verified', 'role:youth'])->group(function (): void {
     Route::delete('/communities/{organization}/membership', [CommunityMembershipController::class, 'destroy'])->name('communities.membership.destroy');
 });
 Route::get('/forum/{thread}', [ForumController::class, 'show'])->name('forum.show');
+
+
+Route::get('/feed', [\App\Http\Controllers\SocialFeedController::class, 'index'])->name('social.index');
+Route::middleware(['auth', 'verified', 'role:youth', 'youth.stage:complete', 'throttle:30,1'])->group(function (): void {
+    Route::get('/feed/create', [\App\Http\Controllers\SocialFeedController::class, 'create'])->name('social.create');
+    Route::post('/feed', [\App\Http\Controllers\SocialFeedController::class, 'store'])->name('social.store');
+    Route::post('/feed/follow', [\App\Http\Controllers\SocialFeedController::class, 'follow'])->name('social.follow');
+    Route::get('/feed/{post}/edit', [\App\Http\Controllers\SocialFeedController::class, 'edit'])->name('social.edit');
+    Route::put('/feed/{post}', [\App\Http\Controllers\SocialFeedController::class, 'update'])->name('social.update');
+    Route::delete('/feed/{post}', [\App\Http\Controllers\SocialFeedController::class, 'destroy'])->name('social.destroy');
+    Route::post('/feed/{post}/likes', [\App\Http\Controllers\SocialFeedController::class, 'like'])->name('social.like');
+    Route::post('/feed/{post}/comments', [\App\Http\Controllers\SocialFeedController::class, 'comment'])->name('social.comments.store');
+    Route::post('/feed/{post}/reports', [\App\Http\Controllers\SocialFeedController::class, 'report'])->name('social.reports.store');
+});
+Route::get('/feed/{post}/image', [\App\Http\Controllers\SocialFeedController::class, 'image'])->name('social.image');
+Route::get('/feed/{post}', [\App\Http\Controllers\SocialFeedController::class, 'show'])->name('social.show');

@@ -27,6 +27,8 @@ final class NotificationActionResolver
                 'activity_registration_result', 'activity_participation_completion' => $this->publicActivity($data['activity_id'] ?? null),
                 'activity_certificate_issued' => $this->ownedCertificate($user, $data['certificate_id'] ?? null),
                 'activity_verification_result' => $this->managedActivity($user, $data['activity_id'] ?? null),
+                'social_followed' => route('social.index', ['tab' => 'following']),
+                'social_commented', 'social_moderated' => $this->socialPost($data['post_id'] ?? null),
                 'forum_thread_replied', 'forum_content_moderated' => $this->publicForumThread($data['thread_id'] ?? null),
                 'program_proposal_reviewed', 'program_logbook_reviewed', 'financial_report_reviewed', 'program_evaluation_finalized' => $this->managedProgram($user, $data['program_id'] ?? null),
                 default => null,
@@ -34,6 +36,12 @@ final class NotificationActionResolver
         } catch (InvalidArgumentException) {
             return null;
         }
+    }
+
+    private function socialPost(mixed $id): string
+    {
+        $post = $this->find(\App\Models\SocialPost::class, $id);
+        return $post && \App\Models\SocialPost::published()->whereKey($post->getKey())->exists() ? route('social.show', $post) : route('social.index');
     }
 
     private function ownedCommunity(User $user, mixed $id): ?string

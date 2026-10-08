@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')
     ->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/feed/posts/{post}/image', [\App\Http\Controllers\SocialFeedController::class, 'image'])->name('social.image');
+        Route::get('/feed/reports', [\App\Http\Controllers\Admin\SocialModerationController::class, 'index'])->name('social.index');
+        Route::patch('/feed/posts/{post}', [\App\Http\Controllers\Admin\SocialModerationController::class, 'post'])->name('social.posts.update');
+        Route::patch('/feed/comments/{comment}', [\App\Http\Controllers\Admin\SocialModerationController::class, 'comment'])->name('social.comments.update');
+        Route::patch('/feed/reports/{report}/resolve', [\App\Http\Controllers\Admin\SocialModerationController::class, 'resolve'])->name('social.reports.resolve');
         Route::get('/forum/reports', [ForumModerationController::class, 'index'])->name('forum.index');
         Route::patch('/forum/threads/{thread}', [ForumModerationController::class, 'thread'])->name('forum.threads.update');
         Route::patch('/forum/replies/{reply}', [ForumModerationController::class, 'reply'])->name('forum.replies.update');

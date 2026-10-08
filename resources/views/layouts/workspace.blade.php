@@ -13,6 +13,7 @@
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('manager.dashboard', $organization), 'patterns' => ['manager.dashboard']],
         ]],
         ['label' => 'Community', 'items' => [
+            ['label' => 'Update Community', 'icon' => 'users', 'route' => route('manager.social.index', $organization), 'patterns' => ['manager.social.*']],
             ['label' => 'Profil Community', 'icon' => 'building', 'route' => route('manager.profile.edit', $organization), 'patterns' => ['manager.profile.*']],
             ['label' => 'Anggota', 'icon' => 'users', 'route' => route('manager.members.index', $organization), 'patterns' => ['manager.members.*']],
             ['label' => 'Permintaan Bergabung', 'icon' => 'users', 'route' => route('manager.join-requests.index', $organization), 'patterns' => ['manager.join-requests.*']],
@@ -52,6 +53,7 @@
             ['label' => 'Privasi Portfolio', 'icon' => 'shield-check', 'route' => route('youth.profile.privacy'), 'patterns' => ['youth.profile.privacy'], 'requires' => 'portfolio'],
         ]],
         ['label' => 'Aktivitas Saya', 'items' => [
+            ['label' => 'Social Feed', 'icon' => 'users', 'route' => route('social.index'), 'patterns' => ['social.*']],
             ['label' => 'Forum Community', 'icon' => 'users', 'route' => route('forum.index'), 'patterns' => ['forum.*']],
             ['label' => 'Development Pathway', 'icon' => 'sparkles', 'route' => route('youth.development-pathway.index'), 'patterns' => ['youth.development-pathway.*'], 'requires' => 'portfolio'],
             ['label' => 'Activity Saya', 'icon' => 'clipboard-check', 'route' => route('youth.activities.index'), 'patterns' => ['youth.activities.*'], 'requires' => 'complete'],
@@ -74,6 +76,7 @@
             ['label' => 'Identitas Pemuda', 'icon' => 'shield-check', 'route' => route('admin.identity-verifications.index'), 'patterns' => ['admin.identity-verifications.*']],
         ]],
         ['label' => 'Konten', 'items' => [
+            ['label' => 'Moderasi Feed', 'icon' => 'users', 'route' => route('admin.social.index'), 'patterns' => ['admin.social.*']],
             ['label' => 'Moderasi Forum', 'icon' => 'users', 'route' => route('admin.forum.index'), 'patterns' => ['admin.forum.*']],
             ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
         ]],

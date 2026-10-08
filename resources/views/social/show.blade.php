@@ -1,0 +1,10 @@
+@extends('layouts.public')
+@section('title', 'Update · Social Feed SIPORA')
+@section('content')
+<div class="mx-auto max-w-4xl space-y-5 px-5 py-10"><a class="btn-outline" href="{{ route('social.index') }}">Kembali ke Feed</a><h1 class="sr-only">Detail post</h1>
+@include('social.post-card', ['detail'=>true])
+@if($canEdit && !$post->is_hidden && !$post->is_removed)<div class="flex flex-wrap gap-3"><a class="btn-outline" href="{{ route('social.edit', $post) }}">Edit post</a><form method="post" action="{{ route('social.destroy', $post) }}" onsubmit="return confirm('Hapus post dari feed?')">@csrf @method('DELETE')<button class="btn-outline" type="submit">Hapus post</button></form></div>@endif
+@auth @if(auth()->user()->hasRole('youth') && $post->visibility === 'public')<div class="sipora-card p-5">@include('social.report')</div>@endif @endauth
+<section class="sipora-card p-5 sm:p-6"><h2 class="font-heading text-xl font-bold text-text-primary">Komentar</h2><div class="mt-5 space-y-5">@forelse($comments as $comment)<article class="border-t border-border pt-4"><p class="text-xs font-bold text-text-muted">{{ \App\Support\ForumDisplayName::for($comment->author) }} · {{ $comment->created_at->diffForHumans() }}</p><p class="mt-2 whitespace-pre-line break-words text-sm leading-7 text-text-secondary">{{ $comment->body }}</p>@auth @if(auth()->user()->hasRole('youth'))@include('social.report', ['comment'=>$comment])@endif @endauth</article>@empty<p class="text-sm text-text-muted">Belum ada komentar.</p>@endforelse</div><div class="mt-4">{{ $comments->links() }}</div>
+@auth @if(auth()->user()->hasRole('youth') && $post->visibility === 'public')<form class="mt-6 space-y-3" method="post" action="{{ route('social.comments.store', $post) }}">@csrf<label class="block text-sm font-bold text-text-primary">Tulis komentar<textarea class="field mt-2 min-h-28 w-full" name="body" maxlength="2000" required>{{ old('body') }}</textarea></label><button class="btn-primary" type="submit">Kirim komentar</button></form>@endif @else<a class="btn-outline mt-5" href="{{ route('login') }}">Masuk untuk berinteraksi</a>@endauth</section></div>
+@endsection

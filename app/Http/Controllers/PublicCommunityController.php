@@ -33,7 +33,8 @@ final class PublicCommunityController extends Controller
             ->limit(6)
             ->get();
 
-        return view('public.communities.show', compact('organization', 'membership', 'activities', 'programs'));
+        $socialFollowed = $request->user()?->hasRole('youth') && \App\Models\SocialFollow::where('user_id', $request->user()->getKey())->where('organization_id', $organization->getKey())->exists();
+        return view('public.communities.show', compact('organization', 'membership', 'activities', 'programs', 'socialFollowed'));
     }
 
     public function logo(Organization $organization): StreamedResponse
