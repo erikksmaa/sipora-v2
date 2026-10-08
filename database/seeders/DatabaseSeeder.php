@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(RolePermissionSeeder::class);
+        $this->call(ForumCategorySeeder::class);
 
         if (app()->environment('production')) {
             $this->command?->warn('Development demo data was not seeded in production.');

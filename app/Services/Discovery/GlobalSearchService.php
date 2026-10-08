@@ -2,6 +2,7 @@
 
 namespace App\Services\Discovery;
 
+use App\Models\ForumThread;
 use App\Services\Youth\PublicYouthDirectoryService;
 use Illuminate\Support\Collection;
 
@@ -21,7 +22,7 @@ final class GlobalSearchService
         $query = mb_substr(trim(is_string($input) ? $input : ''), 0, 120);
 
         if ($query === '') {
-            return ['query' => '', 'activities' => collect(), 'communities' => collect(), 'opportunities' => collect(), 'programs' => collect(), 'youth' => collect()];
+            return ['query' => '', 'activities' => collect(), 'communities' => collect(), 'opportunities' => collect(), 'programs' => collect(), 'youth' => collect(), 'forumThreads' => collect()];
         }
 
         $activities = $this->activities->publicQuery();
@@ -43,6 +44,10 @@ final class GlobalSearchService
             'opportunities' => $opportunities->orderByRaw('deadline_at IS NULL')->orderBy('deadline_at')->limit(8)->get(),
             'programs' => $programs->orderByRaw("CASE execution_status WHEN 'running' THEN 0 ELSE 1 END")->orderByDesc('start_date')->limit(8)->get(),
             'youth' => $this->youth->search($query),
+            'forumThreads' => ForumThread::query()->whereIn('status', [ForumThread::ACTIVE, ForumThread::LOCKED])
+                ->whereHas('category', fn ($category) => $category->where('is_active', true))
+                ->where(fn ($threads) => $threads->where('title', 'like', "%{$query}%")->orWhere('body', 'like', "%{$query}%"))
+                ->with('category')->orderByDesc('created_at')->limit(8)->get(),
         ];
     }
 }

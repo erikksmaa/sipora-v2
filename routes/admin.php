@@ -3,12 +3,17 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EcosystemMapController;
 use App\Http\Controllers\Admin\IdentityVerificationController;
+use App\Http\Controllers\Admin\ForumModerationController;
 use App\Http\Controllers\Admin\OpportunityController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')
     ->group(function (): void {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+        Route::get('/forum/reports', [ForumModerationController::class, 'index'])->name('forum.index');
+        Route::patch('/forum/threads/{thread}', [ForumModerationController::class, 'thread'])->name('forum.threads.update');
+        Route::patch('/forum/replies/{reply}', [ForumModerationController::class, 'reply'])->name('forum.replies.update');
+        Route::patch('/forum/reports/{report}/resolve', [ForumModerationController::class, 'resolve'])->name('forum.reports.resolve');
         Route::get('/ecosystem-map', EcosystemMapController::class)->name('ecosystem-map.index');
         Route::get('/identity-verifications', [IdentityVerificationController::class, 'index'])->name('identity-verifications.index');
         Route::get('/identity-verifications/{submission}', [IdentityVerificationController::class, 'show'])->name('identity-verifications.show');

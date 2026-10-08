@@ -52,6 +52,7 @@
             ['label' => 'Privasi Portfolio', 'icon' => 'shield-check', 'route' => route('youth.profile.privacy'), 'patterns' => ['youth.profile.privacy'], 'requires' => 'portfolio'],
         ]],
         ['label' => 'Aktivitas Saya', 'items' => [
+            ['label' => 'Forum Community', 'icon' => 'users', 'route' => route('forum.index'), 'patterns' => ['forum.*']],
             ['label' => 'Development Pathway', 'icon' => 'sparkles', 'route' => route('youth.development-pathway.index'), 'patterns' => ['youth.development-pathway.*'], 'requires' => 'portfolio'],
             ['label' => 'Activity Saya', 'icon' => 'clipboard-check', 'route' => route('youth.activities.index'), 'patterns' => ['youth.activities.*'], 'requires' => 'complete'],
             ['label' => 'Community Saya', 'icon' => 'building', 'route' => route('youth.communities.index'), 'patterns' => ['youth.communities.*'], 'requires' => 'complete'],
@@ -73,6 +74,7 @@
             ['label' => 'Identitas Pemuda', 'icon' => 'shield-check', 'route' => route('admin.identity-verifications.index'), 'patterns' => ['admin.identity-verifications.*']],
         ]],
         ['label' => 'Konten', 'items' => [
+            ['label' => 'Moderasi Forum', 'icon' => 'users', 'route' => route('admin.forum.index'), 'patterns' => ['admin.forum.*']],
             ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
         ]],
         ['label' => 'Sistem', 'items' => [

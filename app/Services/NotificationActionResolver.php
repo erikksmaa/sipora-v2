@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Activity;
+use App\Models\ForumThread;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
 use App\Models\Program;
@@ -26,6 +27,7 @@ final class NotificationActionResolver
                 'activity_registration_result', 'activity_participation_completion' => $this->publicActivity($data['activity_id'] ?? null),
                 'activity_certificate_issued' => $this->ownedCertificate($user, $data['certificate_id'] ?? null),
                 'activity_verification_result' => $this->managedActivity($user, $data['activity_id'] ?? null),
+                'forum_thread_replied', 'forum_content_moderated' => $this->publicForumThread($data['thread_id'] ?? null),
                 'program_proposal_reviewed', 'program_logbook_reviewed', 'financial_report_reviewed', 'program_evaluation_finalized' => $this->managedProgram($user, $data['program_id'] ?? null),
                 default => null,
             };
@@ -39,6 +41,12 @@ final class NotificationActionResolver
         $organization = $this->find(Organization::class, $id);
 
         return $organization && hash_equals($organization->created_by_user_id, $user->getKey()) ? route('youth.communities.show', $organization) : null;
+    }
+
+    private function publicForumThread(mixed $id): ?string
+    {
+        $thread = $this->find(ForumThread::class, $id);
+        return $thread && $thread->status !== ForumThread::HIDDEN ? route('forum.show', $thread) : route('forum.index');
     }
 
     private function publicCommunity(mixed $id): ?string

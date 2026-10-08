@@ -24,6 +24,7 @@
                     class="text-xs text-text-muted">{{ $description }}</small></span></a>@endforeach
                 </div>
             </div>
+            <a href="{{ route('forum.index') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('forum.*')]) @if(request()->routeIs('forum.*')) aria-current="page" @endif>Forum</a>
             <a href="{{ route('statistics.index') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('statistics.index')]) @if(request()->routeIs('statistics.index')) aria-current="page" @endif>Statistik Pemuda</a>
             <a href="{{ route('about') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('about')]) @if(request()->routeIs('about')) aria-current="page" @endif>Tentang</a>
             <a href="{{ route('contact') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('contact')]) @if(request()->routeIs('contact')) aria-current="page" @endif>Kontak</a>
@@ -68,6 +69,7 @@
                 href="{{ $href }}" @click="open = false"
             class="flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary">{{ $label }}</a>@endforeach
             <a href="{{ route('statistics.index') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('statistics.index')])>Statistik Pemuda</a>
+            <a href="{{ route('forum.index') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('forum.*')])>Forum</a>
             <a href="{{ route('about') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('about')])>Tentang SIPORA</a>
             <a href="{{ route('contact') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('contact')])>Kontak</a>
             <a href="{{ route('search.index') }}" @click="open = false"
