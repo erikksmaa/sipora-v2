@@ -23,6 +23,10 @@ use App\Http\Controllers\Youth\PortfolioEvidenceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', PublicLandingController::class)->name('home');
+// Internal visual documentation; no database records or public navigation entry.
+if (app()->environment(['local', 'testing'])) {
+    Route::view('/design-system', 'design-system.index')->name('design-system');
+}
 Route::get('/youth', PublicYouthDirectoryController::class)->middleware('throttle:public-search')->name('youth-directory.index');
 Route::get('/statistics', PublicYouthStatisticsController::class)->name('statistics.index');
 Route::get('/ecosystem-map', PublicEcosystemMapController::class)->name('ecosystem-map.index');
