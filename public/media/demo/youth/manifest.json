@@ -1,0 +1,209 @@
+{
+  "title": "SIPORA fictional youth demo profile asset pack",
+  "fictional": true,
+  "generation_mode": "built-in imagegen",
+  "count": 20,
+  "profiles": [
+    {
+      "id": "Y001",
+      "name": "Erik Kusuma Rais",
+      "age": 21,
+      "gender": "man",
+      "interest": "technology and web development",
+      "background": "neutral indoor",
+      "prompt_file": "Y001-erik-kusuma-rais.prompt.txt",
+      "file": "Y001-erik-kusuma-rais.png",
+      "url": "/media/demo/youth/Y001-erik-kusuma-rais.png"
+    },
+    {
+      "id": "Y002",
+      "name": "Aulia Rahma Putri",
+      "age": 20,
+      "gender": "woman",
+      "interest": "design",
+      "background": "neutral indoor",
+      "file": "Y002-aulia-rahma-putri.png",
+      "url": "/media/demo/youth/Y002-aulia-rahma-putri.png"
+    },
+    {
+      "id": "Y003",
+      "name": "Rizky Maulana",
+      "age": 22,
+      "gender": "man",
+      "interest": "sports",
+      "background": "campus-like corridor",
+      "file": "Y003-rizky-maulana.png",
+      "url": "/media/demo/youth/Y003-rizky-maulana.png"
+    },
+    {
+      "id": "Y004",
+      "name": "Nabila Putri Anjani",
+      "age": 21,
+      "gender": "woman",
+      "interest": "public speaking",
+      "background": "community workspace",
+      "file": "Y004-nabila-putri-anjani.png",
+      "url": "/media/demo/youth/Y004-nabila-putri-anjani.png"
+    },
+    {
+      "id": "Y005",
+      "name": "Fajar Ramadhan",
+      "age": 23,
+      "gender": "man",
+      "interest": "entrepreneurship",
+      "background": "simple wall",
+      "file": "Y005-fajar-ramadhan.png",
+      "url": "/media/demo/youth/Y005-fajar-ramadhan.png"
+    },
+    {
+      "id": "Y006",
+      "name": "Siti Aisyah Nuraini",
+      "age": 19,
+      "gender": "woman",
+      "interest": "education",
+      "background": "campus-like corridor",
+      "file": "Y006-siti-aisyah-nuraini.png",
+      "url": "/media/demo/youth/Y006-siti-aisyah-nuraini.png"
+    },
+    {
+      "id": "Y007",
+      "name": "Dimas Pratama",
+      "age": 22,
+      "gender": "man",
+      "interest": "creative media",
+      "background": "creative workspace",
+      "file": "Y007-dimas-pratama.png",
+      "url": "/media/demo/youth/Y007-dimas-pratama.png"
+    },
+    {
+      "id": "Y008",
+      "name": "Anisa Maharani",
+      "age": 20,
+      "gender": "woman",
+      "interest": "volunteering",
+      "background": "outdoor park",
+      "file": "Y008-anisa-maharani.png",
+      "url": "/media/demo/youth/Y008-anisa-maharani.png"
+    },
+    {
+      "id": "Y009",
+      "name": "Bagas Saputra",
+      "age": 24,
+      "gender": "man",
+      "interest": "leadership",
+      "background": "neutral indoor",
+      "file": "Y009-bagas-saputra.png",
+      "url": "/media/demo/youth/Y009-bagas-saputra.png"
+    },
+    {
+      "id": "Y010",
+      "name": "Nadia Safitri",
+      "age": 21,
+      "gender": "woman",
+      "interest": "digital marketing",
+      "background": "community workspace",
+      "file": "Y010-nadia-safitri.png",
+      "url": "/media/demo/youth/Y010-nadia-safitri.png"
+    },
+    {
+      "id": "Y011",
+      "name": "Farhan Akbar",
+      "age": 20,
+      "gender": "man",
+      "interest": "web development",
+      "background": "neutral indoor",
+      "file": "Y011-farhan-akbar.png",
+      "url": "/media/demo/youth/Y011-farhan-akbar.png"
+    },
+    {
+      "id": "Y012",
+      "name": "Luthfi Hakim",
+      "age": 23,
+      "gender": "man",
+      "interest": "photography",
+      "background": "creative workspace",
+      "file": "Y012-luthfi-hakim.png",
+      "url": "/media/demo/youth/Y012-luthfi-hakim.png"
+    },
+    {
+      "id": "Y013",
+      "name": "Zahra Amelia",
+      "age": 19,
+      "gender": "woman",
+      "interest": "environmental activities",
+      "background": "outdoor park",
+      "file": "Y013-zahra-amelia.png",
+      "url": "/media/demo/youth/Y013-zahra-amelia.png"
+    },
+    {
+      "id": "Y014",
+      "name": "Rafi Alamsyah",
+      "age": 22,
+      "gender": "man",
+      "interest": "content creation",
+      "background": "simple wall",
+      "file": "Y014-rafi-alamsyah.png",
+      "url": "/media/demo/youth/Y014-rafi-alamsyah.png"
+    },
+    {
+      "id": "Y015",
+      "name": "Putri Ayuningtyas",
+      "age": 24,
+      "gender": "woman",
+      "interest": "entrepreneurship",
+      "background": "neutral indoor",
+      "file": "Y015-putri-ayuningtyas.png",
+      "url": "/media/demo/youth/Y015-putri-ayuningtyas.png"
+    },
+    {
+      "id": "Y016",
+      "name": "Iqbal Ramadhan",
+      "age": 21,
+      "gender": "man",
+      "interest": "youth organization",
+      "background": "campus-like corridor",
+      "file": "Y016-iqbal-ramadhan.png",
+      "url": "/media/demo/youth/Y016-iqbal-ramadhan.png"
+    },
+    {
+      "id": "Y017",
+      "name": "Salma Nadhira",
+      "age": 20,
+      "gender": "woman",
+      "interest": "UI/UX design",
+      "background": "community workspace",
+      "file": "Y017-salma-nadhira-v2.png",
+      "url": "/media/demo/youth/Y017-salma-nadhira-v2.png"
+    },
+    {
+      "id": "Y018",
+      "name": "Reza Firmansyah",
+      "age": 25,
+      "gender": "man",
+      "interest": "sports",
+      "background": "outdoor park",
+      "file": "Y018-reza-firmansyah.png",
+      "url": "/media/demo/youth/Y018-reza-firmansyah.png"
+    },
+    {
+      "id": "Y019",
+      "name": "Alya Maharani",
+      "age": 22,
+      "gender": "woman",
+      "interest": "education",
+      "background": "campus-like corridor",
+      "file": "Y019-alya-maharani-v2.png",
+      "url": "/media/demo/youth/Y019-alya-maharani-v2.png"
+    },
+    {
+      "id": "Y020",
+      "name": "Kevin Aditya",
+      "age": 20,
+      "gender": "man",
+      "interest": "video editing",
+      "background": "simple wall",
+      "file": "Y020-kevin-aditya.png",
+      "url": "/media/demo/youth/Y020-kevin-aditya.png"
+    }
+  ]
+}

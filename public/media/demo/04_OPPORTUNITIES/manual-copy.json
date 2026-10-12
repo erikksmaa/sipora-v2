@@ -1,0 +1,354 @@
+{
+  "note": "Teks ditambahkan manual di Canva/Figma. Null berarti belum diberikan. Contoh deadline/durasi O006 tidak dianggap detail final. Kategori selain tiga pertama disimpulkan dari nama program.",
+  "opportunities": [
+    {
+      "id": "O001",
+      "title": "FRONTEND DEVELOPER",
+      "organizer": "ORG001",
+      "category": "INTERNSHIP",
+      "cover": "O001/opportunity-001-cover.jpg",
+      "card": "O001/opportunity-001-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": "Pemalang",
+      "duration": "3 Bulan",
+      "deadline": null,
+      "organizerName": "Nusantara Digital Academy",
+      "mode": "Hybrid"
+    },
+    {
+      "id": "O002",
+      "title": "PEMUDA DIGITAL 2026",
+      "organizer": "ORG005",
+      "category": "BEASISWA",
+      "cover": "O002/opportunity-002-cover.jpg",
+      "card": "O002/opportunity-002-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": "Pengembangan Skill Digital untuk Pemuda",
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Pemuda Berkarya Foundation",
+      "callToAction": "Pendaftaran Dibuka"
+    },
+    {
+      "id": "O003",
+      "title": "YOUTH POSTER DESIGN COMPETITION",
+      "organizer": "ORG002",
+      "category": "KOMPETISI",
+      "cover": "O003/opportunity-003-cover.jpg",
+      "card": "O003/opportunity-003-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Pemalang Creative Institute",
+      "theme": "Pemuda dan Masa Depan",
+      "prize": null
+    },
+    {
+      "id": "O004",
+      "title": "Volunteer Festival Pemuda",
+      "organizer": "ORG003",
+      "category": "VOLUNTEER",
+      "cover": "O004/opportunity-004-cover.jpg",
+      "card": "O004/opportunity-004-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Youth Skill Center"
+    },
+    {
+      "id": "O005",
+      "title": "Pelatihan UI/UX Gratis",
+      "organizer": "ORG008",
+      "category": "PELATIHAN",
+      "cover": "O005/opportunity-005-cover.jpg",
+      "card": "O005/opportunity-005-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Creative Talent Hub"
+    },
+    {
+      "id": "O006",
+      "title": "Bootcamp Digital Marketing",
+      "organizer": "ORG004",
+      "category": "BOOTCAMP",
+      "cover": "O006/opportunity-006-cover.jpg",
+      "card": "O006/opportunity-006-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Digital Growth Academy"
+    },
+    {
+      "id": "O007",
+      "title": "Kompetisi Business Plan",
+      "organizer": "ORG005",
+      "category": "KOMPETISI",
+      "cover": "O007/opportunity-007-cover.jpg",
+      "card": "O007/opportunity-007-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Pemuda Berkarya Foundation"
+    },
+    {
+      "id": "O008",
+      "title": "Program Magang UMKM Digital",
+      "organizer": "ORG006",
+      "category": "MAGANG",
+      "cover": "O008/opportunity-008-cover.jpg",
+      "card": "O008/opportunity-008-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Future Career Network"
+    },
+    {
+      "id": "O009",
+      "title": "Scholarship Digital Talent",
+      "organizer": "ORG001",
+      "category": "BEASISWA",
+      "cover": "O009/opportunity-009-cover.jpg",
+      "card": "O009/opportunity-009-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Nusantara Digital Academy"
+    },
+    {
+      "id": "O010",
+      "title": "Training Public Speaking",
+      "organizer": "ORG003",
+      "category": "PELATIHAN",
+      "cover": "O010/opportunity-010-cover.jpg",
+      "card": "O010/opportunity-010-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Youth Skill Center"
+    },
+    {
+      "id": "O011",
+      "title": "Kompetisi Fotografi Pemuda",
+      "organizer": "ORG002",
+      "category": "KOMPETISI",
+      "cover": "O011/opportunity-011-cover.jpg",
+      "card": "O011/opportunity-011-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Pemalang Creative Institute"
+    },
+    {
+      "id": "O012",
+      "title": "Volunteer Lingkungan",
+      "organizer": "ORG007",
+      "category": "VOLUNTEER",
+      "cover": "O012/opportunity-012-cover.jpg",
+      "card": "O012/opportunity-012-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Green Youth Initiative"
+    },
+    {
+      "id": "O013",
+      "title": "Pelatihan Video Editing",
+      "organizer": "ORG008",
+      "category": "PELATIHAN",
+      "cover": "O013/opportunity-013-cover.jpg",
+      "card": "O013/opportunity-013-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Creative Talent Hub"
+    },
+    {
+      "id": "O014",
+      "title": "Internship Content Creator",
+      "organizer": "ORG006",
+      "category": "INTERNSHIP",
+      "cover": "O014/opportunity-014-cover.jpg",
+      "card": "O014/opportunity-014-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Future Career Network"
+    },
+    {
+      "id": "O015",
+      "title": "Program Leadership Pemuda",
+      "organizer": "ORG005",
+      "category": "PROGRAM",
+      "cover": "O015/opportunity-015-cover.jpg",
+      "card": "O015/opportunity-015-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      },
+      "description": null,
+      "location": null,
+      "duration": null,
+      "deadline": null,
+      "organizerName": "Pemuda Berkarya Foundation"
+    }
+  ]
+}

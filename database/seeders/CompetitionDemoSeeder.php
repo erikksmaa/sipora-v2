@@ -28,6 +28,25 @@ class CompetitionDemoSeeder extends Seeder
                 }
             }
             $this->call([DemoYouthSeeder::class, DemoEcosystemSeeder::class, DemoDiscussionSeeder::class]);
+            if (app()->environment('local') && is_file(base_path('output/pdf/07A_PROGRAM_PROPOSALS/manifest.json'))) {
+                $this->call(DemoProposalStatusSeeder::class);
+            }
+            if (app()->environment('local') && is_file(public_path('media/demo/07C_PROGRAM_LOGBOOK/manifest.json'))) {
+                $this->call(DemoProgramLogbookSeeder::class);
+            }
+            if (app()->environment('local') && is_file(base_path('output/pdf/07D_ELPJ/manifest.json'))) {
+                $this->call(DemoProgramFinancialReportSeeder::class);
+            }
+            if (app()->environment('local') && is_file(base_path('output/demo-assets/final-evaluation-scenario.json'))) {
+                $this->call(DemoFinalEvaluationSeeder::class);
+            }
+            if (app()->environment('local') && is_file(public_path('media/demo/08A_SOCIAL_FEED/manifest.json'))) {
+                $this->call(DemoSocialFeedMediaSeeder::class);
+            }
+            if (app()->environment('local') && is_file(public_path('media/demo/08A_SOCIAL_FEED/manifest.json'))
+                && is_file(base_path('output/demo-assets/final-evaluation-scenario.json'))) {
+                $this->call(DemoNotificationSeeder::class);
+            }
         });
         $this->command?->info('Competition demo ready. Youth: youth1@sipora.test | Password: '.UserSeeder::PASSWORD);
     }

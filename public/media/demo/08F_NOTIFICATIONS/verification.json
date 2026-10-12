@@ -1,0 +1,24 @@
+{
+    "batch": "8F",
+    "events_verified": 8,
+    "action_links_verified": 8,
+    "idempotent": true,
+    "read_state_preserved": true,
+    "backing_records_verified": true,
+    "social_event_counts_preserved": true,
+    "native_pages": [
+        {
+            "recipient": "Erik Kusuma Rais",
+            "demo_notifications": 7,
+            "native_page_rendered": true
+        },
+        {
+            "recipient": "Aditya Pratama",
+            "demo_notifications": 1,
+            "native_page_rendered": true
+        }
+    ],
+    "external_delivery": false,
+    "unread_demo_count": 6,
+    "read_demo_count": 2
+}

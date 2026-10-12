@@ -1,0 +1,17 @@
+{
+  "post_count": 20,
+  "media_exists": 15,
+  "text_only": 5,
+  "media_composition": {
+    "community": 5,
+    "activity": 5,
+    "youth": 3,
+    "opportunity": 2
+  },
+  "max_emoji_per_post": 1,
+  "unique_ids": true,
+  "database_mutated": false,
+  "fallback_files": {
+    "POST004": "feed-003-creative-hub.jpg"
+  }
+}

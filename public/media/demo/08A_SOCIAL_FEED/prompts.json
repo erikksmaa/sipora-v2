@@ -1,0 +1,22 @@
+[
+  {
+    "index": 5,
+    "prompt": "Create one square 1:1 realistic smartphone documentary photo of fictional Indonesian young adults gathering BEFORE a public speaking training in a modest Central Java community classroom. Four young people chatting casually beside empty chairs, one arranging a notebook, a facilitator preparing a plain microphone in background. Pre-event anticipation, no one giving a speech. Distinct natural faces, ordinary modest casual clothes, mixed women with and without headscarves. Daylight, slightly informal handheld angle, realistic skin and ordinary Indonesian room. No readable text, signage, logos, brand marks, watermark, glamour or cinematic effects.",
+    "ref": null
+  },
+  {
+    "index": 10,
+    "prompt": "Use the attached fictional Erik profile as identity reference. Preserve his recognizable facial structure, natural Indonesian skin tone, short black hair, age around 21. Create a NEW candid 4:5 smartphone documentary photograph of this SAME fictional young man studying web development at a plain laptop in a modest home/community desk corner in Central Java. Three-quarter side view, focused natural expression, navy casual shirt, plain notebook and a mug, unbranded laptop screen with abstract unlabeled panels only. Show hands plausibly resting on keyboard. Natural window daylight, ordinary furniture, unposed personal learning moment. No readable text, logos, watermark, glamorous perfection, cinematic lighting, or visible branding.",
+    "ref": "public/media/demo/youth/Y001-erik-kusuma-rais.png"
+  },
+  {
+    "index": 11,
+    "prompt": "Use the attached fictional Aulia profile as identity reference. Preserve her recognizable face, natural skin texture, Indonesian features, shoulder-length straight black hair, age around 20. Create a NEW 4:5 natural documentary smartphone photo of this SAME young woman after a modest design training in Central Java, holding a generic landscape DEMO certificate at chest level. Casual dusty pink blouse, slight relaxed smile, another participant softly blurred near edge, simple local room daylight. The certificate is plainly fictional: cream card, simple purple border and abstract thin placeholder lines; absolutely NO readable text, logos, seals, signatures, QR codes, or official emblems. Natural congratulatory atmosphere, no influencer pose, no brand marks or watermark, realistic fingers gripping card edges.",
+    "ref": "public/media/demo/youth/Y002-aulia-rahma-putri.png"
+  },
+  {
+    "index": 12,
+    "prompt": "Use attached fictional Dimas profile as identity reference. Preserve his recognizable face, short curly black hair, natural skin texture and Indonesian appearance, age around 22. Create a NEW candid 4:5 realistic smartphone photograph of the SAME fictional young man working on a visual design project on a plain unbranded laptop in a modest Indonesian creative workspace. Gray overshirt over dark tee, focused expression, sketchbook with abstract shapes and simple pencils on desk. Eye-level side angle, slightly imperfect natural framing, daylight, realistic local interior. Laptop shows only unlabeled geometric composition, no text or logos. No watermark, glamour, cinematic effects, real brands, unreadable generated paragraphs, distorted hands.",
+    "ref": "public/media/demo/youth/Y007-dimas-pratama.png"
+  }
+]

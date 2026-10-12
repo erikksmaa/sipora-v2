@@ -1,0 +1,32 @@
+{
+  "activity_id": "A001",
+  "fictional_demo": true,
+  "sessions": [
+    {
+      "name": "Sesi 1 — Pembukaan dan Pengenalan",
+      "files": [
+        "activity-001-documentation-01.jpg"
+      ]
+    },
+    {
+      "name": "Sesi 2 — Praktik Dasar Web",
+      "files": [
+        "activity-001-documentation-02.jpg",
+        "activity-001-documentation-03.jpg"
+      ]
+    },
+    {
+      "name": "Sesi 3 — Project Mini",
+      "files": [
+        "activity-001-documentation-04.jpg",
+        "activity-001-documentation-05.jpg"
+      ]
+    },
+    {
+      "name": "Penutupan",
+      "files": [
+        "activity-001-documentation-06.jpg"
+      ]
+    }
+  ]
+}

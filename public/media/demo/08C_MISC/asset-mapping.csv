@@ -1,0 +1,14 @@
+﻿file,category,width,height,usage,url
+placeholder-youth-avatar.png,avatar,512,512,Avatar profil ketika belum ada foto,/media/demo/08C_MISC/placeholder-youth-avatar.png
+placeholder-community-cover.jpg,cover,1600,900,Cover komunitas ketika media belum tersedia,/media/demo/08C_MISC/placeholder-community-cover.jpg
+placeholder-activity-cover.jpg,cover,1600,900,Cover aktivitas ketika media belum tersedia,/media/demo/08C_MISC/placeholder-activity-cover.jpg
+placeholder-program-cover.jpg,cover,1600,900,Cover program ketika media belum tersedia,/media/demo/08C_MISC/placeholder-program-cover.jpg
+placeholder-opportunity-cover.jpg,cover,1600,900,Cover peluang ketika media belum tersedia,/media/demo/08C_MISC/placeholder-opportunity-cover.jpg
+empty-activity.png,empty-state,640,640,Daftar aktivitas kosong atau tidak ada hasil filter,/media/demo/08C_MISC/empty-activity.png
+empty-community.png,empty-state,640,640,Daftar komunitas kosong atau tidak ada hasil filter,/media/demo/08C_MISC/empty-community.png
+empty-opportunity.png,empty-state,640,640,Daftar peluang kosong atau tidak ada hasil filter,/media/demo/08C_MISC/empty-opportunity.png
+empty-passport.png,empty-state,640,640,Youth belum memiliki riwayat perkembangan,/media/demo/08C_MISC/empty-passport.png
+empty-notification.png,empty-state,640,640,Belum ada notifikasi,/media/demo/08C_MISC/empty-notification.png
+document-placeholder.png,file-preview,512,512,Thumbnail dokumen umum,/media/demo/08C_MISC/document-placeholder.png
+certificate-placeholder.png,file-preview,512,512,Thumbnail sertifikat ketika preview belum tersedia,/media/demo/08C_MISC/certificate-placeholder.png
+pdf-placeholder.png,file-preview,512,512,Thumbnail file PDF ketika preview belum tersedia,/media/demo/08C_MISC/pdf-placeholder.png

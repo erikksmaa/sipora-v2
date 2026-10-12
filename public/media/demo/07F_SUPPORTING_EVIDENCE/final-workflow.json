@@ -1,0 +1,28 @@
+{
+  "batch": "7G",
+  "fictional": true,
+  "P001": {
+    "proposal": "approved",
+    "progress": 100,
+    "logbooks": "approved",
+    "financial_report_history": [
+      "submitted",
+      "approved"
+    ],
+    "final_evaluation": "approved",
+    "program": "completed",
+    "realization": 6600000,
+    "remaining": 400000
+  },
+  "P002": {
+    "proposal": "revision",
+    "proposal_version": 2,
+    "previous_proposal": "approved",
+    "financial_report": "revision",
+    "review_notes": "Mohon lengkapi dokumentasi kegiatan dan rekapitulasi realisasi anggaran."
+  },
+  "supporting_evidence": 4,
+  "media_reuse_verified": true,
+  "idempotent": true,
+  "verifier_rendering": "revision queue, review note, final evaluation passed"
+}

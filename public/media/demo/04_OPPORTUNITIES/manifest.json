@@ -1,0 +1,334 @@
+{
+  "fictional": true,
+  "generation": "Built-in imagegen, individual images",
+  "organizers": [
+    {
+      "id": "ORG001",
+      "name": "Nusantara Digital Academy",
+      "palette": "navy, cyan and orange",
+      "symbol": "three connected ascending square nodes with a simple angular learning pathway",
+      "logo": "organizers/organizer-001-logo.png"
+    },
+    {
+      "id": "ORG002",
+      "name": "Pemalang Creative Institute",
+      "palette": "violet, coral and cream",
+      "symbol": "an original four-point asymmetric spark made of two overlapping folded geometric shapes",
+      "logo": "organizers/organizer-002-logo.png"
+    },
+    {
+      "id": "ORG003",
+      "name": "Youth Skill Center",
+      "palette": "blue and yellow",
+      "symbol": "an open book simplified into three upward steps",
+      "logo": "organizers/organizer-003-logo.png"
+    },
+    {
+      "id": "ORG004",
+      "name": "Digital Growth Academy",
+      "palette": "dark blue and green",
+      "symbol": "two interlocking growth arcs enclosing a small rising diamond",
+      "logo": "organizers/organizer-004-logo.png"
+    },
+    {
+      "id": "ORG005",
+      "name": "Pemuda Berkarya Foundation",
+      "palette": "orange, cream and navy",
+      "symbol": "three rounded figures forming a sturdy triangular collaborative shape",
+      "logo": "organizers/organizer-005-logo.png"
+    },
+    {
+      "id": "ORG006",
+      "name": "Future Career Network",
+      "palette": "teal and slate",
+      "symbol": "two connected bridge-like arches with an upward pathway",
+      "logo": "organizers/organizer-006-logo.png"
+    },
+    {
+      "id": "ORG007",
+      "name": "Green Youth Initiative",
+      "palette": "green and cream",
+      "symbol": "two leaves forming an open circular community symbol",
+      "logo": "organizers/organizer-007-logo.png"
+    },
+    {
+      "id": "ORG008",
+      "name": "Creative Talent Hub",
+      "palette": "purple, pink and dark slate",
+      "symbol": "a bold creative spark nested in an offset rounded geometric frame",
+      "logo": "organizers/organizer-008-logo.png"
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "O001",
+      "title": "Internship Frontend Developer",
+      "organizer": "ORG001",
+      "category": "INTERNSHIP",
+      "cover": "O001/opportunity-001-cover.jpg",
+      "card": "O001/opportunity-001-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O002",
+      "title": "Beasiswa Pemuda Digital",
+      "organizer": "ORG005",
+      "category": "BEASISWA",
+      "cover": "O002/opportunity-002-cover.jpg",
+      "card": "O002/opportunity-002-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O003",
+      "title": "Lomba Desain Poster Pemuda",
+      "organizer": "ORG002",
+      "category": "KOMPETISI",
+      "cover": "O003/opportunity-003-cover.jpg",
+      "card": "O003/opportunity-003-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O004",
+      "title": "Volunteer Festival Pemuda",
+      "organizer": "ORG003",
+      "category": "VOLUNTEER",
+      "cover": "O004/opportunity-004-cover.jpg",
+      "card": "O004/opportunity-004-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O005",
+      "title": "Pelatihan UI/UX Gratis",
+      "organizer": "ORG008",
+      "category": "PELATIHAN",
+      "cover": "O005/opportunity-005-cover.jpg",
+      "card": "O005/opportunity-005-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O006",
+      "title": "Bootcamp Digital Marketing",
+      "organizer": "ORG004",
+      "category": "BOOTCAMP",
+      "cover": "O006/opportunity-006-cover.jpg",
+      "card": "O006/opportunity-006-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O007",
+      "title": "Kompetisi Business Plan",
+      "organizer": "ORG005",
+      "category": "KOMPETISI",
+      "cover": "O007/opportunity-007-cover.jpg",
+      "card": "O007/opportunity-007-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O008",
+      "title": "Program Magang UMKM Digital",
+      "organizer": "ORG006",
+      "category": "MAGANG",
+      "cover": "O008/opportunity-008-cover.jpg",
+      "card": "O008/opportunity-008-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O009",
+      "title": "Scholarship Digital Talent",
+      "organizer": "ORG001",
+      "category": "BEASISWA",
+      "cover": "O009/opportunity-009-cover.jpg",
+      "card": "O009/opportunity-009-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O010",
+      "title": "Training Public Speaking",
+      "organizer": "ORG003",
+      "category": "PELATIHAN",
+      "cover": "O010/opportunity-010-cover.jpg",
+      "card": "O010/opportunity-010-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O011",
+      "title": "Kompetisi Fotografi Pemuda",
+      "organizer": "ORG002",
+      "category": "KOMPETISI",
+      "cover": "O011/opportunity-011-cover.jpg",
+      "card": "O011/opportunity-011-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O012",
+      "title": "Volunteer Lingkungan",
+      "organizer": "ORG007",
+      "category": "VOLUNTEER",
+      "cover": "O012/opportunity-012-cover.jpg",
+      "card": "O012/opportunity-012-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O013",
+      "title": "Pelatihan Video Editing",
+      "organizer": "ORG008",
+      "category": "PELATIHAN",
+      "cover": "O013/opportunity-013-cover.jpg",
+      "card": "O013/opportunity-013-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O014",
+      "title": "Internship Content Creator",
+      "organizer": "ORG006",
+      "category": "INTERNSHIP",
+      "cover": "O014/opportunity-014-cover.jpg",
+      "card": "O014/opportunity-014-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    },
+    {
+      "id": "O015",
+      "title": "Program Leadership Pemuda",
+      "organizer": "ORG005",
+      "category": "PROGRAM",
+      "cover": "O015/opportunity-015-cover.jpg",
+      "card": "O015/opportunity-015-card.jpg",
+      "dimensions": {
+        "cover": [
+          1200,
+          1500
+        ],
+        "card": [
+          1600,
+          900
+        ]
+      }
+    }
+  ]
+}

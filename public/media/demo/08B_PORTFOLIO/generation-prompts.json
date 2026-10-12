@@ -1,0 +1,10 @@
+{
+  "tool": "built-in imagegen",
+  "assets": [
+    {
+      "file": "portfolio-y001-achievement-01.jpg",
+      "prompt": "Use case: photorealistic-natural. Create one 4:3 realistic documentary photograph as fictional youth portfolio achievement evidence in Pemalang, Central Java, Indonesia. Reference image 1 is the identity of Erik Kusuma Rais, fictional Indonesian male age21: preserve his facial features, short black hair, natural skin texture and approachable expression. Medium candid shot in a modest local community seminar room: Erik in a clean navy casual shirt receiving a simple cream certificate with a narrow orange decorative border from a fictional young adult event coordinator. Hold the certificate naturally at the edges with believable fingers; a few youth participants softly visible behind them. The certificate has NO text, no logo or seals, no signature, just blank cream paper with decorative border. Natural daylight, authentic Indonesian setting, friendly restrained smile, documentary not promotional poses. No readable signage, no real brand logos, no watermark, no cinematic lighting, no official government objects.",
+      "reference": "public/media/demo/youth/Y001-erik-kusuma-rais.png"
+    }
+  ]
+}

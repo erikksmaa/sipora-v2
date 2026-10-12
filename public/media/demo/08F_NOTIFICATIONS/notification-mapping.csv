@@ -1,0 +1,25 @@
+﻿event_id,notification_uuid,recipient,recipient_email,type,title,body,read,created_at,action_url
+N001,01a13019-4ae6-704a-a9b0-4e8ca28e0cc8,Erik Kusuma Rais,youth1@sipora.test,activity_registration_result,Pendaftaran Activity diterima,"Pendaftaran Anda untuk Workshop Web Development untuk Pemuda telah diterima.
+
+DATA DEMO SIPORA",False,2026-10-12T09:32:06+00:00,http://127.0.0.1:8000/activities/workshop-web-development-untuk-pemuda
+N002,01a13019-4b69-70e5-a971-c3b5926aa81f,Erik Kusuma Rais,youth1@sipora.test,community_membership_result,Permintaan bergabung Community disetujui,"Anda telah bergabung dengan Komunitas Pemuda Digital Pemalang. Keanggotaan Anda saat ini aktif.
+
+DATA DEMO SIPORA",True,2026-10-12T10:02:06+00:00,http://127.0.0.1:8000/communities/komunitas-pemuda-digital-pemalang
+N003,01a13019-4b74-71dd-a8af-1784823d5fc4,Erik Kusuma Rais,youth1@sipora.test,activity_certificate_issued,Sertifikat tersedia,"Sertifikat Workshop Web Development untuk Pemuda sudah tersedia di Portfolio Anda.
+
+DATA DEMO SIPORA",False,2026-10-12T10:32:06+00:00,http://127.0.0.1:8000/youth/certificates/01a1291f-0128-7389-8866-9c19f807682e
+N004,01a13019-4b81-72b1-b70c-f3c584c58784,Aditya Pratama,demo.youth01@sipora.test,program_proposal_reviewed,Proposal perlu revisi,"Proposal Creative Youth Development Program perlu revisi. Mohon lengkapi indikator keberhasilan program dan rincian rencana anggaran kegiatan.
+
+DATA DEMO SIPORA",False,2026-10-12T10:57:06+00:00,http://127.0.0.1:8000/manage/pemalang-creative-hub/programs/creative-youth-development-program
+N005,01a13019-4b92-7305-96ef-7b4b9f6add69,Erik Kusuma Rais,youth1@sipora.test,financial_report_reviewed,E-LPJ disetujui,"E-LPJ Pemalang Youth Digital Empowerment 2026 telah disetujui. Program P001 telah selesai.
+
+DATA DEMO SIPORA",False,2026-10-12T11:17:06+00:00,http://127.0.0.1:8000/manage/komunitas-pemuda-digital-pemalang/programs/pemalang-youth-digital-empowerment-2026
+N006,01a13019-4ba0-72db-9389-4438b4884247,Erik Kusuma Rais,youth1@sipora.test,forum_thread_replied,Thread mendapat balasan,"Diskusi “Mulai belajar Laravel atau JavaScript dulu?” mendapat balasan. Buka thread untuk melanjutkan percakapan.
+
+DATA DEMO SIPORA",True,2026-10-12T11:47:06+00:00,http://127.0.0.1:8000/forum/01a1291f-0ed1-731f-8e74-4ba8cb02d0f4
+N007,01a13019-4baa-71da-adf4-8de945a406ea,Erik Kusuma Rais,youth1@sipora.test,social_commented,Post mendapat komentar,"Aulia Rahma Putri memberi komentar pada post latihan pengembangan web Anda.
+
+DATA DEMO SIPORA",False,2026-10-12T12:12:06+00:00,http://127.0.0.1:8000/feed/01a12fec-5748-72e9-a56e-7b09b3474a4d
+N008,01a13019-4bb9-7075-8740-9748c0a8db49,Erik Kusuma Rais,youth1@sipora.test,social_followed,Pengguna baru mengikuti akun Anda,"Aulia Rahma Putri mulai mengikuti update publik Anda.
+
+DATA DEMO SIPORA",False,2026-10-12T12:22:06+00:00,http://127.0.0.1:8000/feed?tab=following

@@ -1,0 +1,185 @@
+{
+    "batch": "8F",
+    "fictional": true,
+    "notification_count": 8,
+    "database_seeded": true,
+    "external_delivery": false,
+    "notifications": [
+        {
+            "event_id": "N001",
+            "notification_uuid": "01a13019-4ae6-704a-a9b0-4e8ca28e0cc8",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "activity_registration_result",
+            "title": "Pendaftaran Activity diterima",
+            "body": "Pendaftaran Anda untuk Workshop Web Development untuk Pemuda telah diterima.\n\nDATA DEMO SIPORA",
+            "data": {
+                "status": "accepted",
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "demo_batch": "8F",
+                "activity_id": "01a10a42-9889-730b-bd95-6d8ec91c64d7",
+                "demo_event_id": "N001",
+                "participation_id": "01a1291f-0109-7060-bef6-3f7397c2f19d"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-12T09:32:06+00:00",
+            "action_url": "http://127.0.0.1:8000/activities/workshop-web-development-untuk-pemuda"
+        },
+        {
+            "event_id": "N002",
+            "notification_uuid": "01a13019-4b69-70e5-a971-c3b5926aa81f",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "community_membership_result",
+            "title": "Permintaan bergabung Community disetujui",
+            "body": "Anda telah bergabung dengan Komunitas Pemuda Digital Pemalang. Keanggotaan Anda saat ini aktif.\n\nDATA DEMO SIPORA",
+            "data": {
+                "decision": "accepted",
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "demo_batch": "8F",
+                "demo_event_id": "N002",
+                "membership_id": "01a10a42-985c-7092-8bf8-b1ba8a5bea17",
+                "organization_id": "01a10a42-984d-71c2-b3d7-c54e01149b98"
+            },
+            "read": true,
+            "deleted": false,
+            "created_at": "2026-10-12T10:02:06+00:00",
+            "action_url": "http://127.0.0.1:8000/communities/komunitas-pemuda-digital-pemalang"
+        },
+        {
+            "event_id": "N003",
+            "notification_uuid": "01a13019-4b74-71dd-a8af-1784823d5fc4",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "activity_certificate_issued",
+            "title": "Sertifikat tersedia",
+            "body": "Sertifikat Workshop Web Development untuk Pemuda sudah tersedia di Portfolio Anda.\n\nDATA DEMO SIPORA",
+            "data": {
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "demo_batch": "8F",
+                "activity_id": "01a10a42-9889-730b-bd95-6d8ec91c64d7",
+                "demo_event_id": "N003",
+                "certificate_id": "01a1291f-0128-7389-8866-9c19f807682e"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-12T10:32:06+00:00",
+            "action_url": "http://127.0.0.1:8000/youth/certificates/01a1291f-0128-7389-8866-9c19f807682e"
+        },
+        {
+            "event_id": "N004",
+            "notification_uuid": "01a13019-4b81-72b1-b70c-f3c584c58784",
+            "recipient": "Aditya Pratama",
+            "recipient_email": "demo.youth01@sipora.test",
+            "type": "program_proposal_reviewed",
+            "title": "Proposal perlu revisi",
+            "body": "Proposal Creative Youth Development Program perlu revisi. Mohon lengkapi indikator keberhasilan program dan rincian rencana anggaran kegiatan.\n\nDATA DEMO SIPORA",
+            "data": {
+                "status": "revision",
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "demo_batch": "8F",
+                "program_id": "01a1291e-fffa-7337-a14e-fb7d1bd600a9",
+                "proposal_id": "01a12fd4-83ce-7378-8fa2-96f7bc0f51f8",
+                "demo_event_id": "N004",
+                "program_title": "Creative Youth Development Program"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-12T10:57:06+00:00",
+            "action_url": "http://127.0.0.1:8000/manage/pemalang-creative-hub/programs/creative-youth-development-program"
+        },
+        {
+            "event_id": "N005",
+            "notification_uuid": "01a13019-4b92-7305-96ef-7b4b9f6add69",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "financial_report_reviewed",
+            "title": "E-LPJ disetujui",
+            "body": "E-LPJ Pemalang Youth Digital Empowerment 2026 telah disetujui. Program P001 telah selesai.\n\nDATA DEMO SIPORA",
+            "data": {
+                "status": "approved",
+                "version": 1,
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "demo_batch": "8F",
+                "program_id": "01a10a42-9866-735d-837b-954999059833",
+                "demo_event_id": "N005",
+                "financial_report_id": "01a12fc7-3819-719c-8fba-54861a2ce58d"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-12T11:17:06+00:00",
+            "action_url": "http://127.0.0.1:8000/manage/komunitas-pemuda-digital-pemalang/programs/pemalang-youth-digital-empowerment-2026"
+        },
+        {
+            "event_id": "N006",
+            "notification_uuid": "01a13019-4ba0-72db-9389-4438b4884247",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "forum_thread_replied",
+            "title": "Thread mendapat balasan",
+            "body": "Diskusi “Mulai belajar Laravel atau JavaScript dulu?” mendapat balasan. Buka thread untuk melanjutkan percakapan.\n\nDATA DEMO SIPORA",
+            "data": {
+                "reply_id": "01a12923-9c70-73db-b955-aec9c67772e1",
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "thread_id": "01a1291f-0ed1-731f-8e74-4ba8cb02d0f4",
+                "demo_batch": "8F",
+                "demo_event_id": "N006"
+            },
+            "read": true,
+            "deleted": false,
+            "created_at": "2026-10-12T11:47:06+00:00",
+            "action_url": "http://127.0.0.1:8000/forum/01a1291f-0ed1-731f-8e74-4ba8cb02d0f4"
+        },
+        {
+            "event_id": "N007",
+            "notification_uuid": "01a13019-4baa-71da-adf4-8de945a406ea",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "social_commented",
+            "title": "Post mendapat komentar",
+            "body": "Aulia Rahma Putri memberi komentar pada post latihan pengembangan web Anda.\n\nDATA DEMO SIPORA",
+            "data": {
+                "post_id": "01a12fec-5748-72e9-a56e-7b09b3474a4d",
+                "actor_id": "01a12fec-54aa-724b-b711-37d97298696a",
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "comment_id": "01a13019-4a19-723f-8fb5-55f56dab062e",
+                "demo_batch": "8F",
+                "demo_event_id": "N007"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-12T12:12:06+00:00",
+            "action_url": "http://127.0.0.1:8000/feed/01a12fec-5748-72e9-a56e-7b09b3474a4d"
+        },
+        {
+            "event_id": "N008",
+            "notification_uuid": "01a13019-4bb9-7075-8740-9748c0a8db49",
+            "recipient": "Erik Kusuma Rais",
+            "recipient_email": "youth1@sipora.test",
+            "type": "social_followed",
+            "title": "Pengguna baru mengikuti akun Anda",
+            "body": "Aulia Rahma Putri mulai mengikuti update publik Anda.\n\nDATA DEMO SIPORA",
+            "data": {
+                "post_id": null,
+                "actor_id": "01a12fec-54aa-724b-b711-37d97298696a",
+                "timeline": "synthetic notification presentation time",
+                "fictional": true,
+                "follow_id": "01a13019-4a91-713a-8ba8-def945eaf725",
+                "demo_batch": "8F",
+                "demo_event_id": "N008"
+            },
+            "read": false,
+            "deleted": false,
+            "created_at": "2026-10-12T12:22:06+00:00",
+            "action_url": "http://127.0.0.1:8000/feed?tab=following"
+        }
+    ]
+}

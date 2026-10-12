@@ -1,0 +1,156 @@
+{
+  "title": "SIPORA fictional community logo demo pack",
+  "fictional": true,
+  "generation_mode": "built-in imagegen",
+  "format": "PNG",
+  "style": "vector-style raster mark",
+  "transparent_background": true,
+  "master_dimensions": [
+    1254,
+    1254
+  ],
+  "display_sizes": [
+    32,
+    64,
+    128,
+    512
+  ],
+  "count": 15,
+  "communities": [
+    {
+      "id": "C001",
+      "name": "Komunitas Pemuda Digital Pemalang",
+      "theme": "technology, collaboration, digital growth",
+      "symbol": "a bold cursor arrow joined to three round connected nodes; no code letters or brackets",
+      "palette": "deep indigo and energetic teal",
+      "file": "community-001-logo.png",
+      "url": "/media/demo/communities/community-001-logo.png"
+    },
+    {
+      "id": "C002",
+      "name": "Pemalang Creative Hub",
+      "theme": "creative collaboration, design, ideas",
+      "symbol": "one abstract four-point spark interlocking with two broad overlapping geometric shapes; overlap uses solid flat color",
+      "palette": "warm coral and deep violet",
+      "file": "community-002-logo.png",
+      "url": "/media/demo/communities/community-002-logo.png"
+    },
+    {
+      "id": "C003",
+      "name": "Relawan Muda Pemalang",
+      "theme": "volunteering, solidarity, social impact",
+      "symbol": "two simplified cupped hands forming one heart through negative space; use broad solid shapes without fingers",
+      "palette": "terracotta orange and dark plum",
+      "file": "community-003-logo.png",
+      "url": "/media/demo/communities/community-003-logo.png"
+    },
+    {
+      "id": "C004",
+      "name": "Pemalang Public Speaking Club",
+      "theme": "communication and confidence",
+      "symbol": "one compact speech bubble integrating a simple microphone capsule and broad curved stand; avoid tiny grille lines",
+      "palette": "royal blue and warm amber",
+      "file": "community-004-logo.png",
+      "url": "/media/demo/communities/community-004-logo.png"
+    },
+    {
+      "id": "C005",
+      "name": "Youth Entrepreneur Pemalang",
+      "theme": "entrepreneurship and growth",
+      "symbol": "one simplified storefront with a broad upward arrow emerging from its roof, integrated into a single cohesive mark",
+      "palette": "dark teal and warm orange",
+      "file": "community-005-logo.png",
+      "url": "/media/demo/communities/community-005-logo.png"
+    },
+    {
+      "id": "C006",
+      "name": "Komunitas Fotografi Pemalang",
+      "theme": "photography and visual storytelling",
+      "symbol": "one bold six-blade aperture enclosing a minimal single mountain silhouette; broad aperture blades and no fine landscape details",
+      "palette": "slate navy and sky blue",
+      "file": "community-006-logo.png",
+      "url": "/media/demo/communities/community-006-logo.png"
+    },
+    {
+      "id": "C007",
+      "name": "Pemuda Peduli Lingkungan",
+      "theme": "environmental action",
+      "symbol": "a single broad leaf cradled by a circular community shape made of three thick rounded arcs; no fine leaf veins",
+      "palette": "forest green and fresh lime",
+      "file": "community-007-logo.png",
+      "url": "/media/demo/communities/community-007-logo.png"
+    },
+    {
+      "id": "C008",
+      "name": "Komunitas Olahraga Pemuda",
+      "theme": "sport, energy, teamwork",
+      "symbol": "an original dynamic abstract figure in motion formed from a round head and two broad sweeping angular shapes, balanced compact silhouette",
+      "palette": "bright orange and deep navy",
+      "file": "community-008-logo.png",
+      "url": "/media/demo/communities/community-008-logo.png"
+    },
+    {
+      "id": "C009",
+      "name": "Forum Pemuda Taman",
+      "theme": "local youth collaboration",
+      "symbol": "a broad location pin containing two simple abstract people, two round heads over one shared rounded shoulder shape",
+      "palette": "deep turquoise and warm yellow",
+      "file": "community-009-logo.png",
+      "url": "/media/demo/communities/community-009-logo.png"
+    },
+    {
+      "id": "C010",
+      "name": "Komunitas Desain Pemalang",
+      "theme": "visual design and creativity",
+      "symbol": "a bold geometric pen-tool nib with one small four-point spark incorporated in its outer contour; simple negative-space nib hole",
+      "palette": "dark violet and vivid coral",
+      "file": "community-010-logo.png",
+      "url": "/media/demo/communities/community-010-logo.png"
+    },
+    {
+      "id": "C011",
+      "name": "Pemalang Content Creator Club",
+      "theme": "digital content creation",
+      "symbol": "one compact play triangle nested in a rounded angular frame with a four-point creative spark integrated at its upper corner; keep clearly distinct from familiar video-platform logos",
+      "palette": "deep cobalt and vibrant peach",
+      "file": "community-011-logo.png",
+      "url": "/media/demo/communities/community-011-logo.png"
+    },
+    {
+      "id": "C012",
+      "name": "Youth Education Network",
+      "theme": "learning and knowledge sharing",
+      "symbol": "a simple open book with two broad pages, connected to three chunky circular nodes above; no page lines or text",
+      "palette": "deep blue green and golden yellow",
+      "file": "community-012-logo.png",
+      "url": "/media/demo/communities/community-012-logo.png"
+    },
+    {
+      "id": "C013",
+      "name": "Pemuda Inovatif Petarukan",
+      "theme": "innovation and ideas",
+      "symbol": "a bold lightbulb silhouette built from three interlocking modular rounded blocks, one broad solid base, no filament lines",
+      "palette": "rich purple and lime green",
+      "file": "community-013-logo.png",
+      "url": "/media/demo/communities/community-013-logo.png"
+    },
+    {
+      "id": "C014",
+      "name": "Komunitas Musik Pemuda",
+      "theme": "music and youth expression",
+      "symbol": "one compact abstract musical note fused with three broad sound-wave bars, rhythmic strong silhouette; no thin strokes",
+      "palette": "deep plum and bright magenta",
+      "file": "community-014-logo.png",
+      "url": "/media/demo/communities/community-014-logo.png"
+    },
+    {
+      "id": "C015",
+      "name": "Pemalang Volunteer Network",
+      "theme": "community service and networking",
+      "symbol": "three broad interlinked curved arms forming a circular network around a small heart-shaped negative space, distinct from the two-hand heart logo",
+      "palette": "dark emerald and soft coral",
+      "file": "community-015-logo.png",
+      "url": "/media/demo/communities/community-015-logo.png"
+    }
+  ]
+}
