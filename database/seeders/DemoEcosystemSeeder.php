@@ -26,6 +26,7 @@ use App\Notifications\CommunityMembershipReviewed;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Support\Demo\DemoAssetManifest;
 
 class DemoEcosystemSeeder extends Seeder
 {
@@ -62,6 +63,7 @@ class DemoEcosystemSeeder extends Seeder
             }
         }
         $programNames = ['Pemalang Youth Digital Empowerment 2026', 'Creative Youth Development Program', 'Program Pengembangan Relawan Muda', 'Pemuda Kreatif Kecamatan Taman', 'Laboratorium Desain Pemuda', 'Pemalang Berani Bicara', 'Digital Entrepreneurship for Youth', 'Pemalang dalam Lensa Pemuda', 'Relawan Siaga Pemalang', 'Pemuda Sehat dan Aktif', 'Literasi Pemuda Petarukan', 'Inovasi Digital Comal', 'Pelestarian Seni Muda Belik', 'Jembatan Karier Pemuda', 'Pesisir Bersih Berdaya'];
+        if (DemoAssetManifest::enabled()) DemoAssetManifest::ensureCommunities();
         $programs = [];
         foreach ($programNames as $i => $name) {
             $org = $organizations[$i];
@@ -69,6 +71,17 @@ class DemoEcosystemSeeder extends Seeder
             $status = $i === 14 ? 'cancelled' : ($i >= 11 ? 'completed' : ($i >= 7 ? 'planned' : 'running'));
             $start = $status === 'completed' ? now()->subMonths(5) : ($status === 'planned' ? now()->addMonth() : now()->subMonths(2));
             $end = $status === 'completed' ? now()->subMonth() : now()->addMonths(3);
+            if (DemoAssetManifest::enabled()) {
+                $existing = Program::where('slug', Str::slug($name))->first();
+                if ($existing?->latestEvaluation()->value('decision') === 'approved') {
+                    $status = 'completed';
+                    $start = \Illuminate\Support\Carbon::parse($existing->start_date);
+                    $end = \Illuminate\Support\Carbon::parse($existing->end_date);
+                } elseif ($status === 'completed') {
+                    // Legacy fixture positions cannot manufacture completion.
+                    $status = 'planned';
+                }
+            }
             $program = Program::withTrashed()->updateOrCreate(['slug' => Str::slug($name)], [
                 'title' => $name, 'organization_id' => $org->getKey(), 'created_by_user_id' => $leader->getKey(),
                 'category_id' => ProgramCategory::where('slug', $i === 9 ? 'olahraga-masyarakat' : 'pengembangan-kapasitas-pemuda')->firstOrFail()->getKey(),
@@ -94,19 +107,28 @@ class DemoEcosystemSeeder extends Seeder
             ['Pelatihan Video Editing', 'kreatif', 2, 1], ['Workshop Personal Branding', 'pendidikan', 1, 13], ['Kelas Fotografi Dasar', 'kreatif', 2, 7],
             ['Pelatihan UMKM Digital', 'kewirausahaan', 2, 6], ['Seminar Karier dan Magang', 'pendidikan', 1, 13], ['Aksi Bersih Lingkungan', 'sosial', 1, 2], ['Pelatihan Content Creator', 'teknologi', 2, 11],
         ];
+        if (DemoAssetManifest::enabled()) DemoAssetManifest::ensurePrograms();
         foreach ($activities as $i => [$title, $category, $sessionCount, $orgIndex]) {
             $org = $organizations[$orgIndex];
             $manager = $users[$orgIndex % 19];
+            $canonical = DemoAssetManifest::enabled() ? DemoAssetManifest::activityEntry($title) : null;
+            if ($canonical) {
+                $org = DemoAssetManifest::community($canonical['community_id']);
+                $manager = $org->creator;
+            }
             // Reuse the existing Passport scenario slugs to avoid duplicate titles.
             $slug = $i === 0 ? Str::slug($title) : ($i < 5 ? 'passport-'.Str::slug($title) : 'demo-'.Str::slug($title));
             $status = $i < 5 ? 'completed' : ($i === 5 ? 'ongoing' : 'scheduled');
             $start = $i < 5 ? now()->startOfDay()->subDays(35 - $i * 5)->setTime(9, 0) : ($i === 5 ? now()->startOfDay()->subDay()->setTime(9, 0) : now()->startOfDay()->addDays(10 + $i * 2)->setTime(9, 0));
+            if ($canonical && isset($canonical['demo_start_at'])) {
+                $start = \Illuminate\Support\Carbon::parse($canonical['demo_start_at']);
+            }
             $end = $start->copy()->addDays($sessionCount - 1)->setTime(17, 0);
             if ($i === 5) {
                 $end = now()->addDay()->setTime(17, 0);
             }
             $activity = Activity::withTrashed()->updateOrCreate(['slug' => $slug], [
-                'organization_id' => $org->getKey(), 'program_id' => $i % 3 === 2 ? null : $programs[$orgIndex]->getKey(), 'category_id' => ActivityCategory::where('slug', $category)->firstOrFail()->getKey(), 'created_by_user_id' => $manager->getKey(),
+                'organization_id' => $org->getKey(), 'program_id' => $canonical ? DemoAssetManifest::program($canonical['program_id'])->getKey() : ($i % 3 === 2 ? null : $programs[$orgIndex]->getKey()), 'category_id' => ActivityCategory::where('slug', $category)->firstOrFail()->getKey(), 'created_by_user_id' => $manager->getKey(),
                 'title' => $title, 'description' => 'Belajar '.$category.' melalui praktik dan diskusi. Peserta menghasilkan karya dan menerima umpan balik dari fasilitator '.$org->name.'.',
                 'location_type' => 'offline', 'venue_name' => 'Ruang Komunitas '.$org->name, 'administrative_area_id' => $org->administrative_area_id, 'address_text' => 'Lokasi fiktif demonstrasi di tingkat kecamatan',
                 'start_at' => $start, 'end_at' => $end, 'registration_open_at' => $start->copy()->subDays(60), 'registration_close_at' => $start->copy()->subDays(2),
@@ -114,6 +136,7 @@ class DemoEcosystemSeeder extends Seeder
                 'review_status' => 'approved', 'publication_status' => 'published', 'execution_status' => $status, 'published_at' => $i < 5 ? $start->copy()->subDays(60) : now()->subDays(15)->subHours($i), 'deleted_at' => null,
             ]);
             ActivityReview::withTrashed()->updateOrCreate(['activity_id' => $activity->getKey(), 'decision' => 'approved'], ['reviewer_id' => $verifier->getKey(), 'review_notes' => 'Rencana dan jadwal kegiatan telah ditinjau untuk demo.', 'reviewed_at' => $i < 5 ? $start->copy()->subDays(61) : now()->subDays(17), 'deleted_at' => null]);
+            if ($canonical) $activity->forceFill(['poster_path' => DemoAssetManifest::store($canonical['cover'], 'activity_media')])->save();
             $sessions = [];
             for ($n = 1; $n <= $sessionCount; $n++) {
                 $time = $start->copy()->addDays($n - 1);
@@ -153,6 +176,14 @@ class DemoEcosystemSeeder extends Seeder
                     $certificate = app(IssueActivityCertificateAction::class)->execute($manager, $activity, $participation);
                     $certificate->update(['issued_at' => $end->toDateString()]);
                 }
+                if ($canonical && $canonical['program_id'] === 'P001' && $completed) {
+                    // Keep immutable numbers/codes; only align the fictional issue date
+                    // with this fixture's stable completion date, never before completion.
+                    $existingCertificate = UserCertificate::where('participation_id', $participation->getKey())->where('source_type', UserCertificate::SOURCE_SIPORA)->first();
+                    if ($existingCertificate && $existingCertificate->issued_at->lt($end->copy()->startOfDay())) {
+                        $existingCertificate->update(['issued_at' => $end->toDateString()]);
+                    }
+                }
             }
         }
         $workshop = Activity::where('slug', 'workshop-web-development-untuk-pemuda')->firstOrFail();
@@ -170,10 +201,21 @@ class DemoEcosystemSeeder extends Seeder
         ];
         foreach ($opportunities as $i => [$title, $category]) {
             $org = $organizations[$i];
+            $opportunityId = sprintf('O%03d', $i + 1);
+            $canonicalOpportunity = DemoAssetManifest::enabled() ? DemoAssetManifest::data()['opportunities'][$opportunityId] : null;
+            if ($canonicalOpportunity) {
+                $title = $canonicalOpportunity['title'];
+                $category = match (true) {
+                    str_contains($title, 'Internship'), str_contains($title, 'Magang') => 'magang',
+                    str_contains($title, 'Beasiswa'), str_contains($title, 'Scholarship') => 'beasiswa',
+                    str_contains($title, 'Lomba'), str_contains($title, 'Kompetisi') => 'kompetisi',
+                    str_contains($title, 'Volunteer') => 'volunteer', default => 'pelatihan',
+                };
+            }
             $deadline = $i > 12 ? now()->subDays(10 + $i) : now()->addDays(20 + $i * 3);
-            Opportunity::withTrashed()->updateOrCreate(['slug' => $title === 'Volunteer Festival Pemuda' ? 'volunteer-festival-pemuda' : 'demo-'.Str::slug($title)], [
+            Opportunity::withTrashed()->updateOrCreate(['slug' => $canonicalOpportunity ? DemoAssetManifest::opportunitySlug($opportunityId) : ($title === 'Volunteer Festival Pemuda' ? 'volunteer-festival-pemuda' : 'demo-'.Str::slug($title))], [
                 'title' => $title, 'category_id' => OpportunityCategory::where('slug', $category)->firstOrFail()->getKey(), 'organization_id' => $org->getKey(), 'created_by_user_id' => $users[$i % 19]->getKey(),
-                'provider_name' => $org->name, 'description' => 'Kesempatan belajar teknologi, desain, komunikasi, dan kewirausahaan. Siapkan portofolio karya serta alasan mengikuti '.$title.'. Informasi ini fiktif untuk demonstrasi.',
+                'provider_name' => $canonicalOpportunity ? $canonicalOpportunity['organizer']['name'] : $org->name, 'description' => 'Kesempatan belajar teknologi, desain, komunikasi, dan kewirausahaan. Siapkan portofolio karya serta alasan mengikuti '.$title.'. Informasi ini fiktif untuk demonstrasi.',
                 'administrative_area_id' => $org->administrative_area_id, 'location_text' => 'Pemalang', 'external_url' => 'https://demo.sipora.test/opportunity/'.Str::slug($title),
                 'deadline_at' => $deadline, 'starts_at' => $deadline->copy()->addWeek(), 'ends_at' => $deadline->copy()->addMonth(), 'publication_status' => 'published', 'published_at' => now()->subDays(7)->subHours($i), 'deleted_at' => null,
             ]);

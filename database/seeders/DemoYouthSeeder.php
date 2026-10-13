@@ -14,6 +14,7 @@ use App\Models\UserProfileVisibility;
 use App\Models\UserSkill;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Support\Demo\DemoAssetManifest;
 
 class DemoYouthSeeder extends Seeder
 {
@@ -68,6 +69,38 @@ class DemoYouthSeeder extends Seeder
         }
         foreach (['pemrograman-web-software', 'public-speaking-komunikasi'] as $slug) {
             UserSkill::withTrashed()->updateOrCreate(['user_id' => $erik->getKey(), 'skill_id' => Skill::where('slug', $slug)->firstOrFail()->getKey()], ['proficiency_level' => 'intermediate', 'is_self_reported' => true, 'deleted_at' => null]);
+        }
+        if (DemoAssetManifest::enabled()) {
+            $profiles = json_decode(file_get_contents(public_path('media/demo/youth/manifest.json')), true, flags: JSON_THROW_ON_ERROR);
+            foreach (DemoAssetManifest::data()['youth'] as $id => $entry) {
+                $detail = collect($profiles['profiles'])->firstWhere('id', $id);
+                $email = $id === 'Y001' ? 'youth1@sipora.test' : 'asset.'.strtolower($id).'@sipora.test';
+                $person = User::where('name', $entry['name'])->where('email', 'like', '%@sipora.test')->first()
+                    ?? User::firstOrCreate(['email' => $email], ['name' => $entry['name'], 'password' => Hash::make(UserSeeder::PASSWORD)]);
+                if ($person->name !== $entry['name']) throw new \RuntimeException('Canonical Youth identity mismatch: '.$id);
+                $person->assignRole('youth');
+                if (! $person->email_verified_at) $person->forceFill(['email_verified_at' => now()])->save();
+                $profile = UserProfile::firstOrCreate(['user_id' => $person->getKey()], [
+                    'public_slug' => 'sipora-demo-'.\Illuminate\Support\Str::slug($entry['name']), 'full_name' => $entry['name'],
+                    'birth_place' => 'Pemalang', 'birth_date' => (now()->year - $detail['age']).'-01-12',
+                    'gender' => $detail['gender'] === 'man' ? 'male' : 'female', 'occupation_status' => 'student',
+                    'bio' => 'Karakter fiktif DATA DEMO SIPORA.',
+                ]);
+                $values = ['full_name' => $entry['name'], 'gender' => $detail['gender'] === 'man' ? 'male' : 'female',
+                    'profile_photo_path' => DemoAssetManifest::store($entry['profile'], 'public')];
+                if ($profile->birth_date?->year !== 2026 - $detail['age']) $values['birth_date'] = (2026 - $detail['age']).'-01-12';
+                $profile->forceFill($values)->save();
+                UserAddress::firstOrCreate(['user_id' => $person->getKey(), 'address_type' => 'domicile'], [
+                    'administrative_area_id' => $areas[(int) substr($id, 1) % $areas->count()]->getKey(),
+                    'address_line' => 'Alamat fiktif demo', 'is_primary' => true,
+                ]);
+                $visibility = UserProfileVisibility::firstOrCreate(['user_id' => $person->getKey()], [
+                    'is_profile_public' => (int) substr($id, 1) % 6 !== 0, 'show_bio' => true,
+                    'show_interests' => true, 'show_skills' => true,
+                ]);
+                $visibility->forceFill(['show_photo' => true])->save();
+                UserIdentity::firstOrCreate(['user_id' => $person->getKey()], ['verification_status' => 'unverified']);
+            }
         }
     }
 }

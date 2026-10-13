@@ -102,6 +102,6 @@ final class DemoFinalEvaluationSeeder extends Seeder
             ]);
             app(ReviewProgramProposalAction::class)->execute($verifier, $v2, ProgramProposal::STATUS_REVISION, 'Mohon lengkapi indikator keberhasilan program dan rincian rencana anggaran kegiatan.');
         });
-        $this->command?->info('P001 Completed / E-LPJ Approved / Final Evaluation Approved. P002 E-LPJ Revision / Proposal Revision v2.');
+        $this->command?->info('P001 Completed / E-LPJ Approved / Final Evaluation Approved. Creative Youth Development Program: E-LPJ Revision / Proposal Revision v2.');
     }
 }

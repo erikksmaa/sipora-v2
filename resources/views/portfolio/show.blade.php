@@ -115,4 +115,22 @@
         </aside>
     </div>
 </div>
+@if($portfolio['is_owner'])
+    @php($demoPortfolioMedia = \App\Support\Demo\DemoAssetManifest::portfolio(auth()->user()))
+    @if($demoPortfolioMedia)
+        <section class="sipora-card mx-auto mt-8 max-w-7xl">
+            <h2 class="text-xl font-bold text-text-primary">Media pendukung Portfolio</h2>
+            <p class="mt-2 text-sm text-text-secondary">Data demo milik akun ini, belum diverifikasi. Media ini tidak membuat SIPORA Verified Record dan tidak ditampilkan pada Portfolio publik.</p>
+            <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach($demoPortfolioMedia as $media)
+                    <article class="rounded-xl border border-border p-3">
+                        <a href="{{ $media['url'] }}" target="_blank" rel="noopener"><img src="{{ $media['url'] }}" alt="{{ $media['title'] }}" class="aspect-[4/3] w-full rounded-xl object-contain" loading="lazy"></a>
+                        <h3 class="mt-3 font-bold">{{ $media['title'] }}</h3>
+                        @if($media['note'])<p class="mt-2 text-xs text-text-secondary">{{ $media['note'] }}</p>@endif
+                    </article>
+                @endforeach
+            </div>
+        </section>
+    @endif
+@endif
 @endsection

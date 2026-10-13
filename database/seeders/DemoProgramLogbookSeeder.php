@@ -47,6 +47,9 @@ final class DemoProgramLogbookSeeder extends Seeder
         DB::transaction(function () use ($manifest, $activities, $program, $creator): void {
             // The golden program explicitly groups A001, A002, A003 and A005.
             foreach ($activities as $activity) {
+                if ($activity->organization_id !== $program->organization_id) {
+                    throw new RuntimeException('Golden Activity dan Program harus mempunyai Community owner yang sama.');
+                }
                 $activity->forceFill(['program_id' => $program->getKey()])->save();
             }
             foreach ($manifest['entries'] as $entry) {

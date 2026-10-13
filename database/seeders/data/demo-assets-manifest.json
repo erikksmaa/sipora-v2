@@ -1,0 +1,2207 @@
+{
+  "meta": {
+    "project": "SIPORA",
+    "name": "SIPORA Demo Assets Manifest",
+    "version": "1.0",
+    "purpose": [
+      "competition demo data",
+      "Laravel seeders",
+      "screenshots",
+      "teaser video",
+      "documentation"
+    ],
+    "notes": [
+      "IDs are stable demo identifiers and should remain consistent across seeders and assets.",
+      "Available means the asset was observed in the current staged asset set.",
+      "Planned means the asset is part of the demo plan but was not confirmed in the current staged asset set.",
+      "Demo identity/certificate/program documents must remain clearly marked as demo/non-official.",
+      "User-approved golden journey correction: A001/A002/A003/A005 owned by C001 under P001."
+    ]
+  },
+  "youth": {
+    "Y001": {
+      "name": "Erik Kusuma Rais",
+      "profile": {
+        "path": "public/media/demo/youth/Y001-erik-kusuma-rais.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-001-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y001-project-01.jpg",
+          "status": "available",
+          "kind": "project",
+          "title": "Dashboard project komunitas",
+          "note": "",
+          "trust": "self_reported_demo_media"
+        },
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y001-organization-01.jpg",
+          "status": "available",
+          "kind": "organization",
+          "title": "Diskusi komunitas teknologi",
+          "note": "Bukti konteks kegiatan kelompok; tidak mengidentifikasi individu di foto sebagai Erik.",
+          "trust": "self_reported_demo_media"
+        },
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y001-volunteer-01.jpg",
+          "status": "available",
+          "kind": "volunteer",
+          "title": "Koordinasi kegiatan pemuda",
+          "note": "Bukti kegiatan demo; bukan potret khusus Erik.",
+          "trust": "self_reported_demo_media"
+        },
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y001-achievement-01.jpg",
+          "status": "available",
+          "kind": "achievement",
+          "title": "Penerimaan penghargaan fiktif",
+          "note": "Wajah mengacu pada profil Y001. Sertifikat sengaja tanpa tulisan; detail prestasi disimpan dalam data portfolio.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y002": {
+      "name": "Aulia Rahma Putri",
+      "profile": {
+        "path": "public/media/demo/youth/Y002-aulia-rahma-putri.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-002-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y002-project-01.jpg",
+          "status": "available",
+          "kind": "project",
+          "title": "Prototipe Teman Belajar",
+          "note": "",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y003": {
+      "name": "Rizky Maulana",
+      "profile": {
+        "path": "public/media/demo/youth/Y003-rizky-maulana.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-003-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y003-sports-01.jpg",
+          "status": "available",
+          "kind": "sports",
+          "title": "Dokumentasi futsal pemuda",
+          "note": "Bukti konteks kegiatan; tidak mengidentifikasi pemain tertentu sebagai Rizky.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y004": {
+      "name": "Nabila Putri Anjani",
+      "profile": {
+        "path": "public/media/demo/youth/Y004-nabila-putri-anjani.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-004-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y004-public-speaking-01.jpg",
+          "status": "available",
+          "kind": "public-speaking",
+          "title": "Dokumentasi latihan public speaking",
+          "note": "Dokumentasi kelompok; tidak mengidentifikasi pembicara tertentu sebagai Nabila.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y005": {
+      "name": "Fajar Ramadhan",
+      "profile": {
+        "path": "public/media/demo/youth/Y005-fajar-ramadhan.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-005-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y006": {
+      "name": "Siti Aisyah Nuraini",
+      "profile": {
+        "path": "public/media/demo/youth/Y006-siti-aisyah-nuraini.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-006-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y007": {
+      "name": "Dimas Pratama",
+      "profile": {
+        "path": "public/media/demo/youth/Y007-dimas-pratama.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-007-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y007-creative-project-01.jpg",
+          "status": "available",
+          "kind": "creative-project",
+          "title": "Proses pengerjaan media kreatif",
+          "note": "Foto karakter Dimas dari Batch 8A; bukan screenshot keluaran proyek.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y008": {
+      "name": "Anisa Maharani",
+      "profile": {
+        "path": "public/media/demo/youth/Y008-anisa-maharani.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-008-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y009": {
+      "name": "Bagas Saputra",
+      "profile": {
+        "path": "public/media/demo/youth/Y009-bagas-saputra.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-009-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y010": {
+      "name": "Nadia Safitri",
+      "profile": {
+        "path": "public/media/demo/youth/Y010-nadia-safitri.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-010-identity-demo.pdf",
+        "status": "planned"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y010-project-01.jpg",
+          "status": "available",
+          "kind": "project",
+          "title": "Analitik kampanye Ruang Lokal",
+          "note": "Seluruh angka merupakan simulasi.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y011": {
+      "name": "Farhan Akbar",
+      "profile": {
+        "path": "public/media/demo/youth/Y011-farhan-akbar.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y012": {
+      "name": "Luthfi Hakim",
+      "profile": {
+        "path": "public/media/demo/youth/Y012-luthfi-hakim.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y012-photography-01.jpg",
+          "status": "available",
+          "kind": "photography",
+          "title": "Galeri fotografi dokumenter",
+          "note": "Koleksi kurasi foto demo existing; tidak menyatakan Luthfi benar-benar memotret sumber tersebut.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y013": {
+      "name": "Zahra Amelia",
+      "profile": {
+        "path": "public/media/demo/youth/Y013-zahra-amelia.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y014": {
+      "name": "Rafi Alamsyah",
+      "profile": {
+        "path": "public/media/demo/youth/Y014-rafi-alamsyah.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y014-content-creation-01.jpg",
+          "status": "available",
+          "kind": "content-creation",
+          "title": "Praktik produksi konten",
+          "note": "Bukti konteks workshop; tidak mengidentifikasi individu tertentu sebagai Rafi.",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y015": {
+      "name": "Putri Ayuningtyas",
+      "profile": {
+        "path": "public/media/demo/youth/Y015-putri-ayuningtyas.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y016": {
+      "name": "Iqbal Ramadhan",
+      "profile": {
+        "path": "public/media/demo/youth/Y016-iqbal-ramadhan.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y017": {
+      "name": "Salma Nadhira",
+      "profile": {
+        "path": "public/media/demo/youth/Y017-salma-nadhira-v2.png",
+        "status": "available",
+        "alternatives": [
+          "public/media/demo/youth/Y017-salma-nadhira.png"
+        ]
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": [
+        {
+          "path": "public/media/demo/08B_PORTFOLIO/portfolio-y017-project-01.jpg",
+          "status": "available",
+          "kind": "project",
+          "title": "Komponen antarmuka Ruang Karya",
+          "note": "",
+          "trust": "self_reported_demo_media"
+        }
+      ]
+    },
+    "Y018": {
+      "name": "Reza Firmansyah",
+      "profile": {
+        "path": "public/media/demo/youth/Y018-reza-firmansyah.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y019": {
+      "name": "Alya Maharani",
+      "profile": {
+        "path": "public/media/demo/youth/Y019-alya-maharani-v2.png",
+        "status": "available",
+        "alternatives": [
+          "public/media/demo/youth/Y019-alya-maharani.png"
+        ]
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    },
+    "Y020": {
+      "name": "Kevin Aditya",
+      "profile": {
+        "path": "public/media/demo/youth/Y020-kevin-aditya.png",
+        "status": "available",
+        "alternatives": []
+      },
+      "identity_demo": {
+        "path": null,
+        "status": "optional"
+      },
+      "certificates": [],
+      "portfolio_assets": []
+    }
+  },
+  "communities": {
+    "C001": {
+      "name": "Komunitas Pemuda Digital Pemalang",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C001/community-001-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C001/community-001-cover.jpg",
+        "status": "available"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C001/community-001-gallery-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C001/community-001-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C001/community-001-gallery-03.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C001/community-001-gallery-04.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C001/community-001-gallery-05.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C002": {
+      "name": "Pemalang Creative Hub",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C002/community-002-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C002/community-002-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C002/community-002-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C002/community-002-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C002/community-002-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C003": {
+      "name": "Relawan Muda Pemalang",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C003/community-003-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C003/community-003-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C003/community-003-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C003/community-003-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C003/community-003-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C004": {
+      "name": "Pemalang Public Speaking Club",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C004/community-004-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C004/community-004-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C004/community-004-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C004/community-004-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C004/community-004-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C005": {
+      "name": "Youth Entrepreneur Pemalang",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C005/community-005-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C005/community-005-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C005/community-005-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C005/community-005-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C005/community-005-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C006": {
+      "name": "Komunitas Fotografi Pemalang",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C006/community-006-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C006/community-006-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C006/community-006-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C006/community-006-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C006/community-006-gallery-03.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C006/community-006-gallery-04.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C007": {
+      "name": "Pemuda Peduli Lingkungan",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C007/community-007-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C007/community-007-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C007/community-007-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C007/community-007-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C007/community-007-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C008": {
+      "name": "Komunitas Olahraga Pemuda",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C008/community-008-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C008/community-008-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C008/community-008-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C008/community-008-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C008/community-008-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C009": {
+      "name": "Forum Pemuda Taman",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C009/community-009-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C009/community-009-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C009/community-009-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C009/community-009-gallery-02.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C010": {
+      "name": "Komunitas Desain Pemalang",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C010/community-010-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C010/community-010-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C010/community-010-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C010/community-010-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C010/community-010-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C011": {
+      "name": "Pemalang Content Creator Club",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C011/community-011-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C011/community-011-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C011/community-011-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C011/community-011-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C011/community-011-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C012": {
+      "name": "Youth Education Network",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C012/community-012-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C012/community-012-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C012/community-012-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C012/community-012-gallery-02.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C013": {
+      "name": "Pemuda Inovatif Petarukan",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C013/community-013-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C013/community-013-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C013/community-013-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C013/community-013-gallery-02.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C014": {
+      "name": "Komunitas Musik Pemuda",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C014/community-014-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C014/community-014-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C014/community-014-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C014/community-014-gallery-02.jpg",
+          "status": "planned"
+        }
+      ]
+    },
+    "C015": {
+      "name": "Pemalang Volunteer Network",
+      "logo": {
+        "path": "public/media/demo/02_COMMUNITIES/C015/community-015-logo.png",
+        "status": "available"
+      },
+      "cover": {
+        "path": "public/media/demo/02_COMMUNITIES/C015/community-015-cover.jpg",
+        "status": "planned"
+      },
+      "gallery": [
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C015/community-015-gallery-01.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C015/community-015-gallery-02.jpg",
+          "status": "planned"
+        },
+        {
+          "path": "public/media/demo/02_COMMUNITIES/C015/community-015-gallery-03.jpg",
+          "status": "planned"
+        }
+      ]
+    }
+  },
+  "activities": {
+    "A001": {
+      "title": "Workshop Web Development untuk Pemuda",
+      "community_id": "C001",
+      "program_id": "P001",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-03.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-04.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-05.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-06.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": [
+        "A001 documentation-03 has an extra non-canonical duplicate file ending in -03-02.jpg."
+      ],
+      "demo_start_at": "2026-09-14 09:00:00"
+    },
+    "A002": {
+      "title": "Pelatihan Public Speaking Dasar",
+      "community_id": "C001",
+      "program_id": "P001",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A002/activity-002-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A002/activity-002-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A002/activity-002-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A002/activity-002-documentation-03.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A002/activity-002-documentation-04.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": [],
+      "demo_start_at": "2026-09-23 09:00:00"
+    },
+    "A003": {
+      "title": "Bootcamp Desain Konten Digital",
+      "community_id": "C001",
+      "program_id": "P001",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A003/activity-003-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A003/activity-003-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A003/activity-003-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A003/activity-003-documentation-03.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A003/activity-003-documentation-04.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": [],
+      "demo_start_at": "2026-10-03 09:00:00"
+    },
+    "A004": {
+      "title": "Volunteer Pemalang Youth Festival",
+      "community_id": "C015",
+      "program_id": "P003",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A004/activity-004-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A004/activity-004-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A004/activity-004-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A004/activity-004-documentation-03.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A004/activity-004-documentation-04.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A005": {
+      "title": "Seminar Kewirausahaan Digital",
+      "community_id": "C001",
+      "program_id": "P001",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A005/activity-005-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A005/activity-005-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A005/activity-005-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A005/activity-005-documentation-03.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A005/activity-005-documentation-04.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": [],
+      "demo_start_at": "2026-10-10 09:00:00"
+    },
+    "A006": {
+      "title": "Workshop Digital Marketing",
+      "community_id": "C005",
+      "program_id": "P004",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A006/activity-006-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A006/activity-006-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A006/activity-006-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A006/activity-006-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A007": {
+      "title": "Pelatihan Leadership Pemuda",
+      "community_id": "C009",
+      "program_id": "P008",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A007/activity-007-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A007/activity-007-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A007/activity-007-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A007/activity-007-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A008": {
+      "title": "Turnamen Futsal Pemuda",
+      "community_id": "C008",
+      "program_id": "P005",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A008/activity-008-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A008/activity-008-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A008/activity-008-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A008/activity-008-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A009": {
+      "title": "Pelatihan Video Editing",
+      "community_id": "C011",
+      "program_id": "P014",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A009/activity-009-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A009/activity-009-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A009/activity-009-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A009/activity-009-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A010": {
+      "title": "Workshop Personal Branding",
+      "community_id": "C012",
+      "program_id": "P011",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A010/activity-010-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A010/activity-010-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A010/activity-010-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A010/activity-010-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A011": {
+      "title": "Kelas Fotografi Dasar",
+      "community_id": "C006",
+      "program_id": "P006",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A011/activity-011-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A011/activity-011-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A011/activity-011-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A011/activity-011-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A012": {
+      "title": "Pelatihan UMKM Digital",
+      "community_id": "C005",
+      "program_id": "P012",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A012/activity-012-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A012/activity-012-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A012/activity-012-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A012/activity-012-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A013": {
+      "title": "Seminar Karier dan Magang",
+      "community_id": "C012",
+      "program_id": "P011",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A013/activity-013-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A013/activity-013-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A013/activity-013-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A013/activity-013-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A014": {
+      "title": "Aksi Bersih Lingkungan",
+      "community_id": "C007",
+      "program_id": "P009",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A014/activity-014-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A014/activity-014-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A014/activity-014-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A014/activity-014-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    },
+    "A015": {
+      "title": "Pelatihan Content Creator",
+      "community_id": "C011",
+      "program_id": "P014",
+      "cover": {
+        "path": "public/media/demo/03_ACTIVITIES/A015/activity-015-cover.jpg",
+        "status": "available"
+      },
+      "documentation": [
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A015/activity-015-documentation-01.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A015/activity-015-documentation-02.jpg",
+          "status": "available"
+        },
+        {
+          "path": "public/media/demo/03_ACTIVITIES/A015/activity-015-documentation-03.jpg",
+          "status": "available"
+        }
+      ],
+      "notes": []
+    }
+  },
+  "opportunities": {
+    "O001": {
+      "title": "Internship Frontend Developer",
+      "organizer": {
+        "id": "ORG001",
+        "name": "Nusantara Digital Academy"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O001/opportunity-001-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O001/opportunity-001-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-001-logo.png",
+        "status": "available"
+      }
+    },
+    "O002": {
+      "title": "Beasiswa Pemuda Digital",
+      "organizer": {
+        "id": "ORG005",
+        "name": "Pemuda Berkarya Foundation"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O002/opportunity-002-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O002/opportunity-002-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-005-logo.png",
+        "status": "available"
+      }
+    },
+    "O003": {
+      "title": "Lomba Desain Poster Pemuda",
+      "organizer": {
+        "id": "ORG002",
+        "name": "Pemalang Creative Institute"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O003/opportunity-003-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O003/opportunity-003-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-002-logo.png",
+        "status": "available"
+      }
+    },
+    "O004": {
+      "title": "Volunteer Festival Pemuda",
+      "organizer": {
+        "id": "ORG003",
+        "name": "Youth Skill Center"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O004/opportunity-004-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O004/opportunity-004-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-003-logo.png",
+        "status": "available"
+      }
+    },
+    "O005": {
+      "title": "Pelatihan UI/UX Gratis",
+      "organizer": {
+        "id": "ORG008",
+        "name": "Creative Talent Hub"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O005/opportunity-005-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O005/opportunity-005-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-008-logo.png",
+        "status": "available"
+      }
+    },
+    "O006": {
+      "title": "Bootcamp Digital Marketing",
+      "organizer": {
+        "id": "ORG004",
+        "name": "Digital Growth Academy"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O006/opportunity-006-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O006/opportunity-006-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-004-logo.png",
+        "status": "available"
+      }
+    },
+    "O007": {
+      "title": "Kompetisi Business Plan",
+      "organizer": {
+        "id": "ORG005",
+        "name": "Pemuda Berkarya Foundation"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O007/opportunity-007-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O007/opportunity-007-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-005-logo.png",
+        "status": "available"
+      }
+    },
+    "O008": {
+      "title": "Program Magang UMKM Digital",
+      "organizer": {
+        "id": "ORG006",
+        "name": "Future Career Network"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O008/opportunity-008-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O008/opportunity-008-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-006-logo.png",
+        "status": "available"
+      }
+    },
+    "O009": {
+      "title": "Scholarship Digital Talent",
+      "organizer": {
+        "id": "ORG001",
+        "name": "Nusantara Digital Academy"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O009/opportunity-009-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O009/opportunity-009-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-001-logo.png",
+        "status": "available"
+      }
+    },
+    "O010": {
+      "title": "Training Public Speaking",
+      "organizer": {
+        "id": "ORG003",
+        "name": "Youth Skill Center"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O010/opportunity-010-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O010/opportunity-010-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-003-logo.png",
+        "status": "available"
+      }
+    },
+    "O011": {
+      "title": "Kompetisi Fotografi Pemuda",
+      "organizer": {
+        "id": "ORG002",
+        "name": "Pemalang Creative Institute"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O011/opportunity-011-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O011/opportunity-011-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-002-logo.png",
+        "status": "available"
+      }
+    },
+    "O012": {
+      "title": "Volunteer Lingkungan",
+      "organizer": {
+        "id": "ORG007",
+        "name": "Green Youth Initiative"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O012/opportunity-012-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O012/opportunity-012-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-007-logo.png",
+        "status": "available"
+      }
+    },
+    "O013": {
+      "title": "Pelatihan Video Editing",
+      "organizer": {
+        "id": "ORG008",
+        "name": "Creative Talent Hub"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O013/opportunity-013-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O013/opportunity-013-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-008-logo.png",
+        "status": "available"
+      }
+    },
+    "O014": {
+      "title": "Internship Content Creator",
+      "organizer": {
+        "id": "ORG006",
+        "name": "Future Career Network"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O014/opportunity-014-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O014/opportunity-014-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-006-logo.png",
+        "status": "available"
+      }
+    },
+    "O015": {
+      "title": "Program Leadership Pemuda",
+      "organizer": {
+        "id": "ORG005",
+        "name": "Pemuda Berkarya Foundation"
+      },
+      "cover": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O015/opportunity-015-cover.jpg",
+        "status": "available"
+      },
+      "card": {
+        "path": "public/media/demo/04_OPPORTUNITIES/O015/opportunity-015-card.jpg",
+        "status": "available"
+      },
+      "organizer_logo": {
+        "path": "public/media/demo/04_OPPORTUNITIES/organizers/organizer-005-logo.png",
+        "status": "available"
+      }
+    }
+  },
+  "programs": {
+    "P001": {
+      "name": "Pemalang Youth Digital Empowerment 2026",
+      "demo_status": "completed",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P001/program-001-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P001/proposal/program-001-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "available",
+        "assets": [
+          "public/media/demo/07C_PROGRAM_LOGBOOK/P001/program-001-logbook-01.jpg",
+          "public/media/demo/07C_PROGRAM_LOGBOOK/P001/program-001-logbook-02.jpg",
+          "public/media/demo/07C_PROGRAM_LOGBOOK/P001/program-001-logbook-03.jpg",
+          "public/media/demo/07C_PROGRAM_LOGBOOK/P001/program-001-logbook-04.jpg",
+          "public/media/demo/07C_PROGRAM_LOGBOOK/P001/program-001-logbook-05.jpg",
+          "public/media/demo/07C_PROGRAM_LOGBOOK/P001/program-001-logbook-06.jpg"
+        ]
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P001/elpj/program-001-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "available",
+        "assets": [
+          "public/media/demo/07F_SUPPORTING_EVIDENCE/P001/program-001-evidence-01.jpg",
+          "public/media/demo/07F_SUPPORTING_EVIDENCE/P001/program-001-evidence-02.jpg",
+          "public/media/demo/07F_SUPPORTING_EVIDENCE/P001/program-001-evidence-03.jpg",
+          "public/media/demo/07F_SUPPORTING_EVIDENCE/P001/program-001-evidence-04.jpg"
+        ]
+      },
+      "community_id": "C001"
+    },
+    "P002": {
+      "name": "Pemuda Kreatif Kecamatan Taman",
+      "demo_status": "running",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P002/program-002-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P002/proposal/program-002-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P002/elpj/program-002-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      }
+    },
+    "P003": {
+      "name": "Program Pengembangan Relawan Muda",
+      "demo_status": "running",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P003/program-003-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P003/proposal/program-003-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P003/elpj/program-003-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C015"
+    },
+    "P004": {
+      "name": "Digital Entrepreneurship for Youth",
+      "demo_status": "rejected",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P004/program-004-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P004/proposal/program-004-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P004/elpj/program-004-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C005"
+    },
+    "P005": {
+      "name": "Pemuda Sehat dan Aktif",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P005/program-005-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P005/proposal/program-005-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P005/elpj/program-005-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C008"
+    },
+    "P006": {
+      "name": "Creative Youth Development Program",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P006/program-006-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P006/proposal/program-006-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P006/elpj/program-006-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C006"
+    },
+    "P007": {
+      "name": "Program Literasi Digital Pemuda",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P007/program-007-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P007/proposal/program-007-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P007/elpj/program-007-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      }
+    },
+    "P008": {
+      "name": "Leadership Development Pemalang",
+      "demo_status": "running",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P008/program-008-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P008/proposal/program-008-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P008/elpj/program-008-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C009"
+    },
+    "P009": {
+      "name": "Program Pemuda Peduli Lingkungan",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P009/program-009-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P009/proposal/program-009-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P009/elpj/program-009-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C007"
+    },
+    "P010": {
+      "name": "Digital Skill Acceleration",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P010/program-010-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P010/proposal/program-010-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P010/elpj/program-010-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      }
+    },
+    "P011": {
+      "name": "Youth Career Readiness Program",
+      "demo_status": "running",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P011/program-011-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P011/proposal/program-011-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P011/elpj/program-011-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C012"
+    },
+    "P012": {
+      "name": "Pemuda Wirausaha Mandiri",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P012/program-012-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P012/proposal/program-012-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P012/elpj/program-012-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C005"
+    },
+    "P013": {
+      "name": "Program Relawan Sosial Pemuda",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P013/program-013-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P013/proposal/program-013-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P013/elpj/program-013-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      }
+    },
+    "P014": {
+      "name": "Creative Media Youth Program",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P014/program-014-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P014/proposal/program-014-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P014/elpj/program-014-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      },
+      "community_id": "C011"
+    },
+    "P015": {
+      "name": "Pemuda Aktif dan Produktif",
+      "demo_status": "planned",
+      "cover": {
+        "path": "public/media/demo/05_PROGRAMS/P015/program-015-cover.jpg",
+        "status": "planned"
+      },
+      "proposal": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P015/proposal/program-015-proposal.pdf",
+        "status": "planned"
+      },
+      "logbook": {
+        "status": "planned",
+        "assets": []
+      },
+      "elpj": {
+        "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P015/elpj/program-015-elpj.pdf",
+        "status": "planned"
+      },
+      "supporting_evidence": {
+        "status": "planned",
+        "assets": []
+      }
+    }
+  },
+  "documents": {
+    "DOC001": {
+      "type": "identity_demo",
+      "entity_id": "Y001",
+      "name": "Erik Kusuma Rais",
+      "path": "public/media/demo/06_YOUTH_EVIDENCE/identity/youth-001-identity-demo.pdf",
+      "status": "planned"
+    },
+    "DOC002": {
+      "type": "external_certificate",
+      "entity_id": "Y001",
+      "name": "Web Development Fundamentals",
+      "path": "public/media/demo/06_YOUTH_EVIDENCE/certificates/external-cert-001-web-development.pdf",
+      "status": "planned"
+    },
+    "DOC003": {
+      "type": "external_certificate",
+      "entity_id": "Y001",
+      "name": "Public Speaking Essentials",
+      "path": "public/media/demo/06_YOUTH_EVIDENCE/certificates/external-cert-002-public-speaking.pdf",
+      "status": "planned"
+    },
+    "DOC004": {
+      "type": "achievement_evidence",
+      "entity_id": "Y001",
+      "name": "Kompetisi Web Design Pemuda",
+      "path": "public/media/demo/06_YOUTH_EVIDENCE/achievements/achievement-001-web-design.pdf",
+      "status": "planned"
+    },
+    "DOC005": {
+      "type": "program_proposal",
+      "entity_id": "P001",
+      "name": "Pemalang Youth Digital Empowerment 2026",
+      "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P001/proposal/program-001-proposal.pdf",
+      "status": "planned"
+    },
+    "DOC006": {
+      "type": "program_elpj",
+      "entity_id": "P001",
+      "name": "Pemalang Youth Digital Empowerment 2026",
+      "path": "public/media/demo/07_PROGRAM_DOCUMENTS/P001/elpj/program-001-elpj.pdf",
+      "status": "planned"
+    },
+    "DOC007": {
+      "type": "program_logbook",
+      "entity_id": "P001",
+      "name": "6 logbook entries",
+      "path": "public/media/demo/07C_PROGRAM_LOGBOOK/P001/",
+      "status": "available"
+    },
+    "DOC008": {
+      "type": "program_evidence",
+      "entity_id": "P001",
+      "name": "4 supporting evidence",
+      "path": "public/media/demo/07F_SUPPORTING_EVIDENCE/P001/",
+      "status": "available"
+    }
+  },
+  "social_feed": {
+    "F001": {
+      "author_entity": "C001",
+      "related_entity": null,
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-001-community-digital.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F002": {
+      "author_entity": null,
+      "related_entity": "A001",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-002-workshop-recap.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F003": {
+      "author_entity": null,
+      "related_entity": "C002",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-003-creative-hub.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F004": {
+      "author_entity": null,
+      "related_entity": "C003",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-004-volunteer.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F005": {
+      "author_entity": null,
+      "related_entity": "C006",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-005-photography.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F006": {
+      "author_entity": null,
+      "related_entity": "A002",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-006-public-speaking.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F007": {
+      "author_entity": null,
+      "related_entity": "A003",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-007-content-design.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F008": {
+      "author_entity": null,
+      "related_entity": "A008",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-008-futsal.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F009": {
+      "author_entity": null,
+      "related_entity": "A014",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-009-environment.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F010": {
+      "author_entity": null,
+      "related_entity": "A005",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-010-entrepreneurship.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F011": {
+      "author_entity": "Y001",
+      "related_entity": null,
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-011-personal-learning.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F012": {
+      "author_entity": "Y001",
+      "related_entity": null,
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-012-achievement.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F013": {
+      "author_entity": "Y001",
+      "related_entity": null,
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-013-project.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F014": {
+      "author_entity": null,
+      "related_entity": "O001",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-014-internship.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    },
+    "F015": {
+      "author_entity": null,
+      "related_entity": "O002",
+      "media": {
+        "path": "public/media/demo/08A_SOCIAL_FEED/feed-015-scholarship.jpg",
+        "status": "available"
+      },
+      "caption_source": "public/media/demo/08D_SOCIAL_CONTENT/content-mapping.json"
+    }
+  },
+  "relationships": [
+    {
+      "id": "REL001",
+      "from": "Y001",
+      "relation": "participates_in",
+      "to": "A001",
+      "category": "Primary demo journey"
+    },
+    {
+      "id": "REL002",
+      "from": "A001",
+      "relation": "managed_by",
+      "to": "C001",
+      "category": "Primary demo journey"
+    },
+    {
+      "id": "REL003",
+      "from": "A001",
+      "relation": "part_of",
+      "to": "P001",
+      "category": "Primary demo journey"
+    },
+    {
+      "id": "REL004",
+      "from": "P001",
+      "relation": "has_proposal",
+      "to": "DOC005",
+      "category": "Government workflow"
+    },
+    {
+      "id": "REL005",
+      "from": "P001",
+      "relation": "has_logbook",
+      "to": "DOC007",
+      "category": "Government workflow"
+    },
+    {
+      "id": "REL006",
+      "from": "P001",
+      "relation": "has_elpj",
+      "to": "DOC006",
+      "category": "Government workflow"
+    },
+    {
+      "id": "REL007",
+      "from": "P001",
+      "relation": "has_evidence",
+      "to": "DOC008",
+      "category": "Government workflow"
+    },
+    {
+      "id": "REL008",
+      "from": "Y001",
+      "relation": "has_certificate",
+      "to": "DOC002",
+      "category": "Portfolio"
+    },
+    {
+      "id": "REL009",
+      "from": "Y001",
+      "relation": "has_certificate",
+      "to": "DOC003",
+      "category": "Portfolio"
+    },
+    {
+      "id": "REL010",
+      "from": "Y001",
+      "relation": "has_achievement",
+      "to": "DOC004",
+      "category": "Portfolio"
+    },
+    {
+      "id": "REL011",
+      "from": "F002",
+      "relation": "reuses_media_from",
+      "to": "A001",
+      "category": "Asset reuse"
+    },
+    {
+      "id": "REL012",
+      "from": "F014",
+      "relation": "related_to",
+      "to": "O001",
+      "category": "Social"
+    },
+    {
+      "id": "REL013",
+      "from": "F015",
+      "relation": "related_to",
+      "to": "O002",
+      "category": "Social"
+    }
+  ],
+  "primary_demo_story": {
+    "youth_id": "Y001",
+    "community_id": "C001",
+    "activity_id": "A001",
+    "program_id": "P001",
+    "flow": [
+      "Y001 completes profile and skills/interests",
+      "Y001 receives Development Pathway recommendations",
+      "Y001 registers for A001",
+      "A001 is managed by C001",
+      "A001 is part of P001",
+      "attendance/completion generates participation record",
+      "record appears in Passport",
+      "certificate becomes available",
+      "P001 evidence flows through Proposal → Logbook → E-LPJ → Final Evaluation",
+      "aggregate data contributes to Youth Intelligence and Ecosystem Maps"
+    ]
+  },
+  "seeder_keys": {
+    "opportunities": {
+      "O001": {
+        "slug": "demo-internship-frontend-developer"
+      },
+      "O002": {
+        "slug": "demo-beasiswa-pemuda-digital"
+      },
+      "O003": {
+        "slug": "demo-lomba-desain-poster-pemuda"
+      },
+      "O004": {
+        "slug": "volunteer-festival-pemuda"
+      },
+      "O005": {
+        "slug": "demo-pelatihan-ui-ux-gratis"
+      },
+      "O006": {
+        "slug": "demo-bootcamp-digital-marketing"
+      },
+      "O007": {
+        "slug": "demo-kompetisi-business-plan"
+      },
+      "O008": {
+        "slug": "demo-program-magang-umkm-digital"
+      },
+      "O009": {
+        "slug": "demo-beasiswa-pendidikan-pemuda"
+      },
+      "O010": {
+        "slug": "demo-relawan-kampanye-lingkungan"
+      },
+      "O011": {
+        "slug": "demo-pelatihan-fotografi-produk"
+      },
+      "O012": {
+        "slug": "demo-kompetisi-karya-web-pemuda"
+      },
+      "O013": {
+        "slug": "demo-magang-penulisan-konten"
+      },
+      "O014": {
+        "slug": "demo-beasiswa-kreativitas-pemalang"
+      },
+      "O015": {
+        "slug": "demo-relawan-literasi-petarukan"
+      }
+    }
+  }
+}

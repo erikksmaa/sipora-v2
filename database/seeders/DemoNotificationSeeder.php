@@ -43,7 +43,7 @@ final class DemoNotificationSeeder extends Seeder
         $feed = json_decode(file_get_contents(public_path('media/demo/08A_SOCIAL_FEED/manifest.json')), true, flags: JSON_THROW_ON_ERROR);
         $entry = collect($feed['media'])->firstWhere('id', 'FEED011');
         $post = SocialPost::published()->where('author_id', $erik->getKey())->whereNull('organization_id')
-            ->where('body', $entry['caption']."\n\nDATA DEMO SIPORA")->firstOrFail();
+            ->where('image_path', 'social/demo-batch-8a/'.hash_file('sha256', public_path('media/demo/08A_SOCIAL_FEED/'.$entry['file'])).'.jpg')->firstOrFail();
 
         $mapping = DB::transaction(function () use ($erik, $aulia, $community, $participation, $certificate, $membership, $p001, $p002, $manager, $thread, $reply, $post): array {
             // Local fictional interactions provide real backing records. No notifier,
@@ -94,6 +94,6 @@ final class DemoNotificationSeeder extends Seeder
         if (! is_dir($dir)) mkdir($dir, 0777, true);
         file_put_contents($dir.'/notification-mapping.json', json_encode(['batch' => '8F', 'fictional' => true, 'notification_count' => 8,
             'database_seeded' => true, 'external_delivery' => false, 'notifications' => $mapping], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-        $this->command?->info('Batch 8F: 8 notifikasi lokal; 7 untuk Erik dan 1 untuk pengelola P002.');
+        $this->command?->info('Batch 8F: 8 notifikasi lokal; 7 untuk Erik dan 1 untuk pengelola Creative Youth Development Program.');
     }
 }
