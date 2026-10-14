@@ -37,9 +37,9 @@ $palette = [
     'Dark · actual overrides' => $darkTokens,
 ];
 $typeRows = [
-    ['Display', 'font-display text-5xl font-bold tracking-tight', 'Pixelify Sans', '48 / 48', '700', '-0.025em', 'Build Your Youth Journey', 'components/public/page-intro.blade.php · sm:text-5xl'],
-    ['H1', 'font-heading text-3xl font-bold tracking-tight', 'Pixelify Sans', '30 / 36', '700', '-0.025em', 'Jelajahi Ekosistem Pemuda', 'components/workspace/page-header.blade.php'],
-    ['H2', 'font-heading text-2xl font-bold', 'Pixelify Sans', '24 / 32', '700', 'normal', 'Temukan Kesempatanmu', 'forum/index.blade.php'],
+    ['Display', 'font-display text-5xl font-bold tracking-tight', 'Plus Jakarta Sans', '48 / 48', '700', '-0.025em', 'Build Your Youth Journey', 'components/public/page-intro.blade.php · sm:text-5xl'],
+    ['H1', 'font-heading text-3xl font-bold tracking-tight', 'Plus Jakarta Sans', '30 / 36', '700', '-0.025em', 'Jelajahi Ekosistem Pemuda', 'components/workspace/page-header.blade.php'],
+    ['H2', 'font-heading text-2xl font-bold', 'Plus Jakarta Sans', '24 / 32', '700', 'normal', 'Temukan Kesempatanmu', 'forum/index.blade.php'],
     ['H3', 'text-lg font-extrabold', 'Plus Jakarta Sans', '18 / 28', '800', 'normal', 'Belajar bersama komunitas', 'forum/index.blade.php'],
     ['H4 / card title', 'text-base font-bold', 'Plus Jakarta Sans', '16 / 24', '700', 'normal', 'Langkah kecil, dampak besar', 'components/ui/empty-state.blade.php · h3 element'],
     ['Body large', 'text-lg leading-7', 'Plus Jakarta Sans', '18 / 28', '400', 'normal', 'Bergabung bersama ekosistem pemuda Pemalang.', 'components/public/page-intro.blade.php · sm:text-lg'],
@@ -50,7 +50,7 @@ $typeRows = [
     ['Metadata', 'text-xs text-text-muted', 'Plus Jakarta Sans', '12 / 16', '400', 'normal', '14 November 2026 · Pemalang', 'social/post-card.blade.php'],
     ['Button', 'text-sm font-extrabold leading-none', 'Plus Jakarta Sans', '14 / 14', '800', 'normal', 'Explore Activity', 'app.css · .btn-primary'],
     ['Mono', 'font-mono text-xs', 'JetBrains Mono', '12 / 16', '400 → fallback 500 loaded', 'normal', 'SIPORA-CERT-2026-001', 'youth/certificates/index.blade.php'],
-    ['Pixel accent', 'text-score', 'Press Start 2P', '10 / 16.25', '400', '0.025em', 'LEVEL UP', 'app.css · .text-score'],
+    ['Pixel accent', 'text-score', 'Plus Jakarta Sans', '10 / 16.25', '400', '0.025em', 'LEVEL UP', 'app.css · .text-score'],
 ];
 $iconSource = file_get_contents(resource_path('views/components/ui/icon.blade.php'));
 preg_match_all('/^\s*\x27([\w-]+)\x27(?:,\s*\x27[\w-]+\x27)?\s*=>/m', $iconSource, $iconMatches);

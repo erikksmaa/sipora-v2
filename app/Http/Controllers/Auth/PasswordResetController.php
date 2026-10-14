@@ -11,14 +11,27 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class PasswordResetController extends Controller
 {
     public function send(AuthRequest $request)
     {
-        Password::sendResetLink($request->safe()->only('email'));
+        try {
+            $status = Password::sendResetLink($request->safe()->only('email'));
+        } catch (TransportExceptionInterface $exception) {
+            throw ValidationException::withMessages([
+                'email' => 'Tautan reset belum dapat dikirim. Silakan coba lagi nanti atau hubungi pengelola SIPORA.',
+            ]);
+        }
 
-        return back()->with('status', 'If this account exists, a password reset link has been sent.');
+        if ($status === Password::ResetThrottled) {
+            throw ValidationException::withMessages([
+                'email' => 'Permintaan terlalu cepat. Tunggu satu menit sebelum meminta tautan baru.',
+            ]);
+        }
+
+        return back()->with('status', 'Jika akun dengan email tersebut tersedia, tautan reset password telah dikirim. Periksa inbox dan folder spam.');
     }
 
     public function update(Request $request)
@@ -28,16 +41,16 @@ class PasswordResetController extends Controller
             'email' => ['required', 'email', 'max:255'],
             'password' => ['required', 'confirmed', PasswordRule::min(8), 'max:72'],
         ]);
-        $data['email'] = mb_strtolower($data['email']);
+        $data['email'] = mb_strtolower(trim($data['email']));
         $status = Password::reset($data, function (User $user, string $password): void {
             $user->forceFill(['password' => $password, 'remember_token' => Str::random(60)])->save();
             $user->getConnection()->table('sessions')->where('user_id', $user->getKey())->delete();
             event(new PasswordReset($user));
         });
         if ($status !== Password::PasswordReset) {
-            throw ValidationException::withMessages(['email' => __($status)]);
+            throw ValidationException::withMessages(['email' => 'Tautan reset tidak valid atau telah kedaluwarsa. Silakan minta tautan baru.']);
         }
 
-        return to_route('login')->with('status', __($status));
+        return to_route('login')->with('status', 'Password berhasil diperbarui. Silakan masuk dengan password baru.');
     }
 }

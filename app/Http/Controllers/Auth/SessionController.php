@@ -19,7 +19,7 @@ class SessionController extends Controller
         }
         $request->session()->regenerate();
 
-        return to_route(HomeRoute::for($request->user()))->with('status', 'Selamat datang! Anda berhasil masuk ke SIPORA.');
+        return redirect()->intended(route(HomeRoute::for($request->user())))->with('status', 'Selamat datang! Anda berhasil masuk ke SIPORA.');
     }
 
     public function destroy(Request $request): RedirectResponse

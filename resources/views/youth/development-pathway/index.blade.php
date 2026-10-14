@@ -41,12 +41,12 @@
                         <div class="mt-5 space-y-3">
                             @forelse($pathway['recommendations'][$type] as $recommendation)
                                 @php($item = $recommendation['item'])
-                                <article class="border border-border bg-surface-soft p-4">
+                                <article class="card-interactive border border-border bg-surface-soft p-4">
                                     <p class="text-xs font-bold uppercase tracking-wider text-interactive">{{ $item->category?->name ?? $label }}</p>
                                     <h4 class="mt-1 text-base font-extrabold text-text-primary">{{ $type === 'community' ? $item->name : $item->title }}</h4>
                                     <p class="mt-1 text-xs text-text-secondary">@if($type === 'activity') Pendaftaran dibuka · {{ $item->start_at->translatedFormat('d M Y') }} @elseif($type === 'community') Community aktif @else Tersedia{{ $item->deadline_at ? ' · Batas '.$item->deadline_at->translatedFormat('d M Y') : '' }} @endif</p>
                                     <ul class="mt-3 space-y-1 border-t border-border pt-3 text-xs leading-5 text-text-secondary">@foreach($recommendation['reasons'] as $reason)<li>✓ {{ $reason }}</li>@endforeach</ul>
-                                    <a class="btn-secondary mt-4 !min-h-9 !px-3 text-xs" href="{{ route($showRoute, $item) }}">Lihat {{ $label }}</a>
+                                    <a class="card-link btn-secondary mt-4 !min-h-9 !px-3 text-xs" href="{{ route($showRoute, $item) }}">Lihat {{ $label }}</a>
                                 </article>
                             @empty
                                 <p class="border border-dashed border-border p-4 text-sm leading-6 text-text-secondary">Belum ada {{ $label }} tersedia yang terkait dengan data profilmu saat ini.</p>

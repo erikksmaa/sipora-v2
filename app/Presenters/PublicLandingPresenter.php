@@ -2,11 +2,14 @@
 
 namespace App\Presenters;
 
+use App\Models\ForumThread;
 use App\Models\Interest;
+use App\Models\SocialPost;
 use App\Services\Discovery\ActivityDiscoveryService;
 use App\Services\Discovery\CommunityDiscoveryService;
 use App\Services\Discovery\OpportunityDiscoveryService;
 use App\Services\Discovery\ProgramDiscoveryService;
+use App\Services\PublicStatisticsService;
 use App\Services\YouthStatisticsService;
 
 /**
@@ -21,6 +24,7 @@ final class PublicLandingPresenter
         private readonly OpportunityDiscoveryService $opportunities,
         private readonly ProgramDiscoveryService $programs,
         private readonly YouthStatisticsService $statistics,
+        private readonly PublicStatisticsService $ecosystemStatistics,
     ) {}
 
     /** @return array<string, mixed> */
@@ -40,7 +44,18 @@ final class PublicLandingPresenter
                 ['icon' => '💼', 'name' => 'Kewirausahaan'], ['icon' => '🎭', 'name' => 'Budaya'],
             ];
 
+        $analytics = $this->statistics->public();
+
         return [
+            'analytics' => $analytics,
+            'coverage' => $analytics['coverage'],
+            'ecosystemStatistics' => $this->ecosystemStatistics->summarize(),
+            'threads' => ForumThread::whereIn('status', [ForumThread::ACTIVE, ForumThread::LOCKED])
+                ->whereHas('category', fn ($q) => $q->where('is_active', true))
+                ->with(['category', 'author.profile', 'author.profileVisibility'])
+                ->latest()->orderByDesc('id')->limit(2)->get(),
+            'posts' => SocialPost::published()->with(['organization', 'author.profile', 'author.profileVisibility'])
+                ->latest()->orderByDesc('id')->limit(2)->get(),
             'presentation' => [
                 'is_placeholder' => true,
                 'source' => 'mixed_landing_presentation',
@@ -53,7 +68,7 @@ final class PublicLandingPresenter
             'communities' => $this->communities->featured(),
             'opportunities' => $this->opportunities->featured(),
             'programs' => $this->programs->featured(),
-            'youthStatistics' => $this->statistics->publicSummary(),
+            'youthStatistics' => $analytics['totals'],
         ];
     }
 }

@@ -42,6 +42,17 @@
         </div>
     </div>
 </section>
+@if($contact['maps_embed_url'] ?? null)
+<section class="px-5 py-10" aria-labelledby="contact-location">
+    <div class="sipora-card mx-auto max-w-6xl p-5 sm:p-7">
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
+            <div><h2 id="contact-location" class="text-2xl font-bold text-text-primary">Lokasi layanan</h2><p class="mt-2 text-sm text-text-secondary">Dinas Pendidikan dan Kebudayaan Kabupaten Pemalang.</p></div>
+            @if($contact['maps_url'] ?? null)<a class="btn-outline" href="{{ $contact['maps_url'] }}" target="_blank" rel="noopener noreferrer">Lihat di Google Maps <x-ui.icon name="external-link" class="size-4" /></a>@endif
+        </div>
+        <iframe class="h-72 w-full border border-border sm:h-96" src="{{ $contact['maps_embed_url'] }}" title="Lokasi Dinas Pendidikan dan Kebudayaan Kabupaten Pemalang di Google Maps" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+</section>
+@endif
 <section class="px-5 py-14">
     <div
         class="mx-auto flex max-w-6xl flex-col justify-between gap-5 rounded-2xl border border-border bg-white p-7 shadow-xs sm:flex-row sm:items-center">

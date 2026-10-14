@@ -1,270 +1,173 @@
 @extends('layouts.public')
-
-@section('title', 'SIPORA — Temukan Ruang untuk Berkembang')
-
+@section('title', 'SIPORA — Perjalanan Pemuda Pemalang')
+@push('head')
+    @vite(['resources/css/ecosystem-map.css', 'resources/js/ecosystem-map.js'])
+@endpush
 @section('content')
-@php($primaryCta = auth()->check() ? route(\App\Support\Auth\HomeRoute::for(auth()->user())) : route('register'))
-<section id="beranda"
-    class="relative overflow-hidden bg-primary-800 text-white">
-    <div class="pointer-events-none absolute inset-0"
-        style="opacity: 0.032; background-size: 64px 64px; background-image: linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)">
-    </div>
-    <div
-        class="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-12 lg:grid-cols-[1.05fr_.95fr] lg:pb-24 lg:pt-16">
-        <div class="relative z-10">
-            <span class="px-icon px-bird absolute -top-4 right-8 hidden text-accent-300/70 sm:block" aria-hidden="true"></span>
-            <span
-                class="font-display-accent inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-white/90 shadow-xs"><span
-                    class="size-2 rounded-full bg-accent"></span> Platform kepemudaan Kabupaten Pemalang</span>
-            <h1
-                class="font-heading mt-6 max-w-2xl text-[3rem] font-bold leading-[0.98] tracking-[-0.025em] text-white sm:text-[3.5rem] lg:text-[3.85rem]">
-                Temukan ruang untuk <span class="relative text-accent-300">berkembang.<svg
-                        class="absolute -bottom-2 left-0 w-full text-accent" viewBox="0 0 300 14" fill="none"
-                        aria-hidden="true">
-                        <path d="M3 10C81 1 190 2 297 8" stroke="currentColor" stroke-width="6"
-                            stroke-linecap="round" />
-                    </svg></span></h1>
-            <p class="mt-6 max-w-xl text-base leading-7 text-white/85 sm:text-lg">Jelajahi kegiatan, bergabung dengan
-                komunitas, temukan peluang, dan bangun portofolio terverifikasi bersama ekosistem pemuda Pemalang.</p>
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row"><a href="{{ route('activities.index') }}"
-                    class="landing-btn-primary">Jelajahi Activity <x-ui.icon name="chevron-right"
-                        class="size-4" /></a><a href="{{ route('communities.index') }}"
-                    class="landing-btn-secondary !border-white/30 !bg-white/10 !text-white hover:!bg-white/20">Temukan
-                    Community</a></div>
-            <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-white/85"><span
-                    class="font-bold text-white">Terbuka untuk pemuda Pemalang</span><span
-                    class="inline-flex items-center gap-1.5"><x-ui.icon name="check" class="size-4 text-accent-300" />
-                    Gratis untuk bergabung</span><span class="inline-flex items-center gap-1.5"><x-ui.icon
-                        name="shield-check" class="size-4 text-accent-300" /> Activity melalui verifikasi</span></div>
-        </div>
-        <div class="landing-adventure-frame mx-auto w-full max-w-lg lg:mx-0">
-            <div class="landing-adventure-scene" role="img"
-                aria-label="Ilustrasi petualangan pixel: pemuda menjelajahi peta, komunitas, dan rekam pengalaman yang dapat diverifikasi">
-                <span class="landing-adventure-label" aria-hidden="true">Peta Petualangan Pemuda</span>
-                <span class="landing-adventure-sun" aria-hidden="true"></span>
-                <span class="landing-adventure-cloud landing-adventure-cloud--one" aria-hidden="true"></span>
-                <span class="landing-adventure-cloud landing-adventure-cloud--two" aria-hidden="true"></span>
-                <span class="landing-adventure-hill landing-adventure-hill--back" aria-hidden="true"></span>
-                <span class="landing-adventure-hill landing-adventure-hill--front" aria-hidden="true"></span>
-                <span class="landing-adventure-route" aria-hidden="true"></span>
-                <span class="px-sprite px-castle landing-adventure-castle" aria-hidden="true"></span>
-                <span class="px-sprite px-pine landing-adventure-pine landing-adventure-pine--one" aria-hidden="true"></span>
-                <span class="px-sprite px-pine landing-adventure-pine landing-adventure-pine--two" aria-hidden="true"></span>
-                <span class="px-sprite px-knight landing-adventure-knight" aria-hidden="true"></span>
-                <span class="px-sprite px-chest landing-adventure-chest" aria-hidden="true"></span>
-                <span class="px-sprite px-map landing-adventure-map" aria-hidden="true"></span>
-                <span class="landing-adventure-ground" aria-hidden="true"></span>
+@php
+    $primaryCta = auth()->check() ? route(\App\Support\Auth\HomeRoute::for(auth()->user())) : route('register');
+    $displayCount = fn ($count) => $count === null ? '<5' : number_format($count, 0, ',', '.');
+@endphp
+<div class="public-home">
+<section id="beranda" class="home-hero">
+    <div class="home-container grid items-center gap-10 lg:grid-cols-2">
+        <div>
+            <p class="home-eyebrow">Ekosistem pemuda Kabupaten Pemalang</p>
+            <h1>Satu Platform untuk Perjalanan <span>Pemuda Pemalang</span></h1>
+            <p class="mt-6 max-w-xl text-lg leading-8 text-white/85">Temukan ruang untuk berkembang. SIPORA menghubungkan pemuda, Community, Activity, Opportunity, dan pemerintah dalam satu ekosistem.</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a class="landing-btn-primary" href="{{ $primaryCta }}">{{ auth()->check() ? 'Ruang Saya' : 'Daftar Sekarang' }} <x-ui.icon name="chevron-right" class="size-4" /></a>
+                <a class="landing-btn-secondary !border-white/40 !bg-white/10 !text-white" href="{{ route('activities.index') }}">Jelajahi Activity</a>
             </div>
-            <div class="landing-adventure-proof">
-                <span class="landing-adventure-proof-icon"><x-ui.icon name="badge-check" class="size-5" /></span>
-                <div class="min-w-0"><strong class="block text-sm font-bold text-text-primary">Rekam yang dapat diverifikasi</strong><span
-                        class="text-xs text-text-secondary">Sertifikat SIPORA memiliki kode verifikasi publik</span></div>
+            <p class="mt-6 text-sm text-white/75">Belajar, berkarya, dan berkontribusi bersama pemuda Pemalang.</p>
+        </div>
+        <figure class="home-hero-photo">
+            <img src="{{ asset('media/demo/08A_SOCIAL_FEED/feed-002-workshop-recap.jpg') }}" width="1200" height="800" alt="Foto demo pemuda berkolaborasi dalam workshop pengembangan web" fetchpriority="high">
+            <figcaption><x-ui.icon name="users" class="size-5" /><div><strong>Perjalanan dimulai bersama</strong><span>Temukan komunitas dan pengalaman baru · Foto demo SIPORA</span></div></figcaption>
+        </figure>
+    </div>
+</section>
+<section id="tentang" class="home-section">
+    <div class="home-container grid items-center gap-10 lg:grid-cols-2">
+        <div class="home-app-preview" aria-label="Preview struktur fitur SIPORA, bukan profil pengguna">
+            <div class="flex items-center justify-between border-b border-border pb-4"><strong>SIPORA <span class="text-text-muted">/ Ruang Pemuda</span></strong><x-ui.icon name="shield-check" class="size-5" /></div>
+            <h3 class="mt-6 text-2xl font-bold">Satu tempat untuk perjalananmu</h3>
+            <p class="mt-2 text-sm text-text-secondary">Preview fitur yang tersedia di SIPORA</p>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+                @foreach([['user', 'Portfolio', 'Pengalaman & bukti karya'], ['activity', 'Activity', 'Partisipasi & kehadiran'], ['notebook', 'Passport', 'Riwayat perjalanan nyata'], ['badge-check', 'Certificate', 'Capaian dari Activity']] as [$icon, $title, $copy])
+                <div class="rounded-xl bg-surface-soft p-4"><x-ui.icon :name="$icon" class="size-6 text-interactive" /><strong class="mt-3 block">{{ $title }}</strong><p class="mt-1 text-xs leading-5 text-text-secondary">{{ $copy }}</p></div>
+                @endforeach
             </div>
+            <p class="mt-5 text-xs text-text-muted">Ilustrasi antarmuka; bukan data atau testimoni pengguna.</p>
         </div>
-    </div>
-    <div class="landing-adventure-edge" aria-hidden="true"></div>
-</section>
-
-<section class="relative z-20 -mt-9 px-5" aria-label="Pencarian publik">
-    <form method="GET" action="{{ route('search.index') }}"
-        class="mx-auto max-w-[1140px] rounded-lg border-2 border-primary-700/75 bg-white p-5 shadow-md sm:p-6">
-        <div class="grid gap-3 lg:grid-cols-[1fr_auto]">
-            <label class="relative"><span class="sr-only">Cari Activity, Community, Opportunity, atau
-                    Program</span><x-ui.icon name="search"
-                    class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-text-muted" /><input
-                    type="search" name="q" maxlength="120" class="landing-search h-12 pl-11"
-                    placeholder="Cari Activity, Community, Opportunity, atau Program..."></label>
-            <button type="submit" class="landing-btn-primary h-12">Cari Sekarang</button>
-        </div>
-        <div class="mt-3.5 flex flex-wrap items-center gap-2 text-xs"><span
-                class="font-semibold text-text-secondary">Pencarian
-                populer:</span>@foreach (['Pelatihan', 'Volunteer', 'Beasiswa', 'Komunitas olahraga'] as $term)<a
-                    href="{{ route('search.index', ['q' => $term]) }}"
-                class="inline-flex h-8 items-center rounded-full border border-border bg-surface-soft px-3 font-semibold text-text-secondary transition hover:border-primary-300 hover:bg-primary-50 hover:text-primary">{{ $term }}</a>@endforeach
-        </div>
-    </form>
-</section>
-
-<section class="landing-section-scene px-section-paper px-zig-left px-5 pb-20 pt-24">
-    <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Jelajahi Minat" title="Eksplorasi Sesuai Minatmu"
-            description="Mulai dari hal yang kamu sukai dan temukan ruang bertumbuh bersama pemuda lainnya." centered />
-        @php($interestIcons = ['code', 'activity', 'briefcase', 'palette', 'graduation-cap', 'leaf', 'users', 'trophy'])
-        <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
-            @foreach ($interests as $index => $interest)
-                <article
-                    class="group rounded-2xl border border-border bg-white p-5 text-center shadow-xs transition duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-sm">
-                    <span
-                        class="mx-auto grid size-12 place-items-center rounded-xl bg-primary-50 text-primary transition group-hover:scale-105"><x-ui.icon
-                            :name="$interestIcons[$index % count($interestIcons)]" class="size-5" /></span>
-                    <h3 class="mt-3.5 text-sm font-bold text-text-primary">{{ $interest['name'] }}</h3>
-            </article>@endforeach
+        <div><x-public.section-heading eyebrow="Kenali platform" title="Apa itu SIPORA?" />
+            <p class="mt-5 leading-7 text-text-secondary">SIPORA adalah platform ekosistem kepemudaan Kabupaten Pemalang yang menghubungkan pemuda, komunitas, aktivitas, peluang pengembangan diri, dan pemerintah dalam satu sistem digital terintegrasi.</p>
+            <p class="mt-4 leading-7 text-text-secondary">Melalui SIPORA, pemuda dapat menemukan kegiatan, membangun portofolio, bergabung dengan komunitas, mengikuti peluang pengembangan diri, serta membangun rekam perjalanan melalui Passport dan Certificate.</p>
+            <p class="mt-4 text-sm leading-7 text-text-secondary">Komunitas dan pemerintah dapat mengelola aktivitas, program dan partisipasi, serta memperoleh insight melalui Youth Intelligence dan Ecosystem Maps. Status publikasi dan kendali privasi tetap berlaku.</p>
+            <div class="mt-6 flex flex-wrap gap-3"><a class="btn-accent" href="{{ $primaryCta }}">{{ auth()->check() ? 'Ruang Saya' : 'Daftar Sekarang' }}</a><a class="btn-outline" href="{{ route('search.index') }}">Jelajahi SIPORA</a></div>
         </div>
     </div>
 </section>
-
-<section id="kegiatan" class="landing-section-scene px-section-white px-zig-right px-5 py-20">
+<section id="angka" class="home-section !pt-0">
+    <div class="home-container"><h2 class="text-2xl font-bold">Ekosistem SIPORA dalam Angka</h2><p class="mt-2 text-sm text-text-secondary">Berdasarkan pemuda yang terdaftar dan record publik di SIPORA; bukan seluruh populasi pemuda Kabupaten Pemalang.</p>
+        <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <x-public.stat-card icon="users" :value="$displayCount($youthStatistics['registered'])" label="Pemuda Terdaftar" tone="blue" />
+            @foreach(array_slice($ecosystemStatistics, 0, 3) as $index => $metric)
+                <x-public.stat-card :icon="['building', 'activity', 'bookmark'][$index]" :value="$displayCount($metric['value'] > 0 && $metric['value'] < 5 ? null : $metric['value'])" :label="$metric['label']" tone="blue" />
+            @endforeach
+        </div>
+    </div>
+</section>
+<section id="peta" class="home-section !pt-0">
+    <div class="home-container"><div class="flex flex-wrap items-end justify-between gap-4"><x-public.section-heading eyebrow="Cakupan kecamatan" title="Peta Ekosistem Pemuda" description="Jelajahi sebaran Community, Activity, dan Program dari data kecamatan yang tercatat." /><a class="btn-outline" href="{{ route('ecosystem-map.index') }}">Lihat Peta Ekosistem</a></div>
+        <div class="eco-map-page home-map-preview mt-6"><x-public.ecosystem-map-panel :coverage="$coverage" /></div>
+        <p class="mt-3 text-xs leading-6 text-text-secondary">Data agregat tanpa lokasi individu. Jumlah 1–4 ditampilkan sebagai &lt;5. Batas kecamatan bersumber dari data BIG edisi 2022.</p>
+    </div>
+</section>
+<section id="alur" class="home-section bg-surface-soft">
+    <div class="home-container"><x-public.section-heading eyebrow="Mulai perjalananmu" title="Alur Pendaftaran SIPORA" description="Lima langkah untuk menemukan ruang belajar, berkarya, dan berkontribusi." />
+        <ol class="home-steps mt-8">
+            @foreach([['user', 'Daftar Akun', 'Buat akun SIPORA.'], ['mail', 'Verifikasi Email', 'Konfirmasi email untuk mengaktifkan akun.'], ['shield-check', 'Lengkapi Profil', 'Isi data dasar, minat dan skill. Ajukan verifikasi identitas sesuai tahapan akun.'], ['notebook', 'Bangun Portofolio', 'Tambahkan pengalaman, prestasi dan evidence jika ada.'], ['search', 'Jelajahi Ekosistem', 'Temukan Activity, Community dan Opportunity.']] as $index => [$icon, $title, $copy])
+            <li><span class="home-step-number">{{ $index + 1 }}</span><div><x-ui.icon :name="$icon" class="mb-3 size-5 text-interactive" /><h3 class="font-bold">{{ $title }}</h3><p class="mt-2 text-sm leading-6 text-text-secondary">{{ $copy }}</p></div></li>
+            @endforeach
+        </ol>
+        <p class="mt-6 text-xs leading-6 text-text-secondary">Pendaftaran akun dan verifikasi identitas adalah proses berbeda. Kelengkapan profil dan persetujuan verifikasi mengikuti aturan akses SIPORA; pengalaman dan prestasi tambahan bersifat opsional.</p>
+    </div>
+</section>
+<section class="home-section !pb-0"><div class="home-container"><x-public.section-heading eyebrow="Temukan kesempatan" title="Jelajahi Ekosistem SIPORA" />
+    <form method="GET" action="{{ route('search.index') }}" class="mt-6 flex flex-col gap-3 sm:flex-row"><label class="flex-1"><span class="sr-only">Cari Activity, Community, Opportunity atau Program</span><input class="field w-full" type="search" name="q" maxlength="120" placeholder="Cari Activity, Community, Opportunity atau Program..."></label><button class="btn-accent" type="submit">Cari Sekarang</button></form>
+    <div class="mt-4 flex flex-wrap gap-2">@foreach($interests as $interest)<a class="status-badge" href="{{ route('search.index', ['q' => $interest['name']]) }}">{{ $interest['name'] }}</a>@endforeach</div>
+</div></section>
+<section id="kegiatan" class="landing-section-scene px-section-white px-zig-right px-5 py-10">
     <div class="mx-auto max-w-7xl">
         <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><x-public.section-heading
                 eyebrow="Terjadwal Berikutnya" title="Kegiatan yang Bisa Kamu Ikuti"
                 description="Activity publik diurutkan berdasarkan jadwal terdekat." /><a
-                href="{{ route('activities.index') }}" class="public-link">Lihat semua Activity <x-ui.icon
+                href="{{ route('activities.index') }}" class="btn-outline">Lihat semua Activity <x-ui.icon
                     name="chevron-right" class="size-4" /></a></div>
-        <div class="mt-10 grid gap-7 lg:grid-cols-3">@forelse ($activities as $activity)<x-discovery.activity-card
+        <div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">@forelse ($activities as $activity)<x-discovery.activity-card
         :activity="$activity" />@empty<p
                     class="col-span-full rounded-2xl border-2 border-dashed border-border p-10 text-center text-text-secondary">
                 Belum ada Activity publik yang akan datang.</p>@endforelse</div>
     </div>
 </section>
-
-<section id="komunitas" class="landing-section-scene px-section-paper px-zig-left px-5 py-20">
+<section id="komunitas" class="landing-section-scene px-section-paper px-zig-left px-5 py-10">
     <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Tumbuh Bersama" title="Temukan Komunitas"
             description="Terhubung dengan orang-orang yang berbagi minat dan tujuan yang sama." centered />
-        <div class="mt-10 grid gap-6 lg:grid-cols-3">@forelse ($communities as $community)<x-discovery.community-card
+        <div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">@forelse ($communities as $community)<x-discovery.community-card
         :community="$community" />@empty<p
                     class="col-span-full rounded-2xl border-2 border-dashed border-border p-10 text-center text-text-secondary">
                 Belum ada Community aktif yang dapat ditampilkan.</p>@endforelse</div>
-        <div class="mt-8 text-center"><a href="{{ route('communities.index') }}" class="public-link">Lihat semua
+        <div class="mt-8 text-center"><a href="{{ route('communities.index') }}" class="btn-outline">Lihat semua
                 Community <x-ui.icon name="chevron-right" class="size-4" /></a></div>
     </div>
 </section>
-
-<section id="peluang" class="landing-section-scene px-section-white px-zig-right px-5 py-20">
+<section id="peluang" class="landing-section-scene px-section-white px-zig-right px-5 py-10">
     <div class="mx-auto max-w-7xl">
         <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end"><x-public.section-heading
                 eyebrow="Buka Jalanmu" title="Opportunity untuk Pemuda"
                 description="Akses beasiswa, kerelawanan, magang, dan program pengembangan yang dikurasi Admin SIPORA." /><a
-                class="public-link" href="{{ route('opportunities.index') }}">Lihat semua Opportunity <x-ui.icon
+                class="btn-outline" href="{{ route('opportunities.index') }}">Lihat semua Opportunity <x-ui.icon
                     name="chevron-right" class="size-4" /></a></div>
-        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+        <div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             @forelse ($opportunities as $opportunity)<x-discovery.opportunity-card :opportunity="$opportunity" />@empty
                 <div
                     class="col-span-full rounded-2xl border-2 border-dashed border-border p-10 text-center text-sm text-text-secondary">
             Belum ada Opportunity yang dipublikasikan.</div>@endforelse</div>
     </div>
 </section>
-
-<section id="program" class="landing-section-scene px-section-paper px-zig-left px-5 py-20">
+<section id="program" class="landing-section-scene px-section-paper px-zig-left px-5 py-10">
     <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Program Pemuda"
             title="Program yang Sedang Berjalan dan Selesai"
             description="Program publik berasal dari Community aktif dan memiliki Proposal yang telah disetujui."
             centered />
-        <div class="mt-10 grid gap-6 lg:grid-cols-3">@forelse ($programs as $program)<x-discovery.program-card
+        <div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">@forelse ($programs as $program)<x-discovery.program-card
         :program="$program" />@empty<div
                     class="col-span-full rounded-2xl border-2 border-dashed border-border p-10 text-center text-sm text-text-secondary">
                 Belum ada Program yang memenuhi kriteria publik.</div>@endforelse</div>
-        <div class="mt-8 text-center"><a class="public-link" href="{{ route('programs.index') }}">Lihat semua Program
+        <div class="mt-8 text-center"><a class="btn-outline" href="{{ route('programs.index') }}">Lihat semua Program
                 <x-ui.icon name="chevron-right" class="size-4" /></a></div>
     </div>
 </section>
-
-<section class="px-section-white px-zig-right px-5 py-20">
-    <div class="mx-auto max-w-7xl"><x-public.section-heading eyebrow="Cara Kerja SIPORA"
-            title="Dari menemukan ruang hingga membangun rekam jejak"
-            description="SIPORA menghubungkan pencarian kegiatan, partisipasi, verifikasi, dan Portfolio dalam satu alur yang jelas."
-            centered />
-        <div class="mt-10 grid gap-5 md:grid-cols-3">
-            @foreach([['search', 'Temukan', 'Jelajahi Activity, Community, Opportunity, dan Program yang tersedia.'], ['users', 'Berpartisipasi', 'Daftar dan berkontribusi melalui ekosistem Community yang terverifikasi.'], ['badge-check', 'Bangun rekam jejak', 'Aktivitas selesai dan sertifikat resmi memperkaya Youth Portfolio.']] as $index => [$icon, $title, $description])
-                <article
-                    class="relative rounded-2xl border border-border bg-white p-6 shadow-xs transition hover:shadow-sm">
-                    <span
-                        class="absolute right-5 top-5 font-mono text-sm font-bold text-text-muted">0{{ $index + 1 }}</span><span
-                        class="grid size-12 place-items-center rounded-xl {{ $index === 1 ? 'bg-accent-50 text-accent-700' : ($index === 2 ? 'bg-success-soft text-success' : 'bg-primary-50 text-primary') }}"><x-ui.icon
-                            :name="$icon" class="size-5" /></span>
-                    <h3 class="mt-5 text-lg font-bold text-text-primary">{{ $title }}</h3>
-                    <p class="mt-2 text-sm leading-6 text-text-secondary">{{ $description }}</p>
-            </article>@endforeach
-        </div>
-    </div>
-</section>
-
-<div class="px-divider-loot bg-primary-900" aria-hidden="true"></div>
-<section class="landing-dark-panel bg-primary-900 px-5 py-16 text-white">
-    <div class="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1fr_auto]">
-        <div>
-            <p class="text-xs font-extrabold uppercase tracking-[.18em] text-accent-300">Ekosistem terverifikasi</p>
-            <h2 class="font-heading mt-2 text-3xl font-bold sm:text-4xl">Peran yang jelas menjaga kepercayaan.</h2>
-            <p class="mt-4 max-w-3xl leading-7 text-white/85">Admin memverifikasi identitas pemuda, sedangkan Verifier
-                meninjau Community, Activity, dan alur Program. Setiap rekam jejak publik tetap mengikuti status dan
-                privasi yang berlaku.</p>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-            @foreach([['shield-check', 'Identitas'], ['building', 'Community'], ['activity', 'Activity'], ['notebook', 'Program']] as [$icon, $label])
-                <div
-                    class="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold">
-            <x-ui.icon :name="$icon" class="size-4 text-accent-300" />{{ $label }}</div>@endforeach
-        </div>
-    </div>
-</section>
-
-<section id="tentang" class="overflow-hidden px-5 py-20">
-    <div class="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-        <div class="relative mx-auto w-full max-w-lg">
-            <div class="absolute -inset-4 rotate-2 rounded-[2rem] bg-primary-50"></div>
-            <div class="relative rounded-2xl border border-border bg-white p-7 shadow-md">
-                <p class="text-xs font-bold uppercase tracking-wider text-accent-600">Ilustrasi struktur Portfolio</p>
-                <div class="mt-4 flex items-center gap-4 border-b border-border pb-5"><span
-                        class="grid size-14 place-items-center rounded-2xl bg-primary text-base font-black text-white shadow-xs">YP</span>
-                    <div>
-                        <h3 class="text-lg font-bold text-text-primary">Youth Portfolio</h3>
-                        <p class="text-xs text-text-secondary">Dikendalikan oleh pemilik profil</p>
-                    </div>
-                </div>
-                <div class="mt-5 space-y-2.5">
-                    @foreach (['Activity yang diselesaikan', 'Keanggotaan Community aktif', 'Sertifikat SIPORA terverifikasi'] as $item)
-                        <div class="flex items-center gap-3 rounded-xl bg-surface-soft p-3"><span
-                                class="grid size-8 place-items-center rounded-lg bg-white text-success shadow-xs"><x-ui.icon
-                                    name="check" class="size-4" /></span><span
-                    class="text-sm font-semibold text-text-primary">{{ $item }}</span></div>@endforeach
-                </div>
-                <p class="mt-4 text-xs leading-5 text-text-muted">Tampilan ini menjelaskan struktur fitur dan bukan
-                    Portfolio atau testimoni pengguna tertentu.</p>
-            </div>
-        </div>
-        <div><x-public.section-heading eyebrow="Youth Portfolio" title="Bangun Portofolio Terverifikasi Sejak Dini"
-                description="Catat perjalananmu, kumpulkan bukti pengalaman, dan tampilkan kontribusi nyata dalam satu profil yang terpercaya." />
-            <div class="mt-7 space-y-4">
-                @foreach ([['Riwayat aktivitas yang tercatat', 'Setiap partisipasi terhubung dengan penyelenggara dan proses verifikasi.'], ['Sertifikat digital terintegrasi', 'Simpan capaianmu dalam portofolio yang mudah diakses.'], ['Kendali privasi tetap milikmu', 'Tentukan informasi yang ingin kamu tampilkan kepada publik.']] as [$title, $description])
-                    <div class="flex gap-3.5"><span
-                            class="grid size-9 shrink-0 place-items-center rounded-full bg-accent-50 text-accent-600"><x-ui.icon
-                                name="check" class="size-4" /></span>
-                        <div>
-                            <h3 class="font-bold text-text-primary">{{ $title }}</h3>
-                            <p class="mt-0.5 text-sm leading-6 text-text-secondary">{{ $description }}</p>
-                        </div>
-                </div>@endforeach
-            </div><a href="{{ $primaryCta }}"
-                class="landing-btn-primary mt-8">{{ auth()->check() ? 'Buka Youth Home' : 'Mulai Bangun Portofolio' }}</a>
-        </div>
-    </div>
-</section>
-
-<section class="bg-surface-soft px-5 py-16" aria-label="Statistik publik SIPORA">
-    <div class="mx-auto max-w-7xl">
-        <p class="text-center text-xs font-bold uppercase tracking-[0.18em] text-accent-600">Statistik publik SIPORA</p>
-        <h2 class="font-heading mt-2 text-center text-3xl font-bold text-text-primary">Ekosistem SIPORA dalam Angka</h2>
-        <p class="mt-3 text-center text-sm text-text-secondary">Berdasarkan pemuda yang terdaftar di SIPORA, bukan seluruh populasi pemuda Kabupaten Pemalang.</p>
-        <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            @foreach([['registered', 'Pemuda Terdaftar', 'users'], ['identity_verified', 'Identitas Terverifikasi', 'shield-check'], ['public_portfolio', 'Portfolio Publik', 'user'], ['activity_participated', 'Pernah Mengikuti Activity', 'activity']] as [$key, $label, $icon])
-                <x-public.stat-card :icon="$icon" :value="$youthStatistics[$key] === null ? '<5' : number_format($youthStatistics[$key])" :label="$label" tone="blue" />
+<section id="intelligence" class="home-section bg-surface-soft">
+    <div class="home-container"><div class="flex flex-wrap items-end justify-between gap-4"><x-public.section-heading eyebrow="Youth Intelligence" title="Kenali Potensi Pemuda SIPORA" description="Berdasarkan pemuda yang terdaftar di SIPORA, bukan seluruh populasi Kabupaten Pemalang." /><a class="btn-outline" href="{{ route('statistics.index') }}">Lihat Statistik Pemuda</a></div>
+        <div class="mt-6 grid gap-5 md:grid-cols-2">
+            @foreach(['interests' => 'Minat Pemuda', 'skills' => 'Keahlian Pemuda'] as $key => $title)
+                @php($rows = array_slice($analytics[$key], 0, 5))
+                @php($maximum = max([1, ...array_map(fn ($row) => $row['count'] ?? 0, $rows)]))
+                <section class="home-analytics-card"><h3 class="text-lg font-bold">{{ $title }}</h3><p class="mt-1 text-xs text-text-muted">Jumlah pemuda dengan pilihan yang tercatat</p>
+                    <ul class="mt-5 space-y-4">@forelse($rows as $row)<li><div class="mb-2 flex justify-between gap-3 text-sm"><span>{{ $row['label'] }}</span><strong>{{ $displayCount($row['count']) }}</strong></div><div class="home-bar-track" aria-hidden="true"><span @if($row['count'] !== null) style="width:{{ round(100 * $row['count'] / $maximum) }}%" @else class="home-bar-suppressed" @endif></span></div></li>@empty<li class="text-sm text-text-secondary">Belum ada pilihan yang tercatat.</li>@endforelse</ul>
+                </section>
             @endforeach
         </div>
-        <div class="mt-8 text-center"><a href="{{ route('statistics.index') }}" class="btn-secondary">Lihat Statistik Pemuda</a></div>
+        <p class="mt-4 text-xs text-text-secondary">Bucket berjumlah kurang dari 5 tidak ditampilkan sebagai angka pasti atau panjang bar. Satu pemuda dapat memiliki beberapa minat dan skill.</p>
     </div>
 </section>
-
-<section class="landing-dark-panel relative overflow-hidden bg-primary-800 px-5 py-20 text-center text-white">
-    <div class="relative mx-auto max-w-3xl">
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-accent-300">Giliranmu untuk bertumbuh</p>
-        <h2 class="font-heading mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Ambil langkah pertamamu bersama SIPORA.</h2>
-        <p class="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/85 sm:text-lg">Bergabung dengan ekosistem pemuda
-            Pemalang dan temukan lebih banyak cara untuk belajar, berkarya, dan berdampak.</p>
-        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><a href="{{ $primaryCta }}"
-                class="landing-btn-primary">{{ auth()->check() ? 'Buka Youth Home' : 'Daftar Sebagai Pemuda' }}</a>@guest<a
-                    href="{{ route('register') }}"
-                    class="landing-btn-secondary !border-white/30 !bg-white/10 !text-white hover:!bg-white/20">Daftarkan
-                Komunitas</a>@endguest</div>
+<section id="interaksi" class="home-section">
+    <div class="home-container"><x-public.section-heading eyebrow="Percakapan ekosistem" title="Diskusi dan Kabar Pemuda" description="Diskusi Forum dan pembaruan publik dari Social Feed." />
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+            <div><div class="mb-4 flex items-center justify-between gap-3"><h3 class="text-lg font-bold">Forum terbaru</h3><a class="btn-outline" href="{{ route('forum.index') }}">Buka Forum</a></div><div class="space-y-4">
+                @forelse($threads as $thread)<article class="home-highlight card-interactive"><div class="flex flex-wrap items-center gap-2"><x-forum.category-badge :category="$thread->category" /><x-public.author-identity :author="$thread->author" /></div><h4 class="mt-3 font-bold"><a class="card-link" href="{{ route('forum.show', $thread) }}">{{ $thread->title }}</a></h4><p class="mt-2 line-clamp-2 text-sm leading-6 text-text-secondary">{{ $thread->body }}</p></article>@empty<p class="home-highlight text-text-secondary">Belum ada diskusi publik.</p>@endforelse
+            </div></div>
+            <div><div class="mb-4 flex items-center justify-between gap-3"><h3 class="text-lg font-bold">Social Feed terbaru</h3><a class="btn-outline" href="{{ route('social.index') }}">Buka Feed</a></div><div class="space-y-4">
+                @forelse($posts as $post)<article class="home-highlight card-interactive">@if($post->organization)<a class="card-independent font-bold" href="{{ route('communities.show', $post->organization) }}">{{ $post->organization->name }}</a>@else<x-public.author-identity :author="$post->author" />@endif<p class="mt-3 line-clamp-2 text-sm leading-6 text-text-secondary">{{ $post->body }}</p><a class="card-link mt-3 inline-flex text-sm font-bold" href="{{ route('social.show', $post) }}">Baca pembaruan <span class="sr-only">{{ $loop->iteration }}</span></a></article>@empty<p class="home-highlight text-text-secondary">Belum ada pembaruan publik.</p>@endforelse
+            </div></div>
+        </div>
     </div>
 </section>
+<section id="kontak" class="home-section bg-surface-soft">
+    <div class="home-container grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
+        <div><x-public.section-heading eyebrow="Layanan dan informasi" title="Terhubung dengan Dindikpora" /><p class="mt-4 leading-7 text-text-secondary">Informasi layanan SIPORA dan lokasi yang telah dikonfirmasi oleh pengelola proyek.</p>
+            @foreach(['address' => 'Alamat', 'email' => 'Email', 'phone' => 'Telepon', 'service_hours' => 'Jam layanan'] as $key => $label)
+                @if(config('sipora.contact.'.$key))<p class="mt-4 text-sm"><strong class="block">{{ $label }}</strong>{{ config('sipora.contact.'.$key) }}</p>@endif
+            @endforeach
+            <div class="mt-6 flex flex-wrap gap-3"><a class="btn-outline" href="{{ route('contact') }}">Informasi Kontak</a>@if(config('sipora.contact.maps_url'))<a class="btn-accent" href="{{ config('sipora.contact.maps_url') }}" target="_blank" rel="noopener noreferrer">Lihat di Google Maps</a>@endif</div>
+            <p class="mt-4 text-xs leading-6 text-text-muted">Lokasi pada embed: Dinas Pendidikan dan Kebudayaan Kabupaten Pemalang. Alamat jalan dan kontak ditampilkan ketika dikonfigurasi.</p>
+        </div>
+        @if(config('sipora.contact.maps_embed_url'))<iframe class="home-contact-map" src="{{ config('sipora.contact.maps_embed_url') }}" title="Lokasi layanan di Kabupaten Pemalang" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>@endif
+    </div>
+</section>
+</div>
+<script id="eco-map-data" type="application/json">@json(['districts' => $coverage, 'admin' => false, 'threshold' => 5], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)</script>
 @endsection
-
 @section('footer')<x-public.footer />@endsection

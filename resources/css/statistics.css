@@ -4,10 +4,10 @@
 .stats-filters label { display: grid; gap: .4rem; flex: 1 1 11rem; font-size: .8rem; font-weight: 700; color: var(--color-text-primary, #273f4f); }
 .stats-filters select { width: 100%; min-height: 2.8rem; padding: .55rem .7rem; border: 1px solid var(--color-border, #a6b4bc); border-radius: .2rem; background: var(--color-surface, #fff); color: var(--color-text-primary, #273f4f); }
 .stats-filter-button,.stats-reset { min-height: 2.8rem; display: inline-flex; align-items: center; justify-content: center; padding: .55rem 1rem; border: 2px solid #273f4f; border-radius: .2rem; font-weight: 700; text-decoration: none; }
-.stats-filter-button { background: #fe7743; color: #162b38; box-shadow: 3px 3px 0 #273f4f; cursor: pointer; }
+.stats-filter-button { background: var(--color-accent-500); color: #fff; box-shadow: 3px 3px 0 #273f4f; cursor: pointer; }
 .stats-reset { background: transparent; color: var(--color-text-primary, #273f4f); }
 .stats-section-heading,.stats-panel-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1rem; }
-.stats-section-heading h2,.stats-panel h2 { font-family: 'Pixelify Sans', sans-serif; font-size: clamp(1.5rem,2.3vw,2.1rem); font-weight: 700; line-height: 1.2; color: var(--color-text-primary, #273f4f); }
+.stats-section-heading h2,.stats-panel h2 { font-family: var(--font-sans); font-size: clamp(1.5rem,2.3vw,2.1rem); font-weight: 700; line-height: 1.2; color: var(--color-text-primary, #273f4f); }
 .stats-section-heading p,.stats-panel p { color: var(--color-text-secondary, #536b79); }
 .stats-section-heading .stats-eyebrow,.stats-panel .stats-eyebrow { margin: 0 0 .35rem; color: #db582a; font-family: 'JetBrains Mono', monospace; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .stats-headline-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1rem; }
@@ -23,7 +23,7 @@
 .stats-canvas-small { height: 13rem; }
 .stats-segment { display: inline-flex; border: 1px solid #647d8b; border-radius: .25rem; overflow: hidden; }
 .stats-segment button { padding: .5rem .8rem; font-size: .8rem; font-weight: 700; color: var(--color-text-primary, #273f4f); }
-.stats-segment button[aria-pressed="true"] { background: #273f4f; color: #fff; }
+.stats-segment button[aria-pressed="true"] { background: var(--color-accent-500); color: #fff; }
 .stats-rows { display: grid; gap: .45rem; margin-top: .8rem; font-size: .82rem; }
 .stats-rows > div, .stats-data dl > div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-border, #e3e1dc); padding-bottom: .3rem; }
 .stats-rows span { overflow-wrap: anywhere; color: var(--color-text-secondary, #536b79); }
@@ -53,8 +53,10 @@
 [data-theme="dark"] .stats-dashboard { --color-bg: #14232d; --color-surface: #203541; --color-border: #48616f; --color-text-primary: #f3f0e9; --color-text-secondary: #bbcad2; }
 [data-theme="dark"] .stats-filter-button { border-color: #e4d8c9; box-shadow: 3px 3px 0 #e4d8c9; }
 [data-theme="dark"] .stats-reset { border-color: #91a7b3; }
-[data-theme="dark"] .stats-segment button[aria-pressed="true"],[data-theme="dark"] .stats-step { background: #fe7743; color: #14232d; }
+[data-theme="dark"] .stats-step { background: #fe7743; color: #14232d; }
 [data-theme="dark"] .stats-journey-track { background: #48616f; }
 @media(max-width:900px) { .stats-headline-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .stats-grid-three { grid-template-columns: 1fr; } }
 @media(max-width:900px) { .stats-participation-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media(max-width:640px) { .stats-dashboard { padding: 1.5rem .8rem 3rem; } .stats-grid-two,.stats-headline-grid,.stats-journey,.stats-data-columns,.stats-participation-grid { grid-template-columns: 1fr; } .stats-panel { padding: 1rem; } .stats-canvas-tall { height: 17rem; } .stats-journey { gap: .6rem; } }
+
+.stats-filter-button:hover, .stats-segment button[aria-pressed="true"]:hover { background: var(--color-accent-400); color: #fff; }

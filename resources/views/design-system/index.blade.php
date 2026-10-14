@@ -13,7 +13,7 @@
     <title>SIPORA · Visual Design System</title>
     <link rel="icon" href="{{ asset('logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Pixelify+Sans:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/statistics.css', 'resources/css/ecosystem-map.css', 'resources/css/design-system.css', 'resources/js/design-system.js'])
 </head>
 <body class="{{ $preview ? 'ds-preview' : 'ds-board' }} {{ $capture ? 'ds-capture' : '' }}">

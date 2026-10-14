@@ -8,7 +8,7 @@
         icon="user" variant="youth" />
     <section class="bg-surface-soft px-5 py-12">
         <div class="mx-auto max-w-7xl">
-            <div class="mb-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div class="mb-7 grid grid-cols-2 gap-3 xl:grid-cols-4">
                 @foreach([['registered', 'Pemuda Terdaftar', 'users'], ['identity_verified', 'Identitas Terverifikasi', 'shield-check'], ['public_portfolio', 'Portfolio Publik', 'user'], ['activity_participated', 'Pernah Mengikuti Activity', 'activity']] as [$key, $label, $icon])
                     <x-public.stat-card :icon="$icon" :value="$youthStatistics[$key] === null ? '<5' : number_format($youthStatistics[$key])" :label="$label" tone="blue" />
                 @endforeach
@@ -35,9 +35,9 @@
                 <p class="max-w-xl text-sm text-text-secondary">Urutan nama bersifat netral dan bukan peringkat aktivitas
                     atau capaian.</p>
             </div>
-            <div class="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div class="mt-7 public-card-grid">
                 @forelse($profiles as $profile)<x-discovery.youth-card :profile="$profile" />@empty<x-ui.empty-state
-                    class="md:col-span-2 xl:col-span-3" icon="users" title="Belum ada profil pemuda publik yang sesuai."
+                    class="col-span-full" icon="users" title="Belum ada profil pemuda publik yang sesuai."
                 description="Coba kata pencarian atau area lain." />@endforelse</div>
             @if($profiles->hasPages())
             <div class="mt-8">{{ $profiles->links() }}</div>@endif

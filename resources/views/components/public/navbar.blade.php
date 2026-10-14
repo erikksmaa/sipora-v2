@@ -7,7 +7,7 @@
                     class="text-[10px] font-semibold uppercase tracking-[0.13em] text-text-muted">Pemuda
                     Pemalang</small></span>
         </a>
-        <div class="hidden h-full items-center gap-6 lg:flex">
+        <div class="hidden h-full items-center gap-6 xl:flex">
             <a href="{{ route('home') }}" @class(['public-nav-link h-full', 'public-nav-active' => request()->routeIs('home')]) @if(request()->routeIs('home')) aria-current="page" @endif>Beranda</a>
             <div class="relative flex h-full items-center" @click.outside="exploreOpen = false">
                 <button x-ref="exploreTrigger" type="button" @click="exploreOpen = !exploreOpen"
@@ -40,7 +40,7 @@
                 <a href="{{ auth()->user()->hasRole('youth') ? route('youth.account.show') : route(\App\Support\Auth\HomeRoute::for(auth()->user())) }}" class="hidden size-10 place-items-center rounded-sm border border-border bg-surface text-text-primary sm:grid" aria-label="Akun saya"><x-ui.icon name="user" class="size-5" /></a>
                     <x-theme-toggle /><button x-ref="mobileTrigger"
                 type="button"
-                class="grid size-11 place-items-center rounded-[10px] border border-border bg-white text-primary shadow-xs lg:hidden"
+                class="grid size-11 place-items-center rounded-[10px] border border-border bg-white text-primary shadow-xs xl:hidden"
                 @click="open ? closeMobile(true) : openMobile()" :aria-expanded="open" aria-controls="public-menu"
                 aria-label="Buka menu"><x-ui.icon name="menu" /></button>
             @else
@@ -48,7 +48,7 @@
                     href="{{ route('register') }}" class="landing-btn-primary hidden !min-h-10 !px-5 sm:inline-flex">Daftar</a>
                     <x-theme-toggle /><button x-ref="mobileTrigger"
                 type="button"
-                class="grid size-11 place-items-center rounded-[10px] border border-border bg-white text-primary shadow-xs lg:hidden"
+                class="grid size-11 place-items-center rounded-[10px] border border-border bg-white text-primary shadow-xs xl:hidden"
                 @click="open ? closeMobile(true) : openMobile()" :aria-expanded="open" aria-controls="public-menu"
                 aria-label="Buka menu"><x-ui.icon name="menu" /></button>
             @endauth
@@ -56,13 +56,18 @@
 
     </nav>
     <div x-ref="mobileMenu" id="public-menu" x-cloak x-show="open" x-transition @keydown.tab="trapMobileFocus($event)"
-        class="max-h-[calc(100dvh-74px)] overflow-y-auto border-t border-border bg-white px-5 py-5 lg:hidden">
+        class="max-h-[calc(100dvh-74px)] overflow-y-auto border-t border-border bg-white px-5 py-5 xl:hidden">
         <div class="mx-auto grid max-w-7xl gap-1 text-sm font-semibold">
             <div class="mb-2 flex items-center justify-between px-3"><span
                     class="text-xs font-bold uppercase tracking-wider text-text-muted">Navigasi</span><button
                     x-ref="mobileClose" type="button"
                     class="grid size-10 place-items-center rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary"
                     @click="closeMobile(true)" aria-label="Tutup menu"><x-ui.icon name="x" /></button></div>
+            <div class="mb-3 flex gap-3 border-b border-border pb-4">@auth<a
+                href="{{ route(\App\Support\Auth\HomeRoute::for(auth()->user())) }}"
+            class="landing-btn-primary flex-1">Ruang Saya</a>@else<a href="{{ route('login') }}"
+                        class="btn-secondary flex-1">Masuk</a><a href="{{ route('register') }}"
+                    class="landing-btn-primary flex-1">Daftar</a>@endauth</div>
             <a href="{{ route('home') }}" @click="open = false" @class(['flex min-h-11 items-center rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary', 'bg-primary-50 text-primary' => request()->routeIs('home')])>Beranda</a>
             <p class="px-3 pt-3 text-[10px] font-extrabold uppercase tracking-[.16em] text-text-muted">Jelajahi</p>
             @foreach (['Social Feed' => route('social.index'), 'Activity' => route('activities.index'), 'Community' => route('communities.index'), 'Opportunity' => route('opportunities.index'), 'Program' => route('programs.index'), 'Pemuda' => route('youth-directory.index'), 'Peta Ekosistem' => route('ecosystem-map.index')] as $label => $href)<a
@@ -76,11 +81,7 @@
                 class="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2.5 hover:bg-primary-50 hover:text-primary"><x-ui.icon
                     name="search" class="size-4" />Pencarian</a>
             @auth<div class="flex flex-wrap gap-3 border-t border-border pt-4"><x-notification-indicator /><a href="{{ auth()->user()->hasRole('youth') ? route('youth.account.show') : route(\App\Support\Auth\HomeRoute::for(auth()->user())) }}" class="btn-secondary flex-1">Akun saya</a></div>@endauth
-            <div class="mt-3 flex gap-3 border-t border-border pt-4">@auth<a
-                href="{{ route(\App\Support\Auth\HomeRoute::for(auth()->user())) }}"
-            class="landing-btn-primary flex-1">Ruang Saya</a>@else<a href="{{ route('login') }}"
-                        class="btn-secondary flex-1">Masuk</a><a href="{{ route('register') }}"
-                    class="landing-btn-primary flex-1">Daftar</a>@endauth</div>
+
         </div>
     </div>
 </header>

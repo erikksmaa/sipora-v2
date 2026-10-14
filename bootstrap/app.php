@@ -25,5 +25,5 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(fn ($request) => route(HomeRoute::for($request->user())));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->dontFlash(['password', 'password_confirmation', 'recaptcha_token']);
+        $exceptions->dontFlash(['password', 'password_confirmation', 'recaptcha_token', 'token']);
     })->create();

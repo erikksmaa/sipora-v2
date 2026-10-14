@@ -11,6 +11,9 @@
     icon="users" variant="youth" />
 <div class="stats-dashboard"><div class="stats-container">
     <div class="mb-5 flex justify-end"><a class="btn-secondary" href="{{ route('ecosystem-map.index') }}">Jelajahi Peta Ekosistem</a></div>
+    <section x-data="{ filtersOpen: false }" aria-label="Pilihan filter statistik">
+        <button class="btn-outline w-full justify-between md:hidden" type="button" @click="filtersOpen = !filtersOpen" :aria-expanded="filtersOpen" aria-controls="statistics-filter-panel">Filter statistik <x-ui.icon name="filter" class="size-4" /></button>
+        <div id="statistics-filter-panel" class="md:block" :class="{ hidden: !filtersOpen }">
     <form method="GET" action="{{ route('statistics.index') }}" class="stats-filters" aria-label="Filter statistik pemuda">
         <label>Tahun<select name="year"><option value="">Semua tahun</option>@foreach($options['years'] as $year)<option value="{{ $year }}" @selected(($filters['year'] ?? null) === $year)>{{ $year }}</option>@endforeach</select></label>
         <label>Kecamatan<select name="district"><option value="">Semua kecamatan</option>@foreach($options['districts'] as $district)<option value="{{ $district['code'] }}" @selected(($filters['district'] ?? null) === $district['code'])>{{ $district['name'] }}</option>@endforeach</select></label>
@@ -18,6 +21,8 @@
         <button type="submit" class="stats-filter-button">Terapkan filter</button>
         @if($filters)<a class="stats-reset" href="{{ route('statistics.index') }}">Atur ulang</a>@endif
     </form>
+        </div>
+    </section>
     <section aria-labelledby="stats-headline">
         <div class="stats-section-heading"><div><p class="stats-eyebrow">Ekosistem dalam angka</p><h2 id="stats-headline">Gambaran pemuda SIPORA</h2></div><p>Berdasarkan pemuda yang terdaftar di SIPORA</p></div>
         <div class="stats-headline-grid">

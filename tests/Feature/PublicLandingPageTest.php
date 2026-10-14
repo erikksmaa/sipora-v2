@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\ForumCategory;
+use App\Models\ForumThread;
 use App\Models\User;
 use App\Presenters\PublicLandingPresenter;
 use App\Services\PublicStatisticsService;
@@ -30,14 +32,17 @@ class PublicLandingPageTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertSeeInOrder([
-                'Eksplorasi Sesuai Minatmu',
+                'Apa itu SIPORA?',
+                'Ekosistem SIPORA dalam Angka',
+                'Peta Ekosistem Pemuda',
+                'Alur Pendaftaran SIPORA',
                 'Kegiatan yang Bisa Kamu Ikuti',
                 'Temukan Komunitas',
                 'Opportunity untuk Pemuda',
                 'Program yang Sedang Berjalan dan Selesai',
-                'Bangun Portofolio Terverifikasi Sejak Dini',
-                'Statistik publik SIPORA',
-                'Ambil langkah pertamamu bersama SIPORA',
+                'Kenali Potensi Pemuda SIPORA',
+                'Diskusi dan Kabar Pemuda',
+                'Terhubung dengan Dindikpora',
             ]);
     }
 
@@ -97,5 +102,28 @@ class PublicLandingPageTest extends TestCase
             $migrationNames->contains(fn (string $name): bool => str_contains($name, 'landing')),
             'The presentation-only landing page must not own a persistence migration.'
         );
+    }
+
+    public function test_registration_uses_existing_account_fields_and_explains_identity_review(): void
+    {
+        $this->get('/register')->assertOk()
+            ->assertSee('Langkah 1 dari 5')
+            ->assertSee('name="name"', false)->assertSee('name="email"', false)
+            ->assertSee('name="password"', false)->assertSee('name="password_confirmation"', false)
+            ->assertDontSee('name="nik"', false)->assertDontSee('name="religion"', false)
+            ->assertSee('tidak otomatis memverifikasi identitas');
+    }
+
+    public function test_landing_reuses_suppressed_statistics_and_omits_hidden_discussions(): void
+    {
+        $this->seed(RolePermissionSeeder::class);
+        $user = User::factory()->create()->assignRole('youth');
+        $category = ForumCategory::create(['name' => 'Contoh', 'slug' => 'contoh', 'is_active' => true]);
+        ForumThread::create(['category_id' => $category->getKey(), 'author_id' => $user->getKey(), 'title' => 'Hidden private discussion', 'body' => 'Never exposed', 'status' => 'hidden']);
+        $data = app(PublicLandingPresenter::class)->present();
+        $this->assertNull($data['youthStatistics']['registered']);
+        $this->assertSame($data['analytics']['totals'], $data['youthStatistics']);
+        $this->assertCount(0, $data['threads']);
+        $this->get('/')->assertOk()->assertDontSee('Hidden private discussion')->assertSee('eco-map-data', false);
     }
 }

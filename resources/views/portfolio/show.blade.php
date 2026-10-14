@@ -31,14 +31,13 @@
         </nav>
     @endif
 
-    <section class="overflow-hidden rounded-3xl border border-indigo-100 bg-white shadow-sm">
-        <div class="portfolio-cover-banner relative mb-6 h-28 overflow-hidden bg-primary-800 sm:h-20" aria-hidden="true"><span class="px-sprite px-map absolute right-8 top-6 h-16 opacity-45"></span></div>
-        <div class="px-5 pb-6 sm:px-8 sm:pb-8 ">
-            <div class="-mt-12 flex flex-col gap-5 sm:-mt-14 sm:flex-row sm:items-end">
+    <section class="portfolio-header">
+        <div class="min-w-0">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
                 <div class="grid size-24 shrink-0 place-items-center overflow-hidden rounded-2xl border-4 border-white bg-orange-100 text-3xl font-black text-orange-700 shadow-md sm:size-28">
                     @if($portfolio['identity']['photo_url'])<img data-media-fallback class="h-full w-full object-cover" src="{{ $portfolio['identity']['photo_url'] }}" alt="Foto {{ $portfolio['identity']['name'] }}">@else{{ $initials }}@endif
                 </div>
-                <div class="min-w-0 flex-1 pb-1 sm:pt-16">
+                <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-2"><h1 class="text-2xl font-black text-text-primary sm:text-3xl">{{ $portfolio['identity']['name'] }}</h1><span class="rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-bold text-primary">Terdata di SIPORA</span></div>
                     @if($portfolio['identity']['headline'])<p class="mt-1 font-semibold text-slate-700">{{ $portfolio['identity']['headline'] }}</p>@endif
                     @if($portfolio['identity']['domicile'])<p class="mt-1 text-sm text-slate-500">Domisili {{ $portfolio['identity']['domicile'] }}, Kabupaten Pemalang</p>@endif

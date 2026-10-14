@@ -19,7 +19,7 @@
 @case(3)
     @foreach($typeRows as [$role,$class,$family,$size,$weight,$spacing,$sample,$source])<div class="ds-type-row"><strong>{{ $role }}</strong><div><p class="{{ $class }}">{{ $sample }}</p><p class="ds-caption">{{ $family }} · {{ $size }} px · weight {{ $weight }} · tracking {{ $spacing }}<br>{{ $source }}</p></div></div>@endforeach
     <div class="ds-grid-two mt-8"><div class="sipora-card"><p class="font-display text-3xl font-bold">Temukan Kesempatanmu</p><p class="mt-3 text-sm leading-6">Plus Jakarta Sans untuk isi dan navigasi.</p></div><div class="sipora-card sipora-card-dark"><p class="font-display text-3xl font-bold text-cream-100">Temukan Kesempatanmu</p><p class="mt-3 text-sm leading-6 text-cream-100">Contoh inverse pada surface Slate.</p></div></div>
-    <p class="ds-note">font-heading saat ini adalah alias font-display (Pixelify Sans), termasuk workspace pemerintahan. H4 belum memiliki token semantik khusus; contoh berasal dari heading empty-state. Tipografi mono memakai kelas weight normal, tetapi file font yang dimuat hanya weight 500 dan 600.</p>
+    <p class="ds-note">font-heading saat ini adalah alias font-display (Plus Jakarta Sans), termasuk workspace pemerintahan. H4 belum memiliki token semantik khusus; contoh berasal dari heading empty-state. JetBrains Mono digunakan hanya untuk metadata teknis, dengan weight 400, 500, dan 600.</p>
 @break
 @case(4)
     <div class="ds-space">@foreach([4,8,12,16,20,24,32,40,48,64] as $space)<div><i style="height:{{ $space }}px"></i><span>{{ $space }}px</span></div>@endforeach</div>
