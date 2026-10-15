@@ -1768,3 +1768,31 @@ html[data-theme="dark"] .public-home { --color-bg: #182936; }
 html[data-theme="dark"] .registration-form-panel .btn { background-color: #FE7743; color: #fff; }
 html[data-theme="dark"] .registration-form-panel .btn:hover { background-color: var(--color-accent-400); }
 html[data-theme="dark"] .public-link { color: var(--color-text-primary); }
+
+/* About: soft section layers and semantic card accents, scoped to this page. */
+.about-page .about-section--intro { background-color: #fff7f0; }
+.about-page .about-section--flow { background-color: #eaf1f5; }
+.about-page .about-section--records { background-color: #f7faf8; }
+.about-page .about-tone {
+    --about-surface: #eaf2f7;
+    --about-accent: #41677e;
+    --about-ink: #284c63;
+    --pc: var(--about-accent);
+    background-color: var(--about-surface);
+    background-image: linear-gradient(var(--about-accent), var(--about-accent));
+    background-size: 100% 4px;
+    background-repeat: no-repeat;
+}
+.about-page .about-tone[data-tone="orange"] { --about-surface: #fff0e5; --about-accent: #cf683c; --about-ink: #8b3d20; }
+.about-page .about-tone[data-tone="teal"] { --about-surface: #e5f3ef; --about-accent: #39836f; --about-ink: #235d50; }
+.about-page .about-tone[data-tone="green"] { --about-surface: #def3e5; --about-accent: #338657; --about-ink: #1d6540; }
+.about-page .about-tone-icon { color: var(--about-ink); background-color: color-mix(in srgb, var(--about-accent) 15%, var(--about-surface)); }
+.about-page .about-cta { background-image: linear-gradient(120deg, #203947, #31586b); }
+.about-page .about-cta h2 { color: #fff; }
+html[data-theme="dark"] .about-page .about-section--intro { background-color: #1a2c36; }
+html[data-theme="dark"] .about-page .about-section--flow { background-color: #203642; }
+html[data-theme="dark"] .about-page .about-section--records { background-color: #1b302f; }
+html[data-theme="dark"] .about-page .about-tone { --about-surface: #294352; --about-accent: #80abc2; --about-ink: #c0deee; }
+html[data-theme="dark"] .about-page .about-tone[data-tone="orange"] { --about-surface: #40332e; --about-accent: #ec9b78; --about-ink: #ffd1ba; }
+html[data-theme="dark"] .about-page .about-tone[data-tone="teal"] { --about-surface: #25423d; --about-accent: #78bea9; --about-ink: #b3e7d9; }
+html[data-theme="dark"] .about-page .about-tone[data-tone="green"] { --about-surface: #294333; --about-accent: #8cc99f; --about-ink: #c1e8cc; }

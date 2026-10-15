@@ -2,6 +2,9 @@ import './bootstrap';
 import './media';
 import { showAlert } from './alerts';
 import Alpine from 'alpinejs';
+import chat from './chat';
+
+Alpine.data('siporaChat', chat);
 
 Alpine.data('themeToggle', () => ({
     dark: document.documentElement.dataset.theme === 'dark',

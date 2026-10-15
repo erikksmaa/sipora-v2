@@ -1279,3 +1279,61 @@ ALTER TABLE users
   ADD COLUMN internal_active TINYINT(1) NOT NULL DEFAULT 1,
   ADD COLUMN must_change_password TINYINT(1) NOT NULL DEFAULT 0,
   ADD COLUMN internal_session_version BIGINT UNSIGNED NOT NULL DEFAULT 0;
+
+
+
+
+-- Global and Community Chat (2026-10-15)
+CREATE TABLE `chat_rooms` (
+  `id` binary(16) NOT NULL,
+  `type` enum('global','community') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `community_id` binary(16) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime(6) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `global_slot` tinyint GENERATED ALWAYS AS ((case when (`type` = _utf8mb4'global') then 1 else NULL end)) STORED,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `chat_rooms_community_id_unique` (`community_id`),
+  UNIQUE KEY `uq_chat_global` (`global_slot`),
+  CONSTRAINT `chat_rooms_community_id_foreign` FOREIGN KEY (`community_id`) REFERENCES `organizations` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `ck_chat_scope` CHECK ((((`type` = _utf8mb4'global') and (`community_id` is null)) or ((`type` = _utf8mb4'community') and (`community_id` is not null))))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `chat_messages` (
+  `id` binary(16) NOT NULL,
+  `chat_room_id` binary(16) NOT NULL,
+  `user_id` binary(16) NOT NULL,
+  `client_nonce` binary(16) NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `deleted_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_chat_submission` (`chat_room_id`,`user_id`,`client_nonce`),
+  KEY `idx_chat_history` (`chat_room_id`,`created_at`,`id`),
+  KEY `idx_chat_changes` (`chat_room_id`,`updated_at`,`id`),
+  KEY `chat_messages_user_id_index` (`user_id`),
+  CONSTRAINT `chat_messages_chat_room_id_foreign` FOREIGN KEY (`chat_room_id`) REFERENCES `chat_rooms` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `chat_messages_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `chat_message_reports` (
+  `id` binary(16) NOT NULL,
+  `chat_message_id` binary(16) NOT NULL,
+  `reporter_id` binary(16) NOT NULL,
+  `reason` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('pending','dismissed','actioned') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `reviewed_by` binary(16) DEFAULT NULL,
+  `reviewed_at` datetime(6) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_chat_report` (`chat_message_id`,`reporter_id`),
+  KEY `chat_message_reports_status_created_at_index` (`status`,`created_at`),
+  KEY `chat_message_reports_reporter_id_foreign` (`reporter_id`),
+  KEY `chat_message_reports_reviewed_by_foreign` (`reviewed_by`),
+  CONSTRAINT `chat_message_reports_chat_message_id_foreign` FOREIGN KEY (`chat_message_id`) REFERENCES `chat_messages` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `chat_message_reports_reporter_id_foreign` FOREIGN KEY (`reporter_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT,
+  CONSTRAINT `chat_message_reports_reviewed_by_foreign` FOREIGN KEY (`reviewed_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -3,6 +3,7 @@
     $isAdmin = $workspace === 'admin';
     $isYouth = $workspace === 'youth';
     $isManager = $workspace === 'manager';
+    $chatIsCommunity = ($room ?? null) instanceof \App\Models\ChatRoom && $room->type === 'community';
     $workspaceLabel = match ($workspace) { 'youth' => 'Akun Youth', 'manager' => 'Pengelola Community', 'verifier' => 'Verifier Dinas', default => 'Administrator Dindikpora' };
     $workspaceShortLabel = match ($workspace) { 'youth' => 'Youth', 'manager' => 'Community', 'verifier' => 'Verifier', default => 'Admin' };
     $workspaceDescription = match ($workspace) { 'youth' => 'Ruang Saya', 'manager' => $organization->name, 'verifier' => 'Kurasi & Pengawasan', default => 'Tata Kelola Kepemudaan' };
@@ -13,6 +14,7 @@
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('manager.dashboard', $organization), 'patterns' => ['manager.dashboard']],
         ]],
         ['label' => 'Community', 'items' => [
+            ['label' => 'Chat Community', 'icon' => 'users', 'route' => route('manager.chat', $organization), 'patterns' => ['manager.chat']],
             ['label' => 'Update Community', 'icon' => 'users', 'route' => route('manager.social.index', $organization), 'patterns' => ['manager.social.*']],
             ['label' => 'Profil Community', 'icon' => 'building', 'route' => route('manager.profile.edit', $organization), 'patterns' => ['manager.profile.*']],
             ['label' => 'Anggota', 'icon' => 'users', 'route' => route('manager.members.index', $organization), 'patterns' => ['manager.members.*']],
@@ -53,11 +55,12 @@
             ['label' => 'Privasi Portfolio', 'icon' => 'shield-check', 'route' => route('youth.profile.privacy'), 'patterns' => ['youth.profile.privacy'], 'requires' => 'portfolio'],
         ]],
         ['label' => 'Aktivitas Saya', 'items' => [
+            ['label' => 'Chat Global', 'icon' => 'users', 'route' => route('chat.global'), 'patterns' => ['chat.global', ...($chatIsCommunity ? [] : ['chat.room'])]],
             ['label' => 'Social Feed', 'icon' => 'users', 'route' => route('social.index'), 'patterns' => ['social.*']],
             ['label' => 'Forum Community', 'icon' => 'users', 'route' => route('forum.index'), 'patterns' => ['forum.*']],
             ['label' => 'Development Pathway', 'icon' => 'sparkles', 'route' => route('youth.development-pathway.index'), 'patterns' => ['youth.development-pathway.*'], 'requires' => 'portfolio'],
             ['label' => 'Activity Saya', 'icon' => 'clipboard-check', 'route' => route('youth.activities.index'), 'patterns' => ['youth.activities.*'], 'requires' => 'complete'],
-            ['label' => 'Community Saya', 'icon' => 'building', 'route' => route('youth.communities.index'), 'patterns' => ['youth.communities.*'], 'requires' => 'complete'],
+            ['label' => 'Community Saya', 'icon' => 'building', 'route' => route('youth.communities.index'), 'patterns' => ['youth.communities.*', 'chat.community', ...($chatIsCommunity ? ['chat.room'] : [])], 'requires' => 'complete'],
             ['label' => 'Opportunity Tersimpan', 'icon' => 'bookmark', 'route' => route('youth.opportunities.bookmarks'), 'patterns' => ['youth.opportunities.*'], 'requires' => 'complete'],
             ['label' => 'Passport', 'icon' => 'badge-check', 'route' => route('youth.passport.index'), 'patterns' => ['youth.passport.*'], 'requires' => 'complete'],
             ['label' => 'Sertifikat SIPORA', 'icon' => 'award', 'route' => route('youth.certificates.index'), 'patterns' => ['youth.certificates.*'], 'requires' => 'complete'],
@@ -82,11 +85,13 @@
             ['label' => 'Identitas Pemuda', 'icon' => 'shield-check', 'route' => route('admin.identity-verifications.index'), 'patterns' => ['admin.identity-verifications.*']],
         ]],
         ['label' => 'Konten', 'items' => [
+            ['label' => 'Moderasi Chat', 'icon' => 'shield-check', 'route' => route('admin.chat.index'), 'patterns' => ['admin.chat.*', 'chat.community', ...($chatIsCommunity ? ['chat.room'] : [])]],
             ['label' => 'Moderasi Feed', 'icon' => 'users', 'route' => route('admin.social.index'), 'patterns' => ['admin.social.*']],
             ['label' => 'Moderasi Forum', 'icon' => 'users', 'route' => route('admin.forum.index'), 'patterns' => ['admin.forum.*']],
             ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
         ]],
         ['label' => 'Sistem', 'items' => [
+            ['label' => 'Chat Global', 'icon' => 'users', 'route' => route('chat.global'), 'patterns' => ['chat.global', ...($chatIsCommunity ? [] : ['chat.room'])]],
             ['label' => 'Pengguna Internal', 'icon' => 'users', 'route' => route('admin.internal-users.index'), 'patterns' => ['admin.internal-users.index', 'admin.internal-users.create', 'admin.internal-users.store', 'admin.internal-users.show', 'admin.internal-users.edit', 'admin.internal-users.update', 'admin.internal-users.active', 'admin.internal-users.temporary', 'admin.internal-users.reset-link', 'admin.internal-users.verification']],
             ['label' => 'Kelola Password', 'icon' => 'shield-check', 'route' => route('admin.account.password.edit'), 'patterns' => ['admin.account.password.*']],
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
@@ -115,6 +120,7 @@
         ]],
         ['label' => 'Akun', 'items' => [
             ['label' => 'Kelola Password', 'icon' => 'shield-check', 'route' => route('verifier.account.password.edit'), 'patterns' => ['verifier.account.password.*']],
+            ['label' => 'Chat Global', 'icon' => 'users', 'route' => route('chat.global'), 'patterns' => ['chat.*']],
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
         ]],
     ]));

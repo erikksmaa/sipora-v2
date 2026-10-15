@@ -45,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        foreach (['chat-poll' => 90, 'chat-send' => 30, 'chat-report' => 10, 'chat-moderate' => 20] as $name => $maximum) {
+            RateLimiter::for($name, fn (Request $request) => Limit::perMinute($maximum)->by($request->user()?->getAuthIdentifier() ?? $request->ip()));
+        }
         Gate::policy(Organization::class, OrganizationPolicy::class);
         Gate::policy(Activity::class, ActivityPolicy::class);
         Gate::policy(OrganizationMembership::class, OrganizationMembershipPolicy::class);

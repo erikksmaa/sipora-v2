@@ -30,7 +30,7 @@ class CompetitionDemoSeeder extends Seeder
                     $user->assignRole($role);
                 }
             }
-            $this->call([DemoYouthSeeder::class, DemoEcosystemSeeder::class, DemoDiscussionSeeder::class]);
+            $this->call([DemoYouthSeeder::class, DemoEcosystemSeeder::class, DemoDiscussionSeeder::class, DemoChatSeeder::class]);
             if (app()->environment('local') && is_file(base_path('output/pdf/07A_PROGRAM_PROPOSALS/manifest.json'))) {
                 $this->call(DemoProposalStatusSeeder::class);
             }

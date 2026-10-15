@@ -3,9 +3,10 @@
 @section('meta_description', 'Pelajari cara SIPORA menghubungkan pemuda, Community, Activity, Opportunity, Program, dan Dindikpora Kabupaten Pemalang.')
 @section('canonical', route('about'))
 @section('content')
+<div class="about-page">
     <x-public.page-intro eyebrow="Tentang Platform" title="Ekosistem pemuda dalam satu ruang" variant="about"
         description="SIPORA menghubungkan pemuda, Community, Activity, Opportunity, Program, dan proses verifikasi Dindikpora Kabupaten Pemalang." />
-    <section class="px-5 py-16">
+    <section class="about-section about-section--intro px-5 py-16">
         <div class="mx-auto max-w-6xl"><x-media.representative class="mb-8" domain="about" identity="ecosystem" label="Ilustrasi kolaborasi pemuda dan komunitas" />
             <div class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
                 <div>
@@ -20,8 +21,8 @@
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach([['users', 'Pemuda', 'Membangun pengalaman dan mengatur privasi Portfolio.'], ['building', 'Community', 'Mengelola anggota, Activity, dan Program.'], ['activity', 'Activity', 'Kegiatan dengan jadwal, peserta, dan penyelesaian.'], ['briefcase', 'Opportunity', 'Informasi peluang yang dipublikasikan Admin.'], ['notebook', 'Program', 'Alur Proposal, Logbook, E-LPJ, dan evaluasi.'], ['shield-check', 'Dindikpora', 'Menjalankan verifikasi sesuai tanggung jawab Admin dan Verifier.']] as [$icon, $title, $copy])
-                        <article class="rounded-2xl border border-border bg-white p-5 shadow-xs"><span
-                                class="grid size-10 place-items-center rounded-xl bg-primary-50 text-primary"><x-ui.icon
+                        <article class="about-tone rounded-2xl border border-border p-5 shadow-xs" data-tone="{{ ['orange','teal','blue','orange','blue','green'][$loop->index] }}"><span
+                                class="about-tone-icon grid size-10 place-items-center rounded-xl"><x-ui.icon
                                     :name="$icon" class="size-5" /></span>
                             <h3 class="mt-4 text-lg font-bold text-text-primary">{{ $title }}</h3>
                             <p class="mt-2 text-sm leading-6 text-text-secondary">{{ $copy }}</p>
@@ -30,15 +31,15 @@
             </div>
         </div>
     </section>
-    <section class="bg-surface-soft px-5 py-16">
+    <section class="about-section about-section--flow px-5 py-16">
         <div class="mx-auto max-w-6xl"><x-public.section-heading eyebrow="Alur Ekosistem"
                 title="Dari penemuan hingga rekam pengalaman"
                 description="Setiap bagian terhubung, tetapi tetap memiliki batas tanggung jawab dan verifikasi yang jelas."
                 centered />
             <div class="mt-10 grid gap-4 md:grid-cols-5">
                 @foreach([['search', 'Temukan', 'Activity, Community, Opportunity, atau Program'], ['users', 'Berpartisipasi', 'Bergabung dan mengikuti proses yang berlaku'], ['activity', 'Berkontribusi', 'Ikuti Activity dan aktivitas Community'], ['badge-check', 'Diverifikasi', 'Status disahkan oleh pihak yang berwenang'], ['file-text', 'Bangun Portfolio', 'Tampilkan hanya bagian yang dipilih untuk publik']] as $index => [$icon, $title, $copy])
-                    <article class="relative rounded-2xl border border-border bg-white p-5 text-center shadow-xs"><span
-                            class="mx-auto grid size-11 place-items-center rounded-xl bg-primary-50 text-primary"><x-ui.icon
+                    <article class="about-tone relative rounded-2xl border border-border p-5 text-center shadow-xs" data-tone="{{ ['blue','orange','teal','green','blue'][$index] }}"><span
+                            class="about-tone-icon mx-auto grid size-11 place-items-center rounded-xl"><x-ui.icon
                                 :name="$icon" class="size-5" /></span>
                         <h3 class="mt-4 font-bold text-text-primary">{{ $title }}</h3>
                         <p class="mt-2 text-xs leading-5 text-text-secondary">{{ $copy }}</p>@if($index < 4)<span
@@ -48,9 +49,9 @@
             </div>
         </div>
     </section>
-    <section class="px-5 py-16">
+    <section class="about-section about-section--records px-5 py-16">
         <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
-            <article class="rounded-2xl border border-primary-100 bg-primary-50 p-7">
+            <article class="about-tone rounded-2xl border p-7" data-tone="blue">
                 <p class="text-xs font-bold uppercase tracking-wider text-primary">Tercatat mandiri</p>
                 <h2 class="font-heading mt-2 text-2xl font-bold text-text-primary">Informasi yang dilaporkan pemilik</h2>
                 <ul class="mt-5 space-y-3 text-sm leading-6 text-text-secondary">
@@ -59,7 +60,7 @@
                     </li>@endforeach
                 </ul>
             </article>
-            <article class="rounded-2xl border border-success/20 bg-success-soft p-7">
+            <article class="about-tone rounded-2xl border p-7" data-tone="green">
                 <p class="text-xs font-bold uppercase tracking-wider text-success">Diverifikasi SIPORA</p>
                 <h2 class="font-heading mt-2 text-2xl font-bold text-text-primary">Rekam yang melalui workflow resmi</h2>
                 <ul class="mt-5 space-y-3 text-sm leading-6 text-text-secondary">
@@ -70,7 +71,7 @@
             </article>
         </div>
     </section>
-    <section class="bg-primary-900 px-5 py-14 text-white">
+    <section class="about-cta bg-primary-900 px-5 py-14 text-white">
         <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
                 <h2 class="font-heading text-3xl font-bold">Temukan ruangmu di SIPORA.</h2>
@@ -81,4 +82,5 @@
                     href="{{ route('youth-directory.index') }}">Direktori Pemuda</a></div>
         </div>
     </section>
+</div>
 @endsection

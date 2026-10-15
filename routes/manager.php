@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:youth', 'youth.stage:complete'])->prefix('manage')->name('manager.')
     ->group(function (): void {
+        Route::get('/{organization}/chat', [\App\Http\Controllers\ChatController::class, 'manager'])->name('chat');
         Route::get('/{organization}', [CommunityWorkspaceController::class, 'show'])->name('dashboard');
         Route::get('/{organization}/feed', [\App\Http\Controllers\SocialFeedController::class, 'managerIndex'])->name('social.index');
         Route::post('/{organization}/feed', [\App\Http\Controllers\SocialFeedController::class, 'managerStore'])->middleware('throttle:30,1')->name('social.store');

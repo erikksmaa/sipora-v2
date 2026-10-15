@@ -3,7 +3,7 @@
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
-foreach (['public', 'auth', 'youth', 'manager', 'verifier', 'admin'] as $workspace) {
+foreach (['public', 'auth', 'youth', 'manager', 'verifier', 'admin', 'chat'] as $workspace) {
     require __DIR__.'/'.$workspace.'.php';
 }
 
