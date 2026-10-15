@@ -43,8 +43,12 @@ class PasswordResetController extends Controller
         ]);
         $data['email'] = mb_strtolower(trim($data['email']));
         $status = Password::reset($data, function (User $user, string $password): void {
-            $user->forceFill(['password' => $password, 'remember_token' => Str::random(60)])->save();
-            $user->getConnection()->table('sessions')->where('user_id', $user->getKey())->delete();
+            if ($user->isInternalAccount()) {
+                app(\App\Services\InternalAccountService::class)->changePassword($user, $password, 'internal_password_reset_completed');
+            } else {
+                $user->forceFill(['password' => $password, 'remember_token' => Str::random(60)])->save();
+                $user->getConnection()->table('sessions')->where('user_id', $user->getKey())->delete();
+            }
             event(new PasswordReset($user));
         });
         if ($status !== Password::PasswordReset) {

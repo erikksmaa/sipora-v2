@@ -19,7 +19,7 @@ final class ActivityVerificationController extends Controller
     public function index(Request $request): View
     {
         $input = validator($request->query(), ['status' => ['nullable', Rule::in(['all', 'pending_review', 'revision', 'rejected', 'approved'])], 'search' => ['nullable', 'string', 'max:120']])->validate();
-        $status = $input['status'] ?? Activity::REVIEW_PENDING;
+        $status = $input['status'] ?? 'all';
         $search = trim($input['search'] ?? '');
         $activities = Activity::query()->with(['organization', 'category', 'creator'])
             ->whereNot('review_status', Activity::REVIEW_DRAFT)

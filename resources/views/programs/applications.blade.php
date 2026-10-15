@@ -1,0 +1,28 @@
+@extends($organization ? 'layouts.manager' : 'layouts.verifier')
+@section('title','Pendaftar dan Peserta Program')
+@section($organization ? 'manager-content' : 'verifier-content')
+@php($baseRoute=$organization ? 'manager.programs.applications' : 'verifier.programs.applications')
+@php($baseParams=$organization ? [$organization,$program] : [$program])
+<div class="space-y-6">
+    <x-ui.page-header title="Pendaftar & Peserta Program" :description="$program->title"><x-slot:actions>@if($organization)<a class="btn-outline" href="{{ route('manager.programs.show',[$organization,$program]) }}">Kembali ke Program</a>@can('configureIntake',$program)<a class="btn-accent" href="{{ route('manager.programs.intake.edit',[$organization,$program]) }}">Pengaturan Pendaftaran</a>@endcan @else<a class="btn-outline" href="{{ route('verifier.programs.intake.index') }}">Daftar Program</a>@endif</x-slot:actions></x-ui.page-header>
+    <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">@foreach(['total'=>'Total Pendaftar','accepted'=>'Peserta Aktif','waitlisted'=>'Daftar Tunggu','rejected'=>'Tidak Lolos'] as $key=>$label)<div class="sipora-card p-4"><p class="text-xs text-text-secondary">{{ $label }}</p><strong class="mt-2 block text-2xl">{{ $key==='total' ? $summary['total'] : $summary['counts'][$key] }}</strong></div>@endforeach</div>
+    <div class="sipora-card flex flex-wrap gap-x-6 gap-y-3 text-sm"><p>Kuota: <strong>{{ $summary['quota'] ?? 'Tanpa batas' }}</strong></p><p>Sisa: <strong>{{ $summary['remaining'] ?? 'Tanpa batas' }}</strong></p><p>Diajukan: <strong>{{ $summary['counts']['submitted'] }}</strong></p><p>Ditinjau: <strong>{{ $summary['counts']['under_review'] }}</strong></p><p>Mengundurkan diri: <strong>{{ $summary['counts']['withdrawn'] }}</strong></p></div>
+    <form method="GET" class="sipora-card grid gap-3 md:grid-cols-[1fr_1fr_auto_auto]"><label><span class="label">Cari nama/email akun</span><input class="field" name="q" maxlength="120" value="{{ $search }}"></label><label><span class="label">Status</span><select name="status" class="field"><option value="all">Semua</option>@foreach(\App\Models\ProgramApplication::LABELS as $value=>$label)<option value="{{ $value }}" @selected($status===$value)>{{ $label }}</option>@endforeach</select></label><button class="btn-accent self-end">Terapkan</button><a class="btn-outline self-end" href="{{ route($baseRoute.'.index',$baseParams) }}">Reset</a></form>
+    <x-input-error :messages="$errors->get('decision')" />
+    <section class="table-shell"><div class="overflow-x-auto"><table class="min-w-[850px] w-full"><caption class="sr-only">{{ $status==='accepted' ? 'Peserta aktif yang diterima' : 'Daftar aplikasi Program' }}</caption><thead><tr><th>Pemohon / Portfolio</th><th>Status</th><th>Catatan</th><th>Keputusan seleksi</th></tr></thead><tbody>
+        @forelse($applications as $application)
+        @php($visibility=$application->user->profileVisibility)
+        <tr class="border-t border-border"><td class="align-top"><x-public.author-identity :author="$application->user" /><p class="mt-2 text-xs text-text-muted">{{ $application->created_at->timezone(config('sipora.display_timezone'))->format('d M Y H:i') }} WIB</p>
+        @if($visibility?->is_profile_public && $visibility->show_interests)<p class="mt-2 max-w-64 text-xs text-text-secondary">Minat: {{ $application->user->interests->pluck('name')->join(', ') ?: 'Belum diisi' }}</p>@endif
+        @if($visibility?->is_profile_public && $visibility->show_skills)<p class="mt-2 max-w-64 text-xs text-text-secondary">Skill: {{ $application->user->skills->pluck('name')->join(', ') ?: 'Belum diisi' }}</p>@endif</td>
+        <td class="align-top"><x-program.application-status :status="$application->status" /></td><td class="max-w-56 whitespace-pre-line align-top text-sm">{{ $application->review_notes ?: '—' }}</td><td class="align-top">
+        @if($program->execution_status==='running' && in_array($application->status,['submitted','under_review','waitlisted'],true))
+            <form class="grid min-w-56 gap-2" method="POST" action="{{ route($baseRoute.'.review',array_merge($baseParams,[$application])) }}" data-confirm-title="Simpan keputusan seleksi?" data-confirm="Keputusan akan memperbarui status pemohon. Penerimaan memakai kuota Program.">@csrf<input type="hidden" name="expected_status" value="{{ $application->status }}">
+                <label><span class="sr-only">Keputusan untuk pemohon {{ $loop->iteration }}</span><select class="field" name="decision" required><option value="">Pilih keputusan</option>@if($application->status!=='under_review')<option value="under_review">Tinjau</option>@endif<option value="accepted">Terima</option>@if($application->status!=='waitlisted')<option value="waitlisted">Daftar tunggu</option>@endif<option value="rejected">Tolak</option></select></label><label><span class="sr-only">Catatan keputusan pemohon {{ $loop->iteration }}</span><input class="field" name="notes" maxlength="2000" placeholder="Catatan (opsional)"></label><button class="btn-outline">Simpan Keputusan</button>
+            </form>
+        @else<p class="text-xs text-text-secondary">Status tersimpan; tidak ada tindakan seleksi tersedia.</p>@endif</td></tr>
+        @empty<tr><td colspan="4"><x-ui.empty-state title="Belum ada pendaftar" description="Pendaftaran yang sesuai filter akan tampil di sini." /></td></tr>@endforelse
+    </tbody></table></div></section>{{ $applications->links() }}
+    <p class="text-xs leading-6 text-text-secondary">Hanya status Diterima menjadi peserta aktif. Daftar Tunggu dan Tidak Lolos tidak memakai kuota. Informasi Portfolio mengikuti visibilitas pemilik; dokumen identitas dan evidence privat tidak ditampilkan.</p>
+</div>
+@endsection

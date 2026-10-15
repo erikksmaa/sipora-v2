@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(SecurityHeaders::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\EnsureInternalAccountAccess::class);
         $middleware->alias([
             'youth.stage' => EnsureYouthOnboardingStage::class,
             'role' => RoleMiddleware::class,
@@ -25,5 +26,5 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(fn ($request) => route(HomeRoute::for($request->user())));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->dontFlash(['password', 'password_confirmation', 'recaptcha_token', 'token']);
+        $exceptions->dontFlash(['password', 'password_confirmation', 'current_password', 'admin_password', 'temporary_password', 'recaptcha_token', 'token']);
     })->create();

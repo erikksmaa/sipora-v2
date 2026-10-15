@@ -26,6 +26,8 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::middleware('auth')->group(function (): void {
+    Route::get('/internal/password', [\App\Http\Controllers\InternalPasswordController::class, 'edit'])->middleware('role:admin|verifier')->name('internal.password.edit');
+    Route::put('/internal/password', [\App\Http\Controllers\InternalPasswordController::class, 'update'])->middleware(['role:admin|verifier', 'throttle:6,1'])->name('internal.password.update');
     Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
     Route::get('/verify-email', [EmailVerificationController::class, 'notice'])->name('verification.notice');
     Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])

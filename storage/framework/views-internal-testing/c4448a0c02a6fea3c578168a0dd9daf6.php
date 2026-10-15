@@ -1,0 +1,2 @@
+<?php if($target->hasRole('admin')): ?><label class="block"><span class="field-label">Password Administrator Anda</span><input class="field" name="admin_password" type="password" autocomplete="current-password" maxlength="72" required></label><?php endif; ?>
+<?php /**PATH C:\laragon\www\projects\lomba kabupaten\sipora-v2\resources\views/admin/internal-users/admin-password.blade.php ENDPATH**/ ?>

@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('youth.')
     ->group(function (): void {
+        Route::post('/programs/{program}/apply', [\App\Http\Controllers\ProgramApplicationController::class, 'store'])->middleware(['youth.stage:complete', 'throttle:20,1'])->name('programs.apply');
+        Route::post('/programs/{program}/withdraw', [\App\Http\Controllers\ProgramApplicationController::class, 'withdraw'])->name('programs.withdraw');
         Route::get('/home', YouthHomeController::class)->name('home');
         Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding');
         Route::get('/biodata', [BiodataController::class, 'edit'])->name('biodata.edit');

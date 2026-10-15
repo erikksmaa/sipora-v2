@@ -27,6 +27,23 @@ final class ProgramPolicy
             && $program->activities()->exists();
     }
 
+    public function configureIntake(User $user, Program $program): bool
+    {
+        return $this->manages($user, $program)
+            && in_array($program->execution_status, [Program::STATUS_PLANNED, Program::STATUS_RUNNING], true);
+    }
+
+    public function manageApplications(User $user, Program $program): bool
+    {
+        // Match existing ownership and non-conflicting Verifier oversight.
+        if ($user->hasRole('verifier')) {
+            return ! $this->manages($user, $program)
+                && $program->latestProposal()->value('status') === ProgramProposal::STATUS_APPROVED;
+        }
+
+        return $this->manages($user, $program);
+    }
+
     private function manages(User $user, Program $program): bool
     {
         return OrganizationMembership::query()

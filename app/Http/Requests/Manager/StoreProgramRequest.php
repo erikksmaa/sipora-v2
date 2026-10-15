@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Manager;
 
 use App\Rules\BinaryUuidExists;
+use App\Services\Program\ProgramIntakeRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProgramRequest extends FormRequest
@@ -23,6 +24,6 @@ class StoreProgramRequest extends FormRequest
             'objectives' => ['nullable', 'string', 'max:10000'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
-        ];
+        ] + ProgramIntakeRules::rules();
     }
 }

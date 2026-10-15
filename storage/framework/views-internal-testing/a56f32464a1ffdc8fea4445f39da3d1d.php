@@ -1,0 +1,20 @@
+<?php $__env->startSection('title', 'Minat Saya · SIPORA'); ?>
+<?php $__env->startSection('content'); ?>
+<div class="mx-auto max-w-3xl"><a class="text-sm font-bold text-[#243378]" href="<?php echo e(route('youth.portfolio.show')); ?>">← Portfolio Saya</a><section class="sipora-card mt-4"><p class="text-xs font-bold uppercase tracking-wider text-orange-600">Personalisasi</p><h1 class="mt-2 text-3xl font-extrabold">Apa yang kamu minati?</h1><p class="mt-2 text-slate-600">Pilih satu atau lebih. Daftar ini berasal dari master data SIPORA.</p><form class="mt-6" method="post" action="<?php echo e(route('youth.interests.update')); ?>" x-data="{ other: <?php echo e(old('custom_interest') ? 'true' : 'false'); ?> }"><?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?><div class="grid gap-3 sm:grid-cols-2"><?php $__currentLoopData = $interests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $interest): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><label class="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 p-4 has-checked:border-[#3346a8] has-checked:bg-[#eef0ff]"><input class="size-5 accent-[#243378]" type="checkbox" name="interests[]" value="<?php echo e($interest->uuid()); ?>" <?php if(in_array($interest->uuid(), old('interests', $user->interests->map->uuid()->all()))): echo 'checked'; endif; ?>><span class="font-semibold"><?php echo e($interest->name); ?></span></label><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?></div><?php $__errorArgs = ['interests'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><p class="field-error"><?php echo e($message); ?></p><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><label class="mt-5 flex items-center gap-3"><input type="checkbox" class="size-5" x-model="other" name="other_selected" value="1"><span class="font-semibold">Lainnya — minat belum ada di daftar</span></label><label x-show="other" x-cloak class="mt-3 block"><span class="field-label">Masukkan minat lainnya</span><input class="field" name="custom_interest" value="<?php echo e(old('custom_interest')); ?>" maxlength="120" :required="other" :disabled="!other"><?php $__errorArgs = ['custom_interest'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><span class="field-error"><?php echo e($message); ?></span><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?></label><div class="mt-6 flex justify-end"><button class="btn" type="submit">Simpan minat</button></div></form><?php if($customInterests->isNotEmpty()): ?><div class="mt-6 border-t border-border pt-5"><h2 class="font-bold">Minat lainnya milikmu</h2><div class="mt-3 flex flex-wrap gap-2"><?php $__currentLoopData = $customInterests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><form method="post" action="<?php echo e(route('youth.custom-tags.destroy', $tag)); ?>" data-confirm="Hapus minat <?php echo e($tag->name); ?>?"><span class="interest-chip"><?php echo e($tag->name); ?> <button class="ml-1" type="submit" aria-label="Hapus minat <?php echo e($tag->name); ?>">×</button></span><?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?></form><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?></div></div><?php endif; ?></section></div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.youth', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\projects\lomba kabupaten\sipora-v2\resources\views/youth/interests.blade.php ENDPATH**/ ?>

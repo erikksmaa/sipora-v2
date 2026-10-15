@@ -17,7 +17,17 @@ class SessionController extends Controller
         if (! Auth::attempt($request->safe()->only(['email', 'password']), $request->boolean('remember'))) {
             throw ValidationException::withMessages(['email' => __('auth.failed')]);
         }
+        if ($request->user()->isInternalAccount()) {
+            if (! $request->user()->internal_active) {
+                Auth::guard('web')->logout();
+                throw ValidationException::withMessages(['email' => 'Akun ini nonaktif. Hubungi Administrator SIPORA.']);
+            }
+            $request->session()->put('internal_session_version', $request->user()->internal_session_version);
+        }
         $request->session()->regenerate();
+        if ($request->user()->isInternalAccount() && $request->user()->must_change_password) {
+            return to_route('internal.password.edit');
+        }
 
         return redirect()->intended(route(HomeRoute::for($request->user())))->with('status', 'Selamat datang! Anda berhasil masuk ke SIPORA.');
     }

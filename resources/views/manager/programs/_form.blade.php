@@ -16,6 +16,7 @@
         <label class="md:col-span-2"><span class="label">Deskripsi</span><textarea class="field min-h-32" name="description" maxlength="10000">{{ old('description', $program->description) }}</textarea></label>
         <label class="md:col-span-2"><span class="label">Maksud dan tujuan</span><textarea class="field min-h-36" name="objectives" maxlength="10000">{{ old('objectives', $program->objectives) }}</textarea></label>
     </div>
+    @include('manager.programs._intake-fields')
     @if($errors->any())<div class="rounded-xl bg-red-50 p-4 text-sm text-red-800"><ul class="list-disc pl-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
     <div class="flex flex-wrap justify-end gap-3"><a class="btn-secondary" href="{{ route('manager.programs.index', $organization) }}">Batal</a><button class="btn-primary" @disabled($categories->isEmpty())>Simpan Rencana</button></div>
 </form>

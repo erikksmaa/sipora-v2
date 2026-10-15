@@ -9,6 +9,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')
     ->group(function (): void {
+        Route::get('/account/password', [\App\Http\Controllers\InternalPasswordController::class, 'edit'])->name('account.password.edit');
+        Route::put('/account/password', [\App\Http\Controllers\InternalPasswordController::class, 'update'])->middleware('throttle:6,1')->name('account.password.update');
+        Route::get('/internal-users', [\App\Http\Controllers\Admin\InternalUserController::class, 'index'])->name('internal-users.index');
+        Route::get('/internal-users/create', [\App\Http\Controllers\Admin\InternalUserController::class, 'create'])->name('internal-users.create');
+        Route::get('/internal-users/activity-log', [\App\Http\Controllers\Admin\InternalUserController::class, 'activityLog'])->name('internal-users.activity-log');
+        Route::post('/internal-users', [\App\Http\Controllers\Admin\InternalUserController::class, 'store'])->middleware('throttle:10,1')->name('internal-users.store');
+        Route::get('/internal-users/{user}', [\App\Http\Controllers\Admin\InternalUserController::class, 'show'])->name('internal-users.show');
+        Route::get('/internal-users/{user}/edit', [\App\Http\Controllers\Admin\InternalUserController::class, 'edit'])->name('internal-users.edit');
+        Route::patch('/internal-users/{user}', [\App\Http\Controllers\Admin\InternalUserController::class, 'update'])->name('internal-users.update');
+        Route::post('/internal-users/{user}/active', [\App\Http\Controllers\Admin\InternalUserController::class, 'active'])->middleware('throttle:10,1')->name('internal-users.active');
+        Route::post('/internal-users/{user}/temporary-password', [\App\Http\Controllers\Admin\InternalUserController::class, 'temporary'])->middleware('throttle:6,1')->name('internal-users.temporary');
+        Route::post('/internal-users/{user}/reset-link', [\App\Http\Controllers\Admin\InternalUserController::class, 'resetLink'])->middleware('throttle:6,1')->name('internal-users.reset-link');
+        Route::post('/internal-users/{user}/verification', [\App\Http\Controllers\Admin\InternalUserController::class, 'verification'])->middleware('throttle:6,1')->name('internal-users.verification');
+        foreach (['youth', 'communities', 'activities', 'programs'] as $kind) {
+            Route::get('/directory/'.$kind, [\App\Http\Controllers\GovernmentDirectoryController::class, 'index'])->defaults('directory_kind', $kind)->name('directory.'.$kind.'.index');
+            Route::get('/directory/'.$kind.'/{record}', [\App\Http\Controllers\GovernmentDirectoryController::class, 'show'])->defaults('directory_kind', $kind)->name('directory.'.$kind.'.show');
+        }
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
         Route::get('/feed/posts/{post}/image', [\App\Http\Controllers\SocialFeedController::class, 'image'])->name('social.image');
         Route::get('/feed/reports', [\App\Http\Controllers\Admin\SocialModerationController::class, 'index'])->name('social.index');

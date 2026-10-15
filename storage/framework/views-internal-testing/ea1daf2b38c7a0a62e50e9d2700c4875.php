@@ -1,0 +1,27 @@
+<footer class="px-footer px-zig-mountain bg-primary-900 text-cream-200">
+    <div class="px-scene" aria-hidden="true"></div>
+    <div class="px-footer-body bg-primary-800 px-5 pb-8 pt-12 text-cream-200">
+        <div class="mx-auto grid max-w-7xl gap-10 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-5"><div><div class="flex items-center gap-3"><?php if (isset($component)) { $__componentOriginal8741a05e11b0c77d19ec61b6b35b26b3 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal8741a05e11b0c77d19ec61b6b35b26b3 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.brand-logo','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('brand-logo'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal8741a05e11b0c77d19ec61b6b35b26b3)): ?>
+<?php $attributes = $__attributesOriginal8741a05e11b0c77d19ec61b6b35b26b3; ?>
+<?php unset($__attributesOriginal8741a05e11b0c77d19ec61b6b35b26b3); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal8741a05e11b0c77d19ec61b6b35b26b3)): ?>
+<?php $component = $__componentOriginal8741a05e11b0c77d19ec61b6b35b26b3; ?>
+<?php unset($__componentOriginal8741a05e11b0c77d19ec61b6b35b26b3); ?>
+<?php endif; ?><strong class="font-heading text-2xl text-white">SIPORA</strong></div><p class="mt-5 max-w-sm text-sm leading-7 text-white/75">Sistem Informasi Program Olahraga dan Kepemudaan Kabupaten Pemalang untuk Activity, Community, Opportunity, Program, dan rekam pengalaman Youth.</p></div><div><h2 class="font-heading text-xl font-bold text-white">Platform</h2><div class="mt-5 grid gap-3 text-sm"><a class="transition-colors hover:text-accent" href="<?php echo e(route('activities.index')); ?>">Activity</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('communities.index')); ?>">Community</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('opportunities.index')); ?>">Opportunity</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('programs.index')); ?>">Program</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('youth-directory.index')); ?>">Pemuda</a></div></div><div><h2 class="font-heading text-xl font-bold text-white">Informasi</h2><div class="mt-5 grid gap-3 text-sm"><a class="transition-colors hover:text-accent" href="<?php echo e(route('about')); ?>">Tentang SIPORA</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('contact')); ?>">Kontak</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('search.index')); ?>">Pencarian</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('ecosystem-map.index')); ?>">Peta Ekosistem Pemuda</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('statistics.index')); ?>">Statistik Pemuda</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('forum.index')); ?>">Forum</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('social.index')); ?>">Social Feed</a></div></div><div><h2 class="font-heading text-xl font-bold text-white">Akun</h2><div class="mt-5 grid gap-3 text-sm"><?php if(auth()->guard()->guest()): ?><a class="transition-colors hover:text-accent" href="<?php echo e(route('login')); ?>">Masuk</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('register')); ?>">Daftar sebagai Youth</a><?php else: ?><a class="transition-colors hover:text-accent" href="<?php echo e(route(\App\Support\Auth\HomeRoute::for(auth()->user()))); ?>">Ruang Saya</a><a class="transition-colors hover:text-accent" href="<?php echo e(route('notifications.index')); ?>">Notifikasi</a><?php endif; ?></div></div><div><h2 class="font-heading text-xl font-bold text-white">Dindikpora</h2><p class="mt-5 text-sm leading-7 text-white/75">Dindikpora Kabupaten Pemalang</p><?php if(config('sipora.contact.website')): ?><a class="mt-3 inline-block" href="<?php echo e(config('sipora.contact.website')); ?>" target="_blank" rel="noopener noreferrer">Situs Dindikpora</a><?php endif; ?>
+<?php if(config('sipora.contact.address')): ?><p class="mt-3 text-sm leading-6"><?php echo e(config('sipora.contact.address')); ?></p><?php endif; ?><p class="mt-3 text-xs leading-6 text-white/60">Informasi publik pada SIPORA mengikuti status verifikasi dan publikasi masing-masing domain.</p></div></div><div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 pt-7 text-xs text-white/60 sm:flex-row"><p>© <?php echo e(date('Y')); ?> Dindikpora Kabupaten Pemalang.</p><p class="font-mono text-white/60">SIPORA v2</p></div>
+    </div>
+</footer>
+<?php /**PATH C:\laragon\www\projects\lomba kabupaten\sipora-v2\resources\views/components/public/footer.blade.php ENDPATH**/ ?>

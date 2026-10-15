@@ -1,0 +1,1 @@
+<x-public.author-identity :author="$author" />

@@ -16,15 +16,25 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
+#[Hidden(['password', 'remember_token', 'internal_active', 'must_change_password', 'internal_session_version'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasBinaryUuid, HasFactory, HasRoles, Notifiable;
 
+    public function isInternalAccount(): bool
+    {
+        return $this->hasAnyRole(['admin', 'verifier']) && ! $this->hasRole('youth');
+    }
+
     public function getAuthIdentifier()
     {
         return $this->uuid();
+    }
+
+    public function programApplications(): HasMany
+    {
+        return $this->hasMany(ProgramApplication::class);
     }
 
     public function socialAccounts(): HasMany
@@ -150,6 +160,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'internal_active' => 'boolean',
+            'must_change_password' => 'boolean',
+            'internal_session_version' => 'integer',
         ];
     }
 }

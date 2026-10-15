@@ -21,7 +21,7 @@ final class ProgramMonitoringController extends Controller
     public function index(Request $request): View
     {
         $input = validator($request->query(), ['status' => ['nullable', Rule::in(['all', 'submitted', 'revision', 'approved'])], 'search' => ['nullable', 'string', 'max:120']])->validate();
-        $status = $input['status'] ?? 'submitted';
+        $status = $input['status'] ?? 'all';
         $search = trim($input['search'] ?? '');
         $logbooks = ProgramLogbook::query()->with(['program.organization', 'activity', 'creator'])->whereNot('status', ProgramLogbook::STATUS_DRAFT)->when($status !== 'all', fn ($q) => $q->where('status', $status))->when($search !== '', fn ($q) => $q->whereHas('program', fn ($p) => $p->where('title', 'like', "%{$search}%")->orWhereHas('organization', fn ($o) => $o->where('name', 'like', "%{$search}%"))))->orderByDesc('submitted_at')->paginate(15)->withQueryString();
 

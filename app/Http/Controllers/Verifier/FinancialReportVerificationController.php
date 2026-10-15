@@ -21,7 +21,7 @@ final class FinancialReportVerificationController extends Controller
     public function index(Request $request): View
     {
         $input = validator($request->query(), ['status' => ['nullable', Rule::in(['all', 'submitted', 'under_review', 'revision', 'rejected', 'approved'])], 'search' => ['nullable', 'string', 'max:120']])->validate();
-        $status = $input['status'] ?? FinancialReport::STATUS_SUBMITTED;
+        $status = $input['status'] ?? 'all';
         $search = trim($input['search'] ?? '');
         $reports = FinancialReport::query()->with(['program.organization', 'program.creator'])->whereNot('status', FinancialReport::STATUS_DRAFT)
             ->when($status !== 'all', fn ($query) => $query->where('status', $status))

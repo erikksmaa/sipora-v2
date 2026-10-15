@@ -21,9 +21,10 @@ const toast = Swal.mixin({
     position: 'top-end',
     showConfirmButton: false,
     showCloseButton: true,
-    timer: 5000,
+    timer: 2000,
     timerProgressBar: true,
     heightAuto: false,
+    showClass: { popup: '', icon: '' },
     customClass: { popup: 'sipora-toast', title: 'sipora-toast-title' },
     didOpen: (element) => {
         element.addEventListener('mouseenter', Swal.stopTimer);
@@ -33,7 +34,7 @@ const toast = Swal.mixin({
 
 export function showAlert(icon, text, titleText) {
     const titles = { success: 'Berhasil!', error: 'Proses belum berhasil', warning: 'Perhatian', info: 'Informasi' };
-    return toast.fire({ icon, titleText: titleText || titles[icon] || titles.info, text, timer: icon === 'error' ? 8000 : 5000 });
+    return toast.fire({ icon, titleText: titleText || titles[icon] || titles.info, text });
 }
 
 function bootAlerts() {

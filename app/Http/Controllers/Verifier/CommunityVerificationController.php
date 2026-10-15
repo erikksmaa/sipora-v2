@@ -21,7 +21,7 @@ final class CommunityVerificationController extends Controller
             'status' => ['nullable', Rule::in(['all', 'pending_review', 'revision', 'rejected', 'approved'])],
             'search' => ['nullable', 'string', 'max:120'],
         ])->validate();
-        $status = $validated['status'] ?? Organization::REVIEW_PENDING;
+        $status = $validated['status'] ?? 'all';
         $search = trim($validated['search'] ?? '');
 
         $communities = Organization::query()

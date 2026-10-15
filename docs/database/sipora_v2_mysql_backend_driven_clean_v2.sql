@@ -1243,3 +1243,39 @@ INSERT IGNORE INTO system_roles(id, code, name, description) VALUES
 -- - Laravel/Eloquent owns updated_at. There is deliberately no ON UPDATE clause.
 -- - Laravel SoftDeletes owns deleted_at where the model uses soft deletion.
 -- ============================================================================
+
+-- PROGRAM ENHANCEMENT 1: optional intake; accepted applications are participants.
+ALTER TABLE programs
+  ADD COLUMN registration_enabled TINYINT(1) NOT NULL DEFAULT 0,
+  ADD COLUMN selection_mode VARCHAR(12) NOT NULL DEFAULT 'open',
+  ADD COLUMN quota INT UNSIGNED NULL,
+  ADD COLUMN registration_open_at DATETIME(6) NULL,
+  ADD COLUMN registration_close_at DATETIME(6) NULL,
+  ADD CONSTRAINT ck_program_intake_mode CHECK (selection_mode IN ('open','review')),
+  ADD CONSTRAINT ck_program_intake_quota CHECK (quota IS NULL OR quota > 0),
+  ADD CONSTRAINT ck_program_intake_window CHECK (registration_close_at IS NULL OR registration_open_at IS NULL OR registration_close_at >= registration_open_at);
+CREATE TABLE program_applications (
+  id BINARY(16) NOT NULL,
+  program_id BINARY(16) NOT NULL,
+  user_id BINARY(16) NOT NULL,
+  status VARCHAR(24) NOT NULL DEFAULT 'submitted',
+  review_notes TEXT NULL,
+  reviewed_by BINARY(16) NULL,
+  reviewed_at DATETIME(6) NULL,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_program_application_youth (program_id,user_id),
+  KEY idx_program_applications_status (program_id,status),
+  KEY idx_program_applications_youth (user_id),
+  CONSTRAINT program_applications_program_id_foreign FOREIGN KEY (program_id) REFERENCES programs(id) ON DELETE RESTRICT,
+  CONSTRAINT program_applications_user_id_foreign FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,
+  CONSTRAINT program_applications_reviewed_by_foreign FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE RESTRICT,
+  CONSTRAINT ck_program_application_status CHECK (status IN ('submitted','under_review','accepted','waitlisted','rejected','withdrawn'))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Internal account security (2026-10-15); existing accounts remain active.
+ALTER TABLE users
+  ADD COLUMN internal_active TINYINT(1) NOT NULL DEFAULT 1,
+  ADD COLUMN must_change_password TINYINT(1) NOT NULL DEFAULT 0,
+  ADD COLUMN internal_session_version BIGINT UNSIGNED NOT NULL DEFAULT 0;

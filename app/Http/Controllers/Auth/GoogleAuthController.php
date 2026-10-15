@@ -47,7 +47,18 @@ class GoogleAuthController extends Controller
             ]);
         }
         Auth::login($user);
+        if ($user->isInternalAccount()) {
+            if (! $user->internal_active) {
+                Auth::logout();
+
+                return to_route('login')->withErrors(['email' => 'Akun ini nonaktif. Hubungi Administrator SIPORA.']);
+            }
+            $request->session()->put('internal_session_version', $user->internal_session_version);
+        }
         $request->session()->regenerate();
+        if ($user->isInternalAccount() && $user->must_change_password) {
+            return to_route('internal.password.edit');
+        }
 
         return to_route(HomeRoute::for($user))->with('status', 'Selamat datang! Anda berhasil masuk melalui Google.');
     }

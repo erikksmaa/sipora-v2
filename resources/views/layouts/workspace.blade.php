@@ -72,6 +72,12 @@
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('admin.dashboard'), 'patterns' => ['admin.dashboard']],
             ['label' => 'Peta Ekosistem', 'icon' => 'globe', 'route' => route('admin.ecosystem-map.index'), 'patterns' => ['admin.ecosystem-map.*']],
         ]],
+        ['label' => 'Data Ekosistem', 'items' => [
+            ['label' => 'Pemuda', 'icon' => 'users', 'route' => route('admin.directory.youth.index'), 'patterns' => ['admin.directory.youth.*']],
+            ['label' => 'Community', 'icon' => 'building', 'route' => route('admin.directory.communities.index'), 'patterns' => ['admin.directory.communities.*']],
+            ['label' => 'Activity', 'icon' => 'clipboard-check', 'route' => route('admin.directory.activities.index'), 'patterns' => ['admin.directory.activities.*']],
+            ['label' => 'Program', 'icon' => 'file-text', 'route' => route('admin.directory.programs.index'), 'patterns' => ['admin.directory.programs.*']],
+        ]],
         ['label' => 'Verifikasi', 'items' => [
             ['label' => 'Identitas Pemuda', 'icon' => 'shield-check', 'route' => route('admin.identity-verifications.index'), 'patterns' => ['admin.identity-verifications.*']],
         ]],
@@ -81,26 +87,40 @@
             ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
         ]],
         ['label' => 'Sistem', 'items' => [
+            ['label' => 'Pengguna Internal', 'icon' => 'users', 'route' => route('admin.internal-users.index'), 'patterns' => ['admin.internal-users.index', 'admin.internal-users.create', 'admin.internal-users.store', 'admin.internal-users.show', 'admin.internal-users.edit', 'admin.internal-users.update', 'admin.internal-users.active', 'admin.internal-users.temporary', 'admin.internal-users.reset-link', 'admin.internal-users.verification']],
+            ['label' => 'Kelola Password', 'icon' => 'shield-check', 'route' => route('admin.account.password.edit'), 'patterns' => ['admin.account.password.*']],
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
+            ['label' => 'Log Aktivitas', 'icon' => 'notebook', 'route' => route('admin.internal-users.activity-log'), 'patterns' => ['admin.internal-users.activity-log']],
         ]],
     ] : [
         ['label' => 'Overview', 'items' => [
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('verifier.dashboard'), 'patterns' => ['verifier.dashboard']],
         ]],
+        ['label' => 'Data Ekosistem', 'items' => [
+            ['label' => 'Pemuda Terdaftar', 'icon' => 'users', 'route' => route('verifier.directory.youth.index'), 'patterns' => ['verifier.directory.youth.*']],
+            ['label' => 'Community Terdaftar', 'icon' => 'building', 'route' => route('verifier.directory.communities.index'), 'patterns' => ['verifier.directory.communities.*']],
+            ['label' => 'Activity Terdaftar', 'icon' => 'clipboard-check', 'route' => route('verifier.directory.activities.index'), 'patterns' => ['verifier.directory.activities.*']],
+            ['label' => 'Program Terdaftar', 'icon' => 'file-text', 'route' => route('verifier.directory.programs.index'), 'patterns' => ['verifier.directory.programs.*']],
+        ]],
         ['label' => 'Verifikasi Ekosistem', 'items' => [
-            ['label' => 'Community', 'icon' => 'building', 'route' => route('verifier.community-verifications.index'), 'patterns' => ['verifier.community-verifications.*']],
-            ['label' => 'Activity', 'icon' => 'clipboard-check', 'route' => route('verifier.activity-verifications.index'), 'patterns' => ['verifier.activity-verifications.*']],
+            ['label' => 'Verifikasi Community', 'icon' => 'building', 'route' => route('verifier.community-verifications.index'), 'patterns' => ['verifier.community-verifications.*']],
+            ['label' => 'Verifikasi Activity', 'icon' => 'clipboard-check', 'route' => route('verifier.activity-verifications.index'), 'patterns' => ['verifier.activity-verifications.*']],
         ]],
         ['label' => 'Program', 'items' => [
             ['label' => 'Proposal', 'icon' => 'file-text', 'route' => route('verifier.program-proposals.index'), 'patterns' => ['verifier.program-proposals.*']],
+            ['label' => 'Pendaftaran Program', 'icon' => 'users', 'route' => route('verifier.programs.intake.index'), 'patterns' => ['verifier.programs.*']],
             ['label' => 'Monitoring & Logbook', 'icon' => 'notebook', 'route' => route('verifier.program-monitoring.index'), 'patterns' => ['verifier.program-monitoring.*']],
             ['label' => 'E-LPJ Keuangan', 'icon' => 'wallet', 'route' => route('verifier.financial-reports.index'), 'patterns' => ['verifier.financial-reports.*']],
             ['label' => 'Evaluasi Akhir', 'icon' => 'badge-check', 'route' => route('verifier.program-evaluations.index'), 'patterns' => ['verifier.program-evaluations.*']],
         ]],
-        ['label' => 'Account', 'items' => [
+        ['label' => 'Akun', 'items' => [
+            ['label' => 'Kelola Password', 'icon' => 'shield-check', 'route' => route('verifier.account.password.edit'), 'patterns' => ['verifier.account.password.*']],
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
         ]],
     ]));
+    $verifierMenuCounts = $workspace === 'verifier'
+        ? app(\App\Services\VerifierQueueSummaryService::class)->navigation(auth()->user(), $queues ?? null)
+        : [];
     if ($isYouth) {
         $onboardingService = app(\App\Services\Youth\YouthOnboardingService::class);
         $youthOnboarding = $onboardingService->state(auth()->user());
@@ -163,7 +183,7 @@
                 <div id="workspace-nav-{{ $loop->index }}" @if(($isYouth || $isManager) && $group['label'] !== 'Overview') x-show="openGroup === @js($group['label']) || collapsed" x-cloak @endif class="space-y-1">
                 @foreach($group['items'] as $item) @php($active = isset($item['patterns']) && request()->routeIs(...$item['patterns']) && (!isset($item['section']) || request()->route('section') === $item['section']))
                     @if($item['disabled'] ?? false)<span class="workspace-nav-link workspace-nav-disabled" aria-disabled="true" title="{{ $item['label'] }} — {{ $item['lockedReason'] ?? 'Belum tersedia' }}"><x-ui.icon :name="$item['icon']" /><span x-show="!collapsed">{{ $item['label'] }}</span><span class="sr-only">{{ $item['lockedReason'] ?? 'Belum tersedia' }}</span></span>
-                    @else<a href="{{ $item['route'] }}" @class(['workspace-nav-link', 'workspace-nav-active' => $active]) @if($active) aria-current="page" @endif title="{{ $item['label'] }}" @click="closeMobile"><x-ui.icon :name="$item['icon']" /><span x-show="!collapsed">{{ $item['label'] }}</span></a>@endif
+                    @else<a href="{{ $item['route'] }}" @class(['workspace-nav-link relative', 'workspace-nav-active' => $active]) @if($active) aria-current="page" @endif title="{{ $item['label'] }}{{ ($verifierMenuCounts[$item['route']] ?? 0) > 0 ? ' — '.($verifierMenuCounts[$item['route']]).' perlu ditindaklanjuti' : '' }}" @click="closeMobile"><x-ui.icon :name="$item['icon']" /><span x-show="!collapsed">{{ $item['label'] }}</span>@if(($verifierMenuCounts[$item['route']] ?? 0) > 0)<x-ui.badge tone="warning" x-show="!collapsed" class="ml-auto shrink-0 tabular-nums" data-queue-indicator="{{ $item['route'] }}" title="{{ $verifierMenuCounts[$item['route']] }} perlu ditindaklanjuti"><span aria-hidden="true">{{ $verifierMenuCounts[$item['route']] > 99 ? '99+' : $verifierMenuCounts[$item['route']] }}</span><span class="sr-only">{{ $verifierMenuCounts[$item['route']] }} perlu ditindaklanjuti</span></x-ui.badge><span x-cloak x-show="collapsed" class="absolute right-1 top-1 size-2 rounded-full bg-warning" aria-hidden="true"></span>@endif</a>@endif
                 @endforeach
             </div></section>@endforeach
         </nav>

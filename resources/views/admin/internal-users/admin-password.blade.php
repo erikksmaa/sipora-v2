@@ -1,0 +1,1 @@
+@if($target->hasRole('admin'))<label class="block"><span class="field-label">Password Administrator Anda</span><input class="field" name="admin_password" type="password" autocomplete="current-password" maxlength="72" required></label>@endif

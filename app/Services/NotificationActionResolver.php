@@ -7,9 +7,12 @@ use App\Models\ForumThread;
 use App\Models\Organization;
 use App\Models\OrganizationMembership;
 use App\Models\Program;
+use App\Models\ProgramApplication;
+use App\Models\SocialPost;
 use App\Models\User;
 use App\Models\UserCertificate;
 use App\Models\UserNotification;
+use App\Services\Discovery\ProgramDiscoveryService;
 use App\Support\BinaryUuid;
 use InvalidArgumentException;
 
@@ -24,6 +27,7 @@ final class NotificationActionResolver
                 'identity_verification_result', 'identity_verified' => $user->hasRole('youth') ? route('youth.identity-verification') : null,
                 'community_verification_result', 'community_approved' => $this->ownedCommunity($user, $data['organization_id'] ?? null),
                 'community_membership_result' => $this->publicCommunity($data['organization_id'] ?? null),
+                'program_application_result' => is_string($data['program_id'] ?? null) && $user->hasRole('youth') && ProgramApplication::where('user_id', $user->getKey())->whereHas('program', fn ($p) => $p->where('id', BinaryUuid::bytes($data['program_id'] ?? '')))->exists() ? $this->publicProgram($data['program_id'] ?? null) : null,
                 'activity_registration_result', 'activity_participation_completion' => $this->publicActivity($data['activity_id'] ?? null),
                 'activity_certificate_issued' => $this->ownedCertificate($user, $data['certificate_id'] ?? null),
                 'activity_verification_result' => $this->managedActivity($user, $data['activity_id'] ?? null),
@@ -40,8 +44,9 @@ final class NotificationActionResolver
 
     private function socialPost(mixed $id): string
     {
-        $post = $this->find(\App\Models\SocialPost::class, $id);
-        return $post && \App\Models\SocialPost::published()->whereKey($post->getKey())->exists() ? route('social.show', $post) : route('social.index');
+        $post = $this->find(SocialPost::class, $id);
+
+        return $post && SocialPost::published()->whereKey($post->getKey())->exists() ? route('social.show', $post) : route('social.index');
     }
 
     private function ownedCommunity(User $user, mixed $id): ?string
@@ -54,6 +59,7 @@ final class NotificationActionResolver
     private function publicForumThread(mixed $id): ?string
     {
         $thread = $this->find(ForumThread::class, $id);
+
         return $thread && $thread->status !== ForumThread::HIDDEN ? route('forum.show', $thread) : route('forum.index');
     }
 
@@ -76,6 +82,13 @@ final class NotificationActionResolver
         $activity = $this->find(Activity::class, $id);
 
         return $activity && $this->manages($user, $activity->organization_id) ? route('manager.activities.show', [$activity->organization, $activity]) : null;
+    }
+
+    private function publicProgram(mixed $id): ?string
+    {
+        $program = $this->find(Program::class, $id);
+
+        return $program && app(ProgramDiscoveryService::class)->isPublic($program) ? route('programs.show', $program) : null;
     }
 
     private function managedProgram(User $user, mixed $id): ?string

@@ -1,0 +1,9 @@
+<fieldset class="grid gap-5 rounded-xl border border-border bg-surface-soft p-5 md:grid-cols-2">
+    <legend class="px-2 text-lg font-bold text-text-primary">Pendaftaran peserta (opsional)</legend>
+    <input type="hidden" name="registration_enabled" value="0">
+    <label class="flex min-h-11 items-center gap-3 md:col-span-2"><input type="checkbox" name="registration_enabled" value="1" @checked(old('registration_enabled', $program->registration_enabled))> Aktifkan pendaftaran peserta Program</label>
+    <label><span class="label">Jenis pendaftaran</span><select name="selection_mode" class="field"><option value="open" @selected(old('selection_mode',$program->selection_mode ?? 'open')==='open')>Terbuka — langsung diterima</option><option value="review" @selected(old('selection_mode',$program->selection_mode)==='review')>Seleksi oleh pengelola</option></select></label>
+    <label><span class="label">Kuota peserta diterima</span><input class="field" type="number" min="1" max="4294967295" name="quota" value="{{ old('quota',$program->quota) }}"><span class="mt-1 block text-xs text-text-secondary">Kosongkan jika tanpa batas. Pendaftar yang menunggu seleksi tidak memakai kuota.</span></label>
+    @foreach(['registration_open_at'=>'Pendaftaran dibuka','registration_close_at'=>'Pendaftaran ditutup'] as $field=>$label)<label><span class="label">{{ $label }} (WIB)</span><input type="datetime-local" name="{{ $field }}" class="field" value="{{ old($field,$program->$field?->copy()->timezone(config('sipora.display_timezone'))->format('Y-m-d\TH:i')) }}"></label>@endforeach
+    <p class="text-xs leading-6 text-text-secondary md:col-span-2">Tanggal dapat dikosongkan. Pendaftaran baru tersedia setelah Program berjalan, Proposal disetujui, dan Community aktif. Pengaturan ini tidak mengubah alur Proposal atau mendaftarkan peserta ke Activity secara otomatis.</p>
+</fieldset>

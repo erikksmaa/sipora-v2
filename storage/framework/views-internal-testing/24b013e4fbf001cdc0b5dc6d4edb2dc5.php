@@ -1,0 +1,79 @@
+<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
+
+$__newAttributes = [];
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['name']));
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (in_array($__key, $__propNames)) {
+        $$__key = $$__key ?? $__value;
+    } else {
+        $__newAttributes[$__key] = $__value;
+    }
+}
+
+$attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
+
+unset($__propNames);
+unset($__newAttributes);
+
+foreach (array_filter((['name']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+    $$__key = $$__key ?? $__value;
+}
+
+$__defined_vars = get_defined_vars();
+
+foreach ($attributes->all() as $__key => $__value) {
+    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
+}
+
+unset($__defined_vars, $__key, $__value); ?>
+<?php
+    $paths = match ($name) {
+        'activity', 'clipboard-check' => '<path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><rect width="6" height="4" x="9" y="3" rx="2"/><path d="m9 14 2 2 4-4"/>',
+        'award' => '<circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/>',
+        'badge-check' => '<path d="M12 2.5 15 4l3.5.5.5 3.5 1.5 3-1.5 3-.5 3.5-3.5.5-3 1.5-3-1.5-3.5-.5-.5-3.5-1.5-3 1.5-3 .5-3.5 3.5-.5Z"/><path d="m9 12 2 2 4-4"/>',
+        'bell' => '<path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>',
+        'briefcase' => '<rect width="20" height="14" x="2" y="7" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M2 12h20M10 12v2h4v-2"/>',
+        'building' => '<rect width="16" height="18" x="4" y="3" rx="2"/><path d="M9 21v-4h6v4M8 7h.01M12 7h.01M16 7h.01M8 11h.01M12 11h.01M16 11h.01"/>',
+        'calendar' => '<path d="M8 2v4M16 2v4M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/>',
+        'clock' => '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        'check' => '<path d="m5 12 4 4L19 6"/>',
+        'chevron-left' => '<path d="m15 18-6-6 6-6"/>',
+        'chevron-right' => '<path d="m9 18 6-6-6-6"/>',
+        'chevron-down' => '<path d="m6 9 6 6 6-6"/>',
+        'code' => '<path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/>',
+        'database' => '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/>',
+        'file-text' => '<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5Z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h8M8 9h2"/>',
+        'external-link' => '<path d="M15 3h6v6M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+        'edit' => '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>',
+        'filter' => '<path d="M4 5h16M7 12h10M10 19h4"/>',
+        'globe' => '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+        'graduation-cap' => '<path d="m2 10 10-5 10 5-10 5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/>',
+        'layout-dashboard' => '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
+        'leaf' => '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 4.5 19 2 20 2c0 1-1 6.5-4.9 10.2C13 14.2 11 16.5 11 20Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6.94C9.7 12.78 12 10.5 13 8"/>',
+        'log-out' => '<path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>',
+        'mail' => '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 6L2 7"/>',
+        'map-pin' => '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+        'menu' => '<path d="M4 6h16M4 12h16M4 18h16"/>',
+        'moon' => '<path d="M20.5 13.2A8.8 8.8 0 0 1 10.8 3.5 9 9 0 1 0 20.5 13.2Z"/>',
+        'notebook' => '<path d="M2 6h4M2 10h4M2 14h4M2 18h4"/><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9.5 8h5M9.5 12H16"/>',
+        'palette' => '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.2a2 2 0 0 1 2-2h2a5 5 0 0 0 5-5C22 5.8 17.5 2 12 2Z"/>',
+        'panel-left' => '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/>',
+        'plus' => '<path d="M12 5v14M5 12h14"/>',
+        'search' => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+        'user' => '<circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/>',
+        'bookmark' => '<path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/>',
+        'shield-check' => '<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/><path d="m9 12 2 2 4-4"/>',
+        'sparkles' => '<path d="m12 3-1.9 4.8a2 2 0 0 1-1.2 1.2L4 11l4.9 1.9a2 2 0 0 1 1.2 1.2L12 19l1.9-4.9a2 2 0 0 1 1.2-1.2L20 11l-4.9-1.9a2 2 0 0 1-1.2-1.2Z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/>',
+        'sun' => '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',
+        'trophy' => '<path d="M10 14.7v3.8M14 14.7v3.8M8 22h8M7 2h10v5a5 5 0 0 1-10 0Z"/><path d="M7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/>',
+        'trash' => '<path d="M3 6h18M8 6V4h8v2M19 6l-1 15H6L5 6M10 11v6M14 11v6"/>',
+        'users' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+        'wallet' => '<path d="M19 7V4a1 1 0 0 0-1-1H5a3 3 0 0 0 0 6h16v11a1 1 0 0 1-1 1H5a3 3 0 0 1-3-3V6"/><path d="M16 13h2"/>',
+        'x' => '<path d="M18 6 6 18M6 6l12 12"/>',
+        default => '<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>',
+    };
+?>
+<?php ($hasExplicitSize = str_contains((string) $attributes->get('class', ''), 'size-')); ?>
+<svg <?php echo e($attributes->class(['size-5' => ! $hasExplicitSize, 'shrink-0'])->merge(['aria-hidden' => 'true'])); ?> viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><?php echo $paths; ?></svg>
+<?php /**PATH C:\laragon\www\projects\lomba kabupaten\sipora-v2\resources\views/components/ui/icon.blade.php ENDPATH**/ ?>

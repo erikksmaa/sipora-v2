@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->name('verifier.')
     ->group(function (): void {
+        Route::get('/account/password', [\App\Http\Controllers\InternalPasswordController::class, 'edit'])->name('account.password.edit');
+        Route::put('/account/password', [\App\Http\Controllers\InternalPasswordController::class, 'update'])->middleware('throttle:6,1')->name('account.password.update');
+        foreach (['youth', 'communities', 'activities', 'programs'] as $kind) {
+            Route::get('/directory/'.$kind, [\App\Http\Controllers\GovernmentDirectoryController::class, 'index'])->defaults('directory_kind', $kind)->name('directory.'.$kind.'.index');
+            Route::get('/directory/'.$kind.'/{record}', [\App\Http\Controllers\GovernmentDirectoryController::class, 'show'])->defaults('directory_kind', $kind)->name('directory.'.$kind.'.show');
+        }
         Route::get('/dashboard', VerifierDashboardController::class)->name('dashboard');
         Route::get('/community-verifications', [CommunityVerificationController::class, 'index'])->name('community-verifications.index');
         Route::get('/community-verifications/{organization}', [CommunityVerificationController::class, 'show'])->name('community-verifications.show');
@@ -20,6 +26,9 @@ Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->na
         Route::get('/activity-verifications/{activity}', [ActivityVerificationController::class, 'show'])->name('activity-verifications.show');
         Route::post('/activity-verifications/{activity}/review', [ActivityVerificationController::class, 'review'])->name('activity-verifications.review');
         Route::get('/activity-verifications/{activity}/poster', [ActivityVerificationController::class, 'poster'])->name('activity-verifications.poster');
+        Route::get('/program-intake', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'programs'])->name('programs.intake.index');
+        Route::get('/programs/{program}/applications', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'index'])->name('programs.applications.index');
+        Route::post('/programs/{program}/applications/{application}/review', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'review'])->name('programs.applications.review');
         Route::get('/program-proposals', [ProgramProposalVerificationController::class, 'index'])->name('program-proposals.index');
         Route::get('/program-proposals/{proposal}', [ProgramProposalVerificationController::class, 'show'])->name('program-proposals.show');
         Route::post('/program-proposals/{proposal}/review', [ProgramProposalVerificationController::class, 'review'])->name('program-proposals.review');

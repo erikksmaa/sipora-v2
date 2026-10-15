@@ -19,7 +19,7 @@ final class ProgramProposalVerificationController extends Controller
     public function index(Request $request): View
     {
         $input = validator($request->query(), ['status' => ['nullable', Rule::in(['all', 'submitted', 'under_review', 'revision', 'rejected', 'approved'])], 'search' => ['nullable', 'string', 'max:120']])->validate();
-        $status = $input['status'] ?? ProgramProposal::STATUS_SUBMITTED;
+        $status = $input['status'] ?? 'all';
         $search = trim($input['search'] ?? '');
         $proposals = ProgramProposal::query()->with(['program.organization', 'program.category', 'submissionActivity.causer'])
             ->whereNot('status', ProgramProposal::STATUS_DRAFT)

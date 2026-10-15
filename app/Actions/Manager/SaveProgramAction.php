@@ -5,6 +5,8 @@ namespace App\Actions\Manager;
 use App\Models\Organization;
 use App\Models\Program;
 use App\Models\User;
+use App\Services\Program\ProgramIntakeRules;
+use App\Services\Program\ProgramIntakeService;
 use App\Support\BinaryUuid;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -38,6 +40,9 @@ final class SaveProgramAction
             }
 
             $program->save();
+            if (array_key_exists('registration_enabled', $data)) {
+                $program = app(ProgramIntakeService::class)->configure($actor, $program, array_intersect_key($data, ProgramIntakeRules::rules()));
+            }
             activity()->causedBy($actor)->performedOn($program)
                 ->event($creating ? 'program_created' : 'program_updated')
                 ->withProperties(['program_id' => $program->uuid(), 'organization_id' => $organization->uuid()])

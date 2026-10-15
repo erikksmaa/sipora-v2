@@ -36,6 +36,10 @@ Route::middleware(['auth', 'verified', 'role:youth', 'youth.stage:complete'])->p
         Route::get('/{organization}/programs', [ProgramController::class, 'index'])->name('programs.index');
         Route::get('/{organization}/programs/create', [ProgramController::class, 'create'])->name('programs.create');
         Route::post('/{organization}/programs', [ProgramController::class, 'store'])->name('programs.store');
+        Route::get('/{organization}/programs/{program}/intake', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'edit'])->name('programs.intake.edit');
+        Route::patch('/{organization}/programs/{program}/intake', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'update'])->name('programs.intake.update');
+        Route::get('/{organization}/programs/{program}/applications', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'managerIndex'])->name('programs.applications.index');
+        Route::post('/{organization}/programs/{program}/applications/{application}/review', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'managerReview'])->name('programs.applications.review');
         Route::get('/{organization}/programs/{program}', [ProgramController::class, 'show'])->name('programs.show');
         Route::get('/{organization}/programs/{program}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
         Route::patch('/{organization}/programs/{program}', [ProgramController::class, 'update'])->name('programs.update');

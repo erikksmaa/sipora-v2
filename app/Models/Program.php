@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['organization_id', 'category_id', 'created_by_user_id', 'title', 'slug', 'description', 'objectives', 'start_date', 'end_date', 'execution_status'])]
+#[Fillable(['organization_id', 'category_id', 'created_by_user_id', 'title', 'slug', 'description', 'objectives', 'start_date', 'end_date', 'execution_status', 'registration_enabled', 'selection_mode', 'quota', 'registration_open_at', 'registration_close_at'])]
 #[Hidden(['organization_id', 'category_id', 'created_by_user_id'])]
 class Program extends Model
 {
@@ -48,6 +48,16 @@ class Program extends Model
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class)->orderBy('start_at');
+    }
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(ProgramApplication::class);
+    }
+
+    public function participants(): HasMany
+    {
+        return $this->applications()->where('status', 'accepted');
     }
 
     public function proposals(): HasMany
@@ -94,6 +104,6 @@ class Program extends Model
 
     protected function casts(): array
     {
-        return ['start_date' => 'date', 'end_date' => 'date'];
+        return ['start_date' => 'date', 'end_date' => 'date', 'registration_enabled' => 'boolean', 'quota' => 'integer', 'registration_open_at' => 'datetime', 'registration_close_at' => 'datetime'];
     }
 }
