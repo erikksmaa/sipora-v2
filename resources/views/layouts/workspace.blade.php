@@ -208,6 +208,7 @@
     </div>
 </div>
     <x-back-to-top />
+    <x-floating-chat />
     <x-alerts />
 </body>
 </html>

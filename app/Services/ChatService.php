@@ -149,8 +149,8 @@ final class ChatService
         $deleted = $m->trashed();
 
         return ['id' => $m->uuid(), 'name' => $m->sender->name,
-            'profile_url' => $public ? route('portfolio.show', $m->sender->profile) : null,
-            'avatar_url' => $public && $m->sender->profileVisibility->show_photo && $m->sender->profile->profile_photo_path ? route('portfolio.photo', $m->sender->profile) : null,
+            'profile_url' => $public ? route('portfolio.show', ['profile' => $m->sender->profile->public_slug]) : null,
+            'avatar_url' => \App\Support\Media\UserAvatar::publicUrl($m->sender),
             'message' => $deleted ? null : $m->message, 'deleted' => $deleted,
             'created_at' => $m->created_at->toIso8601String(), 'sort_at' => $m->created_at->format('Y-m-d H:i:s.u'),
             'own' => $m->user_id === $user->getKey(), 'can_delete' => ! $deleted && ($moderator || $m->user_id === $user->getKey()),
@@ -185,7 +185,7 @@ final class ChatService
 
             return [$at, BinaryUuid::bytes($id)];
         } catch (\Throwable) {
-            throw ValidationException::withMessages(['cursor' => 'Cursor pesan tidak valid. Muat ulang ruang chat.']);
+            throw ValidationException::withMessages(['cursor' => 'Penanda pesan tidak valid. Muat ulang ruang chat.']);
         }
     }
 }

@@ -14,5 +14,6 @@
 <main id="main" data-page-motion tabindex="-1" class="mx-auto max-w-7xl px-5 py-8 sm:py-10">@if($errors->any())<div role="alert" aria-live="assertive" class="mb-6 rounded-xl border border-danger/25 bg-danger-soft p-4 text-danger"><p class="font-semibold">Periksa kembali data berikut:</p><ul class="list-inside list-disc">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif @yield('content')</main>
 <footer class="mx-auto max-w-7xl px-5 py-8 text-sm text-text-muted">Dindikpora Kabupaten Pemalang · SIPORA v2</footer>
     <x-back-to-top />
+    <x-floating-chat />
     <x-alerts />
 </body></html>

@@ -71,6 +71,38 @@ class ChatTest extends TestCase
         $this->actingAs($unverified)->get(route('chat.global'))->assertRedirect(route('verification.notice'));
     }
 
+    public function test_floating_room_directory_is_active_membership_scoped_for_all_roles(): void
+    {
+        $owner = $this->user();
+        $active = $this->community($owner, 'directory-active');
+        $other = $this->community($owner, 'directory-other');
+        $this->getJson(route('chat.rooms'))->assertUnauthorized();
+        foreach (['youth', 'admin', 'verifier'] as $role) {
+            $reader = $this->user($role);
+            $this->member($active, $reader);
+            $this->member($other, $reader, 'member', 'pending');
+            $rooms = $this->actingAs($reader)->getJson(route('chat.rooms'))->assertOk()->assertHeader('Cache-Control', 'no-store, private');
+            $rooms->assertJsonCount(2, 'rooms')->assertJsonPath('rooms.0.key', 'global')
+                ->assertJsonPath('rooms.1.key', 'community-'.$active->uuid());
+            $this->assertStringNotContainsString($other->uuid(), $rooms->getContent());
+            $this->assertStringNotContainsString($reader->email, $rooms->getContent());
+        }
+    }
+
+    public function test_floating_json_bootstrap_keeps_private_room_authorization_after_membership_revocation(): void
+    {
+        $org = $this->community($this->user(), 'bootstrap-private');
+        $reader = $this->user();
+        $membership = $this->member($org, $reader);
+        $url = route('chat.community', $org);
+        $this->actingAs($reader)->getJson($url)->assertOk()->assertJsonStructure(['roomId', 'initial' => ['messages', 'cursor'], 'messagesUrl', 'sendUrl']);
+        $membership->update(['membership_status' => 'removed']);
+        $this->getJson($url)->assertForbidden();
+        $this->getJson(route('chat.rooms'))->assertOk()->assertJsonCount(1, 'rooms');
+        $reader->forceFill(['email_verified_at' => null])->save();
+        $this->actingAs($reader->fresh())->getJson(route('chat.rooms'))->assertForbidden();
+    }
+
     public function test_valid_send_is_trimmed_idempotent_and_does_not_log_normal_messages(): void
     {
         $user = $this->user();

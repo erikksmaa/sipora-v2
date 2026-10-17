@@ -31,6 +31,26 @@ final class ChatController extends Controller
         return $this->page($request, $room);
     }
 
+    public function rooms(Request $request)
+    {
+        Gate::authorize('view', $this->chat->globalRoom());
+        // Discovery is deliberately membership-scoped even for Admin: moderation
+        // access to all rooms remains on the dedicated moderation page.
+        $communities = app(\App\Services\ChatRoomDirectory::class)->communities($request->user())->get();
+        $rooms = [['key' => 'global', 'name' => 'Chat Global', 'kind' => 'global',
+            'subtitle' => 'Ekosistem SIPORA', 'logo' => null, 'open_url' => route('chat.global')]];
+        foreach ($communities as $community) {
+            $rooms[] = ['key' => 'community-'.$community->uuid(), 'name' => $community->name,
+                'kind' => 'community', 'subtitle' => 'Percakapan anggota Community',
+                'logo' => $community->logo_path && $community->review_status === Organization::REVIEW_APPROVED
+                    && $community->operational_status === Organization::OPERATIONAL_ACTIVE
+                    ? route('communities.logo', $community) : null,
+                'open_url' => route('chat.community', $community)];
+        }
+
+        return response()->json(['rooms' => $rooms])->header('Cache-Control', 'no-store, private');
+    }
+
     public function manager(Request $request, Organization $organization, ManagedCommunityService $managed)
     {
         Gate::authorize('manageMemberships', $organization);
@@ -44,6 +64,10 @@ final class ChatController extends Controller
         $room->load('community');
         $workspace = $request->user()->hasRole('admin') ? 'admin' : ($request->user()->hasRole('verifier') ? 'verifier' : 'youth');
         $config = ['initial' => $initial, 'messagesUrl' => route('chat.messages', $room), 'sendUrl' => route('chat.send', $room), 'roomUrl' => route('chat.room', $room), 'reasons' => ChatService::REASONS];
+
+        if ($request->expectsJson()) {
+            return response()->json($config + ['roomId' => $room->uuid()])->header('Cache-Control', 'no-store, private');
+        }
 
         return response()->view('chat.show', [...compact('room', 'workspace', 'config'), ...$context])->header('Cache-Control', 'no-store, private');
     }

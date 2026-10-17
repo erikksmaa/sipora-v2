@@ -163,4 +163,56 @@ final class PublicNavigationTest extends TestCase
         $this->assertSame('A', UserAvatar::initials('Aulia'));
     }
 
+    public function test_chat_projection_links_use_the_public_slug_and_retain_privacy(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('chat-photo.jpg', 'fixture');
+        $user = $this->actor('youth');
+        $user->id = \App\Support\BinaryUuid::generate();
+        $user->setRelation('profile', new UserProfile(['public_slug' => 'erik-chat', 'profile_photo_path' => 'chat-photo.jpg']));
+        $user->setRelation('profileVisibility', new UserProfileVisibility(['is_profile_public' => true, 'show_photo' => true]));
+        $message = new \App\Models\ChatMessage;
+        $message->forceFill(['id' => \App\Support\BinaryUuid::generate(), 'user_id' => $user->getKey(), 'created_at' => now(), 'message' => 'Demo']);
+        $message->setRelation('sender', $user);
+        $service = new \App\Services\ChatService(new \App\Policies\ChatRoomPolicy);
+        $project = new \ReflectionMethod($service, 'project');
+        $result = $project->invoke($service, $message, $user, false);
+        $this->assertSame(route('portfolio.photo', 'erik-chat'), $result['avatar_url']);
+        $this->assertSame(route('portfolio.show', 'erik-chat'), $result['profile_url']);
+        $user->profileVisibility->show_photo = false;
+        $this->assertNull($project->invoke($service, $message, $user, false)['avatar_url']);
+    }
+
+    public function test_floating_launcher_visibility_does_not_leak_into_guest_auth_or_full_chat_pages(): void
+    {
+        Auth::forgetGuards();
+        $this->assertStringNotContainsString('fc-launcher', Blade::render('<x-floating-chat />'));
+        $this->actor('youth');
+        $this->assertStringNotContainsString('fc-launcher', Blade::render('<x-floating-chat />'));
+        foreach (['youth', 'admin', 'verifier'] as $role) {
+            $this->route('/');
+            $user = $this->actor($role);
+            $user->forceFill(['email_verified_at' => now(), 'internal_active' => true]);
+            $this->assertStringContainsString('Buka Chat SIPORA', Blade::render('<x-floating-chat />'));
+            $this->route('/chat');
+            $this->assertStringNotContainsString('fc-launcher', Blade::render('<x-floating-chat />'));
+        }
+        $this->assertStringNotContainsString('<x-floating-chat', file_get_contents(resource_path('views/layouts/auth.blade.php')));
+    }
+
+    public function test_room_directory_constrains_active_memberships_for_all_roles_without_loading_messages(): void
+    {
+        foreach (['youth', 'admin', 'verifier'] as $role) {
+            $user = $this->actor($role);
+            $user->id = \App\Support\BinaryUuid::generate();
+            $query = app(\App\Services\ChatRoomDirectory::class)->communities($user);
+            $sql = $query->toSql();
+            $this->assertStringContainsString('exists', $sql);
+            $this->assertStringContainsString('`membership_status` = ?', $sql);
+            $this->assertStringContainsString('`organization_memberships`.`deleted_at` is null', $sql);
+            $this->assertStringContainsString('`organizations`.`deleted_at` is null', $sql);
+            $this->assertSame([$user->getKey(), 'active'], $query->getBindings());
+            $this->assertStringNotContainsString('chat_messages', $sql);
+        }
+    }
 }

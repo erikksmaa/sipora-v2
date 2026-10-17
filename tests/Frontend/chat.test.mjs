@@ -46,8 +46,26 @@ test('a reader near the bottom follows messages, hidden tabs do not poll', async
 });
 test('older history never rewinds the polling cursor or resurrects deleted text', async () => {
     const s=state([message('2',null,{deleted:true})]);
+    s.$refs.stream.scrollTop=120;
+    s.$nextTick=fn=>{s.$refs.stream.scrollHeight=1300;fn();};
     s.request=async()=>({messages:[message('1'),message('2','Stale content')],before:'oldest',cursor:'not-live',has_more:false});
     await s.older();
     assert.equal(s.cursor,'live'); assert.equal(s.before,'oldest'); assert.equal(s.hasOlder,false);
+    assert.equal(s.$refs.stream.scrollTop,420);
     assert.equal(s.messages[1].deleted,true); assert.equal(s.messages[1].message,null);
+});
+
+
+test('report and delete use existing scoped endpoints and preserve tombstones', async () => {
+    const s=state([message('2','DATA QA',{can_delete:true,can_report:true})]);
+    let reportOpen=false, deleteOpen=false; const calls=[];
+    s.$refs.reportDialog={showModal(){reportOpen=true},close(){reportOpen=false}};
+    s.$refs.deleteDialog={showModal(){deleteOpen=true},close(){deleteOpen=false}};
+    s.request=async(url,method,body)=>{calls.push({url,method,body});return {ok:true}};
+    s.openReport(s.messages[0]); assert.equal(reportOpen,true); await s.report();
+    assert.equal(reportOpen,false);assert.equal(s.notice,'Laporan diterima untuk ditinjau.');
+    assert.equal(calls[0].url,'/messages/2/reports');assert.equal(calls[0].method,'POST');
+    s.openDelete(s.messages[0]);assert.equal(deleteOpen,true);await s.remove();
+    assert.equal(deleteOpen,false);assert.equal(calls[1].url,'/messages/2');assert.equal(calls[1].method,'DELETE');
+    assert.equal(s.messages[0].deleted,true);assert.equal(s.messages[0].message,null);assert.equal(s.messages[0].can_delete,false);
 });

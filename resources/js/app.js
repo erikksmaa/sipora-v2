@@ -8,9 +8,11 @@ import './mobile-bottom-nav';
 import { showAlert } from './alerts';
 import Alpine from 'alpinejs';
 import chat from './chat';
+import floatingChat from './floating-chat';
 import socialLike from './social-like';
 
 Alpine.data('siporaChat', chat);
+Alpine.data('floatingChat', floatingChat);
 Alpine.data('socialLike', socialLike);
 
 Alpine.data('themeToggle', () => ({

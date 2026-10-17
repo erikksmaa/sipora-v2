@@ -30,6 +30,7 @@
     @hasSection('footer')@yield('footer')@else<x-public.footer />@endif
     <x-back-to-top />
     <x-mobile-bottom-nav />
+    <x-floating-chat />
     <x-alerts />
 
     <!-- Accessibility Widget -->

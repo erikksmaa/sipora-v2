@@ -1,17 +1,26 @@
+const errorMessage = (error) => error instanceof TypeError
+    ? 'Koneksi chat terputus. Periksa koneksi lalu coba lagi.'
+    : error instanceof SyntaxError ? 'Respons chat belum dapat dibaca. Silakan coba lagi.' : error.message;
+
 export default (config) => ({
     messages: config.initial.messages, cursor: config.initial.cursor,
     before: config.initial.before, hasOlder: config.initial.has_more, canSend: config.initial.can_send,
     text: '', sending: false, loading: false, error: '', notice: '', unread: 0,
     reportTarget: null, reason: 'spam', reporting: false, polling: false, stopped: false,
+    deleteTarget: null, deleting: false,
     nonce: null, submittedText: null, timer: null, failures: 0,
+    paused: config.paused ?? false, roomKey: config.uiKey || 'page',
     init() {
         this.$nextTick(() => this.bottom());
-        this.visibility = () => { clearTimeout(this.timer); if (!document.hidden && !this.stopped) this.poll(); };
+        this.visibility = () => { clearTimeout(this.timer); if (!document.hidden && !this.stopped && !this.paused) this.poll(); };
         document.addEventListener('visibilitychange', this.visibility);
         this.schedule();
+        config.register?.(this);
     },
     destroy() { clearTimeout(this.timer); document.removeEventListener('visibilitychange', this.visibility); this.stopped = true; },
-    schedule(delay = 4000) { clearTimeout(this.timer); if (!document.hidden && !this.stopped) this.timer = setTimeout(() => this.poll(), delay); },
+    pause() { this.paused = true; clearTimeout(this.timer); this.timer = null; },
+    resume() { if (this.stopped) return; this.paused = false; this.$nextTick(() => this.poll()); },
+    schedule(delay = 4000) { clearTimeout(this.timer); if (!document.hidden && !this.stopped && !this.paused) this.timer = setTimeout(() => this.poll(), delay); },
     async request(url, method = 'GET', body) {
         const response = await fetch(url, {method, credentials: 'same-origin', headers: {
             Accept: 'application/json', 'Content-Type': 'application/json',
@@ -40,15 +49,16 @@ export default (config) => ({
     nearBottom() { const s = this.$refs.stream; return s.scrollHeight - s.scrollTop - s.clientHeight < 90; },
     bottom() { const s = this.$refs.stream; s.scrollTop = s.scrollHeight; this.unread = 0; },
     async poll() {
-        if (this.polling || document.hidden || this.stopped) return;
+        if (this.polling || document.hidden || this.stopped || this.paused) return;
         this.polling = true; let more = false;
         try {
             const near = this.nearBottom();
             const data = await this.request(`${config.messagesUrl}?after=${encodeURIComponent(this.cursor)}`);
+            if (this.paused) return;
             const added = this.merge(data.messages); this.cursor = data.cursor; this.canSend = data.can_send;
             this.failures = 0; more = data.has_more;
             if (near) this.$nextTick(() => this.bottom()); else this.unread += added;
-        } catch (e) { this.error = e.message; this.failures++; }
+        } catch (e) { this.error = errorMessage(e); this.failures++; }
         finally { this.polling = false; this.schedule(more ? 800 : Math.min(30000, 4000 * (1 + this.failures))); }
     },
     async older() {
@@ -63,7 +73,7 @@ export default (config) => ({
             this.messages = [...map.values()].sort((a,b) => a.sort_at.localeCompare(b.sort_at) || a.id.localeCompare(b.id));
             this.before = data.before; this.hasOlder = data.has_more;
             this.$nextTick(() => { this.$refs.stream.scrollTop += this.$refs.stream.scrollHeight - height; });
-        } catch (e) { this.error = e.message; } finally { this.loading = false; }
+        } catch (e) { this.error = errorMessage(e); } finally { this.loading = false; }
     },
     async send() {
         if (this.sending || !this.canSend || !this.text.trim()) return;
@@ -74,20 +84,23 @@ export default (config) => ({
             const data = await this.request(config.sendUrl, 'POST', {message: sent, nonce: this.nonce});
             this.merge([data.message]); this.text = ''; this.nonce = null; this.submittedText = null;
             this.$nextTick(() => this.bottom());
-        } catch (e) { this.error = e.message; } finally { this.sending = false; }
+        } catch (e) { this.error = errorMessage(e); } finally { this.sending = false; }
     },
     openReport(message) { this.reportTarget = message; this.reason = 'spam'; this.$refs.reportDialog.showModal(); },
     async report() {
         if (this.reporting) return;
         this.reporting = true;
         try { await this.request(`${config.messagesUrl}/${this.reportTarget.id}/reports`, 'POST', {reason: this.reason}); this.notice = 'Laporan diterima untuk ditinjau.'; this.$refs.reportDialog.close(); }
-        catch (e) { this.error = e.message; this.$refs.reportDialog.close(); }
+        catch (e) { this.error = errorMessage(e); this.$refs.reportDialog.close(); }
         finally { this.reporting = false; }
     },
-    async remove(message) {
-        if (!window.confirm('Hapus pesan ini? Pesan akan disembunyikan dan riwayat moderasi tetap disimpan.')) return;
-        try { await this.request(`${config.messagesUrl}/${message.id}`, 'DELETE'); this.merge([{...message, deleted: true, message: null, can_delete: false, can_report: false}]); }
-        catch (e) { this.error = e.message; }
+    openDelete(message) { this.deleteTarget = message; this.$refs.deleteDialog.showModal(); },
+    async remove(message = this.deleteTarget) {
+        if (!message || this.deleting) return;
+        this.deleting = true;
+        try { await this.request(`${config.messagesUrl}/${message.id}`, 'DELETE'); this.merge([{...message, deleted: true, message: null, can_delete: false, can_report: false}]); this.$refs.deleteDialog.close(); }
+        catch (e) { this.error = errorMessage(e); }
+        finally { this.deleting = false; }
     },
     timestamp(value) { return new Date(value).toLocaleString('id-ID', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}); },
 });
