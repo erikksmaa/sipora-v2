@@ -42,7 +42,9 @@ class PublicInformationPagesTest extends TestCase
             ->assertSee('x-data="publicNavigation"', false)
             ->assertSee('x-ref="mobileTrigger"', false)
             ->assertSee('x-ref="mobileClose"', false)
-            ->assertSee('aria-haspopup="menu"', false)
-            ->assertSee('<main id="main" tabindex="-1">', false);
+            ->assertSee('aria-controls="explore-menu"', false)
+            ->assertSee('x-ref="exploreMenu"', false)
+            ->assertSee('id="main"', false)
+            ->assertSee('tabindex="-1"', false);
     }
 }

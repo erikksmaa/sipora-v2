@@ -242,7 +242,7 @@ class CommunityApplicationTest extends TestCase
         ]);
 
         $this->actingAs($verifier)->get(route('verifier.community-verifications.index'))
-            ->assertOk()->assertDontSee($community->name);
+            ->assertOk()->assertViewHas('communities', fn ($communities) => ! $communities->contains(fn ($record) => $record->is($community)));
         $this->actingAs($verifier)->get(route('verifier.community-verifications.show', $community))->assertForbidden();
         $this->actingAs($verifier)->post(route('verifier.community-verifications.review', $community), ['decision' => 'approved'])
             ->assertSessionHasErrors('decision');

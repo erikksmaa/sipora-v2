@@ -34,10 +34,12 @@ class CommunityForumTest extends TestCase
         $this->post(route('forum.store'), $data)->assertRedirect();
         $thread = ForumThread::query()->firstOrFail();
         $this->assertStringNotContainsString('<script>', $thread->body);
+        // Check the public projection as a visitor, not the author's own account header.
+        $this->app['auth']->forgetGuards();
         $this->get(route('forum.show', $thread))->assertOk()->assertSee('Belajar Laravel bersama')
             ->assertSee('Pemuda SIPORA #')->assertDontSee($youth->name);
         $this->get(route('search.index', ['q' => 'Belajar Laravel']))->assertOk()->assertSee('Belajar Laravel bersama');
-        $this->post(route('forum.store'), [...$data, 'category_id' => '550e8400-e29b-41d4-a716-446655440000'])->assertNotFound();
+        $this->actingAs($youth)->post(route('forum.store'), [...$data, 'category_id' => '550e8400-e29b-41d4-a716-446655440000'])->assertNotFound();
         $this->actingAs($other)->put(route('forum.update', $thread), $data)->assertRedirect(route('youth.onboarding'));
         $this->completeYouthOnboarding($other);
         $this->put(route('forum.update', $thread), $data)->assertForbidden();

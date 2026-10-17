@@ -7,7 +7,7 @@
     <meta name="description" content="@yield('meta_description', 'SIPORA menghubungkan pemuda Pemalang dengan Activity, Community, Opportunity, Program, dan Youth Portfolio.')">
     @hasSection('canonical')<link rel="canonical" href="@yield('canonical')">@endif
     <title>@yield('title', 'SIPORA — Ruang Tumbuh Pemuda Pemalang')</title>
-    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('sipora-growth-mark-v1.png') }}">
     <x-theme-init />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
         .auth-main > .auth-card { width: 100%; margin: 0 auto; }
     </style>
 </head>
-<body class="auth-shell bg-bg text-text-primary antialiased">
+<body class="mobile-scale auth-shell bg-bg text-text-primary antialiased">
     <a href="#main" class="sr-only focus:not-sr-only">Lewati ke konten</a>
     <x-public.navbar />
     <main id="main" tabindex="-1" class="auth-main">@yield('content')</main>
