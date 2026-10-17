@@ -1,7 +1,19 @@
 import './bootstrap';
 import './media';
+import './responsive-tables';
+import './validation';
+import './ui-motion';
+import './scroll-motion';
+import './mobile-bottom-nav';
 import { showAlert } from './alerts';
 import Alpine from 'alpinejs';
+import chat from './chat';
+import floatingChat from './floating-chat';
+import socialLike from './social-like';
+
+Alpine.data('siporaChat', chat);
+Alpine.data('floatingChat', floatingChat);
+Alpine.data('socialLike', socialLike);
 
 Alpine.data('themeToggle', () => ({
     dark: document.documentElement.dataset.theme === 'dark',
@@ -62,7 +74,7 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
         if (this.busy) return;
         this.error = '';
         if (!siteKey) {
-            this.error = 'Security verification is unavailable. Please try again later.';
+            this.error = 'Verifikasi keamanan belum tersedia. Silakan coba lagi nanti.';
             showAlert('warning', this.error);
             return;
         }
@@ -76,7 +88,7 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
             this.$refs.token.value = token;
             this.$el.submit();
         } catch {
-            this.error = 'Security verification failed. Please try again.';
+            this.error = 'Verifikasi keamanan gagal. Silakan coba lagi.';
             showAlert('error', this.error);
             this.busy = false;
         }
@@ -87,13 +99,16 @@ Alpine.data('workspaceShell', () => ({
     mobileOpen: false,
     collapsed: false,
     openGroup: '',
+    get labelsVisible() { return !this.collapsed || this.mobileOpen; },
     init() {
-        this.collapsed = window.localStorage.getItem('sipora.workspace.sidebar.collapsed') === 'true';
+        try { this.collapsed = window.localStorage.getItem('sipora.workspace.sidebar.collapsed') === 'true'; } catch (_) { /* Storage may be disabled. */ }
         const current = this.$el.dataset.currentGroup || 'Overview';
         this.openGroup = current;
         try { this.openGroup = current || window.localStorage.getItem(`sipora.workspace.${this.$el.dataset.workspace}.group`) || 'Overview'; } catch (_) { /* No persistence available. */ }
         if (/^#(skills|education|org|achievement|training|verified-records)-section$/.test(location.hash)) this.openGroup = 'Portfolio';
-        this.$watch('collapsed', (value) => window.localStorage.setItem('sipora.workspace.sidebar.collapsed', String(value)));
+        this.$watch('collapsed', (value) => {
+            try { window.localStorage.setItem('sipora.workspace.sidebar.collapsed', String(value)); } catch (_) { /* Storage may be disabled. */ }
+        });
         this.$watch('mobileOpen', (value) => {
             document.documentElement.classList.toggle('overflow-hidden', value && window.innerWidth < 1024);
         });
@@ -139,10 +154,10 @@ Alpine.data('publicNavigation', () => ({
     exploreOpen: false,
     init() {
         this.$watch('open', (value) => {
-            document.documentElement.classList.toggle('overflow-hidden', value && window.innerWidth < 1024);
+            document.documentElement.classList.toggle('overflow-hidden', value && window.innerWidth < 1280);
         });
         this._handleResize = () => {
-            if (window.innerWidth >= 1024 && this.open) this.closeMobile(false);
+            if (window.innerWidth >= 1280 && this.open) this.closeMobile(false);
         };
         window.addEventListener('resize', this._handleResize);
     },
@@ -164,7 +179,7 @@ Alpine.data('publicNavigation', () => ({
         this.$nextTick(() => this.$refs.exploreMenu?.querySelector('a')?.focus());
     },
     trapMobileFocus(event) {
-        if (!this.open || window.innerWidth >= 1024) return;
+        if (!this.open || window.innerWidth >= 1280) return;
         const focusable = [...this.$refs.mobileMenu.querySelectorAll('a, button:not([disabled])')]
             .filter((element) => element.offsetParent !== null);
         if (!focusable.length) return;

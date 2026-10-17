@@ -11,7 +11,7 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow"><meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SIPORA · Visual Design System</title>
-    <link rel="icon" href="{{ asset('logo.png') }}">
+    <link rel="icon" href="{{ asset('sipora-growth-mark-v1.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/statistics.css', 'resources/css/ecosystem-map.css', 'resources/css/design-system.css', 'resources/js/design-system.js'])
@@ -55,7 +55,7 @@
                         14 => 'Menu, collapsible group, dan details yang ditemukan. Tidak menambahkan pola menu baru ke aplikasi.',
                         15 => 'Pola filter aktual; submit demo ditahan di board dan tidak memanggil workflow aplikasi.',
                         16 => 'Class table-shell, status domain, action, empty state, dan horizontal overflow.',
-                        17 => 'SweetAlert2 memakai styling konfirmasi SIPORA. Semua dialog yang dibuka hanya demo.',
+                        17 => 'SweetAlert2 memakai tampilan bawaan library. Semua dialog yang dibuka hanya demo.',
                         18,19,20,21 => 'Mini komposisi berdasarkan struktur view saat ini. Bukan screenshot historis, bukan halaman aplikasi penuh.',
                         22 => 'Chart.js memakai renderer statistics.js aktual dengan dataset contoh. Tooltip muncul saat hover titik atau bar.',
                         23 => 'Kontrol peta aktual; latar geometri hanya ilustrasi dokumentasi, bukan batas wilayah resmi.',

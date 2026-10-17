@@ -116,10 +116,10 @@ final class InternalAccountService
         try {
             $status = Password::sendResetLink(['email' => $target->email]);
         } catch (TransportExceptionInterface $exception) {
-            throw ValidationException::withMessages(['email' => 'Link reset belum dapat dikirim. Periksa konfigurasi pengiriman email.']);
+            throw ValidationException::withMessages(['email' => 'Tautan reset belum dapat dikirim. Periksa konfigurasi pengiriman email.']);
         }
         if ($status !== Password::ResetLinkSent) {
-            throw ValidationException::withMessages(['email' => $status === Password::ResetThrottled ? 'Tunggu satu menit sebelum meminta link baru.' : 'Link reset belum dapat dikirim.']);
+            throw ValidationException::withMessages(['email' => $status === Password::ResetThrottled ? 'Tunggu satu menit sebelum meminta tautan baru.' : 'Tautan reset belum dapat dikirim.']);
         }
         $this->audit($actor, $target, 'internal_reset_link_requested');
     }
@@ -144,7 +144,7 @@ final class InternalAccountService
             $target = User::whereKey($user->getKey())->lockForUpdate()->firstOrFail();
             abort_unless($target->hasAnyRole(['admin', 'verifier']), 403);
             if (Hash::check($password, $target->password ?? '')) {
-                throw ValidationException::withMessages(['password' => 'Gunakan password baru yang berbeda dari password sebelumnya.']);
+                throw ValidationException::withMessages(['password' => 'Gunakan kata sandi baru yang berbeda dari kata sandi sebelumnya.']);
             }
             $forced = $target->must_change_password;
             $target->password = $password;
@@ -169,7 +169,7 @@ final class InternalAccountService
     private function confirmPassword(User $actor, #[\SensitiveParameter] string $password): void
     {
         if (! Hash::check($password, $actor->password ?? '')) {
-            throw ValidationException::withMessages(['admin_password' => 'Konfirmasi password Administrator saat ini diperlukan.']);
+            throw ValidationException::withMessages(['admin_password' => 'Konfirmasi kata sandi Administrator saat ini diperlukan.']);
         }
     }
 

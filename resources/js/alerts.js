@@ -2,18 +2,9 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { installConfirmations } from './confirmation';
 
 const dialog = Swal.mixin({
-    buttonsStyling: false,
     heightAuto: false,
     confirmButtonText: 'Mengerti',
     cancelButtonText: 'Batal',
-    customClass: {
-        popup: 'sipora-alert',
-        title: 'sipora-alert-title',
-        htmlContainer: 'sipora-alert-message',
-        actions: 'sipora-alert-actions',
-        confirmButton: 'sipora-alert-button sipora-alert-confirm',
-        cancelButton: 'sipora-alert-button sipora-alert-cancel',
-    },
 });
 
 const toast = Swal.mixin({
@@ -21,11 +12,9 @@ const toast = Swal.mixin({
     position: 'top-end',
     showConfirmButton: false,
     showCloseButton: true,
+    closeButtonAriaLabel: 'Tutup pemberitahuan',
     timer: 2000,
     timerProgressBar: true,
-    heightAuto: false,
-    showClass: { popup: '', icon: '' },
-    customClass: { popup: 'sipora-toast', title: 'sipora-toast-title' },
     didOpen: (element) => {
         element.addEventListener('mouseenter', Swal.stopTimer);
         element.addEventListener('mouseleave', Swal.resumeTimer);

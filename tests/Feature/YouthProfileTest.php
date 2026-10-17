@@ -160,6 +160,31 @@ class YouthProfileTest extends TestCase
             ->assertRedirect('/youth/profile/edit')->assertSessionHasErrors('profile_photo');
     }
 
+    public function test_own_private_avatar_remains_available_before_identity_onboarding_without_exposing_it_to_others(): void
+    {
+        Storage::fake('public');
+        $user = $this->completeYouthOnboarding($this->youth(), 'biodata');
+        Storage::disk('public')->put('profile-photos/private-avatar.jpg', 'avatar-fixture');
+        $user->profile()->update(['profile_photo_path' => 'profile-photos/private-avatar.jpg']);
+        $user->profileVisibility()->updateOrCreate([], ['is_profile_public' => false, 'show_photo' => false]);
+        $user = $user->fresh();
+        $this->assertSame(route('youth.profile.photo'), \App\Support\Media\UserAvatar::accountUrl($user));
+        $this->actingAs($user)->get(route('youth.profile.photo'))->assertOk()->assertStreamedContent('avatar-fixture');
+        $this->get(route('portfolio.photo', $user->profile->public_slug))->assertNotFound();
+        $this->get(route('youth.profile.edit'))->assertRedirect(route('youth.onboarding'));
+        $this->actingAs($this->youth())->get(route('youth.profile.photo', ['user_id' => $user->uuid()]))->assertNotFound();
+        $this->app['auth']->forgetGuards();
+        $this->getJson(route('youth.profile.photo'))->assertUnauthorized();
+    }
+
+    public function test_missing_own_avatar_returns_not_found_instead_of_a_storage_error(): void
+    {
+        Storage::fake('public');
+        $user = $this->completeYouthOnboarding($this->youth(), 'identity');
+        $user->profile()->update(['profile_photo_path' => 'profile-photos/missing.jpg']);
+        $this->actingAs($user)->get(route('youth.profile.photo'))->assertNotFound();
+    }
+
     private function youth(): User
     {
         $user = User::factory()->create();

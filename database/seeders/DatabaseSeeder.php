@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolePermissionSeeder::class);
         $this->call(ForumCategorySeeder::class);
+        $this->call(ChatRoomSeeder::class);
 
         if (app()->environment('production')) {
             $this->command?->warn('Development demo data was not seeded in production.');

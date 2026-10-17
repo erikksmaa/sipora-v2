@@ -10,8 +10,8 @@
     @if($useRecaptcha)
         <input type="hidden" name="recaptcha_token" x-ref="token">
         <p x-cloak x-show="error" x-text="error" role="alert" class="text-sm text-red-700"></p>
-        <button type="submit" class="btn w-full" :disabled="busy" x-text="busy ? 'Verifying…' : @js(trim((string) ($button ?? 'Continue')))">{{ $button ?? 'Continue' }}</button>
-        <p class="text-xs text-slate-500">Protected by reCAPTCHA. Google’s <a href="https://policies.google.com/privacy" class="underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" class="underline">Terms of Service</a> apply.</p>
+        <button type="submit" class="btn w-full" :disabled="busy" x-text="busy ? 'Memverifikasi…' : @js(trim((string) ($button ?? 'Lanjutkan')))">{{ $button ?? 'Lanjutkan' }}</button>
+        <p class="text-xs text-slate-500">Dilindungi reCAPTCHA. Google <a href="https://policies.google.com/privacy" class="underline">Kebijakan Privasi</a> dan <a href="https://policies.google.com/terms" class="underline">Persyaratan Layanan</a> berlaku.</p>
         @once
             @push('head')
                 @if(config('recaptcha.site_key'))
@@ -20,6 +20,6 @@
             @endpush
         @endonce
     @else
-        <button type="submit" class="btn w-full">{{ $button ?? 'Continue' }}</button>
+        <button type="submit" class="btn w-full">{{ $button ?? 'Lanjutkan' }}</button>
     @endif
 </form>

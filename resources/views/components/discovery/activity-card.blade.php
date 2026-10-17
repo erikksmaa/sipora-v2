@@ -4,7 +4,7 @@
         && (! $activity->registration_close_at || $activity->registration_close_at->isFuture());
     $capacityAvailable = $activity->quota === null || ($activity->accepted_participants_count ?? 0) < $activity->quota;
 @endphp
-<article {{ $attributes->class(['group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-xs transition duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-md']) }}>
+<article data-animate="stagger-card" {{ $attributes->class(['group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-xs transition duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-md']) }}>
     <a href="{{ route('activities.show', $activity) }}" class="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2" aria-label="Lihat Activity {{ $activity->title }}">
         <div class="relative {{ $compact ? 'h-32' : 'h-52' }} overflow-hidden">
             @if($activity->poster_path)<img data-media-fallback src="{{ route('activities.poster', $activity) }}" alt="Poster {{ $activity->title }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" loading="lazy">@else<x-public.media-fallback :label="$activity->category->name" icon="activity" />@endif

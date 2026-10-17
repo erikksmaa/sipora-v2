@@ -15,7 +15,7 @@
     <p class="ds-note">Frozen pseudo-states hanya ada pada wrapper board. Arahkan mouse dan gunakan Tab untuk mencoba state asli. Loading dan disabled tidak menjalankan aksi.</p>
 @break
 @case(29)
-    <div class="ds-grid">@foreach(['Button hover'=>'110ms transform / shadow; 150ms colors', 'Card hover'=>'150ms frame / shadow; discovery 200ms translate', 'Public nav'=>'160ms steps(4,end) underline', 'Workspace drawer'=>'200ms width / transform', 'Field focus'=>'150ms border / shadow / background', 'Toast'=>'SweetAlert2 motion; timer 5s / error 8s'] as $label => $detail)<div class="ds-sample"><h3 class="font-bold text-sm">{{ $label }}</h3><p class="ds-caption">{{ $detail }}</p></div>@endforeach</div>
+    <div class="ds-grid">@foreach(['Button hover'=>'110ms transform / shadow; 150ms colors', 'Card hover'=>'150ms frame / shadow; discovery 200ms translate', 'Public nav'=>'160ms steps(4,end) underline', 'Workspace drawer'=>'200ms width / transform', 'Field focus'=>'150ms border / shadow / background', 'Toast'=>'SweetAlert2 default motion; timer 2s, pause saat hover'] as $label => $detail)<div class="ds-sample"><h3 class="font-bold text-sm">{{ $label }}</h3><p class="ds-caption">{{ $detail }}</p></div>@endforeach</div>
     <div class="ds-row mt-6"><button type="button" class="btn-primary" data-demo-toast="success">Preview toast</button><button type="button" class="btn-secondary" data-demo-dialog>Preview modal</button><a class="public-nav-link" href="#section-7">Hover pixel trail</a></div>
     <p class="ds-note">prefers-reduced-motion: reduce sudah menekan durasi transisi/animasi di app.css dan alerts.css. Tombol Hentikan animasi di toolbar adalah utilitas capture board, bukan widget aplikasi. Tidak ditemukan shared section-reveal animation.</p>
 @break

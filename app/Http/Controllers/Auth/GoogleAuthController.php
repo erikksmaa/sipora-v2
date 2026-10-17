@@ -18,7 +18,7 @@ class GoogleAuthController extends Controller
 {
     public function redirect()
     {
-        abort_unless($this->configured(), 503, 'Google sign-in is not configured.');
+        abort_unless($this->configured(), 503, 'Masuk melalui Google belum dikonfigurasi.');
 
         return Socialite::driver('google')->redirect();
     }
@@ -26,7 +26,7 @@ class GoogleAuthController extends Controller
     public function callback(Request $request, AuthenticateGoogleUser $authenticate)
     {
         if (! $this->configured() || $request->has('error')) {
-            return to_route('login')->withErrors(['email' => 'Google sign-in was unavailable or cancelled.']);
+            return to_route('login')->withErrors(['email' => 'Masuk melalui Google belum tersedia atau telah dibatalkan.']);
         }
 
         try {
@@ -43,7 +43,7 @@ class GoogleAuthController extends Controller
                     ? $exception->errors()['email'][0]
                     : ($exception instanceof InvalidStateException
                         ? 'Sesi masuk Google tidak cocok atau sudah kedaluwarsa. Buka kembali halaman masuk dan coba sekali lagi.'
-                        : 'Google sign-in failed. Please try again or use email sign-in.'),
+                        : 'Masuk melalui Google belum berhasil. Silakan coba lagi atau masuk menggunakan email.'),
             ]);
         }
         Auth::login($user);

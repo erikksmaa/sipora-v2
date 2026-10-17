@@ -1,0 +1,27 @@
+.institution-identity { display: flex; align-items: center; gap: 12px; flex-shrink: 0; color: var(--color-text-primary); line-height: 1.25; }
+/* Match the SIPORA mark's 48 px column so both logos and text align. */
+.institution-logo { display: block; width: 48px; height: 36px; flex-shrink: 0; object-fit: contain; }
+.institution-identity-text { display: flex; flex-direction: column; }
+.institution-identity strong { font-size: 11px; letter-spacing: .1em; }
+.institution-identity small { font-size: 10px; color: var(--color-text-muted); }
+.public-login-link { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 12px; font-size: 13px; font-weight: 700; }
+.account-dropdown { position: relative; min-width: 0; }
+.account-trigger { display: flex; min-height: 44px; max-width: 260px; align-items: center; gap: 8px; padding: 4px; border-radius: 8px; color: var(--color-text-primary); }
+.account-trigger-name { max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 700; }
+.account-avatar { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; overflow: hidden; border-radius: 50%; background: var(--color-surface-muted); color: var(--color-text-primary); font-size: 11px; font-weight: 800; border: 1px solid var(--color-border); }
+.account-panel { position: absolute; top: calc(100% + 4px); right: 0; z-index: 70; width: min(290px, calc(100vw - 24px)); max-height: calc(100dvh - 100px); overflow-y: auto; padding: 6px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-surface); box-shadow: 0 12px 28px #102b4026; }
+.account-menu-link { display: flex; align-items: center; min-height: 44px; padding: 10px 12px; border-radius: 8px; color: var(--color-text-primary); font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.account-menu-link:hover, .account-trigger:hover { background: var(--color-surface-muted); }
+:is(.account-menu-link, .account-trigger, .public-login-link):focus-visible { outline: 2px solid #fe7743; outline-offset: -2px; }
+.public-header #public-menu { max-height: calc(100dvh - 116px); }
+@media(max-width:767px) {
+    .mobile-scale .institution-logo { width: 32px; }
+    .mobile-scale .institution-identity { gap: 8px; }
+    body:has(.mobile-bottom-nav) .public-drawer-primary { display: none; }
+    .public-institution-bar > div, .public-primary-nav { padding-inline: 12px; }
+    .account-trigger { max-width: 190px; gap: 5px; }
+    .account-trigger-name { max-width: clamp(64px, 22vw, 100px); font-size: 11px; }
+    .mobile-scale .public-header .public-primary-nav { height: 64px; gap: 12px; }
+    body:has(.mobile-bottom-nav) .public-header #public-menu { max-height: calc(100dvh - 114px - var(--mobile-nav-space)); }
+    .workspace-topbar .account-trigger-name { display: none; }
+}

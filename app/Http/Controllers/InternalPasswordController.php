@@ -32,7 +32,7 @@ final class InternalPasswordController extends Controller
         $request->session()->regenerateToken();
         $request->session()->put('internal_session_version', $user->internal_session_version);
 
-        return to_route($forced ? HomeRoute::for($user) : $this->workspace($request).'.account.password.edit')->with('status', 'Password berhasil diperbarui.');
+        return to_route($forced ? HomeRoute::for($user) : $this->workspace($request).'.account.password.edit')->with('status', 'Kata sandi berhasil diperbarui.');
     }
 
     private function workspace(Request $request): string

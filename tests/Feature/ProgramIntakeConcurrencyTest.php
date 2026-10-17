@@ -51,7 +51,7 @@ class ProgramIntakeConcurrencyTest extends TestCase
         $workers = [];
         try {
             foreach ($arguments as $args) {
-                $worker = new Process(array_merge([PHP_BINARY, base_path('tests/Support/program-intake-worker.php')], $args), base_path(), ['APP_ENV' => 'testing', 'DB_DATABASE' => 'sipora_attendance_test', 'DB_URL' => '', 'CACHE_STORE' => 'array']);
+                $worker = new Process(array_merge([PHP_BINARY, base_path('tests/Support/program-intake-worker.php')], $args), base_path(), ['APP_ENV' => 'testing', 'DB_DATABASE' => \Tests\Support\TestEnvironmentGuard::DATABASE, 'DB_URL' => '', 'CACHE_STORE' => 'array']);
                 $worker->setTimeout(60);
                 $worker->start();
                 $workers[] = $worker;

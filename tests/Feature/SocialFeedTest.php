@@ -39,6 +39,20 @@ class SocialFeedTest extends TestCase
         return $u;
     }
 
+    public function test_like_json_updates_are_idempotent_and_standard_form_still_redirects(): void
+    {
+        $user = $this->youth();
+        $post = $this->makePost($user);
+        $this->actingAs($user);
+        $this->postJson(route('social.like', $post), ['liked' => true])->assertOk()->assertExactJson(['liked' => true, 'likes_count' => 1]);
+        $this->postJson(route('social.like', $post), ['liked' => true])->assertOk()->assertExactJson(['liked' => true, 'likes_count' => 1]);
+        $this->postJson(route('social.like', $post), ['liked' => false])->assertOk()->assertExactJson(['liked' => false, 'likes_count' => 0]);
+        $this->post(route('social.like', $post), ['liked' => true])->assertRedirect();
+        $this->postJson(route('social.like', $post), ['liked' => 'invalid'])->assertUnprocessable();
+        $post->update(['visibility' => 'private']);
+        $this->postJson(route('social.like', $post), ['liked' => true])->assertForbidden();
+    }
+
     private function makePost(User $u, array $overrides = []): SocialPost
     {
         return SocialPost::create([...['author_id' => $u->getKey(), 'body' => 'Kabar kegiatan pemuda', 'visibility' => 'public'], ...$overrides]);
@@ -63,8 +77,11 @@ class SocialFeedTest extends TestCase
         $this->actingAs($u)->post(route('social.store'), $data)->assertRedirect();
         $post = SocialPost::firstOrFail();
         $this->assertStringNotContainsString('<script>', $post->body);
+        // A visitor must not see the author's private identity. The owner's
+        // authenticated header legitimately displays their own account name.
+        $this->app['auth']->forgetGuards();
         $this->get(route('social.show', $post))->assertOk()->assertDontSee($u->name)->assertDontSee($u->email)->assertSee('Pemuda SIPORA #');
-        $this->put(route('social.update', $post), ['body' => '<b>Update baik</b>', 'visibility' => 'private'])->assertRedirect();
+        $this->actingAs($u)->put(route('social.update', $post), ['body' => '<b>Update baik</b>', 'visibility' => 'private'])->assertRedirect();
         $this->assertSame('Update baik', $post->fresh()->body);
         $this->get(route('social.index', ['tab' => 'mine']))->assertOk()->assertSee('Update baik');
         $this->actingAs($other)->get(route('social.show', $post))->assertNotFound();

@@ -20,7 +20,9 @@ final class ProgramEvaluationController extends Controller
     public function index(Request $request, ProgramEvaluationEligibilityService $eligibility): View
     {
         $search = trim((string) $request->query('search', ''));
-        $programs = Program::query()->with(['organization', 'category', 'latestEvaluation'])->whereIn('execution_status', [Program::STATUS_RUNNING, Program::STATUS_COMPLETED])
+        $programs = Program::query()->with(['organization', 'category', 'latestEvaluation', 'latestProposal', 'latestFinancialReport'])
+            ->withExists(['logbooks as has_approved_logbook' => fn ($query) => $query->where('status', \App\Models\ProgramLogbook::STATUS_APPROVED)])
+            ->whereIn('execution_status', [Program::STATUS_RUNNING, Program::STATUS_COMPLETED])
             ->when($search !== '', fn ($query) => $query->where(fn ($nested) => $nested->where('title', 'like', "%{$search}%")->orWhereHas('organization', fn ($organization) => $organization->where('name', 'like', "%{$search}%"))))
             ->orderByRaw("FIELD(execution_status, 'running', 'completed')")->latest()->paginate(15)->withQueryString();
 

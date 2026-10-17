@@ -12,9 +12,7 @@ use Illuminate\Validation\ValidationException;
 require __DIR__.'/../../vendor/autoload.php';
 $app = require __DIR__.'/../../bootstrap/app.php';
 $app->make(Kernel::class)->bootstrap();
-if (! app()->environment('testing') || config('database.connections.mysql.database') !== 'sipora_attendance_test') {
-    throw new RuntimeException('Concurrency worker requires isolated testing database');
-}
+\Tests\Support\TestEnvironmentGuard::assertSafe(app()->environment(), config('database.default'), $app['db']->connection()->getDatabaseName());
 $user = User::findOrFail(BinaryUuid::bytes($argv[2]));
 $program = Program::where('slug', $argv[3])->firstOrFail();
 echo "ready\n";

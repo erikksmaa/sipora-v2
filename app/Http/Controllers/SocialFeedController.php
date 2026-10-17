@@ -14,6 +14,7 @@ use App\Services\Community\ManagedCommunityService;
 use App\Services\SocialFeedService;
 use App\Support\BinaryUuid;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -147,7 +148,7 @@ final class SocialFeedController extends Controller
             'Cache-Control' => 'private, no-store', 'X-Content-Type-Options' => 'nosniff', 'Content-Security-Policy' => "default-src 'none'; sandbox"]);
     }
 
-    public function like(Request $request, SocialPost $post): RedirectResponse
+    public function like(Request $request, SocialPost $post): JsonResponse|RedirectResponse
     {
         $this->visible($request, $post);
         abort_unless($post->visibility === 'public', 403);
@@ -156,6 +157,13 @@ final class SocialFeedController extends Controller
             SocialLike::firstOrCreate(['post_id' => $post->getKey(), 'user_id' => $request->user()->getKey()]);
         } else {
             $post->likes()->where('user_id', $request->user()->getKey())->delete();
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'liked' => $post->likes()->where('user_id', $request->user()->getKey())->exists(),
+                'likes_count' => $post->likes()->count(),
+            ])->header('Cache-Control', 'no-store, private');
         }
 
         return back();

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')
     ->group(function (): void {
+        Route::get('/chat/reports', [\App\Http\Controllers\ChatController::class, 'moderation'])->name('chat.index');
+        Route::post('/chat/reports/{report}', [\App\Http\Controllers\ChatController::class, 'resolve'])->middleware('throttle:chat-moderate')->name('chat.resolve');
+        Route::patch('/chat/rooms/{room}', [\App\Http\Controllers\ChatController::class, 'active'])->middleware('throttle:chat-moderate')->name('chat.active');
         Route::get('/account/password', [\App\Http\Controllers\InternalPasswordController::class, 'edit'])->name('account.password.edit');
         Route::put('/account/password', [\App\Http\Controllers\InternalPasswordController::class, 'update'])->middleware('throttle:6,1')->name('account.password.update');
         Route::get('/internal-users', [\App\Http\Controllers\Admin\InternalUserController::class, 'index'])->name('internal-users.index');

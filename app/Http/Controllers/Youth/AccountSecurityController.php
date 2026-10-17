@@ -21,6 +21,6 @@ final class AccountSecurityController extends Controller
         $request->user()->forceFill(['password' => Hash::make($request->validated('password'))])->save();
         $request->session()->regenerate();
 
-        return to_route('youth.account.security')->with('status', 'Password akun berhasil disimpan.');
+        return to_route('youth.account.security')->with('status', 'Kata sandi akun berhasil disimpan.');
     }
 }

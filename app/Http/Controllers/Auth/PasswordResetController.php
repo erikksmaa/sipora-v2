@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthRequest;
 use App\Models\User;
+use App\Services\InternalAccountService;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -31,7 +32,7 @@ class PasswordResetController extends Controller
             ]);
         }
 
-        return back()->with('status', 'Jika akun dengan email tersebut tersedia, tautan reset password telah dikirim. Periksa inbox dan folder spam.');
+        return back()->with('status', 'Jika akun dengan email tersebut tersedia, tautan reset kata sandi telah dikirim. Periksa inbox dan folder spam.');
     }
 
     public function update(Request $request)
@@ -44,7 +45,7 @@ class PasswordResetController extends Controller
         $data['email'] = mb_strtolower(trim($data['email']));
         $status = Password::reset($data, function (User $user, string $password): void {
             if ($user->isInternalAccount()) {
-                app(\App\Services\InternalAccountService::class)->changePassword($user, $password, 'internal_password_reset_completed');
+                app(InternalAccountService::class)->changePassword($user, $password, 'internal_password_reset_completed');
             } else {
                 $user->forceFill(['password' => $password, 'remember_token' => Str::random(60)])->save();
                 $user->getConnection()->table('sessions')->where('user_id', $user->getKey())->delete();
@@ -55,6 +56,6 @@ class PasswordResetController extends Controller
             throw ValidationException::withMessages(['email' => 'Tautan reset tidak valid atau telah kedaluwarsa. Silakan minta tautan baru.']);
         }
 
-        return to_route('login')->with('status', 'Password berhasil diperbarui. Silakan masuk dengan password baru.');
+        return to_route('login')->with('status', 'Kata sandi berhasil diperbarui. Silakan masuk dengan kata sandi baru.');
     }
 }

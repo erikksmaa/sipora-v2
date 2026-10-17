@@ -1,0 +1,58 @@
+/* Visible without JavaScript. Only initialized components get the entrance state. */
+.component-enter {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: none !important;
+}
+.component-enter.component-enter-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1100ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition-delay: var(--component-enter-delay, 0ms) !important;
+}
+/* Leaflet and chart wrappers keep their dimensions and coordinate system. */
+.component-enter[data-animate="map-reveal"] { transform: none; }
+@media (max-width: 767px) {
+    .component-enter { transform: translateY(14px); }
+    .component-enter.component-enter-visible { transform: translateY(0); }
+    .component-enter[data-animate="map-reveal"] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .component-enter { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* Shared geometry also inherited by the accessibility widget's Shadow DOM. */
+body {
+    --floating-size: 56px;
+    --floating-gap: 16px;
+    --floating-right: max(20px, env(safe-area-inset-right, 0px));
+    --floating-base: calc(var(--mobile-nav-space, 0px) + max(20px, env(safe-area-inset-bottom, 0px)));
+    --floating-step: calc(var(--floating-size) + var(--floating-gap));
+}
+.back-to-top {
+    position: fixed;
+    right: var(--floating-right);
+    bottom: var(--floating-base);
+    z-index: 35;
+    display: grid;
+    place-items: center;
+    width: var(--floating-size);
+    height: var(--floating-size);
+    border: 2px solid white;
+    border-radius: 50%;
+    background: #245779;
+    color: white;
+    box-shadow: 0 4px 18px #15364b33;
+    cursor: pointer;
+}
+body:has(#snn-accessibility-widget-container) .back-to-top { bottom: calc(var(--floating-base) + var(--floating-step)); }
+.back-to-top[hidden] { display: none; }
+.back-to-top:focus-visible { outline: 3px solid #ff742e; outline-offset: 4px; }
+.back-to-top:hover { background: #153b56; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .home-feature-card, .home-step-card, .public-stat-card { transition: translate 160ms ease-out, box-shadow 160ms ease-out; }
+    .home-feature-card:hover, .home-step-card:hover, .public-stat-card:hover { translate: 0 -3px; }
+    .back-to-top { transition: translate 160ms ease-out, background-color 160ms ease-out; }
+    .back-to-top:hover { translate: 0 -2px; }
+}

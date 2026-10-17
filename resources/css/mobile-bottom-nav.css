@@ -1,0 +1,65 @@
+.mobile-bottom-nav { display: none; }
+@media (max-width: 767px) {
+    body:has(.mobile-bottom-nav) {
+        --mobile-nav-space: calc(68px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: var(--mobile-nav-space);
+        scroll-padding-bottom: calc(var(--mobile-nav-space) + 16px);
+    }
+    html:has(.mobile-bottom-nav) { scroll-padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+    .mobile-bottom-nav {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 35;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        height: calc(68px + env(safe-area-inset-bottom, 0px));
+        padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px));
+        background: var(--color-surface);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -4px 18px #15364b0d;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mobile-bottom-nav__item {
+        position: relative;
+        display: flex;
+        min-width: 0;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 4px;
+        border-radius: 10px;
+        color: var(--color-text-secondary);
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 16px;
+        white-space: nowrap;
+        text-decoration: none;
+        transition: color 160ms ease-out, background-color 160ms ease-out;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-bottom-nav__item[aria-current="page"] {
+        color: #ad360d;
+        background: #fff0e6;
+        font-weight: 800;
+    }
+    .mobile-bottom-nav__item[aria-current="page"]::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        width: 22px;
+        height: 3px;
+        border-radius: 0 0 3px 3px;
+        background: #fe7743;
+    }
+    html[data-theme="dark"] .mobile-bottom-nav__item[aria-current="page"] { color: #ffb590; background: #493e36; }
+    .mobile-bottom-nav__item:hover { background: var(--color-surface-muted); }
+    .mobile-bottom-nav__item:focus-visible { outline: 2px solid #fe7743; outline-offset: -2px; }
+    body:has(.mobile-bottom-nav) #public-menu { max-height: calc(100dvh - 64px - var(--mobile-nav-space)); }
+    /* Chat composer is in document flow, so body padding protects its final action.
+       Scroll margin also keeps focused fields above the navigation/keyboard viewport. */
+    body:has(.mobile-bottom-nav) :is(input, textarea, select, button) { scroll-margin-bottom: calc(var(--mobile-nav-space) + 24px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mobile-bottom-nav__item { transition: none; }
+}

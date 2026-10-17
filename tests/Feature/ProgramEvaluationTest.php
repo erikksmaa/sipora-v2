@@ -20,6 +20,7 @@ use App\Services\ProgramEvaluationEligibilityService;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -144,6 +145,30 @@ class ProgramEvaluationTest extends TestCase
         $this->assertTrue(Schema::hasTable('opportunities'));
         $routes = collect(app('router')->getRoutes()->getRoutes());
         $this->assertFalse($routes->contains(fn ($route) => str_starts_with((string) $route->getName(), 'public.program-evaluations')));
+    }
+
+    public function test_evaluation_queue_does_not_run_eligibility_queries_per_program(): void
+    {
+        $this->context('query-one');
+        $this->actingAs($this->roleUser('verifier'));
+        $url = route('verifier.program-evaluations.index');
+        $this->get($url)->assertOk(); // Warm permission resolution before measuring.
+        $queries = function () use ($url): int {
+            DB::flushQueryLog();
+            DB::enableQueryLog();
+            try {
+                $this->get($url)->assertOk();
+                return count(DB::getQueryLog());
+            } finally {
+                DB::disableQueryLog();
+            }
+        };
+        $one = $queries();
+        foreach (['two', 'three', 'four'] as $suffix) {
+            $this->context('query-'.$suffix);
+        }
+        $many = $queries();
+        $this->assertLessThanOrEqual($one + 3, $many, "Queue query count grew from $one to $many for four programs.");
     }
 
     private function context(string $suffix): array

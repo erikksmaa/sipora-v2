@@ -2,13 +2,13 @@
 @section('title', 'Daftar Akun · SIPORA')
 @section('content')
 <div class="registration-experience">
-    <aside class="registration-guide">
+    <aside data-public-motion class="registration-guide">
         <a class="inline-flex min-h-11 items-center gap-2 text-sm text-white" href="{{ route('home') }}"><x-ui.icon name="chevron-left" class="size-4" /> Kembali ke Beranda</a>
-        <h1 class="mt-6 text-3xl font-extrabold">Mulai perjalananmu bersama SIPORA</h1>
+        <h1 data-animate="fade-left" class="mt-6 text-3xl font-extrabold">Mulai perjalananmu bersama SIPORA</h1>
         <p class="mt-4 leading-7 text-white/80">Buat akun, lengkapi persiapanmu, lalu temukan ruang bertumbuh di ekosistem pemuda Pemalang.</p>
         <ol class="registration-steps">
             @foreach([['Daftar Akun', 'Nama, email dan password'], ['Verifikasi Email', 'Konfirmasi akses email'], ['Profil & Identitas', 'Biodata, dokumen dan peninjauan'], ['Minat, Skill & Portfolio', 'Arah pengembangan dan bukti pengalaman'], ['Jelajahi Ekosistem', 'Community, Activity dan Opportunity']] as $index => [$title, $copy])
-                <li @if($index === 0) aria-current="step" @endif><span>{{ $index + 1 }}</span><div><strong>{{ $title }}</strong><p>{{ $copy }}</p></div></li>
+                <li data-animate="stagger-card" @if($index === 0) aria-current="step" @endif><span>{{ $index + 1 }}</span><div><strong>{{ $title }}</strong><p>{{ $copy }}</p></div></li>
             @endforeach
         </ol>
         <img class="registration-photo" src="{{ asset('media/demo/08A_SOCIAL_FEED/feed-002-workshop-recap.jpg') }}" alt="Foto demo pemuda berkolaborasi dalam workshop" width="1200" height="800" loading="lazy">
