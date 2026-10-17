@@ -16,7 +16,7 @@
 @endif
 <div class="eco-map-page {{ $isAdmin ? 'eco-map-page-admin' : '' }}">
     <div class="eco-map-container">
-        <div class="eco-map-intro"><div><p class="eco-map-eyebrow">Cakupan kecamatan</p><h2>Jelajahi ekosistem SIPORA per wilayah</h2><p>Empat lapisan berasal dari data aktual: domisili Youth, lokasi Community aktif, lokasi Activity terbit, dan kecamatan Community penyelenggara Program publik.</p></div><a class="btn-secondary" href="{{ route('statistics.index') }}">Lihat Statistik Pemuda</a></div>
+        <div @unless($isAdmin) data-animate="fade-left" @endunless class="eco-map-intro"><div><p class="eco-map-eyebrow">Cakupan kecamatan</p><h2>Jelajahi ekosistem SIPORA per wilayah</h2><p>Empat lapisan berasal dari data aktual: domisili Youth, lokasi Community aktif, lokasi Activity terbit, dan kecamatan Community penyelenggara Program publik.</p></div><a class="btn-secondary" href="{{ route('statistics.index') }}">Lihat Statistik Pemuda</a></div>
         <x-public.ecosystem-map-panel :coverage="$coverage" :is-admin="$isAdmin" :threshold="$threshold" />
         <section class="eco-map-panel" aria-labelledby="eco-map-table-title">
             <div class="eco-map-table-heading"><div><p class="eco-map-eyebrow">Data pembanding</p><h2 id="eco-map-table-title">Cakupan menurut kecamatan</h2></div><p>Angka Youth merupakan akun unik. Community, Activity, dan Program merupakan jumlah record sesuai status publiknya.</p></div>

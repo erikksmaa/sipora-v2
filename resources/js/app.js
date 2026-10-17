@@ -2,6 +2,8 @@ import './bootstrap';
 import './media';
 import './responsive-tables';
 import './validation';
+import './ui-motion';
+import './scroll-motion';
 import './mobile-bottom-nav';
 import { showAlert } from './alerts';
 import Alpine from 'alpinejs';

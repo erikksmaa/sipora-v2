@@ -8,7 +8,7 @@
 <section class="bg-surface-soft px-5 py-16">
     <div class="mx-auto max-w-6xl">
         <div class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
-            <article class="rounded-2xl bg-primary-900 p-7 text-white shadow-md"><span
+            <article data-animate="fade-left" class="rounded-2xl bg-primary-900 p-7 text-white shadow-md"><span
                     class="grid size-12 place-items-center rounded-xl bg-white/10 text-accent-300"><x-ui.icon
                         name="building" /></span><x-media.representative class="mt-5" domain="contact"
                     identity="service" label="Ilustrasi layanan informasi, bukan foto kantor atau peta lokasi" />
@@ -24,7 +24,7 @@
                 <div class="mt-7 grid gap-4 sm:grid-cols-2">
                     @php($methods = [['map-pin', 'Alamat', $contact['address'], null], ['mail', 'Email', $contact['email'], $contact['email'] ? 'mailto:' . $contact['email'] : null], ['phone', 'Telepon', $contact['phone'], $contact['phone'] ? 'tel:' . preg_replace('/[^+0-9]/', '', $contact['phone']) : null], ['globe', 'Website', $contact['website'], $contact['website']]])
                     @foreach($methods as [$icon, $label, $value, $href])
-                        <article class="rounded-2xl border border-border bg-white p-5 shadow-xs"><span
+                        <article data-animate="stagger-card" class="public-tone-card rounded-2xl border border-border p-5 shadow-xs" data-tone="{{ ['blue', 'orange', 'teal', 'green'][$loop->index] }}"><span
                                 class="grid size-10 place-items-center rounded-xl bg-primary-50 text-primary"><x-ui.icon
                                     :name="$icon" class="size-5" /></span>
                             <h3 class="mt-4 text-sm font-bold text-text-primary">{{ $label }}</h3>@if($value) @if($href)<a

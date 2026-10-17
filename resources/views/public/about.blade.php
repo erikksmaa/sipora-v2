@@ -21,7 +21,7 @@
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach([['users', 'Pemuda', 'Membangun pengalaman dan mengatur privasi Portfolio.'], ['building', 'Community', 'Mengelola anggota, Activity, dan Program.'], ['activity', 'Activity', 'Kegiatan dengan jadwal, peserta, dan penyelesaian.'], ['briefcase', 'Opportunity', 'Informasi peluang yang dipublikasikan Admin.'], ['notebook', 'Program', 'Alur Proposal, Logbook, E-LPJ, dan evaluasi.'], ['shield-check', 'Dindikpora', 'Menjalankan verifikasi sesuai tanggung jawab Admin dan Verifier.']] as [$icon, $title, $copy])
-                        <article class="about-tone rounded-2xl border border-border p-5 shadow-xs" data-tone="{{ ['orange','teal','blue','orange','blue','green'][$loop->index] }}"><span
+                        <article data-animate="stagger-card" class="about-tone rounded-2xl border border-border p-5 shadow-xs" data-tone="{{ ['orange','teal','blue','orange','blue','green'][$loop->index] }}"><span
                                 class="about-tone-icon grid size-10 place-items-center rounded-xl"><x-ui.icon
                                     :name="$icon" class="size-5" /></span>
                             <h3 class="mt-4 text-lg font-bold text-text-primary">{{ $title }}</h3>
@@ -38,7 +38,7 @@
                 centered />
             <div class="mt-10 grid gap-4 md:grid-cols-5">
                 @foreach([['search', 'Temukan', 'Activity, Community, Opportunity, atau Program'], ['users', 'Berpartisipasi', 'Bergabung dan mengikuti proses yang berlaku'], ['activity', 'Berkontribusi', 'Ikuti Activity dan aktivitas Community'], ['badge-check', 'Diverifikasi', 'Status disahkan oleh pihak yang berwenang'], ['file-text', 'Bangun Portfolio', 'Tampilkan hanya bagian yang dipilih untuk publik']] as $index => [$icon, $title, $copy])
-                    <article class="about-tone relative rounded-2xl border border-border p-5 text-center shadow-xs" data-tone="{{ ['blue','orange','teal','green','blue'][$index] }}"><span
+                    <article data-animate="stagger-card" class="about-tone relative rounded-2xl border border-border p-5 text-center shadow-xs" data-tone="{{ ['blue','orange','teal','green','blue'][$index] }}"><span
                             class="about-tone-icon mx-auto grid size-11 place-items-center rounded-xl"><x-ui.icon
                                 :name="$icon" class="size-5" /></span>
                         <h3 class="mt-4 font-bold text-text-primary">{{ $title }}</h3>
@@ -51,7 +51,7 @@
     </section>
     <section class="about-section about-section--records px-5 py-16">
         <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
-            <article class="about-tone rounded-2xl border p-7" data-tone="blue">
+            <article data-animate="stagger-card" class="about-tone rounded-2xl border p-7" data-tone="blue">
                 <p class="text-xs font-bold uppercase tracking-wider text-primary">Tercatat mandiri</p>
                 <h2 class="font-heading mt-2 text-2xl font-bold text-text-primary">Informasi yang dilaporkan pemilik</h2>
                 <ul class="mt-5 space-y-3 text-sm leading-6 text-text-secondary">
@@ -60,7 +60,7 @@
                     </li>@endforeach
                 </ul>
             </article>
-            <article class="about-tone rounded-2xl border p-7" data-tone="green">
+            <article data-animate="stagger-card" class="about-tone rounded-2xl border p-7" data-tone="green">
                 <p class="text-xs font-bold uppercase tracking-wider text-success">Diverifikasi SIPORA</p>
                 <h2 class="font-heading mt-2 text-2xl font-bold text-text-primary">Rekam yang melalui workflow resmi</h2>
                 <ul class="mt-5 space-y-3 text-sm leading-6 text-text-secondary">
@@ -71,7 +71,7 @@
             </article>
         </div>
     </section>
-    <section class="about-cta bg-primary-900 px-5 py-14 text-white">
+    <section data-animate="scale-in" class="about-cta bg-primary-900 px-5 py-14 text-white">
         <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
                 <h2 class="font-heading text-3xl font-bold">Temukan ruangmu di SIPORA.</h2>

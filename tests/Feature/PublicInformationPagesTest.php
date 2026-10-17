@@ -45,6 +45,6 @@ class PublicInformationPagesTest extends TestCase
             ->assertSee('aria-controls="explore-menu"', false)
             ->assertSee('x-ref="exploreMenu"', false)
             ->assertSee('id="main"', false)
-            ->assertSee('tabindex="-1"', false);
+            ->assertSee('data-page-motion tabindex="-1"', false);
     }
 }

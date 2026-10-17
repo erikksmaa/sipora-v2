@@ -23,8 +23,9 @@
 <body class="mobile-scale auth-shell bg-bg text-text-primary antialiased">
     <a href="#main" class="sr-only focus:not-sr-only">Lewati ke konten</a>
     <x-public.navbar />
-    <main id="main" tabindex="-1" class="auth-main">@yield('content')</main>
+    <main id="main" data-page-motion tabindex="-1" class="auth-main">@yield('content')</main>
     @stack('scripts')
+    <x-back-to-top />
     <x-alerts />
 </body>
 </html>

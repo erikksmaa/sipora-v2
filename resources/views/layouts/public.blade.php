@@ -21,13 +21,14 @@
     @stack('head')
 </head>
 
-<body class="mobile-scale min-h-screen bg-bg text-text-primary antialiased">
+<body data-public-motion class="mobile-scale min-h-screen bg-bg text-text-primary antialiased">
     <a href="#main"
         class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:p-3">Lewati
         ke konten</a>
     <x-public.navbar />
-    <main id="main" tabindex="-1">@yield('content')</main>
+    <main id="main" data-page-motion tabindex="-1">@yield('content')</main>
     @hasSection('footer')@yield('footer')@else<x-public.footer />@endif
+    <x-back-to-top />
     <x-mobile-bottom-nav />
     <x-alerts />
 

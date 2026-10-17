@@ -2,6 +2,9 @@
 @import './media.css';
 @import 'sweetalert2/dist/sweetalert2.min.css';
 @import './alerts.css';
+@import './ui-motion.css';
+@import './public-cards.css';
+@import './scroll-motion.css';
 @import './mobile-bottom-nav.css';
 @import './public-navigation.css';
 
