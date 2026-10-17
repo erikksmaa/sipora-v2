@@ -2,13 +2,19 @@
 
 Dokumen ini menjelaskan dataset QA lokal, urutan pengujian end-to-end, dan area risiko yang perlu diperiksa sebelum Phase 23A.
 
-## Reset dataset
+## Keamanan database dan fixture
 
-Database pengembangan kanonis adalah `sipora`.
+Database pengembangan kanonis adalah `sipora`. Jangan jalankan reset terhadap database ini untuk regresi. Dataset demo dan media yang sudah tersedia harus dipertahankan.
 
-```bash
-php artisan migrate:fresh --seed
+Backend suite menggunakan MySQL **`sipora_regression_test`** melalui `phpunit.xml`. Buat database kosong ini sekali pada server MySQL lokal yang sama:
+
+```sql
+CREATE DATABASE sipora_regression_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
+
+Jalankan `php artisan test` setelah memastikan tidak ada konfigurasi Laravel yang di-cache. `Tests\Support\TestEnvironmentGuard` menolak environment selain `testing`, driver selain MySQL, atau nama database selain nama tes tersebut, sebelum trait reset database berjalan. Worker tes concurrency memakai pengaman dan database yang sama. `Tests\TestCase` juga mengalihkan disk lokal ke `storage/framework/testing/disks/` agar seeder tidak menulis media demo.
+
+Pembuatan ulang fixture hanya diperbolehkan pada database tes terisolasi. Pengujian browser terhadap `sipora` sebaiknya read-only; gunakan record QA yang jelas untuk mutation dan jangan mengubah kredensial/data demo existing.
 
 Seluruh akun demo memakai password `password`. Seeder modular dan `QualityAssuranceSeeder` tidak berjalan pada environment `production`.
 
@@ -55,7 +61,7 @@ Gunakan browser terpisah atau incognito untuk setiap role agar session tidak ter
 
 ### 1. Baseline read-only
 
-1. Reset database.
+1. Konfirmasi database tes terisolasi dan simpan baseline data pengembangan tanpa meresetnya.
 2. Jalankan `php artisan test`, `npm.cmd run build`, dan `php vendor/bin/pint --test`.
 3. Sebagai Guest, buka landing, Activity, Community, Opportunity, Program, search, Portfolio publik, dan certificate verification.
 4. Pastikan draft, revision, rejected, archived, dan evidence privat tidak muncul.
@@ -85,7 +91,7 @@ Kerjakan baseline ini dahulu karena tidak mengubah state dan memberi titik pemba
 4. Pastikan dokumen hanya dapat dibuka lewat route privat terotorisasi.
 5. Logout lalu buka ulang URL dokumen sebagai Guest, Youth, dan Verifier; semuanya harus ditolak.
 
-Reset database setelah rangkaian ini agar skenario role berikut tetap deterministik.
+Gunakan fixture baru atau rollback di database tes setelah rangkaian ini agar skenario role berikut tetap deterministik. Jangan reset database demo.
 
 ### 5. Community application dan verification
 
@@ -136,7 +142,7 @@ Reset database setelah rangkaian ini agar skenario role berikut tetap determinis
 Setelah seluruh mutation flow selesai:
 
 1. Jalankan ulang full test suite.
-2. Reset dan seed kembali database.
+2. Jika memerlukan fixture ulang, lakukan hanya pada database tes terisolasi.
 3. Ulangi smoke test Guest, Youth, Manager, Verifier, dan Admin.
 4. Periksa desktop serta mobile untuk halaman paling panjang dan tabel antrean.
 

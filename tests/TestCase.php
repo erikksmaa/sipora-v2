@@ -17,9 +17,17 @@ abstract class TestCase extends BaseTestCase
     public function createApplication()
     {
         $app = parent::createApplication();
-        if ($app['config']->get('database.default') !== 'mysql'
-            || $app['config']->get('database.connections.mysql.database') !== 'sipora') {
-            throw new \RuntimeException('Tests may only run against the canonical local sipora MySQL database. Clear cached config first.');
+        \Tests\Support\TestEnvironmentGuard::assertSafe(
+            $app->environment(),
+            $app['config']->get('database.default'),
+            $app['db']->connection()->getDatabaseName(),
+        );
+
+        // Seeders also write fixture files. Never let them touch demo storage.
+        foreach ($app['config']->get('filesystems.disks') as $name => $disk) {
+            if (($disk['driver'] ?? null) === 'local') {
+                $app['config']->set("filesystems.disks.$name.root", storage_path("framework/testing/disks/$name"));
+            }
         }
 
         return $app;
