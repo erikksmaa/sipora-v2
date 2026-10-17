@@ -1,5 +1,6 @@
 import './bootstrap';
 import './media';
+import './validation';
 import { showAlert } from './alerts';
 import Alpine from 'alpinejs';
 import chat from './chat';
@@ -65,7 +66,7 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
         if (this.busy) return;
         this.error = '';
         if (!siteKey) {
-            this.error = 'Security verification is unavailable. Please try again later.';
+            this.error = 'Verifikasi keamanan belum tersedia. Silakan coba lagi nanti.';
             showAlert('warning', this.error);
             return;
         }
@@ -79,7 +80,7 @@ Alpine.data('recaptchaForm', (siteKey, action) => ({
             this.$refs.token.value = token;
             this.$el.submit();
         } catch {
-            this.error = 'Security verification failed. Please try again.';
+            this.error = 'Verifikasi keamanan gagal. Silakan coba lagi.';
             showAlert('error', this.error);
             this.busy = false;
         }

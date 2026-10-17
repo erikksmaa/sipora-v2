@@ -67,7 +67,7 @@ class AuthenticateGoogleUser
     private function deny(): never
     {
         throw ValidationException::withMessages([
-            'email' => 'This Google account cannot be safely linked. Use email sign-in or account recovery.',
+            'email' => 'Akun Google ini belum dapat ditautkan dengan aman. Silakan masuk menggunakan email atau gunakan pemulihan akun.',
         ]);
     }
 }

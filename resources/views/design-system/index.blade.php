@@ -55,7 +55,7 @@
                         14 => 'Menu, collapsible group, dan details yang ditemukan. Tidak menambahkan pola menu baru ke aplikasi.',
                         15 => 'Pola filter aktual; submit demo ditahan di board dan tidak memanggil workflow aplikasi.',
                         16 => 'Class table-shell, status domain, action, empty state, dan horizontal overflow.',
-                        17 => 'SweetAlert2 memakai styling konfirmasi SIPORA. Semua dialog yang dibuka hanya demo.',
+                        17 => 'SweetAlert2 memakai tampilan bawaan library. Semua dialog yang dibuka hanya demo.',
                         18,19,20,21 => 'Mini komposisi berdasarkan struktur view saat ini. Bukan screenshot historis, bukan halaman aplikasi penuh.',
                         22 => 'Chart.js memakai renderer statistics.js aktual dengan dataset contoh. Tooltip muncul saat hover titik atau bar.',
                         23 => 'Kontrol peta aktual; latar geometri hanya ilustrasi dokumentasi, bukan batas wilayah resmi.',

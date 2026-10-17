@@ -67,8 +67,8 @@ class RecaptchaService
         }
 
         $message = app()->environment('local')
-            ? 'Security verification failed: '.$this->localFailureMessage($failure)
-            : 'Security verification failed. Please try again.';
+            ? 'Verifikasi keamanan gagal: '.$this->localFailureMessage($failure)
+            : 'Verifikasi keamanan gagal. Silakan coba lagi.';
 
         throw ValidationException::withMessages(['recaptcha_token' => $message]);
     }
@@ -76,15 +76,15 @@ class RecaptchaService
     private function localFailureMessage(string $failure): string
     {
         return match ($failure) {
-            'configuration_missing' => 'site key, secret key, or token is missing.',
-            'connection_failed' => 'the server could not reach Google.',
-            'google_http_error' => 'Google returned an HTTP error.',
-            'google_rejected_token' => 'Google rejected the token or key pair.',
-            'score_missing' => 'Google did not return a v3 score. Check that the key type is score based (v3).',
-            'score_too_low' => 'the score is below the configured threshold.',
-            'action_mismatch' => 'the returned action does not match this form.',
-            'hostname_mismatch' => 'the returned hostname does not match RECAPTCHA_HOSTNAME.',
-            default => 'the response could not be validated.',
+            'configuration_missing' => 'kunci situs, kunci rahasia, atau token belum tersedia.',
+            'connection_failed' => 'server tidak dapat terhubung ke Google.',
+            'google_http_error' => 'Google mengembalikan kesalahan HTTP.',
+            'google_rejected_token' => 'Google menolak token atau pasangan kunci.',
+            'score_missing' => 'Google tidak mengembalikan hasil verifikasi v3. Pastikan kunci menggunakan jenis v3 berbasis skor.',
+            'score_too_low' => 'hasil verifikasi berada di bawah ambang yang ditetapkan.',
+            'action_mismatch' => 'tindakan yang dikembalikan tidak sesuai dengan formulir ini.',
+            'hostname_mismatch' => 'nama host yang dikembalikan tidak sesuai dengan konfigurasi RECAPTCHA_HOSTNAME.',
+            default => 'respons tidak dapat divalidasi.',
         };
     }
 }

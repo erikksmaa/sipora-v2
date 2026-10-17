@@ -86,8 +86,6 @@
 .ds-table-scroll table { min-width: 650px; }
 .ds-step { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--color-border); }
 .ds-step > span { display: grid; place-items: center; width: 32px; height: 32px; background: var(--color-primary-700); color: #EFEEEA; font: 12px var(--font-mono); }
-.ds-board .sipora-alert.ds-static-dialog { display: block; width: 100%; max-width: 460px; margin: auto; position: relative; }
-.ds-static-dialog .sipora-alert-actions { display: flex; justify-content: center; flex-wrap: wrap; }
 .ds-detail-menu { padding: 14px; border: 1px solid var(--color-border); background: var(--color-surface-soft); }
 .ds-detail-menu summary { cursor: pointer; font-weight: 700; font-size: 14px; min-height: 32px; }
 .ds-detail-menu p { font-size: 13px; line-height: 1.7; margin-top: 14px; }

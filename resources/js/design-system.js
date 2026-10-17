@@ -53,9 +53,8 @@ document.addEventListener('click', (event) => {
         titleText: dialog.dataset.demoDialog === 'destructive' ? 'Hapus data contoh?' : 'Konfirmasi tindakan contoh',
         text: 'Demo dokumentasi saja. Tidak ada data yang disimpan, dihapus, atau dikirim.',
         icon: 'warning', showCancelButton: true, focusCancel: true, reverseButtons: true,
-        allowOutsideClick: false, heightAuto: false, buttonsStyling: false,
+        allowOutsideClick: false, heightAuto: false,
         confirmButtonText: 'Selesai preview', cancelButtonText: 'Batal',
-        customClass: { popup: 'sipora-alert', title: 'sipora-alert-title', htmlContainer: 'sipora-alert-message', actions: 'sipora-alert-actions', confirmButton: 'sipora-alert-button sipora-alert-confirm', cancelButton: 'sipora-alert-button sipora-alert-cancel' },
     });
     const pressed = event.target.closest('[data-demo-pressed], [data-demo-follow]');
     if (pressed) {

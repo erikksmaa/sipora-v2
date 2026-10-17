@@ -2,13 +2,14 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { installConfirmations } from '../../resources/js/confirmation.js';
 
-function fixture(confirm, { method = 'post', dataset = {}, override = '' } = {}) {
+function fixture(confirm, { method = 'post', dataset = { confirm: '' }, override = '' } = {}) {
     let listener;
     const root = { addEventListener(type, fn) { listener = fn; } };
     const submitter = { textContent: 'Simpan', getAttribute() { return null; }, name: 'decision', value: 'approved' };
     const sent = [];
     const form = {
         method, dataset, isConnected: true,
+        hasAttribute(name) { return name === 'data-confirm' && Object.hasOwn(dataset, 'confirm'); },
         querySelector() { return override ? { value: override } : null; },
         requestSubmit(button) {
             const event = makeEvent(button);
@@ -43,7 +44,7 @@ test('confirm replays exactly once with original named submitter', async () => {
 });
 
 test('GET and login opt-out never open confirmation', async () => {
-    for (const options of [{ method: 'get' }, { dataset: { confirm: 'false' } }]) {
+    for (const options of [{ method: 'get' }, { dataset: { confirm: 'false' } }, { dataset: {} }]) {
         let calls = 0;
         const f = fixture(async () => { calls++; }, options);
         await f.dispatch();

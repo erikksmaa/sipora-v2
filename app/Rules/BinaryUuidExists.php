@@ -21,7 +21,7 @@ class BinaryUuidExists implements ValidationRule
         }
 
         if (! $exists) {
-            $fail('The selected :attribute is invalid.');
+            $fail('validation.exists')->translate();
         }
     }
 }
