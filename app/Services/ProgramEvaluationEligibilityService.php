@@ -11,8 +11,11 @@ final class ProgramEvaluationEligibilityService
 {
     public function assess(Program $program): array
     {
-        $latestProposal = $program->latestProposal()->first();
-        $latestFinancialReport = $program->latestFinancialReport()->first();
+        $latestProposal = $program->relationLoaded('latestProposal') ? $program->getRelation('latestProposal') : $program->latestProposal()->first();
+        $latestFinancialReport = $program->relationLoaded('latestFinancialReport') ? $program->getRelation('latestFinancialReport') : $program->latestFinancialReport()->first();
+        $hasApprovedLogbook = array_key_exists('has_approved_logbook', $program->getAttributes())
+            ? (bool) $program->getAttribute('has_approved_logbook')
+            : $program->logbooks()->where('status', ProgramLogbook::STATUS_APPROVED)->exists();
         $reasons = [];
 
         if ($program->execution_status !== Program::STATUS_RUNNING) {
@@ -21,7 +24,7 @@ final class ProgramEvaluationEligibilityService
         if ($latestProposal?->status !== ProgramProposal::STATUS_APPROVED) {
             $reasons[] = 'Versi Proposal terbaru belum disetujui.';
         }
-        if (! $program->logbooks()->where('status', ProgramLogbook::STATUS_APPROVED)->exists()) {
+        if (! $hasApprovedLogbook) {
             $reasons[] = 'Belum ada Logbook yang disetujui.';
         }
         if ($latestFinancialReport?->status !== FinancialReport::STATUS_APPROVED) {

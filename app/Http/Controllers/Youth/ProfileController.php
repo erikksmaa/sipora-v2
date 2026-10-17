@@ -37,7 +37,7 @@ class ProfileController extends Controller
     public function photo(Request $request): StreamedResponse
     {
         $path = $request->user()->profile?->profile_photo_path;
-        abort_unless($path, 404);
+        abort_unless($path && Storage::disk('public')->exists($path), 404);
 
         return response()->streamDownload(
             fn () => print Storage::disk('public')->get($path),

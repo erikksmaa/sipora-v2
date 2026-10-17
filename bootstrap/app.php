@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(SecurityHeaders::class);
         $middleware->appendToGroup('web', \App\Http\Middleware\EnsureInternalAccountAccess::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\ValidateScalarQueryParameters::class);
         $middleware->alias([
             'youth.stage' => EnsureYouthOnboardingStage::class,
             'role' => RoleMiddleware::class,

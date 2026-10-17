@@ -54,7 +54,9 @@ Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('yo
         Route::get('/profile', [ProfileController::class, 'show'])->middleware('youth.stage:profile')->name('profile.show');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->middleware('youth.stage:profile')->name('profile.edit');
         Route::get('/profile/privacy', [VisibilityController::class, 'edit'])->middleware('youth.stage:portfolio')->name('profile.privacy');
-        Route::get('/profile/photo', [ProfileController::class, 'photo'])->middleware('youth.stage:profile')->name('profile.photo');
+        // The account header can show an existing own avatar before onboarding
+        // completes. Authentication, email verification and Youth role still apply.
+        Route::get('/profile/photo', [ProfileController::class, 'photo'])->name('profile.photo');
         Route::put('/profile', [ProfileController::class, 'update'])->middleware('youth.stage:profile')->name('profile.update');
 
         Route::get('/interests', [InterestController::class, 'edit'])->middleware('youth.stage:portfolio')->name('interests.edit');
