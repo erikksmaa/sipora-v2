@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AdministrativeAreaSeeder::class,
+            PemalangVillageSeeder::class,
             InterestSeeder::class,
             SkillSeeder::class,
             ActivityCategorySeeder::class,
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
             NotificationSeeder::class,
             QualityAssuranceSeeder::class,
             MediaFixtureSeeder::class,
+            DemoIdentityAnchorSeeder::class,
         ]);
     }
 }

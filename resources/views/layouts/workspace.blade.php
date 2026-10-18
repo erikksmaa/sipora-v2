@@ -14,7 +14,6 @@
             ['label' => 'Dashboard', 'icon' => 'layout-dashboard', 'route' => route('manager.dashboard', $organization), 'patterns' => ['manager.dashboard']],
         ]],
         ['label' => 'Community', 'items' => [
-            ['label' => 'Chat Community', 'icon' => 'users', 'route' => route('manager.chat', $organization), 'patterns' => ['manager.chat']],
             ['label' => 'Update Community', 'icon' => 'users', 'route' => route('manager.social.index', $organization), 'patterns' => ['manager.social.*']],
             ['label' => 'Profil Community', 'icon' => 'building', 'route' => route('manager.profile.edit', $organization), 'patterns' => ['manager.profile.*']],
             ['label' => 'Anggota', 'icon' => 'users', 'route' => route('manager.members.index', $organization), 'patterns' => ['manager.members.*']],
@@ -55,7 +54,6 @@
             ['label' => 'Privasi Portfolio', 'icon' => 'shield-check', 'route' => route('youth.profile.privacy'), 'patterns' => ['youth.profile.privacy'], 'requires' => 'portfolio'],
         ]],
         ['label' => 'Aktivitas Saya', 'items' => [
-            ['label' => 'Chat Global', 'icon' => 'users', 'route' => route('chat.global'), 'patterns' => ['chat.global', ...($chatIsCommunity ? [] : ['chat.room'])]],
             ['label' => 'Social Feed', 'icon' => 'users', 'route' => route('social.index'), 'patterns' => ['social.*']],
             ['label' => 'Forum Community', 'icon' => 'users', 'route' => route('forum.index'), 'patterns' => ['forum.*']],
             ['label' => 'Development Pathway', 'icon' => 'sparkles', 'route' => route('youth.development-pathway.index'), 'patterns' => ['youth.development-pathway.*'], 'requires' => 'portfolio'],
@@ -91,7 +89,6 @@
             ['label' => 'Opportunity', 'icon' => 'sparkles', 'route' => route('admin.opportunities.index'), 'patterns' => ['admin.opportunities.*']],
         ]],
         ['label' => 'Sistem', 'items' => [
-            ['label' => 'Chat Global', 'icon' => 'users', 'route' => route('chat.global'), 'patterns' => ['chat.global', ...($chatIsCommunity ? [] : ['chat.room'])]],
             ['label' => 'Pengguna Internal', 'icon' => 'users', 'route' => route('admin.internal-users.index'), 'patterns' => ['admin.internal-users.index', 'admin.internal-users.create', 'admin.internal-users.store', 'admin.internal-users.show', 'admin.internal-users.edit', 'admin.internal-users.update', 'admin.internal-users.active', 'admin.internal-users.temporary', 'admin.internal-users.reset-link', 'admin.internal-users.verification']],
             ['label' => 'Kelola Password', 'icon' => 'shield-check', 'route' => route('admin.account.password.edit'), 'patterns' => ['admin.account.password.*']],
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
@@ -120,13 +117,12 @@
         ]],
         ['label' => 'Akun', 'items' => [
             ['label' => 'Kelola Password', 'icon' => 'shield-check', 'route' => route('verifier.account.password.edit'), 'patterns' => ['verifier.account.password.*']],
-            ['label' => 'Chat Global', 'icon' => 'users', 'route' => route('chat.global'), 'patterns' => ['chat.*']],
             ['label' => 'Notifikasi', 'icon' => 'bell', 'route' => route('notifications.index'), 'patterns' => ['notifications.*']],
         ]],
     ]));
     $verifierMenuCounts = $workspace === 'verifier'
         ? app(\App\Services\VerifierQueueSummaryService::class)->navigation(auth()->user(), $queues ?? null)
-        : [];
+        : ($isAdmin ? app(\App\Services\AdminQueueSummaryService::class)->navigation() : []);
     if ($isYouth) {
         $onboardingService = app(\App\Services\Youth\YouthOnboardingService::class);
         $youthOnboarding = $onboardingService->state(auth()->user());

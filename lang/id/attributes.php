@@ -2,6 +2,7 @@
 
 // Request keys from SIPORA forms and filters; payload keys remain unchanged.
 return [
+    'national_id' => 'NIK', 'village_id' => 'Desa/Kelurahan', 'acknowledgement' => 'konfirmasi bukti identitas',
     'access_role' => 'peran dalam Community',
     'achievement_date' => 'tanggal prestasi',
     'active' => 'status aktif',

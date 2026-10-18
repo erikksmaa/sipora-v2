@@ -15,6 +15,6 @@ final class YouthEligibilityService
         }
         $age = $birthDate->age;
 
-        return ['age' => $age, 'eligible' => $age >= 16 && $age <= 30];
+        return ['age' => $age, 'eligible' => $age >= config('youth.min_age') && $age <= config('youth.max_age')];
     }
 }

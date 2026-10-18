@@ -24,6 +24,7 @@ use App\Services\Activity\ActivityPassportService;
 use App\Services\SocialFeedService;
 use App\Services\Youth\DevelopmentPathwayService;
 use App\Services\YouthStatisticsService;
+use App\Support\Nik;
 use Database\Seeders\CompetitionDemoSeeder;
 use Database\Seeders\DemoYouthSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -49,11 +50,13 @@ class CompetitionDemoSeederTest extends TestCase
         $this->assertSame(2, SocialReport::count());
         $this->assertTrue($users->contains(fn ($user) => ! $user->profileVisibility->is_profile_public));
         $this->assertTrue($users->contains(fn ($user) => $user->identity->verification_status === 'unverified'));
-        $this->assertTrue($users->every(fn ($user) => $user->identity->getRawOriginal('national_id_ciphertext') === null));
+        $this->assertTrue($users->every(fn ($user) => Nik::validFormat($user->identity->nationalId()) && str_starts_with($user->identity->nationalId(), '000000')));
+        $this->assertCount($users->count(), $users->map(fn ($user) => $user->identity->national_id_hash)->unique());
+        $anchorHashes = $users->mapWithKeys(fn ($user) => [$user->uuid() => $user->identity->national_id_hash])->all();
         $this->assertTrue($users->every(fn ($user) => ! $user->hasRole('manager')));
         $entries = app(ActivityPassportService::class)->queryFor($erik)->get();
-        $this->assertCount(5, $entries);
-        $this->assertSame(4, $entries->filter(fn ($entry) => $entry->certificate !== null)->count());
+        $this->assertCount(6, $entries);
+        $this->assertSame(5, $entries->filter(fn ($entry) => $entry->certificate !== null)->count());
         $bootcamp = $entries->firstWhere('activity.title', 'Bootcamp Desain Konten Digital');
         $this->assertSame(3, $bootcamp->present_count);
         $this->assertSame(1, $bootcamp->absent_count);
@@ -81,6 +84,7 @@ class CompetitionDemoSeederTest extends TestCase
         $before = array_map(fn ($model) => $model::count(), $models);
         $this->seed(CompetitionDemoSeeder::class);
         $this->assertSame($before, array_map(fn ($model) => $model::count(), $models));
+        $this->assertSame($anchorHashes, DemoYouthSeeder::users()->mapWithKeys(fn ($user) => [$user->uuid() => $user->identity->national_id_hash])->all());
     }
 
     public function test_production_guard_refuses_all_writes(): void

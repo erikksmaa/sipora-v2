@@ -33,13 +33,13 @@ class AuthenticationTest extends TestCase
 
     private function registration(): array
     {
-        return ['name' => 'Youth Example', 'email' => 'YOUTH@example.test', 'password' => 'test-only-password',
+        return [...$this->registrationPayload(), 'name' => 'Youth Example', 'email' => 'YOUTH@example.test', 'password' => 'test-only-password',
             'password_confirmation' => 'test-only-password', 'recaptcha_token' => 'test-token', 'role' => 'admin'];
     }
 
     public function test_registration_normalizes_email_assigns_only_youth_and_sends_verification(): void
     {
-        $this->post('/register', $this->registration())->assertRedirect('/verify-email');
+        $this->post('/register', $this->registrationSteps($this->registration()))->assertRedirect('/verify-email');
         $user = User::firstOrFail();
         $this->assertSame('youth@example.test', $user->email);
         $this->assertSame(['youth'], $user->getRoleNames()->all());
@@ -55,7 +55,7 @@ class AuthenticationTest extends TestCase
         $this->post('/register', ['email' => 'invalid'])->assertSessionHasErrors(['name', 'email', 'password', 'recaptcha_token']);
         $this->assertDatabaseCount('users', 0);
         $this->mock(RecaptchaService::class)->shouldReceive('verify')->andThrow(ValidationException::withMessages(['recaptcha_token' => 'Rejected']));
-        $this->post('/register', $this->registration())->assertSessionHasErrors('recaptcha_token');
+        $this->post('/register', $this->registrationSteps($this->registration()))->assertSessionHasErrors('recaptcha_token');
         $this->assertDatabaseCount('users', 0);
     }
 
@@ -65,7 +65,7 @@ class AuthenticationTest extends TestCase
         $data = $this->registration();
         unset($data['recaptcha_token']);
 
-        $this->post('/register', $data)->assertRedirect('/verify-email');
+        $this->post('/register', $this->registrationSteps($data))->assertRedirect('/verify-email');
         $this->assertDatabaseHas('users', ['email' => 'youth@example.test']);
     }
 

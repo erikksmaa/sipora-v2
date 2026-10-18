@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Middleware\EnsureInternalAccountAccess;
 use App\Http\Middleware\EnsureYouthOnboardingStage;
 use App\Http\Middleware\SecurityHeaders;
+use App\Http\Middleware\ValidateScalarQueryParameters;
 use App\Support\Auth\HomeRoute;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,8 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(SecurityHeaders::class);
-        $middleware->appendToGroup('web', \App\Http\Middleware\EnsureInternalAccountAccess::class);
-        $middleware->appendToGroup('web', \App\Http\Middleware\ValidateScalarQueryParameters::class);
+        $middleware->appendToGroup('web', EnsureInternalAccountAccess::class);
+        $middleware->appendToGroup('web', ValidateScalarQueryParameters::class);
         $middleware->alias([
             'youth.stage' => EnsureYouthOnboardingStage::class,
             'role' => RoleMiddleware::class,
@@ -27,5 +29,5 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(fn ($request) => route(HomeRoute::for($request->user())));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->dontFlash(['password', 'password_confirmation', 'current_password', 'admin_password', 'temporary_password', 'recaptcha_token', 'token']);
+        $exceptions->dontFlash(['password', 'password_confirmation', 'current_password', 'admin_password', 'temporary_password', 'national_id', 'document_number', 'recaptcha_token', 'token']);
     })->create();

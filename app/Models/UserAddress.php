@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['user_id', 'administrative_area_id', 'address_type', 'address_line', 'rt', 'rw', 'postal_code', 'is_primary'])]
+#[Fillable(['user_id', 'administrative_area_id', 'village_id', 'address_type', 'address_line', 'rt', 'rw', 'postal_code', 'is_primary'])]
 class UserAddress extends Model
 {
     use HasBinaryUuid, SoftDeletes;
@@ -21,6 +21,11 @@ class UserAddress extends Model
     public function administrativeArea(): BelongsTo
     {
         return $this->belongsTo(AdministrativeArea::class);
+    }
+
+    public function village(): BelongsTo
+    {
+        return $this->belongsTo(AdministrativeArea::class, 'village_id');
     }
 
     protected function casts(): array

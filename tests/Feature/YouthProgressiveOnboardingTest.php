@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Actions\Youth\SyncUserInterestsAction;
 use App\Actions\Youth\SyncUserSkillsAction;
-use App\Models\AdministrativeArea;
 use App\Models\Interest;
 use App\Models\Skill;
 use App\Models\User;
@@ -34,11 +33,15 @@ class YouthProgressiveOnboardingTest extends TestCase
 
     private function biodata(User $user): void
     {
+        $registration = $this->registrationPayload();
         $this->actingAs($user)->put(route('youth.biodata.update'), [
+            'national_id' => '000000100102'.str_pad((string) (hexdec(substr(bin2hex($user->getKey()), -6)) % 10000), 4, '0', STR_PAD_LEFT),
+            'gender' => 'male',
             'full_name' => 'Youth Pemalang',
             'birth_date' => '2002-01-10',
             'phone' => '081234567890',
-            'administrative_area_id' => AdministrativeArea::where('area_level', 'district')->firstOrFail()->uuid(),
+            'administrative_area_id' => $registration['administrative_area_id'],
+            'village_id' => $registration['village_id'], 'interests' => $registration['interests'],
         ])->assertRedirect(route('youth.identity-verification'));
     }
 
@@ -92,6 +95,8 @@ class YouthProgressiveOnboardingTest extends TestCase
         $this->actingAs($user)->get(route('youth.skills.edit'))->assertOk();
         $this->actingAs($user)->get(route('youth.communities.index'))->assertRedirect(route('youth.onboarding'));
         app(SyncUserSkillsAction::class)->execute($user, [Skill::firstOrFail()->uuid()]);
+        $this->assertTrue(app(YouthOnboardingService::class)->state($user)['onboardingComplete']);
+        app(SyncUserInterestsAction::class)->execute($user, []);
         $this->assertFalse(app(YouthOnboardingService::class)->state($user)['onboardingComplete']);
         app(SyncUserInterestsAction::class)->execute($user, [Interest::firstOrFail()->uuid()]);
         $this->assertTrue(app(YouthOnboardingService::class)->state($user)['onboardingComplete']);

@@ -55,7 +55,7 @@ class AdminIdentityVerificationTest extends TestCase
         $this->actingAs($admin)->get('/admin/identity-verifications')
             ->assertOk()->assertSee('Antrean Verifikasi Identitas');
         $this->actingAs($admin)->get('/admin/identity-verifications/'.$submission->uuid())
-            ->assertOk()->assertSee('Tinjau Identitas Pemuda');
+            ->assertOk()->assertSee('Tinjau Identitas Pemuda')->assertSee('max-w-xl')->assertSee('max-h-[65vh]')->assertSee('object-contain');
         $this->actingAs($admin)->get('/admin/identity-verifications/not-a-uuid')->assertNotFound();
     }
 

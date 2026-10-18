@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Models\UserIdentity;
 use App\Models\UserIdentityVerification;
 use App\Support\BinaryUuid;
+use App\Support\Nik;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +16,7 @@ use Throwable;
 final class SubmitIdentityVerificationAction
 {
     /**
-     * @param  array{document_type: string, document_number?: ?string}  $data
+     * @param  array{document_type: string}  $data
      */
     public function execute(User $user, array $data, UploadedFile $file): UserIdentityVerification
     {
@@ -47,41 +47,26 @@ final class SubmitIdentityVerificationAction
                 }
 
                 $docType = $data['document_type'];
-                $docNumber = preg_replace('/\s+/', '', trim((string) $data['document_number']));
-                $docNumberHash = hash('sha256', $docNumber);
-                $docNumberCipher = Crypt::encryptString($docNumber);
-                $len = strlen($docNumber);
-                $maskedNumber = $len > 8
-                    ? substr($docNumber, 0, 4).str_repeat('*', $len - 8).substr($docNumber, -4)
-                    : str_repeat('*', max(1, $len - 2)).substr($docNumber, -2);
-
+                $nik = $identity->nationalId();
+                if (! $nik) {
+                    throw ValidationException::withMessages(['national_id' => 'Lengkapi NIK pada Biodata sebelum mengajukan bukti identitas.']);
+                }
                 $fileHash = hash_file('sha256', $file->getRealPath());
                 $storedPath = $file->store('identity-documents', 'private');
-
-                $identityData = [
-                    'verification_status' => UserIdentity::STATUS_PENDING,
-                    'verification_method' => $docType,
-                    'national_id_hash' => null,
-                    'national_id_ciphertext' => null,
-                ];
-                if (in_array($docType, ['ktp', 'kia'], true)) {
-                    $identityData['national_id_hash'] = $docNumberHash;
-                    $identityData['national_id_ciphertext'] = $docNumberCipher;
-                }
-                $identity->fill($identityData)->save();
+                $identity->forceFill(['verification_status' => UserIdentity::STATUS_PENDING, 'verification_method' => $docType])->save();
 
                 $verification = new UserIdentityVerification;
                 $verification->id = BinaryUuid::generate();
                 $verification->user_identity_id = $identity->getKey();
                 $verification->document_type = $docType;
-                $verification->document_number_hash = $docNumberHash;
-                $verification->document_number_ciphertext = $docNumberCipher;
+                $verification->document_number_hash = $identity->national_id_hash;
+                $verification->document_number_ciphertext = null;
                 $verification->document_path = $storedPath;
                 $verification->document_sha256 = $fileHash;
                 $verification->status = UserIdentityVerification::STATUS_PENDING;
                 $verification->submitted_at = now();
                 $verification->metadata = [
-                    'masked_document_number' => $maskedNumber,
+                    'masked_nik' => Nik::mask($nik),
                     'mime_type' => $file->getMimeType(),
                     'size_bytes' => $file->getSize(),
                 ];

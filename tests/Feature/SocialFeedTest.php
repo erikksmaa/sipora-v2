@@ -83,7 +83,7 @@ class SocialFeedTest extends TestCase
         $this->get(route('social.show', $post))->assertOk()->assertDontSee($u->name)->assertDontSee($u->email)->assertSee('Pemuda SIPORA #');
         $this->actingAs($u)->put(route('social.update', $post), ['body' => '<b>Update baik</b>', 'visibility' => 'private'])->assertRedirect();
         $this->assertSame('Update baik', $post->fresh()->body);
-        $this->get(route('social.index', ['tab' => 'mine']))->assertOk()->assertSee('Update baik');
+        $this->get(route('social.index', ['tab' => 'mine']))->assertOk()->assertSee('Update baik')->assertSee('data-post-url=')->assertSee('role="link"', false);
         $this->actingAs($other)->get(route('social.show', $post))->assertNotFound();
         $this->get(route('social.index'))->assertDontSee('Update baik');
         $this->put(route('social.update', $post), $data)->assertForbidden();

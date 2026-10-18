@@ -82,7 +82,7 @@ class IndonesianValidationTest extends TestCase
             'document_type' => 'ktp', 'document_number' => '123',
             'document_file' => UploadedFile::fake()->create('bukti.txt', 10, 'text/plain'),
         ], $request->rules(), $request->messages());
-        $this->assertSame('Nomor KTP/KIA harus terdiri dari 16 digit.', $validator->errors()->first('document_number'));
+        $this->assertSame('Konfirmasikan bahwa bukti identitas sudah diperiksa.', $validator->errors()->first('acknowledgement'));
         $this->assertSame('Berkas harus dalam format JPG/JPEG, PNG, atau PDF.', $validator->errors()->first('document_file'));
         $validator = Validator::make(['evidence' => UploadedFile::fake()->create('besar.pdf', 6000, 'application/pdf')], ['evidence' => ['file', 'max:5120']]);
         $this->assertSame('Ukuran berkas bukti pendukung maksimal 5120 KB.', $validator->errors()->first());

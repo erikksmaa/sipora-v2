@@ -7,9 +7,9 @@
     @if($forced)<x-auth-flow-feedback />@endif
     <form method="POST" action="{{ route($forced ? 'internal.password.update' : $workspace.'.account.password.update') }}" class="mt-6 space-y-5">
         @csrf @method('PUT')
-        @if(!$forced && $hasPassword)<label class="block"><span class="field-label">Password saat ini</span><input class="field" type="password" name="current_password" autocomplete="current-password" maxlength="72" required></label>@endif
-        <label class="block"><span class="field-label">Password baru</span><input class="field" type="password" name="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
-        <label class="block"><span class="field-label">Konfirmasi password baru</span><input class="field" type="password" name="password_confirmation" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+        @if(!$forced && $hasPassword)<label class="block"><span class="field-label">Password saat ini</span><x-password-input class="field" name="current_password" autocomplete="current-password" maxlength="72" required /></label>@endif
+        <label class="block"><span class="field-label">Password baru</span><x-password-input class="field" name="password" autocomplete="new-password" minlength="8" maxlength="72" required /></label>
+        <label class="block"><span class="field-label">Konfirmasi password baru</span><x-password-input class="field" name="password_confirmation" autocomplete="new-password" minlength="8" maxlength="72" required /></label>
         <p class="text-xs text-text-secondary">Minimal 8 dan maksimal 72 karakter. Gunakan password yang berbeda dari sebelumnya.</p>
         <button class="btn-primary" type="submit">Simpan Password</button>
     </form>

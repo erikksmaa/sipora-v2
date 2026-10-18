@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified', 'role:youth', 'youth.stage:complete'])->p
         Route::post('/{organization}/programs', [ProgramController::class, 'store'])->name('programs.store');
         Route::get('/{organization}/programs/{program}/intake', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'edit'])->name('programs.intake.edit');
         Route::patch('/{organization}/programs/{program}/intake', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'update'])->name('programs.intake.update');
+        Route::get('/{organization}/programs/{program}/attendance-sheet', [\App\Http\Controllers\AttendanceSheetController::class, 'managerProgram'])->name('programs.attendance-sheet');
         Route::get('/{organization}/programs/{program}/applications', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'managerIndex'])->name('programs.applications.index');
         Route::post('/{organization}/programs/{program}/applications/{application}/review', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'managerReview'])->name('programs.applications.review');
         Route::get('/{organization}/programs/{program}', [ProgramController::class, 'show'])->name('programs.show');
@@ -92,6 +93,7 @@ Route::middleware(['auth', 'verified', 'role:youth', 'youth.stage:complete'])->p
         Route::patch('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'update'])->name('activities.sessions.update');
         Route::patch('/{organization}/activities/{activity}/sessions/{session}/move', [ActivitySessionController::class, 'move'])->name('activities.sessions.move');
         Route::delete('/{organization}/activities/{activity}/sessions/{session}', [ActivitySessionController::class, 'destroy'])->name('activities.sessions.destroy');
+        Route::get('/{organization}/activities/{activity}/attendance-sheet', [\App\Http\Controllers\AttendanceSheetController::class, 'activity'])->name('activities.attendance-sheet');
         Route::get('/{organization}/activities/{activity}/participants', [ActivityParticipantController::class, 'index'])->name('activities.participants.index');
         Route::post('/{organization}/activities/{activity}/participants/{participation}/review', [ActivityParticipantController::class, 'review'])->name('activities.participants.review');
         Route::post('/{organization}/activities/{activity}/participants/{participation}/completion', [ActivityParticipantController::class, 'complete'])->name('activities.participants.complete');

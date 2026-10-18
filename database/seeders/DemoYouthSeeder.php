@@ -49,7 +49,7 @@ class DemoYouthSeeder extends Seeder
                 'is_profile_public' => $i % 6 !== 5, 'show_bio' => true, 'show_interests' => true, 'show_skills' => true,
                 'show_activity_passport' => true, 'show_certificates' => true, 'deleted_at' => null,
             ]);
-            // No identity number or document is fabricated. Verified state is a development fixture.
+            // Verified state is a development fixture. DemoIdentityAnchorSeeder adds synthetic NIK anchors; no real document is fabricated.
             UserIdentity::withTrashed()->updateOrCreate(['user_id' => $user->getKey()], [
                 'verification_status' => $i < 20 ? 'verified' : 'unverified', 'verification_method' => $i < 20 ? 'ktp' : null,
                 'verified_at' => $i < 20 ? $date->copy()->addDay() : null, 'verified_by' => $i < 20 ? $admin->getKey() : null, 'deleted_at' => null,

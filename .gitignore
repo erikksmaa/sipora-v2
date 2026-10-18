@@ -25,6 +25,7 @@ Thumbs.db
 
 /.env.*
 !/.env.example
+!/.env.competition.example
 /.phpunit.cache
 /.phpunit.result.cache
 

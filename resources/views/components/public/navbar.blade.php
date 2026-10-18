@@ -6,12 +6,12 @@
         ['Kegiatan', 'activities.index', ['activities.*']],
         ['Program', 'programs.index', ['programs.*']],
         ['Peluang', 'opportunities.index', ['opportunities.*']],
-        ['Forum', 'forum.index', ['forum.*']],
+
     ];
     $secondaryGroups = [
         'Jelajahi' => [['Kegiatan', 'activities.index'], ['Peluang', 'opportunities.index']],
         'Data Ekosistem' => [['Statistik', 'statistics.index'], ['Peta Ekosistem', 'ecosystem-map.index']],
-        'Interaksi' => [['Social Feed', 'social.index'], ['Chat Global', 'chat.global']],
+        'Interaksi' => [['Social Feed', 'social.index'], ['forum', 'forum.index']],
         'Informasi' => [['Tentang SIPORA', 'about'], ['Kontak', 'contact']],
     ];
 @endphp
@@ -24,7 +24,7 @@
                 <span class="institution-identity-text"><strong>DINDIKPORA</strong><small>Kabupaten Pemalang</small></span>
             </span>
             <div class="flex min-w-0 items-center gap-2">
-                @auth<x-notification-indicator /><x-account-dropdown />@else<a href="{{ route('login') }}" class="public-login-link">Masuk</a>@endauth
+                @auth<x-notification-indicator /><x-account-dropdown />@else<a href="{{ route('login') }}" class="public-login-link">Masuk</a> | <a href="{{ route('register') }}" class="public-login-link">Daftar</a>@endauth
             </div>
         </div>
     </div>

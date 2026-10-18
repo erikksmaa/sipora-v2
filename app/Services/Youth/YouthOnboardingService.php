@@ -16,7 +16,10 @@ final class YouthOnboardingService
         $biodataComplete = filled($profile?->full_name)
             && $profile?->birth_date !== null
             && $user->primaryDomicile()->exists();
-        $identityStatus = $user->identity()->value('verification_status') ?? UserIdentity::STATUS_UNVERIFIED;
+        $identity = $user->identity()->first();
+        $identityStatus = $identity?->verification_status ?? UserIdentity::STATUS_UNVERIFIED;
+        $hasNik = $identity?->nationalId() !== null;
+        $identitySubmitted = $identity?->verifications()->exists() ?? false;
         $identityVerified = $identityStatus === UserIdentity::STATUS_VERIFIED;
         $profileComplete = filled($profile?->bio) && filled($profile?->occupation_status);
         $hasSkill = $user->skills()->exists() || $user->customPortfolioTags()->where('kind', 'skill')->exists();
@@ -37,7 +40,7 @@ final class YouthOnboardingService
         $nextAction = match ($currentStep) {
             'email' => ['route' => 'verification.notice', 'label' => 'Verifikasi email'],
             'biodata' => ['route' => 'youth.biodata.edit', 'label' => 'Lengkapi Biodata'],
-            'identity' => ['route' => 'youth.identity-verification', 'label' => $identityStatus === UserIdentity::STATUS_PENDING ? 'Tunggu Verifikasi' : 'Kirim Verifikasi Identitas'],
+            'identity' => ['route' => $hasNik ? 'youth.identity-verification' : 'youth.biodata.edit', 'label' => ! $hasNik ? 'Lengkapi NIK' : ($identityStatus === UserIdentity::STATUS_PENDING ? 'Tunggu Verifikasi' : 'Kirim Verifikasi Identitas')],
             'profile' => ['route' => 'youth.profile.edit', 'label' => 'Lengkapi Profil'],
             'portfolio' => ['route' => $hasSkill ? 'youth.interests.edit' : 'youth.skills.edit', 'label' => $hasSkill ? 'Pilih Minat' : 'Tambahkan Keahlian'],
             default => ['route' => 'youth.home', 'label' => 'Buka Ruang Youth'],
@@ -60,7 +63,7 @@ final class YouthOnboardingService
         $lockedSteps = array_slice($stepKeys, $currentIndex + 1);
 
         return compact(
-            'emailVerified', 'biodataComplete', 'identityStatus', 'identityVerified',
+            'hasNik', 'identitySubmitted', 'emailVerified', 'biodataComplete', 'identityStatus', 'identityVerified',
             'profileComplete', 'hasSkill', 'hasInterest', 'portfolioBaselineComplete',
             'onboardingComplete', 'currentStep', 'nextAction', 'completedSteps', 'lockedSteps'
         );

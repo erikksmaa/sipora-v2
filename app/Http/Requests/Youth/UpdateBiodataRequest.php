@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Youth;
 
 use App\Rules\BinaryUuidExists;
+use App\Rules\PemalangAddress;
+use App\Rules\UniqueNik;
+use App\Rules\YouthAge;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -11,6 +14,9 @@ final class UpdateBiodataRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $normalized = [];
+        if (! $this->filled('gender') && in_array($this->user()?->profile?->gender, ['other', 'prefer_not_to_say'], true)) {
+            $normalized['gender'] = $this->user()->profile->gender;
+        }
         foreach (['instagram', 'facebook', 'linkedin'] as $field) {
             if (is_string($this->input($field))) {
                 $normalized[$field] = trim($this->input($field));
@@ -30,10 +36,14 @@ final class UpdateBiodataRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'national_id' => [$this->user()?->identity?->nationalId() ? 'nullable' : 'required', 'bail', 'string', 'regex:/^[0-9]{16}$/D', new UniqueNik($this->user()?->getKey())],
+            'village_id' => [$this->user()?->identity?->nationalId() ? 'nullable' : 'required', 'bail', 'uuid', new PemalangAddress($this->input('administrative_area_id'))],
+            'interests' => [$this->user()?->identity?->nationalId() ? 'sometimes' : 'required', 'array', 'min:1', 'max:5'],
+            'interests.*' => ['bail', 'uuid', 'distinct', new BinaryUuidExists('interests')],
             'full_name' => ['required', 'string', 'min:2', 'max:160'],
             'birth_place' => ['nullable', 'string', 'max:120'],
-            'birth_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:1900-01-01', 'before_or_equal:today'],
-            'gender' => ['nullable', Rule::in(['male', 'female', 'other', 'prefer_not_to_say'])],
+            'birth_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:1900-01-01', 'before_or_equal:today', new YouthAge],
+            'gender' => [$this->user()?->identity?->nationalId() ? 'nullable' : 'required', Rule::in(['male', 'female', $this->user()?->profile?->gender])],
             'phone' => ['required', 'regex:/^\+?[0-9][0-9\s-]{7,30}$/', 'max:32'],
             'instagram' => ['nullable', 'regex:/^[A-Za-z0-9._]{1,30}$/', 'max:30'],
             'facebook' => ['nullable', 'regex:/^(?:https:\/\/(?:www\.)?facebook\.com\/[A-Za-z0-9._-]+\/?|[A-Za-z0-9._-]{3,80})$/', 'max:255'],

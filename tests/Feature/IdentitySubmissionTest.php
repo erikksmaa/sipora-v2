@@ -31,7 +31,7 @@ class IdentitySubmissionTest extends TestCase
     private function validSubmission(array $overrides = []): array
     {
         return array_replace([
-            'document_type' => 'ktp',
+            'acknowledgement' => 1, 'document_type' => 'ktp',
             'document_number' => '3327012345678901',
             'document_file' => UploadedFile::fake()->image('identity.jpg'),
         ], $overrides);
@@ -51,7 +51,8 @@ class IdentitySubmissionTest extends TestCase
         $this->assertNotSame('identity.jpg', basename($submission->document_path));
         Storage::disk('private')->assertExists($submission->document_path);
         Storage::disk('public')->assertMissing($submission->document_path);
-        $this->assertSame('3327012345678901', $submission->documentNumber());
+        $this->assertNull($submission->documentNumber());
+        $this->assertSame($identity->national_id_hash, $submission->document_number_hash);
         $this->assertArrayNotHasKey('original_filename', $submission->metadata);
 
         $audit = AuditEntry::where('event', 'identity_submitted')->firstOrFail();
@@ -60,7 +61,7 @@ class IdentitySubmissionTest extends TestCase
         $this->assertStringNotContainsString($submission->document_path, $encoded);
     }
 
-    public function test_student_card_is_not_saved_as_national_identity(): void
+    public function test_student_card_preserves_registered_nik_anchor(): void
     {
         $user = $this->youth();
         $this->actingAs($user)->post('/youth/identity-verification', $this->validSubmission([
@@ -69,8 +70,8 @@ class IdentitySubmissionTest extends TestCase
 
         $identity = $user->fresh()->identity;
         $this->assertSame('student_card', $identity->verification_method);
-        $this->assertNull($identity->national_id_hash);
-        $this->assertNull($identity->national_id_ciphertext);
+        $this->assertNotNull($identity->national_id_hash);
+        $this->assertNotNull($identity->national_id_ciphertext);
     }
 
     public function test_identity_validation_rejects_type_mime_size_and_invalid_nik(): void
@@ -79,8 +80,8 @@ class IdentitySubmissionTest extends TestCase
         $this->actingAs($user)->post('/youth/identity-verification', $this->validSubmission(['document_type' => 'passport']))
             ->assertSessionHasErrors('document_type');
         $this->actingAs($user)->post('/youth/identity-verification', $this->validSubmission([
-            'document_number' => '123',
-        ]))->assertSessionHasErrors('document_number');
+            'acknowledgement' => 0,
+        ]))->assertSessionHasErrors('acknowledgement');
         $this->actingAs($user)->post('/youth/identity-verification', $this->validSubmission([
             'document_file' => UploadedFile::fake()->create('identity.txt', 20, 'text/plain'),
         ]))->assertSessionHasErrors('document_file');
@@ -135,7 +136,7 @@ class IdentitySubmissionTest extends TestCase
         foreach (['document_number_hash', 'document_number_ciphertext', 'document_path', 'document_sha256'] as $sensitive) {
             $this->assertArrayNotHasKey($sensitive, $serialized);
         }
-        $this->assertNull($other->fresh()->identity);
+        $this->assertNotNull($other->fresh()->identity);
         $this->actingAs($other)->get('/youth/identity-verification')->assertOk();
         $this->assertDatabaseCount('user_identities', 2);
         $this->assertSame('unverified', $other->fresh()->identity->verification_status);

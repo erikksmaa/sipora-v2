@@ -39,3 +39,34 @@ test('chat network errors are localized and retain the unsent draft', async () =
     assert.equal(state.error, 'Koneksi chat terputus. Periksa koneksi lalu coba lagi.');
     assert.equal(state.text, 'Pesan belum terkirim');
 });
+
+
+test('choosing any single identity radio clears localized errors for its group only', () => {
+    for (const chosen of ['ktp', 'kia', 'student_card']) {
+        const handlers = {};
+        const root = {addEventListener: (name, fn) => {handlers[name] = fn;}};
+        const form = {elements: []}, otherForm = {elements: []};
+        const radio = (value, owner = form, name = 'document_type') => field({valueMissing: true}, {
+            type: 'radio', name, value, form: owner, required: true, checked: false,
+            getAttribute: key => key === 'data-validation-label' ? 'jenis dokumen identitas' : null,
+            matches: () => true, setCustomValidity(message) {this.customMessage = message;},
+        });
+        const options = ['ktp','kia','student_card'].map(value => radio(value));
+        const unrelated = radio('other', form, 'other_group');
+        const foreign = radio('foreign', otherForm);
+        form.elements = [...options, unrelated, foreign];
+        installNativeValidation(root);
+        for (const option of form.elements) handlers.invalid({target: option});
+        for (const option of options) assert.equal(option.customMessage, 'Pilih salah satu jenis dokumen identitas.');
+        const selected = options.find(option => option.value === chosen);
+        selected.checked = true;
+        handlers.change({target: selected});
+        for (const option of options) {assert.equal(option.customMessage, '');assert.equal(option.required, true);}
+        assert.equal(options.filter(option => option.checked).length, 1);
+        assert.notEqual(unrelated.customMessage, '');assert.notEqual(foreign.customMessage, '');
+        // Changing selection via input (keyboard/browser differences) also clears the group.
+        for (const option of options) handlers.invalid({target: option});
+        handlers.input({target: selected});
+        for (const option of options) assert.equal(option.customMessage, '');
+    }
+});

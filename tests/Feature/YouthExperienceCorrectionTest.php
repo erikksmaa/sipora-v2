@@ -37,10 +37,10 @@ class YouthExperienceCorrectionTest extends TestCase
 
     public function test_email_youth_moves_through_activation_and_private_portfolio(): void
     {
-        $this->post(route('register.store'), [
+        $this->post(route('register.store'), $this->registrationSteps([...$this->registrationPayload(),
             'name' => 'Pemuda Alur', 'email' => 'alur@example.test',
             'password' => 'abcdefgh', 'password_confirmation' => 'abcdefgh',
-        ])->assertRedirect(route('verification.notice'));
+        ]))->assertRedirect(route('verification.notice'));
         $youth = User::where('email', 'alur@example.test')->firstOrFail();
         $this->assertFalse($youth->hasVerifiedEmail());
         $this->get(route('youth.biodata.edit'))->assertRedirect(route('verification.notice'));
@@ -62,7 +62,7 @@ class YouthExperienceCorrectionTest extends TestCase
         $this->get(route('youth.profile.edit'))->assertRedirect(route('youth.onboarding'));
 
         $this->post(route('youth.identity-verification.store'), [
-            'document_type' => 'ktp', 'document_number' => '3327012345678901',
+            'acknowledgement' => 1, 'document_type' => 'ktp', 'document_number' => '3327012345678901',
             'document_file' => UploadedFile::fake()->image('ktp.png'),
         ])->assertRedirect(route('youth.onboarding'));
         $submission = $youth->fresh()->identity->verifications()->firstOrFail();
@@ -175,7 +175,7 @@ class YouthExperienceCorrectionTest extends TestCase
     {
         $youth = $this->completeYouthOnboarding(User::factory()->create()->assignRole('youth'), 'biodata');
         $this->actingAs($youth)->post(route('youth.identity-verification.store'), [
-            'document_type' => 'ktp', 'document_number' => '3327012345678901',
+            'acknowledgement' => 1, 'document_type' => 'ktp', 'document_number' => '3327012345678901',
             'document_file' => UploadedFile::fake()->image('first.png'),
         ])->assertRedirect();
         $first = $youth->fresh()->identity->verifications()->firstOrFail();
@@ -187,7 +187,7 @@ class YouthExperienceCorrectionTest extends TestCase
         $this->assertSame('revision', $youth->siporaNotifications()->latest('created_at')->firstOrFail()->data['status']);
         $this->actingAs($youth->fresh())->get(route('youth.profile.edit'))->assertRedirect(route('youth.onboarding'));
         $this->post(route('youth.identity-verification.store'), [
-            'document_type' => 'ktp', 'document_number' => '3327012345678901',
+            'acknowledgement' => 1, 'document_type' => 'ktp', 'document_number' => '3327012345678901',
             'document_file' => UploadedFile::fake()->image('replacement.png'),
         ])->assertRedirect();
         $latest = $youth->fresh()->identity->verifications()->latest('created_at')->firstOrFail();

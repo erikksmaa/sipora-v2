@@ -17,6 +17,7 @@
         <div><p class="text-xs font-extrabold uppercase tracking-widest text-interactive">Kesiapan Profil</p><p class="mt-1 text-xl font-extrabold">{{ count($onboarding['completedSteps']) }} dari 6 tahap selesai</p></div>
         <x-ui.icon name="badge-check" class="size-8 text-interactive" />
     </div>
+    <section class="sipora-card" aria-label="Progres pendaftaran dan identitas"><h2 class="font-bold">Progres akun dan identitas</h2><ul class="mt-4 grid gap-3 text-sm sm:grid-cols-2">@foreach(['Akun dibuat'=>true, 'Email diverifikasi'=>$onboarding['emailVerified'], 'Data pendaftaran dilengkapi'=>$onboarding['biodataComplete'] && $onboarding['hasNik'], 'Identitas diajukan'=>$onboarding['identitySubmitted'], 'Identitas terverifikasi'=>$onboarding['identityVerified']] as $label=>$done)<li><span aria-hidden="true">{{ $done ? '✓' : '○' }}</span> {{ $label }}<span class="sr-only">{{ $done ? ', selesai' : ', belum selesai' }}</span></li>@endforeach</ul></section>
     <ol class="onboarding-timeline" aria-label="Tahap aktivasi akun">
         @foreach($steps as $index => $step)
             @php

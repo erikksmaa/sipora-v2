@@ -33,7 +33,7 @@ class ManagerWorkspaceRenderingTest extends TestCase
 
         $response->assertOk()->assertSee('Navigasi Community')->assertSee('Antrean operasional')
             ->assertSee('Ganti Community')->assertSee($second->name)->assertDontSee($other->name)
-            ->assertSee('Workspace Community')->assertSee('Jelajahi SIPORA');
+            ->assertSee('Workspace Community')->assertSee('Jelajahi SIPORA')->assertSee('fc-launcher')->assertDontSee('>Chat Global<', false)->assertDontSee('>Chat Community<', false);
         $this->actingAs($leader)->get(route('manager.dashboard', $other))->assertForbidden();
     }
 

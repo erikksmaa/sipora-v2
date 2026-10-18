@@ -1,4 +1,5 @@
 import './bootstrap';
+import './social-card';
 import './media';
 import './responsive-tables';
 import './validation';
@@ -7,6 +8,11 @@ import './scroll-motion';
 import './mobile-bottom-nav';
 import { showAlert } from './alerts';
 import Alpine from 'alpinejs';
+import registration, { dependentAddress, nikAssistance, interestSelection } from './registration';
+Alpine.data('dependentAddress', dependentAddress);
+Alpine.data('nikAssistance', nikAssistance);
+Alpine.data('interestSelection', interestSelection);
+Alpine.data('youthRegistration', registration);
 import chat from './chat';
 import floatingChat from './floating-chat';
 import socialLike from './social-like';
@@ -32,9 +38,10 @@ Alpine.data('themeToggle', () => ({
 
 Alpine.data('biodataStepper', (initial = 0) => ({
     step: initial,
-    steps: ['Biodata', 'Alamat', 'Kontak', 'Identitas', 'Konfirmasi'],
+    steps: ['Biodata', 'Alamat', 'Kontak', 'Profiling', 'Konfirmasi'],
     next() {
         const panel = this.$refs.panels.querySelector(`[data-step="${this.step}"]`);
+        if (panel.dataset.profileSelected === '0' || Number(panel.dataset.profileSelected) > 5) { panel.dispatchEvent(new CustomEvent('profiling-invalid')); return; }
         for (const input of panel.querySelectorAll('input, select, textarea')) {
             if (!input.checkValidity()) { input.reportValidity(); input.focus(); return; }
         }

@@ -132,7 +132,7 @@ class AuthenticationReliabilityTest extends TestCase
         $this->assertFalse($user->fresh()->hasVerifiedEmail());
         Auth::logout();
         $this->post(route('password.email'), ['email' => $user->email, 'recaptcha_token' => 'test'])->assertSessionHasErrors('email');
-        $this->post(route('register.store'), ['name' => 'QA account', 'email' => 'qa-registration@example.test', 'password' => 'test-only-password', 'password_confirmation' => 'test-only-password', 'recaptcha_token' => 'test'])
+        $this->post(route('register.store'), $this->registrationSteps([...$this->registrationPayload(), 'name' => 'QA account', 'email' => 'qa-registration@example.test', 'password' => 'test-only-password', 'password_confirmation' => 'test-only-password', 'recaptcha_token' => 'test']))
             ->assertRedirect(route('verification.notice'))->assertSessionHas('error');
         $created = User::where('email', 'qa-registration@example.test')->firstOrFail();
         $this->assertAuthenticatedAs($created);
@@ -154,7 +154,7 @@ class AuthenticationReliabilityTest extends TestCase
             return html_entity_decode($matches[1], ENT_QUOTES);
         };
 
-        $this->post(route('register.store'), ['name' => 'QA Journey', 'email' => 'journey@example.test', 'password' => 'old-test-password', 'password_confirmation' => 'old-test-password', 'recaptcha_token' => 'test'])
+        $this->post(route('register.store'), $this->registrationSteps([...$this->registrationPayload(), 'name' => 'QA Journey', 'email' => 'journey@example.test', 'password' => 'old-test-password', 'password_confirmation' => 'old-test-password', 'recaptcha_token' => 'test']))
             ->assertRedirect(route('verification.notice'));
         $user = User::where('email', 'journey@example.test')->firstOrFail();
         $this->assertFalse($user->hasVerifiedEmail());

@@ -10,6 +10,10 @@ final class UpdateDomicileAction
 {
     public function execute(User $user, array $data): UserAddress
     {
+        if (array_key_exists('village_id', $data)) {
+            $data['village_id'] = filled($data['village_id']) ? BinaryUuid::bytes($data['village_id']) : null;
+        }
+
         return $user->primaryDomicile()->updateOrCreate(
             ['address_type' => 'domicile', 'is_primary' => true],
             [...$data, 'administrative_area_id' => BinaryUuid::bytes($data['administrative_area_id'])]

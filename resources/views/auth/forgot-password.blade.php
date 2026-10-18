@@ -1,9 +1,9 @@
 @extends('layouts.auth')
-@section('title', 'Lupa Password · SIPORA')
+@section('title', 'Lupa Kata sandi · SIPORA')
 @section('content')
 <section class="auth-card">
-    <h1 class="mb-3 text-2xl font-bold">Lupa password?</h1>
-    <p class="mb-6 text-sm leading-6 text-text-secondary">Masukkan email akun SIPORA. Kami akan mengirim tautan untuk membuat password baru jika akun tersedia.</p>
+    <h1 class="mb-3 text-2xl font-bold">Lupa kata sandi?</h1>
+    <p class="mb-6 text-sm leading-6 text-text-secondary">Masukkan email akun SIPORA. Kami akan mengirim tautan untuk membuat kata sandi baru jika akun tersedia.</p>
     <x-auth-flow-feedback />
     <x-auth-form :action="route('password.email')" recaptcha="forgot_password">
         <x-auth-input name="email" label="Email akun" type="email" autocomplete="email" />

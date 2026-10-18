@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleOnboardingController;
+use App\Http\Controllers\ProgramApplicationController;
 use App\Http\Controllers\Youth\AccountController;
 use App\Http\Controllers\Youth\AccountSecurityController;
 use App\Http\Controllers\Youth\ActivityCertificateController;
@@ -24,12 +26,15 @@ use App\Http\Controllers\Youth\YouthOrganizationExperienceController;
 use App\Http\Controllers\Youth\YouthPortfolioController;
 use App\Http\Controllers\Youth\YouthPortfolioSectionController;
 use App\Http\Controllers\Youth\YouthSkillController;
+use App\Http\Middleware\EnsureGoogleOnboarding;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', 'role:youth'])->prefix('youth')->name('youth.')
+Route::middleware(['auth', 'verified', 'role:youth', EnsureGoogleOnboarding::class])->prefix('youth')->name('youth.')
     ->group(function (): void {
-        Route::post('/programs/{program}/apply', [\App\Http\Controllers\ProgramApplicationController::class, 'store'])->middleware(['youth.stage:complete', 'throttle:20,1'])->name('programs.apply');
-        Route::post('/programs/{program}/withdraw', [\App\Http\Controllers\ProgramApplicationController::class, 'withdraw'])->name('programs.withdraw');
+        Route::get('/registration', [GoogleOnboardingController::class, 'show'])->name('registration.edit');
+        Route::put('/registration', [GoogleOnboardingController::class, 'store'])->middleware('throttle:20,1')->name('registration.update');
+        Route::post('/programs/{program}/apply', [ProgramApplicationController::class, 'store'])->middleware(['youth.stage:complete', 'throttle:20,1'])->name('programs.apply');
+        Route::post('/programs/{program}/withdraw', [ProgramApplicationController::class, 'withdraw'])->name('programs.withdraw');
         Route::get('/home', YouthHomeController::class)->name('home');
         Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding');
         Route::get('/biodata', [BiodataController::class, 'edit'])->name('biodata.edit');

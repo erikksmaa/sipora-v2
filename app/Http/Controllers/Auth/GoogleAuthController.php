@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Actions\Auth\AuthenticateGoogleUser;
 use App\Http\Controllers\Controller;
+use App\Services\Youth\GoogleOnboardingService;
 use App\Support\Auth\HomeRoute;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\UniqueConstraintViolationException;
@@ -58,6 +59,10 @@ class GoogleAuthController extends Controller
         $request->session()->regenerate();
         if ($user->isInternalAccount() && $user->must_change_password) {
             return to_route('internal.password.edit');
+        }
+
+        if (app(GoogleOnboardingService::class)->pending($user)) {
+            return to_route('youth.registration.edit');
         }
 
         return to_route(HomeRoute::for($user))->with('status', 'Selamat datang! Anda berhasil masuk melalui Google.');

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Support\Demo\DemoAssetManifest;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +17,8 @@ class CompetitionDemoSeeder extends Seeder
         if (! app()->environment(['local', 'testing']) || (! app()->environment('testing') && DB::connection()->getDatabaseName() !== 'sipora')) {
             throw new RuntimeException('Competition demo is only allowed in local sipora or an isolated testing environment.');
         }
-        if (\App\Support\Demo\DemoAssetManifest::enabled()) {
-            \App\Support\Demo\DemoAssetManifest::preflight();
+        if (DemoAssetManifest::enabled()) {
+            DemoAssetManifest::preflight();
         }
         DB::transaction(function (): void {
             $this->call([RolePermissionSeeder::class, AdministrativeAreaSeeder::class, InterestSeeder::class, SkillSeeder::class,
@@ -31,6 +32,7 @@ class CompetitionDemoSeeder extends Seeder
                 }
             }
             $this->call([DemoYouthSeeder::class, DemoEcosystemSeeder::class, DemoDiscussionSeeder::class, DemoChatSeeder::class]);
+            $this->call([PemalangVillageSeeder::class, DemoIdentityAnchorSeeder::class]);
             if (app()->environment('local') && is_file(base_path('output/pdf/07A_PROGRAM_PROPOSALS/manifest.json'))) {
                 $this->call(DemoProposalStatusSeeder::class);
             }
@@ -44,13 +46,16 @@ class CompetitionDemoSeeder extends Seeder
                 $this->call(DemoFinalEvaluationSeeder::class);
             }
             if (app()->environment('local') && is_file(public_path('media/demo/08A_SOCIAL_FEED/manifest.json'))) {
-                if (\App\Support\Demo\DemoAssetManifest::enabled()) \App\Support\Demo\DemoAssetManifest::normalizeExecutionState();
+                if (DemoAssetManifest::enabled()) {
+                    DemoAssetManifest::normalizeExecutionState();
+                }
                 $this->call(DemoSocialFeedMediaSeeder::class);
             }
             if (app()->environment('local') && is_file(public_path('media/demo/08A_SOCIAL_FEED/manifest.json'))
                 && is_file(base_path('output/demo-assets/final-evaluation-scenario.json'))) {
                 $this->call(DemoNotificationSeeder::class);
             }
+            $this->call(GovernmentProgramJourneySeeder::class);
         });
         $this->command?->info('Competition demo ready. Youth: youth1@sipora.test');
     }

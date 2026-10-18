@@ -27,6 +27,7 @@ Route::middleware(['auth', 'verified', 'role:verifier'])->prefix('verifier')->na
         Route::post('/activity-verifications/{activity}/review', [ActivityVerificationController::class, 'review'])->name('activity-verifications.review');
         Route::get('/activity-verifications/{activity}/poster', [ActivityVerificationController::class, 'poster'])->name('activity-verifications.poster');
         Route::get('/program-intake', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'programs'])->name('programs.intake.index');
+        Route::get('/programs/{program}/attendance-sheet', [\App\Http\Controllers\AttendanceSheetController::class, 'program'])->name('programs.attendance-sheet');
         Route::get('/programs/{program}/applications', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'index'])->name('programs.applications.index');
         Route::post('/programs/{program}/applications/{application}/review', [\App\Http\Controllers\Manager\ProgramIntakeController::class, 'review'])->name('programs.applications.review');
         Route::get('/program-proposals', [ProgramProposalVerificationController::class, 'index'])->name('program-proposals.index');

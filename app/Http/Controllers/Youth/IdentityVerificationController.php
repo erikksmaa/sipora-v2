@@ -19,7 +19,7 @@ class IdentityVerificationController extends Controller
 
     public function show(Request $request): View
     {
-        $user = $request->user()->loadMissing(['profile', 'identity.verifications']);
+        $user = $request->user()->load(['profile', 'identity.verifications']);
         $identity = $user->identity;
         if (! $identity) {
             $identity = $user->identity()->create([
@@ -43,7 +43,7 @@ class IdentityVerificationController extends Controller
     {
         $action->execute(
             $request->user(),
-            $request->safe()->only(['document_type', 'document_number']),
+            $request->safe()->only(['document_type']),
             $request->file('document_file')
         );
 

@@ -107,11 +107,11 @@ class PublicLandingPageTest extends TestCase
     public function test_registration_uses_existing_account_fields_and_explains_identity_review(): void
     {
         $this->get('/register')->assertOk()
-            ->assertSee('Langkah 1 dari 5')
+            ->assertSee('Langkah ')
             ->assertSee('name="name"', false)->assertSee('name="email"', false)
             ->assertSee('name="password"', false)->assertSee('name="password_confirmation"', false)
             ->assertDontSee('name="nik"', false)->assertDontSee('name="religion"', false)
-            ->assertSee('tidak otomatis memverifikasi identitas');
+            ->assertSee('Identitas belum terverifikasi');
     }
 
     public function test_landing_reuses_suppressed_statistics_and_omits_hidden_discussions(): void

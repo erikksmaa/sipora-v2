@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Actions\Auth\RegisterUser;
 use App\Models\User;
 use App\Models\UserSocialAccount;
 use Database\Seeders\RolePermissionSeeder;
@@ -54,7 +55,7 @@ class GoogleAuthenticationTest extends TestCase
     public function test_new_google_user_gets_only_youth_and_no_password_or_tokens(): void
     {
         $this->mockIdentity($this->identity());
-        $this->get('/auth/google/callback')->assertRedirect('/youth/home');
+        $this->get('/auth/google/callback')->assertRedirect('/youth/registration');
         $user = User::firstOrFail();
         $this->assertSame(['youth'], $user->getRoleNames()->all());
         $this->assertTrue($user->hasVerifiedEmail());
@@ -70,7 +71,7 @@ class GoogleAuthenticationTest extends TestCase
     {
         $user = User::factory()->create(['email' => 'youth@gmail.com'])->assignRole('youth');
         $this->mockIdentity($this->identity());
-        $this->get('/auth/google/callback')->assertRedirect('/youth/home');
+        $this->get('/auth/google/callback')->assertRedirect('/youth/registration');
         $this->assertDatabaseCount('users', 1);
         $this->assertAuthenticatedAs($user);
     }
@@ -79,7 +80,7 @@ class GoogleAuthenticationTest extends TestCase
     {
         $user = User::factory()->create(['email' => 'youth@example.test'])->assignRole('youth');
         $this->mockIdentity($this->identity('youth@example.test', ['hd' => 'example.test']));
-        $this->get('/auth/google/callback')->assertRedirect('/youth/home');
+        $this->get('/auth/google/callback')->assertRedirect('/youth/registration');
         $this->assertDatabaseCount('users', 1);
         $this->assertAuthenticatedAs($user);
     }
@@ -89,11 +90,23 @@ class GoogleAuthenticationTest extends TestCase
         $user = User::factory()->create(['email' => 'old@gmail.com'])->assignRole('youth');
         $user->socialAccounts()->create(['provider' => 'google', 'provider_user_id' => 'google-test-id', 'provider_email' => $user->email]);
         $this->mockIdentity($this->identity('new@gmail.com'));
-        $this->get('/auth/google/callback')->assertRedirect('/youth/home');
+        $this->get('/auth/google/callback')->assertRedirect('/youth/registration');
         $this->assertDatabaseCount('users', 1);
         $this->assertDatabaseCount('user_social_accounts', 1);
         $this->assertAuthenticatedAs($user);
         $this->assertSame('old@gmail.com', $user->fresh()->email);
+    }
+
+    public function test_completed_legacy_google_user_logs_in_without_registration(): void
+    {
+        $user = app(RegisterUser::class)->execute($this->registrationPayload(['email' => 'youth@gmail.com']));
+        $user->markEmailAsVerified();
+        $user->primaryDomicile()->update(['village_id' => null]);
+        $user->identity()->update(['national_id_hash' => null, 'national_id_ciphertext' => null]);
+        $this->mockIdentity($this->identity());
+        $this->get('/auth/google/callback')->assertRedirect('/youth/home');
+        $this->assertDatabaseCount('users', 1);
+        $this->assertAuthenticatedAs($user);
     }
 
     public function test_unverified_existing_account_is_not_taken_over_or_duplicated(): void

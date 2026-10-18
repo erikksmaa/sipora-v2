@@ -25,6 +25,7 @@
     <x-public.navbar />
     <main id="main" data-page-motion tabindex="-1" class="auth-main">@yield('content')</main>
     @stack('scripts')
+    @if(request()->routeIs('login', 'register'))<x-mobile-bottom-nav />@endif
     <x-back-to-top />
     <x-alerts />
 </body>

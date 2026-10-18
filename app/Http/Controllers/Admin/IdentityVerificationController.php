@@ -6,6 +6,7 @@ use App\Actions\Admin\ReviewIdentityVerificationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReviewIdentityVerificationRequest;
 use App\Models\UserIdentityVerification;
+use App\Support\Nik;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -47,7 +48,7 @@ final class IdentityVerificationController extends Controller
 
     public function show(UserIdentityVerification $submission): View
     {
-        $submission->load(['userIdentity.user.profile', 'userIdentity.user.primaryDomicile.administrativeArea', 'reviewer']);
+        $submission->load(['userIdentity.user.profile', 'userIdentity.user.primaryDomicile.administrativeArea', 'userIdentity.user.primaryDomicile.village', 'reviewer']);
         $previousReview = $submission->userIdentity->verifications()
             ->where('id', '!=', $submission->getKey())
             ->whereIn('status', [
@@ -60,7 +61,7 @@ final class IdentityVerificationController extends Controller
 
         return view('admin.identity-verifications.show', [
             'submission' => $submission,
-            'documentNumber' => $submission->documentNumber(),
+            'documentNumber' => $submission->userIdentity->nationalId() ? $submission->userIdentity->maskedNik() : Nik::mask($submission->documentNumber()),
             'previousReview' => $previousReview,
         ]);
     }

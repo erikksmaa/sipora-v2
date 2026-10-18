@@ -1,4 +1,4 @@
-<article class="sipora-card space-y-4 p-5 sm:p-6">
+<article class="sipora-card space-y-4 p-5 sm:p-6 {{ !$detail ? 'social-clickable-card' : '' }}" @if(!$detail) tabindex="0" role="link" aria-label="Buka post {{ $post->organization?->name ?? \App\Support\ForumDisplayName::for($post->author) }}" data-post-url="{{ route('social.show', $post) }}" @endif>
 <div class="flex flex-wrap items-start justify-between gap-3"><div>
 @if($post->organization)<a class="font-bold text-text-primary" href="{{ route('communities.show', $post->organization) }}">{{ $post->organization->name }}</a><p class="text-xs text-text-muted">Update Community</p>
 @else <x-public.author-identity :author="$post->author" /><p class="text-xs text-text-muted">Youth</p>@endif
