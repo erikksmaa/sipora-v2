@@ -23,7 +23,7 @@ class GoogleAuthenticationTest extends TestCase
         parent::setUp();
         Http::preventStrayRequests();
         $this->seed(RolePermissionSeeder::class);
-        config(['services.google.client_id' => 'test-client', 'services.google.client_secret' => 'test-secret',
+        config(['features.google_oauth' => true, 'services.google.client_id' => 'test-client', 'services.google.client_secret' => 'test-secret',
             'services.google.redirect' => 'http://localhost/auth/google/callback']);
     }
 

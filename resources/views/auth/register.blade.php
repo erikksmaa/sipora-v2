@@ -7,7 +7,7 @@
         if ($googleOnboarding)
             $registrationReference['initial']['email'] = auth()->user()->email;
         $registrationReference['stepUrl'] = url('/registration/steps');
-        $useRecaptcha = !$googleOnboarding && config('recaptcha.enabled');
+        $useRecaptcha = !$googleOnboarding && config('features.recaptcha') && config('recaptcha.enabled');
     @endphp
     <div class="registration-experience registration-consolidated" x-data="youthRegistration(@js($registrationReference))">
         <aside class="registration-guide">
@@ -92,7 +92,7 @@
                         <label class="block"><span class="field-label">Konfirmasi kata sandi *</span><x-password-input
                                 aria-label="Konfirmasi kata sandi" name="password_confirmation" autocomplete="new-password"
                                 minlength="8" maxlength="72" required /></label>
-                        @if(config('services.google.client_id') && config('services.google.client_secret'))
+                        @if(config('features.google_oauth') && config('services.google.client_id') && config('services.google.client_secret'))
                             <div class="sm:col-span-2"><a class="btn-outline flex w-full items-center justify-center gap-3"
                                     href="{{ route('google.redirect') }}"><x-google-icon /> Daftar dengan Google</a>
                                 <p class="mt-2 text-xs text-text-secondary">Pengguna Google melengkapi NIK dan Biodata setelah

@@ -11,6 +11,10 @@ class RecaptchaService
 {
     public function verify(string $token, string $action, ?string $ip = null): void
     {
+        if (! config('features.recaptcha')) {
+            return;
+        }
+
         if (! config('recaptcha.enabled') && app()->environment(['local', 'testing'])) {
             return;
         }

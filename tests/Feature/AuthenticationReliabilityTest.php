@@ -29,7 +29,7 @@ class AuthenticationReliabilityTest extends TestCase
         parent::setUp();
         $this->seed(RolePermissionSeeder::class);
         Notification::fake();
-        config(['recaptcha.enabled' => true]);
+        config(['features.recaptcha' => true, 'recaptcha.enabled' => true]);
         $this->mock(RecaptchaService::class)->shouldReceive('verify')->andReturnNull()->byDefault();
     }
 

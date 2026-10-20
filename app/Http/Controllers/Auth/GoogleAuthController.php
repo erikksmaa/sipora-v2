@@ -19,6 +19,10 @@ class GoogleAuthController extends Controller
 {
     public function redirect()
     {
+        if (! config('features.google_oauth')) {
+            return to_route('login')->with('status', 'Login dengan Google sedang dinonaktifkan sementara.');
+        }
+
         abort_unless($this->configured(), 503, 'Masuk melalui Google belum dikonfigurasi.');
 
         return Socialite::driver('google')->redirect();
@@ -26,6 +30,10 @@ class GoogleAuthController extends Controller
 
     public function callback(Request $request, AuthenticateGoogleUser $authenticate)
     {
+        if (! config('features.google_oauth')) {
+            return to_route('login')->with('status', 'Login dengan Google sedang dinonaktifkan sementara.');
+        }
+
         if (! $this->configured() || $request->has('error')) {
             return to_route('login')->withErrors(['email' => 'Masuk melalui Google belum tersedia atau telah dibatalkan.']);
         }

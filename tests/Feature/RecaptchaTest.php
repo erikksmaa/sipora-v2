@@ -14,7 +14,7 @@ class RecaptchaTest extends TestCase
     {
         parent::setUp();
         Http::preventStrayRequests();
-        config(['recaptcha.enabled' => true, 'recaptcha.secret_key' => 'test-secret', 'recaptcha.hostname' => 'localhost', 'recaptcha.min_score' => 0.5]);
+        config(['features.recaptcha' => true, 'recaptcha.enabled' => true, 'recaptcha.secret_key' => 'test-secret', 'recaptcha.hostname' => 'localhost', 'recaptcha.min_score' => 0.5]);
     }
 
     public function test_valid_captcha_uses_configured_action_and_score(): void

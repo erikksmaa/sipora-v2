@@ -26,7 +26,7 @@ class AuthenticationTest extends TestCase
         parent::setUp();
         Http::preventStrayRequests();
         Notification::fake();
-        config(['recaptcha.enabled' => true]);
+        config(['features.recaptcha' => true, 'recaptcha.enabled' => true]);
         $this->seed(RolePermissionSeeder::class);
         $this->mock(RecaptchaService::class)->shouldReceive('verify')->andReturnNull()->byDefault();
     }

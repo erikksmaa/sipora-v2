@@ -6,6 +6,7 @@ use App\Services\Security\RecaptchaService;
 use App\Services\Youth\RegistrationWizard;
 use App\Services\Youth\YouthRegistrationRules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class AuthRequest extends FormRequest
@@ -27,6 +28,7 @@ class AuthRequest extends FormRequest
         $rules = [
             'email' => ['required', 'email', 'max:255'],
             'recaptcha_token' => [
+                Rule::excludeIf(! config('features.recaptcha')),
                 config('recaptcha.enabled') || ! app()->environment(['local', 'testing']) ? 'required' : 'nullable',
                 'string',
                 'max:8192',
@@ -67,6 +69,8 @@ class AuthRequest extends FormRequest
             'login.store' => 'login',
             default => 'forgot_password',
         };
-        app(RecaptchaService::class)->verify((string) $this->validated('recaptcha_token', ''), $action, $this->ip());
+        if (config('features.recaptcha')) {
+            app(RecaptchaService::class)->verify((string) $this->validated('recaptcha_token', ''), $action, $this->ip());
+        }
     }
 }
