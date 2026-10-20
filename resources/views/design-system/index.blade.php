@@ -3,7 +3,18 @@
     $preview = in_array(request('preview'), ['navbar', 'components', 'dashboard', 'landing', 'statistics', 'map'], true) ? request('preview') : null;
     $theme = request('theme') === 'dark' ? 'dark' : 'light';
     $capture = request('capture') === '1';
-    $onlySection = $capture && ctype_digit((string) request('section')) ? (int) request('section') : null;
+    $onlySection = $capture && request('section') === 'logo-philosophy'
+        ? 'logo-philosophy'
+        : ($capture && ctype_digit((string) request('section')) ? (int) request('section') : null);
+    // Keep existing section IDs and capture URLs stable when adding documentation.
+    $boardSections = [];
+    foreach ($sections as $index => $sectionTitle) {
+        $boardSections[] = ['number' => $index + 1, 'title' => $sectionTitle];
+        if ($index === 0) {
+            $boardSections[] = ['number' => 'logo-philosophy', 'title' => 'Logo Philosophy'];
+        }
+    }
+    $sectionTotal = count($boardSections);
 @endphp
 <!DOCTYPE html>
 <html lang="id" data-theme="{{ $theme }}">
@@ -24,21 +35,26 @@
     <div class="ds-toolbar" aria-label="Kontrol dokumentasi">
         <strong>SIPORA <span class="font-normal text-text-muted">/ Visual Design System</span></strong>
         <label class="text-xs font-semibold" for="ds-jump">Section</label>
-        <select id="ds-jump" class="field !w-auto !min-h-9 !py-1" aria-label="Lompat ke section">@foreach($sections as $title)<option value="section-{{ $loop->iteration }}">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }} · {{ $title }}</option>@endforeach</select>
+        <select id="ds-jump" class="field !w-auto !min-h-9 !py-1" aria-label="Lompat ke section">@foreach($boardSections as $section)<option value="section-{{ $section['number'] }}">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }} · {{ $section['title'] }}</option>@endforeach</select>
         <button type="button" class="btn-secondary btn-sm" id="ds-theme" aria-pressed="{{ $theme === 'dark' ? 'true' : 'false' }}">{{ $theme === 'dark' ? 'Light mode' : 'Dark mode' }}</button>
         <button type="button" class="btn-ghost btn-sm" id="ds-pause" aria-pressed="false">Hentikan animasi</button>
         <a href="{{ route('design-system', ['capture' => 1, 'theme' => $theme]) }}" class="btn-accent btn-sm" id="ds-capture-all">Capture board</a>
     </div>
     <div class="ds-shell">
-        <nav class="ds-index" aria-label="Daftar section">@foreach($sections as $title)<a href="#section-{{ $loop->iteration }}"><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $title }}</a>@endforeach</nav>
+        <nav class="ds-index" aria-label="Daftar section">@foreach($boardSections as $section)<a href="#section-{{ $section['number'] }}"><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $section['title'] }}</a>@endforeach</nav>
         <main class="ds-main" id="main">
-        @foreach($sections as $title)
-            @php($number = $loop->iteration)
+        @foreach($boardSections as $section)
+            @php
+                $number = $section['number'];
+                $title = $section['title'];
+                $displayNumber = $loop->iteration;
+            @endphp
             @continue($onlySection && $onlySection !== $number)
             <section id="section-{{ $number }}" class="ds-section" aria-labelledby="heading-{{ $number }}">
                 <header class="ds-section-head">
-                    <span class="ds-number">{{ str_pad($number, 2, '0', STR_PAD_LEFT) }} / 33</span>
+                    <span class="ds-number">{{ str_pad($displayNumber, 2, '0', STR_PAD_LEFT) }} / {{ $sectionTotal }}</span>
                     <div><h2 id="heading-{{ $number }}">{{ $title }}</h2><p>{{ match($number) {
+                        'logo-philosophy' => 'Identitas visual yang merepresentasikan pertumbuhan pemuda dalam ekosistem yang terhubung.',
                         1 => 'Satu bahasa visual untuk ruang tumbuh pemuda Pemalang.',
                         2 => 'Token aktual dari app.css. Accent = Flame; primary = Slate. Nama peran pada brief tidak mengganti nama token proyek.',
                         3 => 'Hierarki yang diamati dari class aktual, bukan skala typography baru. Ukuran ditulis font-size / line-height dalam px pada basis 16px.',
@@ -70,9 +86,10 @@
                         32 => 'Rekonstruksi wireframe dari struktur desain final. Tidak diklaim sebagai sketsa awal historis.',
                         default => 'Section dapat dibuka sendiri untuk capture dengan heading dan ruang kosong yang cukup.',
                     } }}</p></div>
-                    <a class="ds-tag ds-capture-link" href="{{ route('design-system', ['capture' => 1, 'section' => $number, 'theme' => $theme]) }}">CAPTURE {{ str_pad($number, 2, '0', STR_PAD_LEFT) }}</a>
+                    <a class="ds-tag ds-capture-link" href="{{ route('design-system', ['capture' => 1, 'section' => $number, 'theme' => $theme]) }}">CAPTURE {{ str_pad($displayNumber, 2, '0', STR_PAD_LEFT) }}</a>
                 </header>
-                @if($number <= 7) @include('design-system.foundations')
+                @if($number === 'logo-philosophy') @include('design-system.logo-philosophy')
+                @elseif($number <= 7) @include('design-system.foundations')
                 @elseif($number <= 17) @include('design-system.components')
                 @elseif($number <= 21) @include('design-system.patterns')
                 @elseif($number <= 25) @include('design-system.domains')

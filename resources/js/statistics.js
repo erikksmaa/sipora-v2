@@ -64,6 +64,7 @@ if (source) {
                     }],
                 },
                 options: {
+                    animation: document.body.classList.contains('ds-capture') ? false : undefined,
                     responsive: true,
                     maintainAspectRatio: false,
                     indexAxis: horizontal ? 'y' : 'x',

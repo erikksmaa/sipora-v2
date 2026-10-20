@@ -20,6 +20,21 @@
 .ds-grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .ds-sample { min-width: 0; padding: 24px; background: var(--color-bg); border: 1px solid var(--color-border); }
 .ds-caption { margin: 16px 0 0; font: 11px/1.6 var(--font-mono); color: var(--color-text-muted); overflow-wrap: anywhere; }
+.ds-logo-story { padding: clamp(24px, 5vw, 64px); border: 1px solid var(--color-border); background: var(--color-bg); }
+.ds-philosophy-mark { display: block; width: clamp(140px, 24vw, 280px); max-width: 100%; height: auto; margin-bottom: 28px; }
+.ds-logo-wordmark { margin-bottom: 16px; font-size: 15px; font-weight: 800; letter-spacing: .2em; }
+.ds-logo-story h3 { max-width: 850px; font: 700 clamp(28px, 4vw, 56px)/1.16 var(--font-sans); letter-spacing: -.045em; color: var(--color-text-primary); }
+.ds-logo-introduction { max-width: 850px; margin-top: 28px; color: var(--color-text-secondary); font-size: 15px; line-height: 1.9; }
+.ds-logo-introduction p + p { margin-top: 16px; }
+.ds-logo-journey { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 32px; font: 600 11px/1.8 var(--font-mono); letter-spacing: .06em; color: var(--color-text-primary); }
+.ds-logo-journey span[aria-hidden] { color: var(--color-accent-600); }
+.ds-logo-meanings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px; }
+.ds-logo-principle { font: 600 11px/1.7 var(--font-mono); color: var(--color-text-secondary); }
+.ds-logo-meanings h4 { margin: 12px 0; font-size: 18px; line-height: 1.5; font-weight: 700; color: var(--color-text-primary); }
+.ds-logo-meanings article > p:last-child { color: var(--color-text-secondary); font-size: 14px; line-height: 1.9; }
+.ds-logo-essence { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 15px; line-height: 1.9; }
+.ds-logo-essence strong { color: var(--color-text-primary); }
+@media (max-width: 800px) { .ds-logo-meanings { grid-template-columns: 1fr; gap: 28px; } }
 .ds-note { padding: 14px 18px; margin-top: 24px; border-left: 3px solid var(--color-accent-500); background: var(--color-surface-soft); font-size: 13px; line-height: 1.8; color: var(--color-text-secondary); }
 .ds-subheading { margin: 28px 0 16px; font-size: 14px; font-weight: 800; letter-spacing: .04em; }
 .ds-cover { background: #273F4F; color: #EFEEEA; padding: clamp(24px, 5vw, 64px); position: relative; overflow: hidden; }
