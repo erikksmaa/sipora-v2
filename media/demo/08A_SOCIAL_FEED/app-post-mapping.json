@@ -1,0 +1,131 @@
+{
+  "batch": "8A",
+  "fictional": true,
+  "media_posts": 15,
+  "text_posts": 5,
+  "idempotent": true,
+  "private_image_endpoints": "15 JPEG responses passed",
+  "feed_rendering": "passed",
+  "posts": [
+    {
+      "asset_id": "FEED001",
+      "post_uuid": "01a12fec-5729-723e-a75d-71d0c0cab2a8",
+      "owner": "Komunitas Pemuda Digital Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED002",
+      "post_uuid": "01a12fec-572d-7306-8f7a-a0e40b7e4586",
+      "owner": "Komunitas Pemuda Digital Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED003",
+      "post_uuid": "01a12fec-5730-73f8-85fa-ac6bda3939f6",
+      "owner": "Pemalang Creative Hub",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED004",
+      "post_uuid": "01a12fec-5734-73b2-a11e-39f20bf07c4a",
+      "owner": "Relawan Muda Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED005",
+      "post_uuid": "01a12fec-5737-7384-a5cc-cdfe8651f999",
+      "owner": "Komunitas Fotografi Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED006",
+      "post_uuid": "01a12fec-573a-7242-b647-c9d03e8727e5",
+      "owner": "Pemalang Public Speaking Club",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED007",
+      "post_uuid": "01a12fec-573c-70f8-b846-1b3ed5ecd2a6",
+      "owner": "Komunitas Desain Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED008",
+      "post_uuid": "01a12fec-573f-7260-8829-475bd92298a2",
+      "owner": "Pemuda Olahraga Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED009",
+      "post_uuid": "01a12fec-5742-72b3-a516-66084140dfd8",
+      "owner": "Pemuda Peduli Lingkungan",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED010",
+      "post_uuid": "01a12fec-5745-73e8-b8c2-595b54e11b21",
+      "owner": "Youth Entrepreneur Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED011",
+      "post_uuid": "01a12fec-5748-72e9-a56e-7b09b3474a4d",
+      "owner": "Erik Kusuma Rais",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED012",
+      "post_uuid": "01a12fec-574c-73be-9a77-d11c82075c6a",
+      "owner": "Aulia Rahma Putri",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED013",
+      "post_uuid": "01a12fec-5750-72fd-a85f-88105af983d1",
+      "owner": "Dimas Pratama",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED014",
+      "post_uuid": "01a12fec-5754-7224-8db9-4f3d5b2aac6a",
+      "owner": "Komunitas Pemuda Digital Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "FEED015",
+      "post_uuid": "01a12fec-5758-7098-a5a1-a72332be5070",
+      "owner": "Komunitas Pemuda Digital Pemalang",
+      "has_image": true
+    },
+    {
+      "asset_id": "TEXT001",
+      "post_uuid": "01a12fec-575c-71b2-9674-f04255c30a66",
+      "owner": "Komunitas Pemuda Digital Pemalang",
+      "has_image": false
+    },
+    {
+      "asset_id": "TEXT002",
+      "post_uuid": "01a12fec-575f-7119-a604-26a48584bab8",
+      "owner": "Pemalang Public Speaking Club",
+      "has_image": false
+    },
+    {
+      "asset_id": "TEXT003",
+      "post_uuid": "01a12fec-5762-709b-9482-a5b9bb6a842c",
+      "owner": "Nabila Putri Anjani",
+      "has_image": false
+    },
+    {
+      "asset_id": "TEXT004",
+      "post_uuid": "01a12fec-5766-709b-bdd8-dd362c3aa468",
+      "owner": "Komunitas Pemuda Digital Pemalang",
+      "has_image": false
+    },
+    {
+      "asset_id": "TEXT005",
+      "post_uuid": "01a12fec-5769-714c-8492-203b3e9072e1",
+      "owner": "Pemuda Peduli Lingkungan",
+      "has_image": false
+    }
+  ]
+}

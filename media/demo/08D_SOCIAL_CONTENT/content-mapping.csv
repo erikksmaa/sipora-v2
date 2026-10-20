@@ -1,0 +1,65 @@
+﻿id,source_asset_id,existing_post_uuid,author,author_type,category,related_id,caption,media_file,media_path,media_url,emoji_count,import_body,media_note
+POST001,FEED001,01a12fec-5729-723e-a75d-71d0c0cab2a8,Komunitas Pemuda Digital Pemalang,community,community,C001,"Hari ini kami kembali belajar dan berbagi dalam sesi pengembangan web.
+Terima kasih untuk semua teman-teman yang sudah ikut berdiskusi dan mencoba mini project bersama.",feed-001-community-digital.jpg,public/media/demo/08A_SOCIAL_FEED/feed-001-community-digital.jpg,/media/demo/08A_SOCIAL_FEED/feed-001-community-digital.jpg,0,"Hari ini kami kembali belajar dan berbagi dalam sesi pengembangan web.
+Terima kasih untuk semua teman-teman yang sudah ikut berdiskusi dan mencoba mini project bersama.
+
+DATA DEMO SIPORA",
+POST002,FEED011,01a12fec-5748-72e9-a56e-7b09b3474a4d,Erik Kusuma Rais,youth,youth,Y001,"Sedikit demi sedikit mulai memahami bagaimana frontend dan backend bekerja bersama. Masih banyak yang harus dipelajari, tapi progres tetap progres.",portfolio-y001-project-01.jpg,public/media/demo/08B_PORTFOLIO/portfolio-y001-project-01.jpg,/media/demo/08B_PORTFOLIO/portfolio-y001-project-01.jpg,0,"Sedikit demi sedikit mulai memahami bagaimana frontend dan backend bekerja bersama. Masih banyak yang harus dipelajari, tapi progres tetap progres.
+
+DATA DEMO SIPORA",Mengganti foto belajar Y001 dengan screenshot project dummy dari Batch 8B.
+POST003,FEED009,01a12fec-5742-72b3-a516-66084140dfd8,Pemuda Peduli Lingkungan,community,activity,A014,"Aksi kecil akan lebih berarti ketika dilakukan bersama.
+Terima kasih untuk teman-teman yang ikut kegiatan bersih lingkungan akhir pekan ini.",activity-014-documentation-01.jpg,public/media/demo/03_ACTIVITIES/A014/activity-014-documentation-01.jpg,/media/demo/03_ACTIVITIES/A014/activity-014-documentation-01.jpg,0,"Aksi kecil akan lebih berarti ketika dilakukan bersama.
+Terima kasih untuk teman-teman yang ikut kegiatan bersih lingkungan akhir pekan ini.
+
+DATA DEMO SIPORA",
+POST004,FEED003,01a12fec-5730-73f8-85fa-ac6bda3939f6,Pemalang Creative Hub,community,community,C002,"Belajar desain bukan hanya soal membuat sesuatu terlihat bagus, tetapi juga menyampaikan pesan dengan lebih jelas.",feed-003-creative-hub.jpg,public/media/demo/08A_SOCIAL_FEED/feed-003-creative-hub.jpg,/media/demo/08A_SOCIAL_FEED/feed-003-creative-hub.jpg,0,"Belajar desain bukan hanya soal membuat sesuatu terlihat bagus, tetapi juga menyampaikan pesan dengan lebih jelas.
+
+DATA DEMO SIPORA",File gallery C002 yang dicontohkan belum tersedia; reuse feed-003-creative-hub.jpg (sumber A003 dokumentasi 03).
+POST005,FEED002,01a12fec-572d-7306-8f7a-a0e40b7e4586,Komunitas Pemuda Digital Pemalang,community,activity,A001,"Bagian paling seru dari workshop kali ini: saling bantu saat kode belum berjalan sesuai rencana. Dari mini project sederhana, kami belajar mencoba, bertanya, dan memperbaiki bersama.",feed-002-workshop-recap.jpg,public/media/demo/08A_SOCIAL_FEED/feed-002-workshop-recap.jpg,/media/demo/08A_SOCIAL_FEED/feed-002-workshop-recap.jpg,0,"Bagian paling seru dari workshop kali ini: saling bantu saat kode belum berjalan sesuai rencana. Dari mini project sederhana, kami belajar mencoba, bertanya, dan memperbaiki bersama.
+
+DATA DEMO SIPORA",
+POST006,FEED004,01a12fec-5734-73b2-a11e-39f20bf07c4a,Relawan Muda Pemalang,community,community,C003,"Perlengkapan siap, pembagian tugas sudah beres. Terima kasih untuk tim relawan yang membantu persiapan kegiatan hari ini.",feed-004-volunteer.jpg,public/media/demo/08A_SOCIAL_FEED/feed-004-volunteer.jpg,/media/demo/08A_SOCIAL_FEED/feed-004-volunteer.jpg,0,"Perlengkapan siap, pembagian tugas sudah beres. Terima kasih untuk tim relawan yang membantu persiapan kegiatan hari ini.
+
+DATA DEMO SIPORA",
+POST007,FEED005,01a12fec-5737-7384-a5cc-cdfe8651f999,Komunitas Fotografi Pemalang,community,community,C006,"Jalan sebentar, berhenti untuk mengambil gambar, lalu berbagi cerita. Photo walk hari ini bikin kami lebih memperhatikan hal-hal kecil di sekitar.",feed-005-photography.jpg,public/media/demo/08A_SOCIAL_FEED/feed-005-photography.jpg,/media/demo/08A_SOCIAL_FEED/feed-005-photography.jpg,0,"Jalan sebentar, berhenti untuk mengambil gambar, lalu berbagi cerita. Photo walk hari ini bikin kami lebih memperhatikan hal-hal kecil di sekitar.
+
+DATA DEMO SIPORA",
+POST008,FEED006,01a12fec-573a-7242-b647-c9d03e8727e5,Pemalang Public Speaking Club,community,activity,A002,"Sebelum mulai latihan public speaking, kenalan dulu biar lebih nyaman. Tidak harus langsung lancar; yang penting berani mencoba.",feed-006-public-speaking.jpg,public/media/demo/08A_SOCIAL_FEED/feed-006-public-speaking.jpg,/media/demo/08A_SOCIAL_FEED/feed-006-public-speaking.jpg,0,"Sebelum mulai latihan public speaking, kenalan dulu biar lebih nyaman. Tidak harus langsung lancar; yang penting berani mencoba.
+
+DATA DEMO SIPORA",
+POST009,FEED007,01a12fec-573c-70f8-b846-1b3ed5ecd2a6,Komunitas Desain Pemalang,community,activity,A003,"Satu ide bisa punya banyak cara untuk disampaikan. Hari ini kami mencoba beberapa versi desain, lalu saling memberi masukan.",feed-007-content-design.jpg,public/media/demo/08A_SOCIAL_FEED/feed-007-content-design.jpg,/media/demo/08A_SOCIAL_FEED/feed-007-content-design.jpg,0,"Satu ide bisa punya banyak cara untuk disampaikan. Hari ini kami mencoba beberapa versi desain, lalu saling memberi masukan.
+
+DATA DEMO SIPORA",
+POST010,FEED008,01a12fec-573f-7260-8829-475bd92298a2,Pemuda Olahraga Pemalang,community,activity,A008,"Pemanasan dulu sebelum masuk lapangan. Main bersama, jaga sportivitas, dan pulang dengan cerita seru.",feed-008-futsal.jpg,public/media/demo/08A_SOCIAL_FEED/feed-008-futsal.jpg,/media/demo/08A_SOCIAL_FEED/feed-008-futsal.jpg,0,"Pemanasan dulu sebelum masuk lapangan. Main bersama, jaga sportivitas, dan pulang dengan cerita seru.
+
+DATA DEMO SIPORA",
+POST011,FEED010,01a12fec-5745-73e8-b8c2-595b54e11b21,Youth Entrepreneur Pemalang,community,community,C005,"Produk lokal punya cerita yang menarik untuk dibagikan. Sore ini kami berdiskusi tentang foto produk, kemasan, dan cara mengenalkan usaha lewat media digital.",feed-010-entrepreneurship.jpg,public/media/demo/08A_SOCIAL_FEED/feed-010-entrepreneurship.jpg,/media/demo/08A_SOCIAL_FEED/feed-010-entrepreneurship.jpg,0,"Produk lokal punya cerita yang menarik untuk dibagikan. Sore ini kami berdiskusi tentang foto produk, kemasan, dan cara mengenalkan usaha lewat media digital.
+
+DATA DEMO SIPORA",
+POST012,FEED012,01a12fec-574c-73be-9a77-d11c82075c6a,Aulia Rahma Putri,youth,youth,Y002,Senang bisa menyelesaikan sesi belajar desain dan mendapat masukan dari teman-teman. Berikutnya mau coba menerapkan yang dipelajari ke proyek kecil sendiri.,feed-012-achievement.jpg,public/media/demo/08A_SOCIAL_FEED/feed-012-achievement.jpg,/media/demo/08A_SOCIAL_FEED/feed-012-achievement.jpg,0,"Senang bisa menyelesaikan sesi belajar desain dan mendapat masukan dari teman-teman. Berikutnya mau coba menerapkan yang dipelajari ke proyek kecil sendiri.
+
+DATA DEMO SIPORA",
+POST013,FEED013,01a12fec-5750-72fd-a85f-88105af983d1,Dimas Pratama,youth,youth,Y007,Sore produktif sambil merapikan proyek visual. ✨,feed-013-project.jpg,public/media/demo/08A_SOCIAL_FEED/feed-013-project.jpg,/media/demo/08A_SOCIAL_FEED/feed-013-project.jpg,1,"Sore produktif sambil merapikan proyek visual. ✨
+
+DATA DEMO SIPORA",
+POST014,FEED014,01a12fec-5754-7224-8db9-4f3d5b2aac6a,Komunitas Pemuda Digital Pemalang,community,opportunity,O001,"Lagi menyiapkan portfolio untuk peluang internship frontend? Pilih beberapa karya yang paling menggambarkan proses belajarmu, lalu ceritakan bagian yang kamu kerjakan. Detail kesempatan bisa dilihat di Opportunity Hub.",feed-014-internship.jpg,public/media/demo/08A_SOCIAL_FEED/feed-014-internship.jpg,/media/demo/08A_SOCIAL_FEED/feed-014-internship.jpg,0,"Lagi menyiapkan portfolio untuk peluang internship frontend? Pilih beberapa karya yang paling menggambarkan proses belajarmu, lalu ceritakan bagian yang kamu kerjakan. Detail kesempatan bisa dilihat di Opportunity Hub.
+
+DATA DEMO SIPORA",
+POST015,FEED015,01a12fec-5758-7098-a5a1-a72332be5070,Komunitas Pemuda Digital Pemalang,community,opportunity,O009,"Ada kesempatan belajar baru di Opportunity Hub: Scholarship Digital Talent. Baca detail program dan persyaratannya, lalu simpan kalau sesuai dengan arah belajarmu.",feed-015-scholarship.jpg,public/media/demo/08A_SOCIAL_FEED/feed-015-scholarship.jpg,/media/demo/08A_SOCIAL_FEED/feed-015-scholarship.jpg,0,"Ada kesempatan belajar baru di Opportunity Hub: Scholarship Digital Talent. Baca detail program dan persyaratannya, lalu simpan kalau sesuai dengan arah belajarmu.
+
+DATA DEMO SIPORA",
+POST016,TEXT001,01a12fec-575c-71b2-9674-f04255c30a66,Komunitas Pemuda Digital Pemalang,community,community,,"Kalau kita bikin proyek teknologi kecil bersama, masalah apa di sekitar yang paling ingin kamu bantu selesaikan?",,,,0,"Kalau kita bikin proyek teknologi kecil bersama, masalah apa di sekitar yang paling ingin kamu bantu selesaikan?
+
+DATA DEMO SIPORA",
+POST017,TEXT002,01a12fec-575f-7119-a604-26a48584bab8,Pemalang Public Speaking Club,community,activity,,"Tips latihan hari ini: pilih satu pesan utama, satu contoh, dan satu penutup. Coba sampaikan dalam satu menit.",,,,0,"Tips latihan hari ini: pilih satu pesan utama, satu contoh, dan satu penutup. Coba sampaikan dalam satu menit.
+
+DATA DEMO SIPORA",
+POST018,TEXT003,01a12fec-5762-709b-9482-a5b9bb6a842c,Nabila Putri Anjani,youth,youth,,"Hari ini belum lancar, tapi sudah lebih berani menyampaikan ide. Besok coba lagi.",,,,0,"Hari ini belum lancar, tapi sudah lebih berani menyampaikan ide. Besok coba lagi.
+
+DATA DEMO SIPORA",
+POST019,TEXT004,01a12fec-5766-709b-bdd8-dd362c3aa468,Komunitas Pemuda Digital Pemalang,community,opportunity,,"Pengingat kecil sebelum mencari peluang: rapikan portfolio, cek persyaratan, dan pilih yang sesuai dengan tujuan belajarmu.",,,,0,"Pengingat kecil sebelum mencari peluang: rapikan portfolio, cek persyaratan, dan pilih yang sesuai dengan tujuan belajarmu.
+
+DATA DEMO SIPORA",
+POST020,TEXT005,01a12fec-5769-714c-8492-203b3e9072e1,Pemuda Peduli Lingkungan,community,community,,Akhir pekan ini mulai dari lingkungan terdekat dulu. Kebiasaan kecil apa yang sudah kamu lakukan untuk mengurangi sampah?,,,,0,"Akhir pekan ini mulai dari lingkungan terdekat dulu. Kebiasaan kecil apa yang sudah kamu lakukan untuk mengurangi sampah?
+
+DATA DEMO SIPORA",

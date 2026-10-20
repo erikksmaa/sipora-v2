@@ -1,0 +1,124 @@
+{
+  "batch": "7C",
+  "fictional": true,
+  "program_id": "P001",
+  "program_slug": "pemalang-youth-digital-empowerment-2026",
+  "title": "Pemalang Youth Digital Empowerment 2026",
+  "entries": [
+    {
+      "id": "P001-LB01",
+      "log_date": "2026-09-05",
+      "title": "Koordinasi Awal Program",
+      "description": "Tim pelaksana melakukan koordinasi awal untuk membahas rangkaian kegiatan, pembagian tugas, kebutuhan fasilitas, dan target peserta.",
+      "progress_percent": 10,
+      "participant_count": null,
+      "activity_id": null,
+      "status": "approved",
+      "evidence": [
+        {
+          "file": "P001/program-001-logbook-01.jpg",
+          "caption": "Koordinasi Awal Program — foto demo fiktif",
+          "source": "new_generation"
+        }
+      ]
+    },
+    {
+      "id": "P001-LB02",
+      "log_date": "2026-09-12",
+      "title": "Persiapan Workshop Web Development",
+      "description": "Tim menyiapkan materi, fasilitas, perangkat presentasi, serta proses registrasi peserta.",
+      "progress_percent": 25,
+      "participant_count": null,
+      "activity_id": "A001",
+      "status": "approved",
+      "evidence": [
+        {
+          "file": "P001/program-001-logbook-02.jpg",
+          "caption": "Persiapan Workshop Web Development — foto demo fiktif",
+          "source": "new_generation"
+        }
+      ]
+    },
+    {
+      "id": "P001-LB03",
+      "log_date": "2026-09-20",
+      "title": "Pelaksanaan Workshop Web Development",
+      "description": "Workshop Web Development dilaksanakan dengan materi dasar pengembangan web dan praktik mini project.",
+      "progress_percent": 45,
+      "participant_count": 20,
+      "activity_id": "A001",
+      "status": "approved",
+      "evidence": [
+        {
+          "file": "P001/program-001-logbook-03.jpg",
+          "caption": "Pelaksanaan Workshop Web Development — foto demo fiktif",
+          "source": "03_ACTIVITIES/A001/activity-001-documentation-01.jpg"
+        },
+        {
+          "file": "P001/program-001-logbook-03-02.jpg",
+          "caption": "Praktik mini project web — foto demo fiktif",
+          "source": "03_ACTIVITIES/A001/activity-001-documentation-03.jpg"
+        }
+      ]
+    },
+    {
+      "id": "P001-LB04",
+      "log_date": "2026-09-27",
+      "title": "Pelatihan Public Speaking",
+      "description": "Peserta mengikuti latihan penyusunan pesan, presentasi singkat, dan sesi umpan balik bersama fasilitator.",
+      "progress_percent": 65,
+      "participant_count": 18,
+      "activity_id": "A002",
+      "status": "approved",
+      "evidence": [
+        {
+          "file": "P001/program-001-logbook-04.jpg",
+          "caption": "Pelatihan Public Speaking — foto demo fiktif",
+          "source": "03_ACTIVITIES/A002/activity-002-documentation-01.jpg"
+        }
+      ]
+    },
+    {
+      "id": "P001-LB05",
+      "log_date": "2026-10-04",
+      "title": "Bootcamp Desain Konten Digital",
+      "description": "Peserta menyusun konsep, memproduksi konten visual, dan mendiskusikan hasil karya melalui ulasan kelompok.",
+      "progress_percent": 85,
+      "participant_count": 22,
+      "activity_id": "A003",
+      "status": "approved",
+      "evidence": [
+        {
+          "file": "P001/program-001-logbook-05.jpg",
+          "caption": "Bootcamp Desain Konten Digital — foto demo fiktif",
+          "source": "03_ACTIVITIES/A003/activity-003-documentation-01.jpg"
+        }
+      ]
+    },
+    {
+      "id": "P001-LB06",
+      "log_date": "2026-10-10",
+      "title": "Evaluasi dan Penutupan Program",
+      "description": "Tim melakukan evaluasi pelaksanaan, rekapitulasi kehadiran, dokumentasi, serta penyusunan laporan akhir.",
+      "progress_percent": 100,
+      "participant_count": null,
+      "activity_id": null,
+      "status": "approved",
+      "evidence": [
+        {
+          "file": "P001/program-001-logbook-06.jpg",
+          "caption": "Evaluasi dan Penutupan Program — foto demo fiktif",
+          "source": "new_generation"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Logbook dates are progress reporting dates, not replacements for Activity session dates.",
+    "Six milestone logbooks consolidate the seven planned learning sessions. This differs from the proposal's per-session logbook target; retain this distinction in E-LPJ.",
+    "Participant figures are per-activity reported demo counts. Do not sum 20+18+22 as unique participants or claim that the 60-person program target was achieved.",
+    "A005 remains part of P001. Closing entry summarizes the program; A005 attendance and output are unspecified.",
+    "Batch 7G approves the six Logbooks. Reported progress and participant figures retain their original meaning."
+  ],
+  "administrative_state": "Batch 7G: all six Logbooks Approved; Program Completed."
+}

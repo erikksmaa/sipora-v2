@@ -1,0 +1,49 @@
+{
+  "batch": "7F",
+  "fictional": true,
+  "program_id": "P001",
+  "new_images_generated": 0,
+  "evidence": [
+    {
+      "id": "P001-EV1",
+      "activity_id": "A001",
+      "title": "Workshop Web Development untuk Pemuda",
+      "file": "P001/program-001-evidence-01.jpg",
+      "source": "public/media/demo/03_ACTIVITIES/A001/activity-001-documentation-01.jpg",
+      "app_disk": "program_logbook_media",
+      "app_file_path": "logbooks/demo-p001/program-001-logbook-03.jpg",
+      "sha256": "94c8e9df40dfcf4609cef7d0a1aa346afb2f30b18c8aace7671604d19b7a20b2"
+    },
+    {
+      "id": "P001-EV2",
+      "activity_id": "A002",
+      "title": "Pelatihan Public Speaking Dasar",
+      "file": "P001/program-001-evidence-02.jpg",
+      "source": "public/media/demo/03_ACTIVITIES/A002/activity-002-documentation-01.jpg",
+      "app_disk": "program_logbook_media",
+      "app_file_path": "logbooks/demo-p001/program-001-logbook-04.jpg",
+      "sha256": "133c348895035d33ac27015d009e414e085b8e88bff98b63942c0ad313d8889c"
+    },
+    {
+      "id": "P001-EV3",
+      "activity_id": "A003",
+      "title": "Bootcamp Desain Konten Digital",
+      "file": "P001/program-001-evidence-03.jpg",
+      "source": "public/media/demo/03_ACTIVITIES/A003/activity-003-documentation-01.jpg",
+      "app_disk": "program_logbook_media",
+      "app_file_path": "logbooks/demo-p001/program-001-logbook-05.jpg",
+      "sha256": "2cd4cebce0c78a8e7dfb378dbe81a468020a77afc108deff3f542b54019de585"
+    },
+    {
+      "id": "P001-EV4",
+      "activity_id": "A005",
+      "title": "Seminar Kewirausahaan Digital",
+      "file": "P001/program-001-evidence-04.jpg",
+      "source": "public/media/demo/03_ACTIVITIES/A005/activity-005-documentation-01.jpg",
+      "app_disk": "program_logbook_media",
+      "app_file_path": "logbooks/demo-p001/activity-005-documentation-01.jpg",
+      "sha256": "d6147171a18025bc074e92cbca7e2c9e9325ff32d104b170cefb0d9a05f6b028"
+    }
+  ],
+  "app_reference_note": "A001/A002/A003 reuse existing private media paths. A005 is stored once and referenced by closing Logbook. These are activity documentation, not expense receipts."
+}

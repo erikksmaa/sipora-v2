@@ -1,0 +1,133 @@
+{
+  "batch": "8E",
+  "fictional": true,
+  "attachment_count": 4,
+  "thread_count": 5,
+  "application_imported": false,
+  "assets": [
+    {
+      "id": "ATT001",
+      "file": "forum-attachment-001-event-poster.jpg",
+      "title": "Poster Workshop Web Development",
+      "mode": "browser-screenshot",
+      "source": "sources/event-poster.html",
+      "related_id": "A001",
+      "width": 1264,
+      "height": 1113,
+      "sha256": "fd100e2f9e616325a482457dd8140cff80b1d03649ed493d01a1442f86d5e2ac",
+      "url": "/media/demo/08E_FORUM/forum-attachment-001-event-poster.jpg",
+      "capture_source": "sources/event-poster.png",
+      "html_sha256": "ccd5b609778527352b72e9c4700126a116719dcc22ff725875e081072f444c4a"
+    },
+    {
+      "id": "ATT002",
+      "file": "forum-attachment-002-project-preview.jpg",
+      "title": "Landing page Teman Belajar — Aulia",
+      "mode": "browser-screenshot",
+      "source": "sources/project-preview.html",
+      "related_id": "Y002",
+      "width": 1264,
+      "height": 1108,
+      "sha256": "1ab5d9690610b7902d3e87f736c9263fc71e8ec9c3bc10a71e7dde5e0fdf90fe",
+      "url": "/media/demo/08E_FORUM/forum-attachment-002-project-preview.jpg",
+      "capture_source": "sources/project-preview.png",
+      "html_sha256": "fc9c6458799f9a22dcfa4666744f25a6b3a2a6b1708934ef320437201cb62e24"
+    },
+    {
+      "id": "ATT003",
+      "file": "forum-attachment-003-community-photo.jpg",
+      "title": "Diskusi komunitas teknologi",
+      "mode": "reuse",
+      "source": "public/media/demo/02_COMMUNITIES/C001/community-001-gallery-01.jpg",
+      "related_id": "C001",
+      "width": 1200,
+      "height": 900,
+      "sha256": "97ffcd107d7fb7a25f03f89b1796cf8b897ad109cade84fa484804f719754f09",
+      "url": "/media/demo/08E_FORUM/forum-attachment-003-community-photo.jpg"
+    },
+    {
+      "id": "ATT004",
+      "file": "forum-attachment-004-training-info.jpg",
+      "title": "Informasi materi workshop",
+      "mode": "browser-screenshot",
+      "source": "sources/training-info.html",
+      "related_id": "A001",
+      "width": 1264,
+      "height": 1071,
+      "sha256": "4eff2fcf91a60713b71550f7fda53ac0ffd8bc2f6a24e446f75a47268d91c84f",
+      "url": "/media/demo/08E_FORUM/forum-attachment-004-training-info.jpg",
+      "capture_source": "sources/training-info.png",
+      "html_sha256": "fbae3074513d028d431d71b4cbe416bcb3a0de5f5763c286f113d104393d965c"
+    }
+  ],
+  "threads": [
+    {
+      "id": "THREAD001",
+      "title": "Ada rekomendasi belajar Laravel untuk pemula?",
+      "author": "Erik Kusuma Rais",
+      "category": "Teknologi & Belajar",
+      "body": "Saya baru mulai memahami pengembangan web dan ingin belajar Laravel dengan lebih terarah. Buat teman-teman yang pernah mulai dari nol, biasanya belajar lewat materi seperti apa? Boleh berbagi pengalaman dan cara membagi waktu latihan.",
+      "attachment_id": null,
+      "related_id": "Y001",
+      "example_attachment": null,
+      "attachment_file": null,
+      "attachment_url": null,
+      "demo_label": "DATA DEMO SIPORA"
+    },
+    {
+      "id": "THREAD002",
+      "title": "Ada yang mau ikut Workshop Web Development minggu ini?",
+      "author": "Erik Kusuma Rais",
+      "category": "Kegiatan & Komunitas",
+      "body": "Saya sedang mencari teman untuk ikut Workshop Web Development untuk Pemuda. Materinya mulai dari dasar dan ada praktik mini project bersama. Kalau ada yang tertarik, kita bisa berdiskusi dulu di thread ini. Detail kegiatan ada di Activity A001.",
+      "attachment_id": "ATT001",
+      "related_id": "A001",
+      "example_attachment": "activity-001-cover.jpg",
+      "alternative_media_url": "/media/demo/activities/activity-001-cover.jpg",
+      "note": "Attachment poster dibuat dari cover A001. Cover asli pada contoh user tersedia sebagai pilihan alternatif. Frasa minggu ini adalah copy skenario demo; tidak menyatakan jadwal aktual.",
+      "attachment_file": "forum-attachment-001-event-poster.jpg",
+      "attachment_url": "/media/demo/08E_FORUM/forum-attachment-001-event-poster.jpg",
+      "demo_label": "DATA DEMO SIPORA"
+    },
+    {
+      "id": "THREAD003",
+      "title": "Minta feedback untuk desain landing page saya",
+      "author": "Aulia Rahma Putri",
+      "category": "Karya & Feedback",
+      "body": "Ini konsep landing page Teman Belajar yang sedang saya buat. Saya ingin halaman pembukanya terasa sederhana dan ramah untuk pemula. Menurut teman-teman, apakah judul, tombol utama, dan kartu kategorinya sudah mudah dipahami? Masukan soal jarak dan urutan konten juga sangat membantu.",
+      "attachment_id": "ATT002",
+      "related_id": "Y002",
+      "example_attachment": "portfolio-y002-uiux-project.jpg",
+      "note": "Nama contoh belum tersedia di Batch 8B. Attachment menggunakan screenshot landing page baru yang melanjutkan konsep UI/UX Teman Belajar milik Y002.",
+      "attachment_file": "forum-attachment-002-project-preview.jpg",
+      "attachment_url": "/media/demo/08E_FORUM/forum-attachment-002-project-preview.jpg",
+      "demo_label": "DATA DEMO SIPORA"
+    },
+    {
+      "id": "THREAD004",
+      "title": "Ada yang ingin ikut diskusi project kecil bareng komunitas?",
+      "author": "Erik Kusuma Rais",
+      "category": "Kegiatan & Komunitas",
+      "body": "Kami ingin mulai dari project web yang sederhana dan bisa dikerjakan bersama. Tidak harus sudah mahir; yang penting mau mencoba dan berbagi proses. Kalau punya ide atau ingin mencari teman belajar, tulis di sini ya. Foto ini adalah contoh suasana diskusi komunitas.",
+      "attachment_id": "ATT003",
+      "related_id": "C001",
+      "example_attachment": null,
+      "attachment_file": "forum-attachment-003-community-photo.jpg",
+      "attachment_url": "/media/demo/08E_FORUM/forum-attachment-003-community-photo.jpg",
+      "demo_label": "DATA DEMO SIPORA"
+    },
+    {
+      "id": "THREAD005",
+      "title": "Apa yang perlu disiapkan sebelum ikut workshop web development?",
+      "author": "Nabila Putri Anjani",
+      "category": "Teknologi & Belajar",
+      "body": "Saya tertarik mengikuti workshop web development, tapi belum punya banyak pengalaman. Dari gambaran materi yang dilampirkan, bagian mana yang sebaiknya saya kenali lebih dulu? Boleh berbagi tips persiapan supaya lebih nyaman mengikuti praktik.",
+      "attachment_id": "ATT004",
+      "related_id": "A001",
+      "example_attachment": null,
+      "attachment_file": "forum-attachment-004-training-info.jpg",
+      "attachment_url": "/media/demo/08E_FORUM/forum-attachment-004-training-info.jpg",
+      "demo_label": "DATA DEMO SIPORA"
+    }
+  ]
+}

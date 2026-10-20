@@ -1,0 +1,105 @@
+{
+  "title": "SIPORA fictional youth activity cover pack",
+  "fictional": true,
+  "generation_mode": "built-in imagegen",
+  "count": 15,
+  "format": "JPEG",
+  "dimensions": [
+    1600,
+    900
+  ],
+  "aspect_ratio": "16:9",
+  "jpeg_quality": 92,
+  "activities": [
+    {
+      "id": "A001",
+      "name": "Workshop Web Development untuk Pemuda",
+      "file": "activity-001-cover.jpg",
+      "url": "/media/demo/activities/activity-001-cover.jpg"
+    },
+    {
+      "id": "A002",
+      "name": "Pelatihan Public Speaking Dasar",
+      "file": "activity-002-cover.jpg",
+      "url": "/media/demo/activities/activity-002-cover.jpg"
+    },
+    {
+      "id": "A003",
+      "name": "Bootcamp Desain Konten Digital",
+      "file": "activity-003-cover.jpg",
+      "url": "/media/demo/activities/activity-003-cover.jpg"
+    },
+    {
+      "id": "A004",
+      "name": "Volunteer Pemalang Youth Festival",
+      "file": "activity-004-cover.jpg",
+      "url": "/media/demo/activities/activity-004-cover.jpg"
+    },
+    {
+      "id": "A005",
+      "name": "Seminar Kewirausahaan Digital",
+      "file": "activity-005-cover.jpg",
+      "url": "/media/demo/activities/activity-005-cover.jpg"
+    },
+    {
+      "id": "A006",
+      "name": "Workshop Digital Marketing",
+      "file": "activity-006-cover.jpg",
+      "url": "/media/demo/activities/activity-006-cover.jpg"
+    },
+    {
+      "id": "A007",
+      "name": "Pelatihan Leadership Pemuda",
+      "file": "activity-007-cover.jpg",
+      "url": "/media/demo/activities/activity-007-cover.jpg"
+    },
+    {
+      "id": "A008",
+      "name": "Turnamen Futsal Pemuda",
+      "file": "activity-008-cover.jpg",
+      "url": "/media/demo/activities/activity-008-cover.jpg"
+    },
+    {
+      "id": "A009",
+      "name": "Pelatihan Video Editing",
+      "file": "activity-009-cover.jpg",
+      "url": "/media/demo/activities/activity-009-cover.jpg"
+    },
+    {
+      "id": "A010",
+      "name": "Workshop Personal Branding",
+      "file": "activity-010-cover.jpg",
+      "url": "/media/demo/activities/activity-010-cover.jpg"
+    },
+    {
+      "id": "A011",
+      "name": "Kelas Fotografi Dasar",
+      "file": "activity-011-cover.jpg",
+      "url": "/media/demo/activities/activity-011-cover.jpg"
+    },
+    {
+      "id": "A012",
+      "name": "Pelatihan UMKM Digital",
+      "file": "activity-012-cover.jpg",
+      "url": "/media/demo/activities/activity-012-cover.jpg"
+    },
+    {
+      "id": "A013",
+      "name": "Seminar Karier dan Magang",
+      "file": "activity-013-cover.jpg",
+      "url": "/media/demo/activities/activity-013-cover.jpg"
+    },
+    {
+      "id": "A014",
+      "name": "Aksi Bersih Lingkungan",
+      "file": "activity-014-cover.jpg",
+      "url": "/media/demo/activities/activity-014-cover.jpg"
+    },
+    {
+      "id": "A015",
+      "name": "Pelatihan Content Creator",
+      "file": "activity-015-cover.jpg",
+      "url": "/media/demo/activities/activity-015-cover.jpg"
+    }
+  ]
+}

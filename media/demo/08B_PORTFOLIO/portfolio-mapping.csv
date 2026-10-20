@@ -1,0 +1,13 @@
+﻿youth_id,kind,title,file,mode,source,note
+Y001,project,Dashboard project komunitas,portfolio-y001-project-01.jpg,browser-screenshot,projects/y001-web.html,
+Y001,organization,Diskusi komunitas teknologi,portfolio-y001-organization-01.jpg,reuse,02_COMMUNITIES/C001/community-001-gallery-01.jpg,Bukti konteks kegiatan kelompok; tidak mengidentifikasi individu di foto sebagai Erik.
+Y001,volunteer,Koordinasi kegiatan pemuda,portfolio-y001-volunteer-01.jpg,reuse,03_ACTIVITIES/A004/activity-004-documentation-03.jpg,Bukti kegiatan demo; bukan potret khusus Erik.
+Y001,achievement,Penerimaan penghargaan fiktif,portfolio-y001-achievement-01.jpg,imagegen,new-award-reference-y001,Wajah mengacu pada profil Y001. Sertifikat sengaja tanpa tulisan; detail prestasi disimpan dalam data portfolio.
+Y002,project,Prototipe Teman Belajar,portfolio-y002-project-01.jpg,browser-screenshot,projects/y002-ux.html,
+Y003,sports,Dokumentasi futsal pemuda,portfolio-y003-sports-01.jpg,reuse,03_ACTIVITIES/A008/activity-008-documentation-02.jpg,Bukti konteks kegiatan; tidak mengidentifikasi pemain tertentu sebagai Rizky.
+Y004,public-speaking,Dokumentasi latihan public speaking,portfolio-y004-public-speaking-01.jpg,reuse,03_ACTIVITIES/A002/activity-002-documentation-03.jpg,Dokumentasi kelompok; tidak mengidentifikasi pembicara tertentu sebagai Nabila.
+Y007,creative-project,Proses pengerjaan media kreatif,portfolio-y007-creative-project-01.jpg,reuse,08A_SOCIAL_FEED/feed-013-project.jpg,Foto karakter Dimas dari Batch 8A; bukan screenshot keluaran proyek.
+Y010,project,Analitik kampanye Ruang Lokal,portfolio-y010-project-01.jpg,browser-screenshot,projects/y010-marketing.html,Seluruh angka merupakan simulasi.
+Y012,photography,Galeri fotografi dokumenter,portfolio-y012-photography-01.jpg,browser-screenshot,projects/y012-photography.html,Koleksi kurasi foto demo existing; tidak menyatakan Luthfi benar-benar memotret sumber tersebut.
+Y014,content-creation,Praktik produksi konten,portfolio-y014-content-creation-01.jpg,reuse,03_ACTIVITIES/A015/activity-015-documentation-01.jpg,Bukti konteks workshop; tidak mengidentifikasi individu tertentu sebagai Rafi.
+Y017,project,Komponen antarmuka Ruang Karya,portfolio-y017-project-01.jpg,browser-screenshot,projects/y017-ui.html,
